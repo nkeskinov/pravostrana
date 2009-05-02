@@ -1,0 +1,87 @@
+.nav, .nav * {
+	margin:0;
+	padding:15px;
+
+}
+.nav {
+	line-height:2.0;
+	float:left;
+	margin-bottom:1.5em;
+
+}
+.nav ul {
+	background:#fff; /*IE6 needs this*/
+}
+
+.nav li {
+	float:left;
+	list-style:none;
+	position:relative;
+}
+
+.nav li li a {
+	display:block;
+	padding: .25em 0 .25em 2em;
+	text-decoration:none;
+	background-image: none;
+	float:none;
+	width:120px
+}
+
+div#horiz-menu li li a {
+	font-weight: normal;
+	margin-left: -6px;
+	font-size:12px;
+	font-family: Trebuchet MS, Arial, Verdana, tahoma;
+	color: #fff;
+	height: 23px;
+	line-height: 25px;
+}
+
+div#horiz-menu li:hover li,
+div#horiz-menu li.sfHover li,
+div#horiz-menu li.active:hover li,
+div#horiz-menu li.active.sfHover li {
+	background-image: none;
+}
+
+div#horiz-menu li:hover li a,
+div#horiz-menu li.sfHover li a,
+div#horiz-menu li.active:hover li a,
+div#horiz-menu li.active.sfHover li a {
+	font-weight: normal;
+	margin-left: -6px;
+	font-size:12px;
+	color: #fff;
+	background-image: none;
+}
+
+.nav li ul {
+	float:none;
+	top:-999em;
+	position:absolute;
+	width: 165px;
+	z-index: 5;
+}
+
+.nav li:hover ul,
+.nav li.sfHover ul {
+	left:0px;
+	top: 46px;
+}
+.nav li:hover li ul,
+.nav li.sfHover li ul {
+	top:-999em;
+}
+.nav li li:hover ul,
+.nav li li.sfHover ul {
+	left: 168px;
+	top:0px;
+	width: 165px;
+}
+.nav li li {
+	float:none;
+	width: 165px;
+}
+
+
