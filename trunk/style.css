@@ -113,6 +113,33 @@ h4 {
 	z-index:1;
 	color:#FFFFFF;
 	font-size:12px;
+	font-weight:normal;
+}
+#mapMenu a{
+	margin:-21px;	
+	font-size:12px;
+	text-decoration:underline;
+}
+#mapMenu a:link {
+	color: #FFF;
+	font-size:12px;
+	font-weight:normal;
+}
+#mapMenu a:visited {
+	color: #FFF;
+	font-weight:normal;
+	font-size:12px;	
+}
+#mapMenu a:hover {
+	color: #FFF;
+	font-weight:normal;	
+	font-size:12px;
+	text-decoration:underline;	
+}
+#mapMenu a:active {
+	color: #FFF;
+	font-weight:normal;
+	font-size:12px;	
 }
 .mainBody{
 	margin-top:25px;
@@ -547,3 +574,5 @@ font-family : arial, sans-serif;
 .pstrength-minchar {
 font-size : 10px;
 }
+
+
