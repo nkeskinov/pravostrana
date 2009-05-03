@@ -79,7 +79,7 @@ transition: Fx.Transitions.sineOut
         </ul>
 
       	<div id="menu"></div>
-       <div id="mapMenu">Почетна &gt;</div> 
+       <div id="mapMenu"><!-- TemplateBeginEditable name="siteMap" -->Почетна &gt;<!-- TemplateEndEditable --></div> 
       </div>
 	</div>
     
