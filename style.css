@@ -17,6 +17,18 @@ body {
 	line-height: 125%;
 	font-family: Trebuchet MS, Arial, Verdana, tahoma;
 }
+a:link {
+	color: #333;
+}
+a:visited {
+	color: #333;
+}
+a:hover {
+	color: #333;
+}
+a:active {
+	color: #333;
+}
 p {
   /* setup some more readable paragraph spacing */
   margin-top: 10px;
@@ -154,7 +166,19 @@ h4 {
 .mainBody .login{
 	
 	background:url(images/login-block.png);
-}	
+}
+.mainBody .login a:link {
+	color: #FFF;
+}
+.mainBody .login a:visited {
+	color: #DCCDB6;
+}
+.mainBody .login a:hover {
+	color: #FFF;
+}
+.mainBody .login a:active {
+	color: #FFF;
+}
 .mainBody .login .title{
 	padding:5px;
 	padding-right:10px;

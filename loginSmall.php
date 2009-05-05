@@ -16,9 +16,13 @@ if ((isset($_GET['doLogout'])) &&($_GET['doLogout']=="true")){
   $_SESSION['MM_Username'] = NULL;
   $_SESSION['MM_UserGroup'] = NULL;
   $_SESSION['PrevUrl'] = NULL;
+  $_SESSION['MM_Name']=NULL;
+  $_SESSION['MM_ID']=NULL;
   unset($_SESSION['MM_Username']);
   unset($_SESSION['MM_UserGroup']);
   unset($_SESSION['PrevUrl']);
+  unset($_SESSION['MM_Name']);
+  unset($_SESSION['MM_ID']);
 	
   $logoutGoTo = "index.php";
   if ($logoutGoTo) {
@@ -70,9 +74,9 @@ if (isset($_GET['accesscheck'])) {
   $_SESSION['PrevUrl'] = $_GET['accesscheck'];
 }
 
-if (isset($_POST['username'])) {
-  $loginUsername=$_POST['username'];
-  $password=$_POST['password'];
+if (isset($_POST['username_login'])) {
+  $loginUsername=$_POST['username_login'];
+  $password=$_POST['password_login'];
   $MM_fldUserAuthorization = "id_user";
   $MM_redirectLoginSuccess = "index.php";
   $MM_redirectLoginFailed = "login.php";
@@ -108,6 +112,15 @@ if (isset($_POST['username'])) {
     $_SESSION['MM_Username'] = $loginUsername;
     $_SESSION['MM_UserGroup'] = $loginStrGroup;	
 	$_SESSION['MM_Name'] = $loginStrName." ".$loginStrSurname;
+	$_SESSION['MM_ID'] = $id_user;
+	
+	/* if($_SERVER['PHP_SELF']=='/pravo.org.mk/register.php'){
+		$tmp = isset($_SESSION['MM_ID']) ? $_SESSION['MM_ID'] : 0; 
+		$_SESSION['MM_ID_TMP'] = $tmp;
+		unset($_SESSION['MM_ID']);
+		echo $_SESSION['MM_ID'];
+		echo $_SERVER['PHP_SELF'];
+	} */
     if (isset($_SESSION['PrevUrl']) && false) {
       $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];	
     }
@@ -127,11 +140,11 @@ if (isset($_POST['username'])) {
                   <table width="100%" border="0" cellspacing="0">
               <tr>
                         <td>Корисничко име:</td>
-                        <td ><input name="username" type="text" id="username" size="17" /></td>
+                        <td ><input name="username_login" type="text" id="username_login" size="17" /></td>
                     </tr>
                       <tr>
                         <td>Лозинка:</td>
-                        <td><input name="password" type="password" id="password" size="17" /></td>
+                        <td><input name="password_login" type="password" id="password_login" size="17" /></td>
                       </tr>
                       <tr>
                         <td>&nbsp;</td>
@@ -147,7 +160,7 @@ if (isset($_POST['username'])) {
                         <td colspan="2"><div align="center" style="color:#493a35">Заборави лозинка?</div></td>
                       </tr>
                       <tr>
-                        <td colspan="2"><div align="center" style="color:#493a35"><a href="register.php">Регистрирај се!</a></div></td>
+                        <td colspan="2"><div align="center" style="color:#493a35"><a href="register.php?new">Регистрирај се!</a></div></td>
                       </tr>
                     </table>
                     </form>
@@ -160,7 +173,7 @@ if (isset($_POST['username'])) {
                 
                   <table width="100%" border="0" cellspacing="0">
               		<tr>
-                        <td colspan="2">Добредојде,  <?php if(isset($_SESSION['MM_Name'])) echo $_SESSION['MM_Name']; ?></td>
+                        <td colspan="2">Добредојде,  <a href="profile.php?edit"><?php if(isset($_SESSION['MM_Name'])) echo $_SESSION['MM_Name']; ?></a></td>
                     </tr>
                       <tr>
                         <td></td>
