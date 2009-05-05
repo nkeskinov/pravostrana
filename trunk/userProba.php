@@ -138,6 +138,40 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form4")) {
   $Result1 = mysql_query($updateSQL, $pravo) or die(mysql_error());
 }
 
+if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
+  $updateSQL = sprintf("UPDATE `user` SET username=%s, password=%s, name=%s, surname=%s, occupation=%s, email=%s, organization=%s, date_of_birth=%s, sex=%s, address=%s, city=%s, country=%s, phone=%s, is_locked_out=%s, create_date=%s, last_login_date=%s, last_password_changed_date=%s, password_question=%s, password_answer=%s, is_approved=%s, deleted=%s, last_lockout_date=%s, failed_password_attempt_count=%s, failed_password_attempt_window_start=%s, failed_password_answer_attempt_count=%s, failed_password_answer_attempt_window_start=%s WHERE id_user=%s",
+                       GetSQLValueString($_POST['username'], "text"),
+                       GetSQLValueString($_POST['password'], "text"),
+                       GetSQLValueString($_POST['name'], "text"),
+                       GetSQLValueString($_POST['surname'], "text"),
+                       GetSQLValueString($_POST['occupation'], "text"),
+                       GetSQLValueString($_POST['email'], "text"),
+                       GetSQLValueString($_POST['organization'], "text"),
+                       GetSQLValueString($_POST['date_of_birth'], "date"),
+                       GetSQLValueString($_POST['sex'], "int"),
+                       GetSQLValueString($_POST['address'], "text"),
+                       GetSQLValueString($_POST['city'], "text"),
+                       GetSQLValueString($_POST['country'], "text"),
+                       GetSQLValueString($_POST['phone'], "text"),
+                       GetSQLValueString($_POST['is_locked_out'], "int"),
+                       GetSQLValueString($_POST['create_date'], "date"),
+                       GetSQLValueString($_POST['last_login_date'], "date"),
+                       GetSQLValueString($_POST['last_password_changed_date'], "date"),
+                       GetSQLValueString($_POST['password_question'], "text"),
+                       GetSQLValueString($_POST['password_answer'], "text"),
+                       GetSQLValueString($_POST['is_approved'], "int"),
+                       GetSQLValueString($_POST['deleted'], "int"),
+                       GetSQLValueString($_POST['last_lockout_date'], "date"),
+                       GetSQLValueString($_POST['failed_password_attempt_count'], "int"),
+                       GetSQLValueString($_POST['failed_password_attempt_window_start'], "date"),
+                       GetSQLValueString($_POST['failed_password_answer_attempt_count'], "int"),
+                       GetSQLValueString($_POST['failed_password_answer_attempt_window_start'], "date"),
+                       GetSQLValueString($_POST['id_user'], "int"));
+
+  mysql_select_db($database_pravo, $pravo);
+  $Result1 = mysql_query($updateSQL, $pravo) or die(mysql_error());
+}
+
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form3")) {
   $insertSQL = sprintf("INSERT INTO `user` (id_user, username, password, name, surname, occupation, email, organization, date_of_birth, sex, address, city, country, phone, is_locked_out, create_date, last_login_date, last_password_changed_date, password_question, password_answer, is_approved, delated, last_lockout_date, failed_password_attempt_count, failed_password_attempt_window_start, failed_password_answer_attempt_count, failed_password_answer_attempt_window_start) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                        GetSQLValueString($_POST['id_user'], "int"),
@@ -179,267 +213,15 @@ $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysql_num_rows($Recordset1);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ice="http://ns.adobe.com/incontextediting">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Untitled Document</title>
-<script src="SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
-<script src="includes/ice/ice.js" type="text/javascript"></script>
-<link href="SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
-<div ice:editable="*">
+<p>&nbsp;</p>
 <form action="<?php echo $editFormAction; ?>" method="post" name="form1" id="form1">
-  <table align="center">
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Id_user:</td>
-      <td><input type="text" name="id_user" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Username:</td>
-      <td><span id="sprytextfield1">
-        <input type="text" name="username" value="" size="32" />
-      <span class="textfieldRequiredMsg">A value is required.</span></span></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Password:</td>
-      <td><input type="text" name="password" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Name:</td>
-      <td><input type="text" name="name" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Surname:</td>
-      <td><input type="text" name="surname" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Occupation:</td>
-      <td><input type="text" name="occupation" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">E-mail:</td>
-      <td><input type="text" name="email" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Organization:</td>
-      <td><input type="text" name="organization" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Date_of_birth:</td>
-      <td><input type="text" name="date_of_birth" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Sex:</td>
-      <td><select name="sex">
-        <option value="0" <?php if (!(strcmp(0, ""))) {echo "SELECTED";} ?>>Машки</option>
-        <option value="1" <?php if (!(strcmp(1, ""))) {echo "SELECTED";} ?>>Женски</option>
-      </select></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right" valign="top">Address:</td>
-      <td><textarea name="address" cols="50" rows="5"></textarea></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">City:</td>
-      <td><input type="text" name="city" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Country:</td>
-      <td><input type="text" name="country" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Phone:</td>
-      <td><input type="text" name="phone" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Is_locked_out:</td>
-      <td><input type="checkbox" name="is_locked_out" value="" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Create_date:</td>
-      <td><input type="text" name="create_date" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Last_login_date:</td>
-      <td><input type="text" name="last_login_date" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Last_password_changed_date:</td>
-      <td><input type="text" name="last_password_changed_date" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Password_question:</td>
-      <td><input type="text" name="password_question" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Password_answer:</td>
-      <td><input type="text" name="password_answer" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Is_approved:</td>
-      <td><input type="text" name="is_approved" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Delated:</td>
-      <td><input type="text" name="delated" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Last_lockout_date:</td>
-      <td><input type="text" name="last_lockout_date" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Failed_password_attempt_count:</td>
-      <td><input type="text" name="failed_password_attempt_count" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Failed_password_attempt_window_start:</td>
-      <td><input type="text" name="failed_password_attempt_window_start" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Failed_password_answer_attempt_count:</td>
-      <td><input type="text" name="failed_password_answer_attempt_count" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Failed_password_answer_attempt_window_start:</td>
-      <td><input type="text" name="failed_password_answer_attempt_window_start" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">&nbsp;</td>
-      <td><input type="submit" value="Insert record" /></td>
-    </tr>
-  </table>
-  <input type="hidden" name="MM_insert" value="form1" />
-</form>
-<form action="<?php echo $editFormAction; ?>" method="post" name="form2" id="form2">
-  <input type="hidden" name="MM_update" value="form2" />
-  <input type="hidden" name="id_user" value="<?php echo $row_Recordset1['id_user']; ?>" />
-</form>
-Content for new Editable Region goes here асда</div>
-<div ice:repeatinggroup="*">
-  <div ice:repeating="true">Content for new Repeating Region goes here асдас</div>
-</div>
-<p>&nbsp;</p>
-<form action="<?php echo $editFormAction; ?>" method="post" name="form3" id="form3">
-  <table align="center">
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Id_user:</td>
-      <td><input type="text" name="id_user" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Username:</td>
-      <td><input type="text" name="username" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Password:</td>
-      <td><input type="text" name="password" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Name:</td>
-      <td><input type="text" name="name" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Surname:</td>
-      <td><input type="text" name="surname" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Occupation:</td>
-      <td><input type="text" name="occupation" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Email:</td>
-      <td><input type="text" name="email" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Organization:</td>
-      <td><input type="text" name="organization" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Date_of_birth:</td>
-      <td><input type="text" name="date_of_birth" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Sex:</td>
-      <td><input type="text" name="sex" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Address:</td>
-      <td><input type="text" name="address" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">City:</td>
-      <td><input type="text" name="city" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Country:</td>
-      <td><input type="text" name="country" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Phone:</td>
-      <td><input type="text" name="phone" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Is_locked_out:</td>
-      <td><input type="text" name="is_locked_out" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Create_date:</td>
-      <td><input type="text" name="create_date" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Last_login_date:</td>
-      <td><input type="text" name="last_login_date" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Last_password_changed_date:</td>
-      <td><input type="text" name="last_password_changed_date" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Password_question:</td>
-      <td><input type="text" name="password_question" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Password_answer:</td>
-      <td><input type="text" name="password_answer" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Is_approved:</td>
-      <td><input type="checkbox" name="is_approved" value="" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Delated:</td>
-      <td><input type="text" name="delated" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Last_lockout_date:</td>
-      <td><input type="text" name="last_lockout_date" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Failed_password_attempt_count:</td>
-      <td><input type="text" name="failed_password_attempt_count" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Failed_password_attempt_window_start:</td>
-      <td><input type="text" name="failed_password_attempt_window_start" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Failed_password_answer_attempt_count:</td>
-      <td><input type="text" name="failed_password_answer_attempt_count" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Failed_password_answer_attempt_window_start:</td>
-      <td><input type="text" name="failed_password_answer_attempt_window_start" value="" size="32" /></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap="nowrap" align="right">&nbsp;</td>
-      <td><input type="submit" value="Insert record" /></td>
-    </tr>
-  </table>
-  <input type="hidden" name="MM_insert" value="form3" />
-</form>
-<p>&nbsp;</p>
-<form action="<?php echo $editFormAction; ?>" method="post" name="form4" id="form4">
   <table align="center">
     <tr valign="baseline">
       <td nowrap="nowrap" align="right">Id_user:</td>
@@ -523,11 +305,11 @@ Content for new Editable Region goes here асда</div>
     </tr>
     <tr valign="baseline">
       <td nowrap="nowrap" align="right">Is_approved:</td>
-      <td><input type="checkbox" name="is_approved" value=""  <?php if (!(strcmp(htmlentities($row_Recordset1['is_approved'], ENT_COMPAT, 'utf-8'),""))) {echo "checked=\"checked\"";} ?> /></td>
+      <td><input type="text" name="is_approved" value="<?php echo htmlentities($row_Recordset1['is_approved'], ENT_COMPAT, 'utf-8'); ?>" size="32" /></td>
     </tr>
     <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Delated:</td>
-      <td><input type="text" name="delated" value="<?php echo htmlentities($row_Recordset1['delated'], ENT_COMPAT, 'utf-8'); ?>" size="32" /></td>
+      <td nowrap="nowrap" align="right">Deleted:</td>
+      <td><input type="text" name="deleted" value="" size="32" /></td>
     </tr>
     <tr valign="baseline">
       <td nowrap="nowrap" align="right">Last_lockout_date:</td>
@@ -554,16 +336,13 @@ Content for new Editable Region goes here асда</div>
       <td><input type="submit" value="Update record" /></td>
     </tr>
   </table>
-  <input type="hidden" name="MM_update" value="form4" />
+  <input type="hidden" name="MM_update" value="form1" />
   <input type="hidden" name="id_user" value="<?php echo $row_Recordset1['id_user']; ?>" />
 </form>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
-<script type="text/javascript">
-<!--
-var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1");
-//-->
-</script>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
 </body>
 </html>
 <?php

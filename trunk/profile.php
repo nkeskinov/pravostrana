@@ -5,7 +5,7 @@
 <link href="rokmoomenu.css" rel="stylesheet" type="text/css" />
 <link href="style.css" rel="stylesheet" type="text/css" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>pravo.org.mk | Регистрација</title>
+<title>pravo.org.mk | Кориснички Профил</title>
 <!-- InstanceEndEditable -->
 <script type="text/javascript" src="roktools.js"></script>
 
@@ -79,7 +79,7 @@ transition: Fx.Transitions.sineOut
         </ul>
 
       	<div id="menu"></div>
-       <div id="mapMenu"><!-- InstanceBeginEditable name="siteMap" --><a href="index.php">Почетна</a>&nbsp;&nbsp;&gt&nbsp;Регистрација <!-- InstanceEndEditable --></div> 
+       <div id="mapMenu"><!-- InstanceBeginEditable name="siteMap" -->Почетна &gt;<!-- InstanceEndEditable --></div> 
       </div>
 	</div>
     
@@ -90,12 +90,12 @@ transition: Fx.Transitions.sineOut
             <div class="middle-red-block">
                 <div class="title">
                     <div class="left"></div>
-                    <div class="middle"><div class="text"><!-- InstanceBeginEditable name="BlockTitle" -->Регистрација<!-- InstanceEndEditable --></div></div>
+                    <div class="middle"><div class="text"><!-- InstanceBeginEditable name="BlockTitle" -->Наслов<!-- InstanceEndEditable --></div></div>
                     <div class="right"></div>
                 </div>
                  <div class="sodrzina"><!-- InstanceBeginEditable name="BlockContent" -->
-               <?php include("users/model/user.php"); ?>
-             <!-- InstanceEndEditable --></div>
+                    <?php include("users/model/user.php"); ?>
+                 <!-- InstanceEndEditable --></div>
             </div>
             </td></tr></table>
    		 <p>&nbsp;</p>   
@@ -112,4 +112,3 @@ transition: Fx.Transitions.sineOut
 
 </body>
 <!-- InstanceEnd --></html>
-

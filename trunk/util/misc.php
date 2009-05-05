@@ -11,6 +11,6 @@ function _show_message_color($_message,$_color="")
 			case "BLACK": $bgcolor_table = "#000000"; $bgcolor_td = "#FFFFFF"; break;
 			default: $bgcolor_table = "#000000"; $bgcolor_td = "#FFFFFF"; break;
 		}
-		?><table bgcolor="<?php echo $bgcolor_table?>" width="90%" cellspacing="1" align="center"><tr><td bgcolor="<?php echo $bgcolor_td?>" align="left" valign="middle" ><img src="images/<?php echo $_image?>" align="absmiddle"/><?php echo $_message?></div></td></tr></table><?php 
+		?><table bgcolor="<?php echo $bgcolor_table?>" width="100%" cellspacing="1" align="center"><tr><td bgcolor="<?php echo $bgcolor_td?>" align="center" valign="middle" ><img src="images/<?php echo $_image?>" align="absmiddle"/>&nbsp;<?php echo $_message?></div></td></tr></table><?php 
 	}
 ?>
