@@ -171,12 +171,27 @@ h4 {
 	color: #FFF;
 }
 .mainBody .login a:visited {
-	color: #DCCDB6;
-}
-.mainBody .login a:hover {
 	color: #FFF;
 }
+.mainBody .login a:hover {
+	color: #8c2800;
+}
 .mainBody .login a:active {
+	color: #FFF;
+}
+.mainBody .login .down{
+	color:#333;
+}
+.mainBody .login .down a:link {
+	color: #8c2800;
+}
+.mainBody .login .down a:visited {
+	color: #8c2800;
+}
+.mainBody .login .down a:hover {
+	color: #FFF;
+}
+.mainBody .login .down a:active {
 	color: #FFF;
 }
 .mainBody .login .title{
