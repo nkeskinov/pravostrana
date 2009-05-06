@@ -1,9 +1,12 @@
+<?php require_once("Connections/pravo.php"); ?>
+<?php include("util/misc.php"); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/SingleRed.dwt.php" codeOutsideHTMLIsLocked="false" -->
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="rokmoomenu.css" rel="stylesheet" type="text/css" />
 <link href="style.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="images/favicon1.png" />
 <!-- InstanceBeginEditable name="doctitle" -->
 <title>pravo.org.mk | Регистрација</title>
 <!-- InstanceEndEditable -->
@@ -90,7 +93,7 @@ transition: Fx.Transitions.sineOut
             <div class="middle-red-block">
                 <div class="title">
                     <div class="left"></div>
-                    <div class="middle"><div class="text"><!-- InstanceBeginEditable name="BlockTitle" -->Регистрација<!-- InstanceEndEditable --></div></div>
+                    <div class="middle"><div class="text"><!-- InstanceBeginEditable name="BlockTitle" -->Креирање на кориснички профил<!-- InstanceEndEditable --></div></div>
                     <div class="right"></div>
                 </div>
                  <div class="sodrzina"><!-- InstanceBeginEditable name="BlockContent" -->
@@ -112,4 +115,3 @@ transition: Fx.Transitions.sineOut
 
 </body>
 <!-- InstanceEnd --></html>
-

@@ -1,43 +1,14 @@
-<?php require_once("Connections/pravo.php"); ?>
-<?php include("util/misc.php"); ?>
 <?php
 session_start();
-if (!function_exists("GetSQLValueString")) {
-function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
-{
-  if (PHP_VERSION < 6) {
-    $theValue = get_magic_quotes_gpc() ? stripslashes($theValue) : $theValue;
-  }
 
-  $theValue = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($theValue) : mysql_escape_string($theValue);
-
-  switch ($theType) {
-    case "text":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;    
-    case "long":
-    case "int":
-      $theValue = ($theValue != "") ? intval($theValue) : "NULL";
-      break;
-    case "double":
-      $theValue = ($theValue != "") ? doubleval($theValue) : "NULL";
-      break;
-    case "date":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;
-    case "defined":
-      $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
-      break;
-  }
-  return $theValue;
-}
-}
 
 //echo strpos($_SERVER['PHP_SELF'],'profile.php');
 //echo "od users ".isset($_SESSION['MM_ID']) ? $_SESSION['MM_ID'] : 0;
-$editFormAction = $_SERVER['PHP_SELF'];
-if (isset($_SERVER['QUERY_STRING'])) {
-  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
+
+$editFormAction = $_SERVER['PHP_SELF']."?edit";
+
+if (isset($_SERVER['QUERY_STRING']) && ($_SERVER['QUERY_STRING'] != "")) {
+  $editFormAction .= "&" . htmlentities($_SERVER['QUERY_STRING']);
 }
 
 mysql_select_db($database_pravo, $pravo);
@@ -75,7 +46,9 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
   $Result2 = mysql_query($updateSQL, $pravo) or die(mysql_error());
   if($Result2){
 			echo '<br />';
-			_show_message_color('Вашите податоци се успешно изменети!','GREEN');		
+			_show_message_color('Вашите податоци се успешно изменети!','GREEN');
+
+			
   }else{
 	  echo '<br />';
 	 _show_message_color('Настана грешка при измена на податоците!','RED');		
@@ -173,11 +146,11 @@ $('.password').pstrength();
 <form method="post" name="form1" action="<?php echo $editFormAction; ?>">
   <table align="center" width="100%">
    <tr valign="baseline">
-      <td colspan="2"><span class="brown-bold">1. Основни податоци</span></td>
+      <td colspan="3"><h4>1. Основни податоци</h4></td>
     </tr>
     <tr valign="baseline">
-      <td width="256" align="right" nowrap>Име:</td>
-      <td><span id="sprytextfield1">
+      <td width="192" align="right" nowrap>Име:</td>
+      <td colspan="2"><span id="sprytextfield1">
         <input type="text" name="name" value="
 			<?php 	if(isset($_POST['name'])) 
 						echo $_POST['name'];
@@ -188,7 +161,7 @@ $('.password').pstrength();
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Презиме:</td>
-      <td><span id="sprytextfield2">
+      <td colspan="2"><span id="sprytextfield2">
         <input name="surname" type="text" value="
 			<?php if(isset($_POST['surname'])) 
 					echo $_POST['surname'];
@@ -199,7 +172,7 @@ $('.password').pstrength();
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Пол:</td>
-      <td><span id="spryselect1">
+      <td colspan="2"><span id="spryselect1">
         <select name="sex">
           <option value="" >- Избери пол -</option>
           <option value="0" <?php if (!(strcmp(0, htmlentities($row_RecordsetUsers['sex'], ENT_COMPAT, 'utf-8')))) {echo "SELECTED";} ?>>Машки</option>
@@ -209,7 +182,7 @@ $('.password').pstrength();
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Дата на раѓање: <?php echo substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),5,2); ?></td>
-      <td><select name="den">
+      <td colspan="2"><select name="den">
       	<option value="">ден</option>
         <option value="1" <?php if (!(strcmp("01",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>1</option>
         <option value="2" <?php if (!(strcmp("02",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>2</option>
@@ -360,8 +333,7 @@ $('.password').pstrength();
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Телефон:</td>
-      <td><input type="text" name="phone" value="
-	  			<?php if(isset($_POST['phone'])) 
+      <td colspan="2"><input type="text" name="phone" value="<?php if(isset($_POST['phone'])) 
 						echo $_POST['phone'];
 					elseif(isset($_SESSION['MM_ID'])) 
 						echo htmlentities($row_RecordsetUsers['phone'], ENT_COMPAT, 'utf-8'); 
@@ -369,11 +341,11 @@ $('.password').pstrength();
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Занимање:</td>
-      <td><input type="text" name="occupation" value="<?php if(isset($_POST['occupation'])) echo $_POST['occupation']; elseif(isset($_SESSION['MM_ID'])) echo htmlentities($row_RecordsetUsers['occupation'], ENT_COMPAT, 'utf-8'); else echo "";?>" size="32"></td>
+      <td colspan="2"><input type="text" name="occupation" value="<?php if(isset($_POST['occupation'])) echo $_POST['occupation']; elseif(isset($_SESSION['MM_ID'])) echo htmlentities($row_RecordsetUsers['occupation'], ENT_COMPAT, 'utf-8'); else echo "";?>" size="32"></td>
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Организација:</td>
-      <td><input type="text" name="organization" value="<?php if(isset($_POST['organization'])) 
+      <td colspan="2"><input type="text" name="organization" value="<?php if(isset($_POST['organization'])) 
 					echo $_POST['organization'];
 					elseif(isset($_SESSION['MM_ID'])) 
 						echo htmlentities($row_RecordsetUsers['organization'], ENT_COMPAT, 'utf-8'); 
@@ -381,7 +353,7 @@ $('.password').pstrength();
     </tr>
     <tr valign="baseline">
       <td nowrap align="right" valign="top">Адреса:</td>
-      <td><textarea name="address" cols="40" rows="3"><?php if(isset($_POST['address'])) 
+      <td colspan="2"><textarea name="address" cols="40" rows="3"><?php if(isset($_POST['address'])) 
 					echo $_POST['address'];
 					elseif(isset($_SESSION['MM_ID'])) 
 						echo htmlentities($row_RecordsetUsers['address'], ENT_COMPAT, 'utf-8'); 
@@ -389,7 +361,7 @@ $('.password').pstrength();
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Град:</td>
-      <td><input type="text" name="city" value="<?php if(isset($_POST['city'])) 
+      <td colspan="2"><input type="text" name="city" value="<?php if(isset($_POST['city'])) 
 					echo $_POST['city'];
 					elseif(isset($_SESSION['MM_ID'])) 
 						echo htmlentities($row_RecordsetUsers['city'], ENT_COMPAT, 'utf-8'); 
@@ -397,7 +369,7 @@ $('.password').pstrength();
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Држава:</td>
-      <td>
+      <td colspan="2">
       <select name="country">
       <option value="">Избери држава...</option>
         <option value="Afghanistan">Afghanistan</option>
@@ -682,15 +654,14 @@ $('.password').pstrength();
       </td>
     </tr>
     <tr valign="baseline">
-      <td nowrap align="right">&nbsp;</td>
-      <td></td>
+      <td colspan="3" align="right" nowrap style="border-bottom:1px dotted #CCC;">&nbsp;</td>
     </tr>
     <tr valign="baseline">
-      <td colspan="2"><span class="brown-bold">2. Вашето корисничко име и лозинка</span></td>
+      <td colspan="3"><h4>2. Вашето корисничко име и лозинка</h4></td>
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Корисничко име - E-mail:</td>
-      <td><span id="sprytextfield3">
+      <td colspan="2"><span id="sprytextfield3">
       <input type="text" name="username" value="<?php 
 	  			if(isset($_POST['username'])) 
 					echo $_POST['username'];
@@ -702,27 +673,26 @@ $('.password').pstrength();
     <?php if(strpos($editFormAction,'profile.php') == false) { ?>
     <tr valign="baseline">
       <td nowrap align="right">Лозинка:</td>
-      <td><span id="sprypassword1">
+      <td colspan="2"><span id="sprypassword1">
        <input class="password" type="password" id="password" name="password" value="" size="32">
       <span class="passwordRequiredMsg">Лозинката е задолжителна.</span></span></td>
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Повтори Лозинка:</td>
-      <td><span id="spryconfirm1">
+      <td colspan="2"><span id="spryconfirm1">
         <input type="password" name="password2" id="password2" value="" size="32" />
       <span class="confirmRequiredMsg">Лозинката е задолжителна.</span><span class="confirmInvalidMsg">Лозинките не се софпаѓаат.</span></span></td>
     </tr>
     <?php } ?>
     <tr valign="baseline">
-      <td nowrap align="right">&nbsp;</td>
-      <td></td>
+      <td colspan="3" align="right" nowrap style="border-bottom:1px dotted #CCC;">&nbsp;</td>
     </tr>
     <tr valign="baseline">
-      <td colspan="2"><span class="brown-bold">3. Во случај да ги заборавите корисничкото име и лозинката...</span></td>
+      <td colspan="3"><h4>3. Во случај да ги заборавите корисничкото име и лозинката...</h4></td>
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Алтернативна E-mail:</td>
-      <td><span id="sprytextfield4">
+      <td colspan="2"><span id="sprytextfield4">
       <input type="text" name="email" value="<?php if(isset($_POST['email']))
 	  						echo $_POST['email'];
 						elseif(isset($_SESSION['MM_ID'])) 
@@ -733,7 +703,7 @@ $('.password').pstrength();
     <?php if(strpos($editFormAction,'profile.php') == false) { ?>
     <tr valign="baseline">
       <td nowrap align="right">Безбедносно прашање:</td>
-      <td><span id="spryselect2">
+      <td colspan="2"><span id="spryselect2">
         <select name="password_question">
           <option value="" >- Изберете едно - </option>
           <option value="Кое е името на Вашиот најстар братучед?" <?php if (!(strcmp("Кое е името на Вашиот најстар братучед?", ""))) {echo "SELECTED";} ?>>Кое е името на Вашиот најстар братучед?</option>
@@ -746,52 +716,57 @@ $('.password').pstrength();
       <span class="selectRequiredMsg">Изберете едно прашање.</span></span></td>
     </tr>
     <tr valign="baseline">
-      <td nowrap align="right">Одговор на безбедносното прашање:</td>
-      <td><span id="sprytextfield5">
+      <td nowrap align="right">Одговор:</td>
+      <td colspan="2"><span id="sprytextfield5">
         <input type="text" name="password_answer" value="<?php if(isset($_POST['password_answer'])) echo $_POST['password_answer']; ?>" size="32" />
       <span class="textfieldRequiredMsg">Одговорот е задолжителен.</span></span></td>
     </tr>
 
     <tr valign="baseline">
-      <td nowrap align="right">&nbsp;</td>
-      <td></td>
+      <td colspan="3" align="right" nowrap style="border-bottom:1px dotted #CCC;">&nbsp;</td>
     </tr>
     <tr valign="baseline">
-      <td colspan="2"><span class="brown-bold">4. Уште неколку детали...</span></td>
+      <td colspan="3"><h4>4. Уште неколку детали...</h4></td>
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Безбедносен код:</td>
-      <td><span id="sprytextfield7">
+      <td width="313"><span id="sprytextfield7">
+      <span class="textfieldRequiredMsg">Безбедносниот код е задолжителен.</span>
         <input id="security_code" name="security_code" type="text" />
-      <span class="textfieldRequiredMsg">Безбедносниот код е задолжителен.</span></span></td>
+      </span></td>
+      <td width="354"><span style="font-size:11px;">Ова ни помага да спречиме спам и лажни регистрации. </span></td>
     </tr>
     <tr valign="baseline">
       <td nowrap align="right"></td>
-      <td><img src="includes/captcha/CaptchaSecurityImages.php?width=100&amp;height=40&amp;characters=5" /></td>
+      <td colspan="2" valign="top"><img src="includes/captcha/CaptchaSecurityImages.php?width=100&amp;height=40&amp;characters=5" /></td>
     </tr>
     <tr valign="baseline">
-      <td nowrap align="right">&nbsp;</td>
-      <td></td>
+      <td colspan="3" align="right" nowrap style="border-bottom:1px dotted #CCC;">&nbsp;</td>
     </tr>
     
     <tr valign="baseline">
-      <td nowrap align="right">Дали се согласување?</td>
-      <td>
+      <td nowrap align="right">Дали се согласувате?</td>
+      <td colspan="2">
         <span id="sprycheckbox1">
+        
         <input name="is_approved" type="checkbox" value="" <?php if(isset($_POST['is_approved'])) if (!(strcmp(htmlentities($_POST['is_approved'], ENT_COMPAT, 'utf-8'),""))) {echo "checked=\"checked\"";} ?>  />
-      <span class="checkboxRequiredMsg">Мора да се согласите со полисата.</span></span> Ја прочитав и се согласувам со pravo.org.mk <a href="#">Полисата за користење</a> на страната</td>
+      Ги прочитав и се согласувам со <a href="#" >pravo.org.mk Услови на услугата</a> и <a href="#">Политика за приватност</a>. <span class="checkboxRequiredMsg">Мора да се согласите со полисата.</span></span></td>
     </tr>
     <tr valign="baseline">
       <td nowrap="nowrap" align="right">&nbsp;</td>
-      <td><input type="submit" name="submit" value="Регистрирај ме!" />
+      <td colspan="2"><input type="submit" name="submit" value="Регистрирај ме!" />
+      <a href="index.php">Откажи</a>
       </td>
     </tr>
    <?php } ?>
+   <?php if(isset($_SESSION['MM_ID']) && strpos($editFormAction,'profile.php') != false) { ?>
    <tr valign="baseline">
       <td nowrap="nowrap" align="right">&nbsp;</td>
-      <td><input type="submit" name="edit" value="Измени" />
+      <td colspan="2"><input type="submit" name="edit" value="Измени" />
+      <a href="index.php">Откажи</a>
       </td>
     </tr>
+    <?php } ?>
   </table>
   
   <?php if(isset($_SESSION['MM_ID']) && strpos($editFormAction,'profile.php') != false) { ?>
@@ -800,11 +775,6 @@ $('.password').pstrength();
   <input type="hidden" name="MM_insert" value="form1">
   <?php } ?>
 </form>
-<form action="index.php" method="post">
-      <label>
-  <div style="text-align:right"><input type="submit" name="cancel" id="cancel" value="Откажи" /></div>
-      </label>
-      </form>
 
 <?php       } ?>
 <p>&nbsp;</p>
