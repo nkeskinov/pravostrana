@@ -10,6 +10,7 @@ if (isset($_GET['accesscheck'])) {
 }
 
 if (isset($_POST['username_login'])) {
+  $count = 0;
   $loginUsername=$_POST['username_login'];
   $password=$_POST['password_login'];
   $MM_fldUserAuthorization = "id_user";
@@ -67,7 +68,8 @@ if (isset($_POST['username_login'])) {
   }
   else {
    // header("Location: ". $MM_redirectLoginFailed );
-   
+   $count = $count + 1;
+   echo $count;
   }
 }
 ?>
