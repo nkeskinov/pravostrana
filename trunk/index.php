@@ -67,7 +67,7 @@ transition: Fx.Transitions.sineOut
       <div id="horiz-menu" class="moomenu">
 
   		
-        <ul class="nav"><li class="active"><a href="#">Почетна</a></li>
+        <ul class="nav"><li class="active"><a href="index.php">Почетна</a></li>
         <li><a class="topdaddy" href="#">Документи</a>
           <ul>
         <li><a href="#">Закони</a></li>
@@ -100,7 +100,7 @@ transition: Fx.Transitions.sineOut
                 </div>
                  <div class="sodrzina"><!-- InstanceBeginEditable name="leftContent" -->
                     <p>Текст </p>
-                    <p>sdf</p>
+                    <p><a href="login.php">login</a></p>
                     <p>sdf</p>
                     <p>sdf</p>
                  <!-- InstanceEndEditable -->
