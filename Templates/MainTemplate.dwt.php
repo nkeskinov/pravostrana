@@ -67,7 +67,7 @@ transition: Fx.Transitions.sineOut
       <div id="horiz-menu" class="moomenu">
 
   		
-        <ul class="nav"><li class="active"><a href="#">Почетна</a></li>
+        <ul class="nav"><li class="active"><a href="index.php">Почетна</a></li>
         <li><a class="topdaddy" href="#">Документи</a>
           <ul>
         <li><a href="#">Закони</a></li>

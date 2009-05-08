@@ -1,5 +1,8 @@
 <?php
-session_start();
+
+if (!isset($_SESSION)) {
+  session_start();
+}
 
 
 //echo strpos($_SERVER['PHP_SELF'],'profile.php');
@@ -90,11 +93,17 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 		// Insert you code for processing the form here, e.g emailing the submission, entering it into a database. 
 		$Result1 = mysql_query($insertSQL, $pravo) or die(mysql_error());
 		if($Result1){
+			$_SESSION['MM_Username'] = $_POST['username'];
+			$_SESSION['MM_UserGroup'] = 'user';	
+			$_SESSION['MM_Name'] = $_POST['name']." ".$_POST['surname'];
+			$_SESSION['MM_ID'] = mysql_insert_id();
+			
 			echo '<br />';
 			_show_message_color('Вашата регистрација беше успешно завршена!','GREEN');
 			echo '<div align="center"><form action="index.php" method="get">
 		 <input type="submit" name="button2" id="button2" value="Во ред" />
 		 </form></div>';
+		 	
 		  }
 		
 		unset($_SESSION['security_code']);

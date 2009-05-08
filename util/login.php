@@ -14,7 +14,7 @@ if (isset($_POST['username_login'])) {
   $loginUsername=$_POST['username_login'];
   $password=$_POST['password_login'];
   $MM_fldUserAuthorization = "id_user";
-  $MM_redirectLoginSuccess = "../index.php";
+  $MM_redirectLoginSuccess = "index.php";
   $MM_redirectLoginFailed = "login.php";
   $MM_redirecttoReferrer = false;
   mysql_select_db($database_pravo, $pravo);
@@ -64,7 +64,7 @@ if (isset($_POST['username_login'])) {
     if (isset($_SESSION['PrevUrl']) && false) {
       $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];	
     }
-   // header("Location: " . $MM_redirectLoginSuccess );
+    //header("Location: " . $MM_redirectLoginSuccess );
   }
   else {
    // header("Location: ". $MM_redirectLoginFailed );

@@ -155,7 +155,7 @@ h4 {
 }
 .mainBody{
 	margin-top:25px;
-	min-height:500px;
+	min-height:250px;
 }
 .mainBody .right{
 	float:right;
@@ -466,6 +466,51 @@ h4 {
 	float:right;
 }
 .mainBody .middle-red-block .sodrzina{
+	border:thin solid #71312d;;
+	
+	border-top:none;
+	margin-top:-5px;
+	padding:5px;
+}
+
+
+
+
+.mainBody .middle-red-block-small{
+	float:left;
+	width:100%;
+	display:block;
+}
+.mainBody .middle-red-block-small .title{
+	display: block; 
+	overflow:hidden; 
+	clear:both;
+}
+.mainBody .middle-red-block-small .middle{
+	background:url(images/red-title-middle.png);
+	height:30px;
+	width:98.067%;
+	float:left;
+}
+.mainBody .middle-red-block-small .middle .text{
+	color:#fcf9ea;
+	font-weight:bold;
+	padding-left:10px;
+	padding-top:5px;
+}
+.mainBody .middle-red-block-small .left{
+	background:url(images/red-title-left.png);
+	height:30px;
+	width:7px;
+	float:left;
+}
+.mainBody .middle-red-block-small .right{
+	background:url(images/red-title-right.png);
+	height:30px;
+	width:7px;
+	float:right;
+}
+.mainBody .middle-red-block-small .sodrzina{
 	border:thin solid #71312d;;
 	
 	border-top:none;
