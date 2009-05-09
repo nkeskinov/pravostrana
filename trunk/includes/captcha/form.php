@@ -1,5 +1,5 @@
 <?php 
-session_start();
+/* session_start(); */
 
 if( isset($_POST['submit'])) {
    if( $_SESSION['security_code'] == $_POST['security_code'] && !empty($_SESSION['security_code'] ) ) {

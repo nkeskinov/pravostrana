@@ -1,10 +1,11 @@
+<?php 
+if (!isset($_SESSION)) {
+session_start();
+} ?>
 <?php require_once("Connections/pravo.php"); ?>
 <?php include("util/misc.php"); ?>
 <?php include("util/login.php"); ?>
 <?php 
-	if (!isset($_SESSION)) {
-  		session_start();
-	}
 	if(strpos($_SERVER['HTTP_REFERER'],'login.php') == false) { 
 		$_SESSION['referer'] = $_SERVER['HTTP_REFERER'];
 	}
@@ -12,6 +13,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/SingleRed_clean.dwt.php" codeOutsideHTMLIsLocked="false" -->
 <head>
+<!--templateinfo codeoutsidehtmlislocked="true" -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="rokmoomenu.css" rel="stylesheet" type="text/css" />
 <link href="style.css" rel="stylesheet" type="text/css" />

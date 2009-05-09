@@ -1,9 +1,10 @@
 <?php
-// *** Validate request to login to this site.
-if (!isset($_SESSION)) {
-  session_start();
-}
 
+// *** Validate request to login to this site.
+/* if (!isset($_SESSION)) {
+session_start();
+} 
+ */
 $loginFormAction = $_SERVER['PHP_SELF'];
 if (isset($_GET['accesscheck'])) {
   $_SESSION['PrevUrl'] = $_GET['accesscheck'];
