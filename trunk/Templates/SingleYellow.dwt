@@ -86,16 +86,17 @@ transition: Fx.Transitions.sineOut
     <div class="mainBody">
    	  <div class="content">
             <div><img src="../images/726-90.jpg" width="728" height="90" /></div>
-        <div class="middle-red-block">
+        <div class="middle-block">
        		<div class="title">
        			<div class="left"></div>
-            	<div class="middle"><div class="text">Наслов</div></div>
+            	<div class="middle"><div class="text"><!-- TemplateBeginEditable name="BlockTitle" -->Наслов<!-- TemplateEndEditable --></div></div>
        	  		<div class="right"></div>
          	</div>
-             <div class="sodrzina">
-                <p>Текст </p>
-                <p>Текст</p>
-                <p>&nbsp;</p>
+             <div class="sodrzina"><!-- TemplateBeginEditable name="BlockContent" -->
+               <p>Текст </p>
+               <p>Текст</p>
+             <!-- TemplateEndEditable -->
+               <p>&nbsp;</p>
               </div>
         </div>
     <p>&nbsp;</p>
