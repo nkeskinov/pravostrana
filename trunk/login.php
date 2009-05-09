@@ -129,7 +129,7 @@ transition: Fx.Transitions.sineOut
                       </tr>
                       <tr>
                         <td colspan="2"><?php if(isset($loginFoundUser) && !$loginFoundUser) {?>
-                        <div style="color:#F00;">Корисничкото име и лозинката не се софпаѓаат</div>
+                        <div style="color:#F00;">Корисничкото име и лозинката не се совпаѓаат</div>
                         <?php } ?>
                         </td>
                       </tr>
