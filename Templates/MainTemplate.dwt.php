@@ -1,8 +1,12 @@
+<?php 
+session_start();
+?>
 <?php require_once("Connections/pravo.php"); ?>
 <?php include("util/misc.php"); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<!--templateinfo codeoutsidehtmlislocked="true" -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="../rokmoomenu.css" rel="stylesheet" type="text/css" />
 <link href="../style.css" rel="stylesheet" type="text/css" />
@@ -163,7 +167,7 @@ transition: Fx.Transitions.sineOut
 
  
         <div class="right">
-        <?php include("../loginSmall.php"); ?>
+        <?php include("loginSmall.php"); ?>
           <div><img src="../images/250-250.jpg" width="250" height="250" /></div>
           </div>
 

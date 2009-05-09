@@ -1,8 +1,8 @@
 <?php
 
-if (!isset($_SESSION)) {
+/* if (!isset($_SESSION)) {
   session_start();
-}
+} */
 
 
 //echo strpos($_SERVER['PHP_SELF'],'profile.php');
