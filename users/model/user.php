@@ -1,4 +1,34 @@
 <?php
+if (!function_exists("GetSQLValueString")) {
+function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
+{
+  if (PHP_VERSION < 6) {
+    $theValue = get_magic_quotes_gpc() ? stripslashes($theValue) : $theValue;
+  }
+
+  $theValue = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($theValue) : mysql_escape_string($theValue);
+
+  switch ($theType) {
+    case "text":
+      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
+      break;    
+    case "long":
+    case "int":
+      $theValue = ($theValue != "") ? intval($theValue) : "NULL";
+      break;
+    case "double":
+      $theValue = ($theValue != "") ? doubleval($theValue) : "NULL";
+      break;
+    case "date":
+      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
+      break;
+    case "defined":
+      $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
+      break;
+  }
+  return $theValue;
+}
+}
 
 /* if (!isset($_SESSION)) {
   session_start();
@@ -29,14 +59,14 @@ if(isset($_SESSION['MM_ID']) && strpos($_SERVER['PHP_SELF'],'profile.php') != fa
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
   $data_na_raganje=$_POST['godina']."-".$_POST['mesec'].".".$_POST['den'];
-  $updateSQL = sprintf("UPDATE `user` SET username=%s, name=%s, surname=%s, occupation=%s, email=%s, organization=%s, date_of_birth=%s, sex=%s, address=%s, city=%s, country=%s, phone=%s WHERE id_user=%s",
+  $updateSQL = sprintf("UPDATE `user` SET username=%s, name=%s, surname=%s, id_user_occupation=%s, email=%s, id_user_organization=%s, date_of_birth=%s, sex=%s, address=%s, city=%s, country=%s, phone=%s WHERE id_user=%s",
                        GetSQLValueString($_POST['username'], "text"),
 
                        GetSQLValueString($_POST['name'], "text"),
                        GetSQLValueString($_POST['surname'], "text"),
-                       GetSQLValueString($_POST['occupation'], "text"),
+                       GetSQLValueString($_POST['occupation'], "int"),
                        GetSQLValueString($_POST['email'], "text"),
-                       GetSQLValueString($_POST['organization'], "text"),
+                       GetSQLValueString($_POST['organization'], "int"),
                        GetSQLValueString($data_na_raganje, "date"),
                        GetSQLValueString($_POST['sex'], "int"),
                        GetSQLValueString($_POST['address'], "text"),
@@ -67,17 +97,17 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
  	if($totalRows2>0){
 		echo '<br />';
 		_show_message_color("Корисничкото име ".$_POST['username']." веќе постои! Внесете ново корисничко име за успешно да се логирате!","RED");
-		printInsertUser($_SERVER['PHP_SELF'],$row_RecordsetUsers);
+		printInsertUser($_SERVER['PHP_SELF'],$row_RecordsetUsers,$pravo);
 	}else{
 	$data_na_raganje=$_POST['godina']."-".$_POST['mesec'].".".$_POST['den'];
- $insertSQL = sprintf("INSERT INTO `user` (name, surname, sex, date_of_birth, phone, occupation, organization, address, city, country, username, password, email, password_question, password_answer, is_approved) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+ $insertSQL = sprintf("INSERT INTO `user` (name, surname, sex, date_of_birth, phone, id_user_occupation, id_user_organization, address, city, country, username, password, email, password_question, password_answer, is_approved) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                        GetSQLValueString($_POST['name'], "text"),
                        GetSQLValueString($_POST['surname'], "text"),
                        GetSQLValueString($_POST['sex'], "int"),
                        GetSQLValueString($data_na_raganje, "date"),
                        GetSQLValueString($_POST['phone'], "text"),
-                       GetSQLValueString($_POST['occupation'], "text"),
-                       GetSQLValueString($_POST['organization'], "text"),
+                       GetSQLValueString($_POST['occupation'], "int"),
+                       GetSQLValueString($_POST['organization'], "int"),
                        GetSQLValueString($_POST['address'], "text"),
                        GetSQLValueString($_POST['city'], "text"),
                        GetSQLValueString($_POST['country'], "text"),
@@ -112,7 +142,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 		// Insert your code for showing an error message here
 		echo '<br />';
 		_show_message_color('Безбедносниот код е невалиден!','RED');
-		printInsertUser($_SERVER['PHP_SELF'],$row_RecordsetUsers);
+		printInsertUser($_SERVER['PHP_SELF'],$row_RecordsetUsers,$pravo);
    }
 }
  /* $insertGoTo = "index.php";
@@ -125,7 +155,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 } else{
 	//povikuvanje na funkcijata za pecatenje na formata
 	//if(isset($_GET['new']))
-	printInsertUser($_SERVER['PHP_SELF'],$row_RecordsetUsers);
+	printInsertUser($_SERVER['PHP_SELF'],$row_RecordsetUsers,$pravo);
 }
 
 
@@ -150,7 +180,21 @@ $('.password').pstrength();
 });
 
 </script>
-<?php function printInsertUser($editFormAction,$row_RecordsetUsers){ ?>
+<?php function printInsertUser($editFormAction,$row_RecordsetUsers,$pravo){ 
+//user_occupation select
+//mysql_select_db($database_pravo, $pravo);
+$query_Recordset2 = "SELECT * FROM user_occupation ORDER BY id_user_occupation ASC";
+$Recordset2 = mysql_query($query_Recordset2, $pravo) or die(mysql_error());
+$row_Recordset2 = mysql_fetch_assoc($Recordset2);
+$totalRows_Recordset2 = mysql_num_rows($Recordset2);
+
+//user_organization select
+//mysql_select_db($database_pravo, $pravo);
+$query_Recordset3 = "SELECT * FROM user_organization ORDER BY user_organization.id_user_organization ASC";
+$Recordset3 = mysql_query($query_Recordset3, $pravo) or die(mysql_error());
+$row_Recordset3 = mysql_fetch_assoc($Recordset3);
+$totalRows_Recordset3 = mysql_num_rows($Recordset3);
+?>
 
 <form method="post" name="form1" action="<?php echo $editFormAction; ?>">
   <table align="center" width="100%">
@@ -192,7 +236,7 @@ $('.password').pstrength();
     <tr valign="baseline">
       <td nowrap align="right">Дата на раѓање: <?php echo substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),5,2); ?></td>
       <td colspan="2"><select name="den">
-      	<option value="">ден</option>
+      	<option value="">Ден</option>
         <option value="1" <?php if (!(strcmp("01",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>1</option>
         <option value="2" <?php if (!(strcmp("02",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>2</option>
         <option value="3" <?php if (!(strcmp("03",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>3</option>
@@ -226,9 +270,9 @@ $('.password').pstrength();
         <option value="31" <?php if (!(strcmp("31",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>31</option>                
       </select>
       <select name="mesec" style="width:80px">
-      <option value="">месец</option>
+      <option value="">Месец</option>
         <option value="1" <?php if (!(strcmp("01",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),5,2))))) {echo "SELECTED";} ?>>Јануари</option>
-        <option value="2" <?php if (!(strcmp("02",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),5,2))))) {echo "SELECTED";} ?>>Фебруари</option>
+        <option value="2" <?php if (!(strcmp("02",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),5,2))))) {echo "SELECTED";} ?>>Февруари</option>
         <option value="3" <?php if (!(strcmp("03",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),5,2))))) {echo "SELECTED";} ?>>Март</option>
         <option value="4" <?php if (!(strcmp("04",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),5,2))))) {echo "SELECTED";} ?>>Април</option>
         <option value="5" <?php if (!(strcmp("05",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),5,2))))) {echo "SELECTED";} ?>>Мај</option>
@@ -242,7 +286,7 @@ $('.password').pstrength();
       </select>
         <select name="godina">
         <option value="<?php echo substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),0,4); ?>"><?php echo substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),0,4); ?></option>
-        <option value="">година</option>
+        <option value="">Година</option>
         <option value="1990">1990</option>
         <option value="1989">1989</option>
         <option value="1988">1988</option>
@@ -350,15 +394,40 @@ $('.password').pstrength();
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Занимање:</td>
-      <td colspan="2"><input type="text" name="occupation" value="<?php if(isset($_POST['occupation'])) echo $_POST['occupation']; elseif(isset($_SESSION['MM_ID'])) echo htmlentities($row_RecordsetUsers['occupation'], ENT_COMPAT, 'utf-8'); else echo "";?>" size="32"></td>
+      <td colspan="2"><select name="occupation" size="1">
+        <option value="" <?php if (!(strcmp("", $row_RecordsetUsers['id_user_occupation']))) {echo "selected=\"selected\"";} ?>>Одбери...</option>
+        <?php
+do {
+?>
+        <option value="<?php echo $row_Recordset2['id_user_occupation']?>"<?php if (!(strcmp($row_Recordset2['id_user_occupation'], $row_RecordsetUsers['id_user_occupation']))) {echo "selected=\"selected\"";} ?>><?php echo $row_Recordset2['name']?></option>
+        <?php
+} while ($row_Recordset2 = mysql_fetch_assoc($Recordset2));
+	$rows = mysql_num_rows($Recordset2);
+  	if($rows > 0) {
+      mysql_data_seek($Recordset2, 0);
+	  $row_Recordset2 = mysql_fetch_assoc($Recordset2);
+  	}
+?>
+      </select>
+      </td>
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Организација:</td>
-      <td colspan="2"><input type="text" name="organization" value="<?php if(isset($_POST['organization'])) 
-					echo $_POST['organization'];
-					elseif(isset($_SESSION['MM_ID'])) 
-						echo htmlentities($row_RecordsetUsers['organization'], ENT_COMPAT, 'utf-8'); 
-					else echo "";?>" size="32"></td>
+      <td colspan="2"><select name="organization" size="1">
+        <option value="" <?php if (!(strcmp("", $row_RecordsetUsers['id_user_organization']))) {echo "selected=\"selected\"";} ?>>Одбери...</option>
+        <?php
+do {  
+?>
+        <option value="<?php echo $row_Recordset3['id_user_organization']?>"<?php if (!(strcmp($row_Recordset3['id_user_organization'], $row_RecordsetUsers['id_user_organization']))) {echo "selected=\"selected\"";} ?>><?php echo $row_Recordset3['name']?></option>
+        <?php
+} while ($row_Recordset3 = mysql_fetch_assoc($Recordset3));
+  $rows = mysql_num_rows($Recordset3);
+  if($rows > 0) {
+      mysql_data_seek($Recordset3, 0);
+	  $row_Recordset3 = mysql_fetch_assoc($Recordset3);
+  }
+?>
+      </select></td>
     </tr>
     <tr valign="baseline">
       <td nowrap align="right" valign="top">Адреса:</td>
@@ -823,4 +892,10 @@ $('.password').pstrength();
 		var sprytextfield7 = new Spry.Widget.ValidationTextField("sprytextfield7");
 //-->
 </script>
-<?php } ?>
+<?php 
+}
+
+//TODO: ovie da se stavat na krajot od funkcijata
+//mysql_free_result($Recordset2);
+//mysql_free_result($Recordset3);
+?>
