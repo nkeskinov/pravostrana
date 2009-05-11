@@ -1,4 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <info>
 	<infoitem key="UD_RecordsetUsers" value="name:id_user;datatype:int,name:username;datatype:string,name:password;datatype:string,name:name;datatype:string,name:surname;datatype:string,name:occupation;datatype:string,name:email;datatype:string,name:organization;datatype:string,name:date_of_birth;datatype:date,name:sex;datatype:int,name:address;datatype:string,name:city;datatype:string,name:country;datatype:string,name:phone;datatype:string,name:is_locked_out;datatype:int,name:create_date;datatype:timestamp,name:last_login_date;datatype:timestamp,name:last_password_changed_date;datatype:timestamp,name:password_question;datatype:string,name:password_answer;datatype:string,name:is_approved;datatype:int,name:delated;datatype:int,name:last_lockout_date;datatype:timestamp,name:failed_password_attempt_count;datatype:int,name:failed_password_attempt_window_start;datatype:timestamp,name:failed_password_answer_attempt_count;datatype:int,name:failed_password_answer_attempt_window_start;datatype:timestamp" />
+	<infoitem key="UD_Recordset2" value="name:id_user_occupation;datatype:int,name:name;datatype:string" />
+	<infoitem key="UD_Recordset3" value="name:id_user_organization;datatype:int,name:name;datatype:string" />
 </info>
