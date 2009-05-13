@@ -209,7 +209,7 @@ $totalRows_Recordset3 = mysql_num_rows($Recordset3);
 						echo $_POST['name'];
 					elseif(isset($_SESSION['MM_ID'])) 
 						echo htmlentities($row_RecordsetUsers['name'], ENT_COMPAT, 'utf-8'); 
-					else echo "";?>" size="32">
+					else echo "";?>" size="32" />
       <span class="textfieldRequiredMsg">Името е задолжително.</span></span></td>
     </tr>
     <tr valign="baseline">
@@ -220,7 +220,7 @@ $totalRows_Recordset3 = mysql_num_rows($Recordset3);
 					echo $_POST['surname'];
 					elseif(isset($_SESSION['MM_ID'])) 
 						echo htmlentities($row_RecordsetUsers['surname'], ENT_COMPAT, 'utf-8'); 
-					else echo "";?>" size="32">
+					else echo "";?>" size="32" />
       <span class="textfieldRequiredMsg">Презимето е задолжително.</span></span></td>
     </tr>
     <tr valign="baseline">
@@ -740,26 +740,26 @@ do {
     <tr valign="baseline">
       <td nowrap align="right">Корисничко име - E-mail:</td>
       <td colspan="2"><span id="sprytextfield3">
-      <input type="text" name="username" value="<?php 
-	  			if(isset($_POST['username'])) 
+        <input type="text" name="username" value="<?php
+				if(isset($_POST['username'])) 
 					echo $_POST['username'];
 				elseif(isset($_SESSION['MM_ID'])) 
 						echo htmlentities($row_RecordsetUsers['username'], ENT_COMPAT, 'utf-8'); 
-				else echo "";?>	" size="32" />
+				else echo "";?>" size="32" />
       <span class="textfieldRequiredMsg">Е-mail е задолжителен.</span><span class="textfieldInvalidFormatMsg">Неправилен формат на email адресата.</span></span></td>
     </tr>
     <?php if(strpos($editFormAction,'profile.php') == false) { ?>
     <tr valign="baseline">
       <td nowrap align="right">Лозинка:</td>
       <td colspan="2"><span id="sprypassword1">
-       <input class="password" type="password" id="password" name="password" value="" size="32">
+       <input class="password" type="password" id="password" name="password" value="" size="32" />
       <span class="passwordRequiredMsg">Лозинката е задолжителна.</span></span></td>
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Повтори Лозинка:</td>
       <td colspan="2"><span id="spryconfirm1">
         <input type="password" name="password2" id="password2" value="" size="32" />
-      <span class="confirmRequiredMsg">Лозинката е задолжителна.</span><span class="confirmInvalidMsg">Лозинките не се софпаѓаат.</span></span></td>
+      <span class="confirmRequiredMsg">Лозинката е задолжителна.</span><span class="confirmInvalidMsg">Лозинките не се совпаѓаат.</span></span></td>
     </tr>
     <?php } ?>
     <tr valign="baseline">
@@ -864,6 +864,7 @@ do {
 	<script type="text/javascript">
 	<!--
 		var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1");
+		var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2");
 		var spryselect1 = new Spry.Widget.ValidationSelect("spryselect1");
 		var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "email");
 		var sprypassword1 = new Spry.Widget.ValidationPassword("sprypassword1");
