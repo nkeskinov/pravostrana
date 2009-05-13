@@ -195,11 +195,6 @@ $Recordset3 = mysql_query($query_Recordset3, $pravo) or die(mysql_error());
 $row_Recordset3 = mysql_fetch_assoc($Recordset3);
 $totalRows_Recordset3 = mysql_num_rows($Recordset3);
 ?>
-<select name="sex">
-  <option value="" >- Избери пол -</option>
-  <option value="0" <?php if (!(strcmp(0, htmlentities($row_RecordsetUsers['sex'], ENT_COMPAT, 'utf-8')))) {echo "SELECTED";} ?>>Машки</option>
-  <option value="1" <?php if (!(strcmp(1, htmlentities($row_RecordsetUsers['sex'], ENT_COMPAT, 'utf-8')))) {echo "SELECTED";} ?>>Женски</option>
-</select>
 
 <form method="post" name="form1" action="<?php echo $editFormAction; ?>">
   <table align="center" width="100%">
@@ -230,7 +225,13 @@ $totalRows_Recordset3 = mysql_num_rows($Recordset3);
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Пол:</td>
-      <td colspan="2"><span id="spryselect1"><span class="selectRequiredMsg">Ве молиме изберете пол.</span></span></td>
+      <td colspan="2"><span id="spryselect1">
+        <select name="sex">
+          <option value="" >- Избери пол -</option>
+          <option value="0" <?php if (!(strcmp(0, htmlentities($row_RecordsetUsers['sex'], ENT_COMPAT, 'utf-8')))) {echo "SELECTED";} ?>>Машки</option>
+          <option value="1" <?php if (!(strcmp(1, htmlentities($row_RecordsetUsers['sex'], ENT_COMPAT, 'utf-8')))) {echo "SELECTED";} ?>>Женски</option>
+        </select>
+      <span class="selectRequiredMsg">Ве молиме изберете пол.</span></span></td>
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Дата на раѓање: <?php echo substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),5,2); ?></td>
