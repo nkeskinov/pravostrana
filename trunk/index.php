@@ -100,7 +100,8 @@ transition: Fx.Transitions.sineOut
             <div class="left-block">
                 <div class="title">
                     <div class="left"></div>
-                    <div class="middle"><div class="text"><!-- InstanceBeginEditable name="leftTitle" -->Наслов<!-- InstanceEndEditable --></div></div>
+                    <div class="middle">
+                      <div class="text"><!-- InstanceBeginEditable name="leftTitle" -->Новости<!-- InstanceEndEditable --></div></div>
                     <div class="right"></div>
                 </div>
                  <div class="sodrzina"><!-- InstanceBeginEditable name="leftContent" -->
@@ -117,7 +118,8 @@ transition: Fx.Transitions.sineOut
            <div class="right-block">
                 <div class="title">
                     <div class="left"></div>
-                    <div class="middle"><div class="text"><!-- InstanceBeginEditable name="rightTitle" -->Наслов за десен дел<!-- InstanceEndEditable --></div></div>
+                    <div class="middle">
+                      <div class="text"><!-- InstanceBeginEditable name="rightTitle" -->Пребарување на закони<!-- InstanceEndEditable --></div></div>
                     <div class="right"></div>
                 </div>
                  <div class="sodrzina"><!-- InstanceBeginEditable name="rightContent" -->
@@ -145,11 +147,11 @@ transition: Fx.Transitions.sineOut
            <div class="right-yellow-block">
                 <div class="title">
                     <div class="left"></div>
-                    <div class="middle"><div class="text"><!-- InstanceBeginEditable name="rightTitle2" -->Наслов<!-- InstanceEndEditable --></div></div>
+                    <div class="middle"><div class="text"><!-- InstanceBeginEditable name="rightTitle2" -->Последни закони<!-- InstanceEndEditable --></div></div>
                     <div class="right"></div>
                 </div>
                  <div class="sodrzina"><!-- InstanceBeginEditable name="rightContent2" -->
-                   <p>Текст </p>
+                   <?php include('util/latestLaws.php'); ?>
                  <!-- InstanceEndEditable --></div>
         </div>
         </td>

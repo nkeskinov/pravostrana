@@ -1,38 +1,8 @@
 <?php
-if (!function_exists("GetSQLValueString")) {
-function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
-{
-  if (PHP_VERSION < 6) {
-    $theValue = get_magic_quotes_gpc() ? stripslashes($theValue) : $theValue;
-  }
 
-  $theValue = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($theValue) : mysql_escape_string($theValue);
-
-  switch ($theType) {
-    case "text":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;    
-    case "long":
-    case "int":
-      $theValue = ($theValue != "") ? intval($theValue) : "NULL";
-      break;
-    case "double":
-      $theValue = ($theValue != "") ? doubleval($theValue) : "NULL";
-      break;
-    case "date":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;
-    case "defined":
-      $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
-      break;
-  }
-  return $theValue;
-}
-}
-
-/* if (!isset($_SESSION)) {
+if (!isset($_SESSION)) {
   session_start();
-} */
+}
 
 
 //echo strpos($_SERVER['PHP_SELF'],'profile.php');
@@ -100,7 +70,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 		printInsertUser($_SERVER['PHP_SELF'],$row_RecordsetUsers,$pravo);
 	}else{
 	$data_na_raganje=$_POST['godina']."-".$_POST['mesec'].".".$_POST['den'];
- $insertSQL = sprintf("INSERT INTO `user` (name, surname, sex, date_of_birth, phone, id_user_occupation, id_user_organization, address, city, country, username, password, email, password_question, password_answer, is_approved) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+ $insertSQL = sprintf("INSERT INTO `user` (name, surname, sex, date_of_birth, phone, id_user_occupation, id_user_organization, address, city, country, username, password, email, is_approved) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                        GetSQLValueString($_POST['name'], "text"),
                        GetSQLValueString($_POST['surname'], "text"),
                        GetSQLValueString($_POST['sex'], "int"),
@@ -114,12 +84,10 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
                        GetSQLValueString($_POST['username'], "text"),
                        GetSQLValueString($_POST['password'], "text"),
                        GetSQLValueString($_POST['email'], "text"),
-                       GetSQLValueString($_POST['password_question'], "text"),
-                       GetSQLValueString($_POST['password_answer'], "text"),
 					   GetSQLValueString(isset($_POST['is_approved']) ? "true" : "", "defined","1","0"));
 	
   
-  if( $_SESSION['security_code'] == $_POST['security_code'] && !empty($_SESSION['security_code'] ) ) {
+  if( !empty($_SESSION['security_code']) && $_SESSION['security_code'] == $_POST['security_code'] ) {
 		// Insert you code for processing the form here, e.g emailing the submission, entering it into a database. 
 		$Result1 = mysql_query($insertSQL, $pravo) or die(mysql_error());
 		if($Result1){
@@ -227,160 +195,81 @@ $totalRows_Recordset3 = mysql_num_rows($Recordset3);
       <td nowrap align="right">Пол:</td>
       <td colspan="2"><span id="spryselect1">
         <select name="sex">
-          <option value="" >- Избери пол -</option>
-          <option value="0" <?php if (!(strcmp(0, htmlentities($row_RecordsetUsers['sex'], ENT_COMPAT, 'utf-8')))) {echo "SELECTED";} ?>>Машки</option>
-          <option value="1" <?php if (!(strcmp(1, htmlentities($row_RecordsetUsers['sex'], ENT_COMPAT, 'utf-8')))) {echo "SELECTED";} ?>>Женски</option>
+        <?php
+			$actualUserSex = '';
+			if (isset($_POST['sex'])){
+				$actualUserSex = $_POST['sex'];
+			} elseif (isset($_SESSION['MM_ID'])) {
+				$actualUserSex = $row_RecordsetUsers['sex'];
+			}
+		?>
+          <option value=""<?php echo ($actualUserSex == '' ? ' selected="selected" ' : ''); ?>>Избери пол</option>
+          <option value="0"<?php echo ($actualUserSex == '0' ? ' selected="selected" ' : ''); ?>>Машки</option>
+          <option value="1"<?php echo ($actualUserSex == '1' ? ' selected="selected" ' : ''); ?>>Женски</option>
         </select>
       <span class="selectRequiredMsg">Ве молиме изберете пол.</span></span></td>
     </tr>
     <tr valign="baseline">
-      <td nowrap align="right">Дата на раѓање: <?php echo substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),5,2); ?></td>
+      <td nowrap align="right">Дата на раѓање:</td>
       <td colspan="2"><select name="den">
-      	<option value="">Ден</option>
-        <option value="1" <?php if (!(strcmp("01",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>1</option>
-        <option value="2" <?php if (!(strcmp("02",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>2</option>
-        <option value="3" <?php if (!(strcmp("03",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>3</option>
-        <option value="4" <?php if (!(strcmp("04",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>4</option>
-        <option value="5" <?php if (!(strcmp("05",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>5</option>
-        <option value="6" <?php if (!(strcmp("06",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>6</option>
-        <option value="7" <?php if (!(strcmp("07",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>7</option>
-        <option value="8" <?php if (!(strcmp("08",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>8</option>
-        <option value="9" <?php if (!(strcmp("09",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>9</option>
-        <option value="10" <?php if (!(strcmp("10",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>10</option>
-        <option value="11" <?php if (!(strcmp("11",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>11</option>
-        <option value="12" <?php if (!(strcmp("12",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>12</option>
-        <option value="13" <?php if (!(strcmp("13",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>13</option>
-        <option value="14" <?php if (!(strcmp("14",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>14</option>
-        <option value="15" <?php if (!(strcmp("15",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>15</option>
-        <option value="16" <?php if (!(strcmp("16",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>16</option>
-        <option value="17" <?php if (!(strcmp("17",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>17</option>
-        <option value="18" <?php if (!(strcmp("18",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>18</option>
-        <option value="19" <?php if (!(strcmp("19",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>19</option>
-        <option value="20" <?php if (!(strcmp("20",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>20</option>        
-        <option value="21" <?php if (!(strcmp("21",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>21</option>
-        <option value="22" <?php if (!(strcmp("22",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>22</option>
-        <option value="23" <?php if (!(strcmp("23",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>23</option>
-        <option value="24" <?php if (!(strcmp("24",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>24</option>
-        <option value="25" <?php if (!(strcmp("25",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>25</option>
-        <option value="26" <?php if (!(strcmp("26",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>26</option>
-        <option value="27" <?php if (!(strcmp("27",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>27</option>
-        <option value="28" <?php if (!(strcmp("28",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>28</option>
-        <option value="29" <?php if (!(strcmp("29",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>29</option>
-        <option value="30" <?php if (!(strcmp("30",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>30</option>
-        <option value="31" <?php if (!(strcmp("31",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),7,3))))) {echo "SELECTED";} ?>>31</option>                
+      	<?php 
+		$actualUserDay = '';
+		if (isset($_POST['den'])){
+			$actualUserDay = $_POST['den'];
+		} elseif (isset($_SESSION['MM_ID'])) {
+			$actualUserDay = date("j", strtotime($row_RecordsetUsers['date_of_birth']));
+		}
+		?>
+      	<option value=""<?php echo ($actualUserDay == '') ? ' selected="selected" ' : ''; ?>>Ден</option>
+        <?php
+		for ($i = 1; $i <= 31; $i++) {
+		?>
+  			<option value="<?php echo $i; ?>"<?php echo ($actualUserDay == strval($i) ? ' selected="selected" ' : ''); ?>><?php echo $i; ?></option>
+        <?php 
+		}
+		?>
       </select>
-      <select name="mesec" style="width:80px">
-      <option value="">Месец</option>
-        <option value="1" <?php if (!(strcmp("01",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),5,2))))) {echo "SELECTED";} ?>>Јануари</option>
-        <option value="2" <?php if (!(strcmp("02",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),5,2))))) {echo "SELECTED";} ?>>Февруари</option>
-        <option value="3" <?php if (!(strcmp("03",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),5,2))))) {echo "SELECTED";} ?>>Март</option>
-        <option value="4" <?php if (!(strcmp("04",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),5,2))))) {echo "SELECTED";} ?>>Април</option>
-        <option value="5" <?php if (!(strcmp("05",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),5,2))))) {echo "SELECTED";} ?>>Мај</option>
-        <option value="6" <?php if (!(strcmp("06",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),5,2))))) {echo "SELECTED";} ?>>Јуни</option>
-        <option value="7" <?php if (!(strcmp("07",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),5,2))))) {echo "SELECTED";} ?>>Јули</option>
-        <option value="8" <?php if (!(strcmp("08",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),5,2))))) {echo "SELECTED";} ?>>Август</option>
-        <option value="9" <?php if (!(strcmp("09",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),5,2))))) {echo "SELECTED";} ?>>Септември</option>
-        <option value="10" <?php if (!(strcmp("10",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),5,2))))) {echo "SELECTED";} ?>>Октомври</option>
-        <option value="11" <?php if (!(strcmp("11",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),5,2))))) {echo "SELECTED";} ?>>Ноември</option>
-        <option value="12" <?php if (!(strcmp("12",str_replace("-","",substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),5,2))))) {echo "SELECTED";} ?>>Декември</option>
+      <select name="mesec" style="width:100px">
+      <?php 
+		$actualUserMonth = '';
+		if (isset($_POST['mesec'])){
+			$actualUserMOnth = $_POST['mesec'];
+		} elseif (isset($_SESSION['MM_ID'])) {
+			$actualUserMonth = date("n", strtotime($row_RecordsetUsers['date_of_birth']));
+		}
+		?>
+      <option value=""<?php echo ($actualUserMonth == '') ? ' selected="selected" ' : ''; ?>>Месец</option>
+        <option value="1"<?php echo ($actualUserMonth == "1" ? ' selected="selected" ' : ''); ?>>Јануари</option>
+        <option value="2"<?php echo ($actualUserMonth == "2" ? ' selected="selected" ' : ''); ?>>Февруари</option>
+        <option value="3"<?php echo ($actualUserMonth == "3" ? ' selected="selected" ' : ''); ?>>Март</option>
+        <option value="4"<?php echo ($actualUserMonth == "4" ? ' selected="selected" ' : ''); ?>>Април</option>
+        <option value="5"<?php echo ($actualUserMonth == "5" ? ' selected="selected" ' : ''); ?>>Мај</option>
+        <option value="6"<?php echo ($actualUserMonth == "6" ? ' selected="selected" ' : ''); ?>>Јуни</option>
+        <option value="7"<?php echo ($actualUserMonth == "7" ? ' selected="selected" ' : ''); ?>>Јули</option>
+        <option value="8"<?php echo ($actualUserMonth == "8" ? ' selected="selected" ' : ''); ?>>Август</option>
+        <option value="9"<?php echo ($actualUserMonth == "9" ? ' selected="selected" ' : ''); ?>>Септември</option>
+        <option value="10"<?php echo ($actualUserMonth == "10" ? ' selected="selected" ' : ''); ?>>Октомври</option>
+        <option value="11"<?php echo ($actualUserMonth == "11" ? ' selected="selected" ' : ''); ?>>Ноември</option>
+        <option value="12"<?php echo ($actualUserMonth == "12" ? ' selected="selected" ' : ''); ?>>Декември</option>
       </select>
         <select name="godina">
-        <option value="<?php echo substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),0,4); ?>"><?php echo substr(htmlentities($row_RecordsetUsers['date_of_birth'], ENT_COMPAT, 'utf-8'),0,4); ?></option>
-        <option value="">Година</option>
-        <option value="1990">1990</option>
-        <option value="1989">1989</option>
-        <option value="1988">1988</option>
-        <option value="1987">1987</option>
-        <option value="1986">1986</option>
-        <option value="1985">1985</option>
-        <option value="1984">1984</option>
-        <option value="1983">1983</option>
-        <option value="1982">1982</option>
-        <option value="1981">1981</option>
-        <option value="1980">1980</option>
-        <option value="1982">1982</option>
-        <option value="1981">1981</option>
-        <option value="1980">1980</option>
-        <option value="1979">1979</option>
-        <option value="1978">1978</option>
-        <option value="1977">1977</option>
-        <option value="1976">1976</option>
-        <option value="1975">1975</option>
-        <option value="1974">1974</option>
-        <option value="1973">1973</option>
-        <option value="1972">1972</option>
-        <option value="1971">1971</option>
-        <option value="1970">1970</option>
-        <option value="1969">1969</option>
-        <option value="1968">1968</option>
-        <option value="1967">1967</option>
-        <option value="1966">1966</option>
-        <option value="1965">1965</option>
-        <option value="1964">1964</option>
-        <option value="1963">1963</option>
-        <option value="1962">1962</option>
-        <option value="1961">1961</option>
-        <option value="1960">1960</option>
-        <option value="1959">1959</option>
-        <option value="1958">1958</option>
-        <option value="1957">1957</option>
-        <option value="1956">1956</option>
-        <option value="1955">1955</option>
-        <option value="1954">1954</option>
-        <option value="1953">1953</option>
-        <option value="1952">1952</option>
-        <option value="1951">1951</option>
-        <option value="1950">1950</option>
-        <option value="1949">1949</option>
-        <option value="1948">1948</option>
-        <option value="1947">1947</option>
-        <option value="1946">1946</option>
-        <option value="1945">1945</option>
-        <option value="1944">1944</option>
-        <option value="1943">1943</option>
-        <option value="1942">1942</option>
-        <option value="1941">1941</option>
-        <option value="1940">1940</option>
-        <option value="1939">1939</option>
-        <option value="1938">1938</option>
-        <option value="1937">1937</option>
-        <option value="1936">1936</option>
-        <option value="1935">1935</option>
-        <option value="1934">1934</option>
-        <option value="1933">1933</option>
-        <option value="1932">1932</option>
-        <option value="1931">1931</option>
-        <option value="1930">1930</option>
-        <option value="1929">1929</option>
-        <option value="1928">1928</option>
-        <option value="1927">1927</option>
-        <option value="1926">1926</option>
-        <option value="1925">1925</option>
-        <option value="1924">1924</option>
-        <option value="1923">1923</option>
-        <option value="1922">1922</option>
-        <option value="1921">1921</option>
-        <option value="1920">1920</option>
-        <option value="1919">1919</option>
-        <option value="1918">1918</option>
-        <option value="1917">1917</option>
-        <option value="1916">1916</option>
-        <option value="1915">1915</option>
-        <option value="1914">1914</option>
-        <option value="1913">1913</option>
-        <option value="1912">1912</option>
-        <option value="1911">1911</option>
-        <option value="1910">1910</option>
-        <option value="1909">1909</option>
-        <option value="1908">1908</option>
-        <option value="1907">1907</option>
-        <option value="1906">1906</option>
-        <option value="1905">1905</option>
-        <option value="1904">1904</option>
-        <option value="1903">1903</option>
-        <option value="1902">1902</option>
-        <option value="1901">1901</option>
-        <option value="1900">1900</option>
+        <?php 
+		$actualUserYear = '';
+		if (isset($_POST['godina'])){
+			$actualUserYear = $_POST['godina'];
+		} elseif (isset($_SESSION['MM_ID'])) {
+			$actualUserYear = date("Y", strtotime($row_RecordsetUsers['date_of_birth']));
+		}
+		?>
+		<option value=""<?php echo ($actualUserYear == '') ? ' selected="selected" ' : ''; ?>>Година</option>;
+        <?php
+		$currentYear = intval(date("Y"));
+		for ($i = $currentYear - 10; $i >= $currentYear - 100; $i--) {
+		?>
+			<option value="<?php echo $i; ?>"<?php echo ($actualUserYear == strval($i) ? ' selected="selected" ' : ''); ?>><?php echo $i; ?></option>
+        <?php
+		}
+		?>
       </select>
       <input type="hidden" name="date_of_birth" value="asd" size="32"></td>
     </tr>
@@ -395,11 +284,19 @@ $totalRows_Recordset3 = mysql_num_rows($Recordset3);
     <tr valign="baseline">
       <td nowrap align="right">Занимање:</td>
       <td colspan="2"><select name="occupation" size="1">
-        <option value="" <?php if (!(strcmp("", $row_RecordsetUsers['id_user_occupation']))) {echo "selected=\"selected\"";} ?>>Одбери...</option>
+      <?php
+	  $actualUserOccupation = '';
+	  if (isset($_POST['occupation'])){
+			$actualUserOccupation = $_POST['occupation'];
+		} elseif (isset($_SESSION['MM_ID'])) {
+			$actualUserOccupation = $row_RecordsetUsers['id_user_occupation'];
+		}
+	  ?>
+        <option value=""<?php echo ($actualUserOccupation == '') ? ' selected="selected" ' : ''; ?>>Одбери...</option>
         <?php
 do {
 ?>
-        <option value="<?php echo $row_Recordset2['id_user_occupation']?>"<?php if (!(strcmp($row_Recordset2['id_user_occupation'], $row_RecordsetUsers['id_user_occupation']))) {echo "selected=\"selected\"";} ?>><?php echo $row_Recordset2['name']?></option>
+        <option value="<?php echo $row_Recordset2['id_user_occupation']; ?>"<?php echo ($actualUserOccupation == $row_Recordset2['id_user_occupation'] ? ' selected="selected" ' : ''); ?>><?php echo $row_Recordset2['name']; ?></option>
         <?php
 } while ($row_Recordset2 = mysql_fetch_assoc($Recordset2));
 	$rows = mysql_num_rows($Recordset2);
@@ -414,18 +311,26 @@ do {
     <tr valign="baseline">
       <td nowrap align="right">Организација:</td>
       <td colspan="2"><select name="organization" size="1">
-        <option value="" <?php if (!(strcmp("", $row_RecordsetUsers['id_user_organization']))) {echo "selected=\"selected\"";} ?>>Одбери...</option>
         <?php
-do {  
+	  $actualUserOrganization = '';
+	  if (isset($_POST['organization'])){
+			$actualUserOrganization = $_POST['organization'];
+		} elseif (isset($_SESSION['MM_ID'])) {
+			$actualUserOrganization = $row_RecordsetUsers['id_user_organization'];
+		}
+	  ?>
+        <option value=""<?php echo ($actualUserOrganization == '') ? ' selected="selected" ' : ''; ?>>Одбери...</option>
+        <?php
+do {
 ?>
-        <option value="<?php echo $row_Recordset3['id_user_organization']?>"<?php if (!(strcmp($row_Recordset3['id_user_organization'], $row_RecordsetUsers['id_user_organization']))) {echo "selected=\"selected\"";} ?>><?php echo $row_Recordset3['name']?></option>
+        <option value="<?php echo $row_Recordset3['id_user_organization']; ?>"<?php echo ($actualUserOrganization == $row_Recordset3['id_user_organization'] ? ' selected="selected" ' : ''); ?>><?php echo $row_Recordset3['name']; ?></option>
         <?php
 } while ($row_Recordset3 = mysql_fetch_assoc($Recordset3));
-  $rows = mysql_num_rows($Recordset3);
-  if($rows > 0) {
+	$rows = mysql_num_rows($Recordset3);
+  	if($rows > 0) {
       mysql_data_seek($Recordset3, 0);
 	  $row_Recordset3 = mysql_fetch_assoc($Recordset3);
-  }
+  	}
 ?>
       </select></td>
     </tr>
@@ -596,7 +501,7 @@ do {
         <option value="Luxembourg">Luxembourg</option>
         <option value="Macau">Macau</option>
     
-        <option value="Македонија" selected="selected">Македонија</option>
+        <option value="Македонија" selected='selected="selected"'>Македонија</option>
         <option value="Madagascar">Madagascar</option>
         <option value="Malawi">Malawi</option>
         <option value="Malaysia">Malaysia</option>
@@ -779,26 +684,6 @@ do {
       <span class="textfieldRequiredMsg">Алтернативната е-mail адреса е задолжителна.</span><span class="textfieldInvalidFormatMsg">Неправилен формат на email адресата.</span></span></td>
     </tr>
     <?php if(strpos($editFormAction,'profile.php') == false) { ?>
-    <tr valign="baseline">
-      <td nowrap align="right">Безбедносно прашање:</td>
-      <td colspan="2"><span id="spryselect2">
-        <select name="password_question">
-          <option value="" >- Изберете едно - </option>
-          <option value="Кое е името на Вашиот најстар братучед?" <?php if (!(strcmp("Кое е името на Вашиот најстар братучед?", ""))) {echo "SELECTED";} ?>>Кое е името на Вашиот најстар братучед?</option>
-          <option value="Каде ја запознавте жена/маж ви?" <?php if (!(strcmp("Каде ја запознавте жена/маж ви?", ""))) {echo "SELECTED";} ?>>Каде ја запознавте жена/маж ви?</option>
-          <option value="Каде бевте на меден месец?" <?php if (!(strcmp("Каде бевте на меден месец?", ""))) {echo "SELECTED";} ?>>Каде бевте на меден месец?</option>
-          <option value="Кое е вашето омилено животно?" <?php if (!(strcmp("Кое е вашето омилено животно?", ""))) {echo "SELECTED";} ?>>Кое е вашето омилено животно?</option>
-          <option value="Кое е името на вашата омилена тетка?" <?php if (!(strcmp("Кое е името на вашата омилена тетка?", ""))) {echo "SELECTED";} ?>>Кое е името на вашата омилена тетка?</option>
-          <option value="Кое е името на вашиот најстар внук?" <?php if (!(strcmp("Кое е името на вашиот најстар внук?", ""))) {echo "SELECTED";} ?>>Кое е името на вашиот најстар внук?</option>
-        </select>
-      <span class="selectRequiredMsg">Изберете едно прашање.</span></span></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap align="right">Одговор:</td>
-      <td colspan="2"><span id="sprytextfield5">
-        <input type="text" name="password_answer" value="<?php if(isset($_POST['password_answer'])) echo $_POST['password_answer']; ?>" size="32" />
-      <span class="textfieldRequiredMsg">Одговорот е задолжителен.</span></span></td>
-    </tr>
 
     <tr valign="baseline">
       <td colspan="3" align="right" nowrap style="border-bottom:1px dotted #CCC;">&nbsp;</td>
@@ -870,8 +755,6 @@ do {
 		var sprypassword1 = new Spry.Widget.ValidationPassword("sprypassword1");
 		var sprycheckbox1 = new Spry.Widget.ValidationCheckbox("sprycheckbox1");
 		var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4", "email");
-		var spryselect2 = new Spry.Widget.ValidationSelect("spryselect2");
-		var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5");
 		var spryconfirm1 = new Spry.Widget.ValidationConfirm("spryconfirm1", "password", {validateOn:["change"]});
 		var sprytextfield7 = new Spry.Widget.ValidationTextField("sprytextfield7");
 	//-->
@@ -887,8 +770,6 @@ do {
 		var sprypassword1 = new Spry.Widget.ValidationPassword("sprypassword1");
 		var sprycheckbox1 = new Spry.Widget.ValidationCheckbox("sprycheckbox1");
 		var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4", "email");
-		var spryselect2 = new Spry.Widget.ValidationSelect("spryselect2");
-		var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5");
 
 		var sprytextfield7 = new Spry.Widget.ValidationTextField("sprytextfield7");
 //-->
