@@ -668,4 +668,9 @@ td.on {
 td.off {
 	background:none;
 }
-
+tr.on {
+	background: #fbf7e0;
+} 
+tr.off {
+	background:none;
+}
