@@ -340,6 +340,7 @@ h4 {
 .mainBody .right-block .sodrzina{
 	border:thin solid #71312d;
 	border-right:none;
+	border-left:none;
 	border-top:none;
 	margin-top:-5px;
 	padding:5px;
@@ -390,6 +391,7 @@ h4 {
 	padding:5px;
 	padding-left:0;
 	padding-right:0;
+	padding-bottom:0;
 }
 
 .mainBody .middle-block{
