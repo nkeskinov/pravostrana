@@ -382,11 +382,14 @@ h4 {
 	float:right;
 }
 .mainBody .right-yellow-block .sodrzina{
-	border:thin solid #f5e6a2;
+	border:1px solid #f5e6a2;
 	border-right:none;
+	border-left:none;
 	border-top:none;
 	margin-top:-5px;
 	padding:5px;
+	padding-left:0;
+	padding-right:0;
 }
 
 .mainBody .middle-block{
@@ -466,7 +469,7 @@ h4 {
 	float:right;
 }
 .mainBody .middle-red-block .sodrzina{
-	border:thin solid #71312d;;
+	border:thin solid #71312d;
 	
 	border-top:none;
 	margin-top:-5px;
@@ -659,4 +662,10 @@ font-family : arial, sans-serif;
 font-size : 10px;
 }
 
+td.on {
+	background: #fbf7e0;
+} 
+td.off {
+	background:none;
+}
 
