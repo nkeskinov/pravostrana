@@ -123,7 +123,7 @@ transition: Fx.Transitions.sineOut
                     <div class="right"></div>
                 </div>
                  <div class="sodrzina"><!-- InstanceBeginEditable name="rightContent" -->
-                   <p>Текст </p>
+                   <?php include("util/search.php"); ?>
                  <!-- InstanceEndEditable --></div>
             </div>
             </td>
