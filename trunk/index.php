@@ -100,8 +100,7 @@ transition: Fx.Transitions.sineOut
             <div class="left-block">
                 <div class="title">
                     <div class="left"></div>
-                    <div class="middle">
-                      <div class="text"><!-- InstanceBeginEditable name="leftTitle" -->Новости<!-- InstanceEndEditable --></div></div>
+                    <div class="middle"><div class="text"><!-- InstanceBeginEditable name="leftTitle" -->Новости<!-- InstanceEndEditable --></div></div>
                     <div class="right"></div>
                 </div>
                  <div class="sodrzina"><!-- InstanceBeginEditable name="leftContent" -->
@@ -118,8 +117,9 @@ transition: Fx.Transitions.sineOut
            <div class="right-block">
                 <div class="title">
                     <div class="left"></div>
-                    <div class="middle">
-                      <div class="text"><!-- InstanceBeginEditable name="rightTitle" -->Пребарување на закони<!-- InstanceEndEditable --></div></div>
+                  <div class="middle"><div class="text"><!-- InstanceBeginEditable name="rightTitle" -->Пребарување на закони<!-- InstanceEndEditable --> </div>
+                    
+                   </div>
                     <div class="right"></div>
                 </div>
                  <div class="sodrzina"><!-- InstanceBeginEditable name="rightContent" -->

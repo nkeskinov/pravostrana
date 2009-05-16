@@ -1,3 +1,49 @@
+<?php require_once('Connections/pravo.php'); ?>
+<?php
+if (!function_exists("GetSQLValueString")) {
+function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
+{
+  if (PHP_VERSION < 6) {
+    $theValue = get_magic_quotes_gpc() ? stripslashes($theValue) : $theValue;
+  }
+
+  $theValue = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($theValue) : mysql_escape_string($theValue);
+
+  switch ($theType) {
+    case "text":
+      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
+      break;    
+    case "long":
+    case "int":
+      $theValue = ($theValue != "") ? intval($theValue) : "NULL";
+      break;
+    case "double":
+      $theValue = ($theValue != "") ? doubleval($theValue) : "NULL";
+      break;
+    case "date":
+      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
+      break;
+    case "defined":
+      $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
+      break;
+  }
+  return $theValue;
+}
+}
+
+$editFormAction = $_SERVER['PHP_SELF'];
+if (isset($_SERVER['QUERY_STRING'])) {
+  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
+}
+
+
+mysql_select_db($database_pravo, $pravo);
+$query_Recordset1 = "SELECT * FROM doc_group";
+$Recordset1 = mysql_query($query_Recordset1, $pravo) or die(mysql_error());
+$row_Recordset1 = mysql_fetch_assoc($Recordset1);
+$totalRows_Recordset1 = mysql_num_rows($Recordset1);
+?>
+
 <script language="JavaScript">
 var popUpWin=0;
 function popUpWindow(URLStr, left, top, width, height)
@@ -22,7 +68,7 @@ function popUpWindow(URLStr, left, top, width, height)
 </script>
 <table width="100%" border="0">
 <tr>
-    <td colspan="2" align="left"><div align="right" style="font-size:11px;"><a href="JavaScript:popUpWindow('help.php?id=1','','',450,'300');">совети за пребарување</a></div>
+    <td colspan="2" align="left"><div align="right" style="font-size:11px;"><a href="JavaScript:popUpWindow('help.php?id=1','','',450,'330');">совети за пребарување</a></div>
     <strong>Пребарувај по почетна буква на законот</strong>
     </td>
   </tr>
@@ -67,10 +113,18 @@ function popUpWindow(URLStr, left, top, width, height)
   </tr>
   <tr>
     <td align="left">Група: </td>
-    <td><label>
-      <select name="document_group" id="document_group">
+    <td>
+    	<select name="id_doc_group">
+        <option value="0">Изберете група</option>
+        <?php 
+do {  
+?>
+        <option value="<?php echo $row_Recordset1['id_doc_group']?>" ><?php echo $row_Recordset1['name']?></option>
+        <?php
+} while ($row_Recordset1 = mysql_fetch_assoc($Recordset1));
+?>
       </select>
-    </label></td>
+    </td>
   </tr>
   <tr>
     <td align="left">Број / Година: </td>

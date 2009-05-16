@@ -112,7 +112,9 @@ transition: Fx.Transitions.sineOut
            <div class="right-block">
                 <div class="title">
                     <div class="left"></div>
-                    <div class="middle"><div class="text"><!-- TemplateBeginEditable name="rightTitle" -->Наслов<!-- TemplateEndEditable --></div></div>
+                  <div class="middle"><div class="text"><!-- TemplateBeginEditable name="rightTitle" -->Наслов<!-- TemplateEndEditable --> </div>
+                    
+                   </div>
                     <div class="right"></div>
                 </div>
                  <div class="sodrzina"><!-- TemplateBeginEditable name="rightContent" -->
