@@ -71,8 +71,8 @@ transition: Fx.Transitions.sineOut
    	  </div>
       <div id="horiz-menu" class="moomenu"><!-- InstanceBeginEditable name="Menu" -->
         <ul class="nav">
-          <li ><a href="index.php">Почетна</a></li>
-          <li class="active"><a class="topdaddy" href="#">Документи</a>
+          <li class="active"><a href="index.php">Почетна</a></li>
+          <li><a class="topdaddy" href="#">Документи</a>
             <ul>
               <li><a href="documentlaws.php">Закони</a></li>
               <li><a href="#">Анализи</a></li>
@@ -86,7 +86,7 @@ transition: Fx.Transitions.sineOut
         </ul>
       <!-- InstanceEndEditable -->
         <div id="menu"></div>
-       <div id="mapMenu"><!-- InstanceBeginEditable name="SiteMap" -->Документи &gt; Закони<!-- InstanceEndEditable --></div> 
+       <div id="mapMenu"><!-- InstanceBeginEditable name="SiteMap" -->Почетна &gt;<!-- InstanceEndEditable --></div> 
       </div>
 	</div>
     
@@ -96,28 +96,28 @@ transition: Fx.Transitions.sineOut
             <!-- InstanceBeginEditable name="Content" -->
             <table width="100%">
               <tr>
-                <td valign="top" width="200"><div class="left-block">
+                <td width="200" valign="top"><div class="left-block">
                   <div class="title">
                     <div class="left"></div>
                     <div class="middle">
-                      <div class="text">Категории</div>
+                      <div class="text">Поврзани документи</div>
                     </div>
                     <div class="right"></div>
                   </div>
                   <div class="sodrzina">
-                    <p><?php include("util/doc_category.php"); ?>&nbsp;</p>
+                    <p>Текст </p>
                   </div>
                 </div></td>
                 <td valign="top"><div class="right-block">
                   <div class="title">
                     <div class="left"></div>
                     <div class="middle">
-                      <div class="text">Закони</div>
+                      <div class="text">Наслов</div>
                     </div>
                     <div class="right"></div>
                   </div>
-                  <div class="sodrzina" style="border-left:none; border-right:none;">
-                    <p><?php include("util/documentlaws.php"); ?>&nbsp;</p>
+                  <div class="sodrzina">
+                    <p>Текст </p>
                   </div>
                 </div></td>
               </tr>

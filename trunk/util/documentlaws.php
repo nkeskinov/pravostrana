@@ -5,7 +5,7 @@
 $currentPage = $_SERVER["PHP_SELF"];
 
 
-$maxRows_Documents = 2;
+$maxRows_Documents = 10;
 $pageNum_Documents = 0;
 if (isset($_GET['pageNum_Documents'])) {
   $pageNum_Documents = $_GET['pageNum_Documents'];
@@ -18,8 +18,11 @@ if (isset($_GET['id_doc_group'])) {
 }
 mysql_select_db($database_pravo, $pravo);
 $query_Documents = sprintf("SELECT * FROM `document` WHERE id_doc_type= %s and id_superdoc is null ", GetSQLValueString($id_doc_type_Documents, "int"));
-if(isset($_GET['id_doc_group'])){
+if(isset($_GET['id_doc_group']) && $_GET['id_doc_group']!=0){
 		$query_Documents = sprintf("%s and id_doc_group=%s",$query_Documents,GetSQLValueString($_GET['id_doc_group'], "int"));
+}
+if(isset($_GET['name'])){
+	$query_Documents = sprintf("%s and title like %s",$query_Documents,GetSQLValueString("%".$_GET['name']."%", "text"));
 }
 $query_limit_Documents = sprintf("%s ORDER BY title ASC LIMIT %d, %d", $query_Documents, $startRow_Documents, $maxRows_Documents);
 $Documents = mysql_query($query_limit_Documents, $pravo) or die(mysql_error());
@@ -63,7 +66,7 @@ function getSubDocuments($id_document, $pravo, $database_pravo){
 <?php if(mysql_num_rows($SubDocuments)!=0){ ?>
 <table border="0" width="100%" cellspacing="0" cellpadding="0">
   <?php  
-	  do { 	$timestamp = strtotime($row_SubDocuments['uploaded_date']); ?>
+	  do { 	$timestamp = strtotime($row_SubDocuments['published_date']); ?>
     <tr onmouseover="this.className='on'" onmouseout="this.className='off'" style="cursor:default;">
       <td width="4%" valign="top">
        <?php if($tmp_number<mysql_num_rows($SubDocuments)-1) {?>
@@ -73,7 +76,7 @@ function getSubDocuments($id_document, $pravo, $database_pravo){
       <?php }?>
       </td>
       <td width="91%">&nbsp;<?php echo $row_SubDocuments['title']; ?><br>
-      <span style="color:#666; font-size:11px">&nbsp;&nbsp;<?php echo date("d.m.Y", $timestamp); ?>&nbsp;<?php echo date("G:i", $timestamp); ?></span></td>
+      <span style="color:#666; font-size:11px">&nbsp;&nbsp;<?php echo date("d.m.Y", $timestamp); ?>&nbsp;</span></td>
       
       <td width="5%" align="right"><a href="util/download.php?id=<?php echo $row_SubDocuments['id_document']; ?> "><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
     </tr>
