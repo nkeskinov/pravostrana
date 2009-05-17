@@ -224,7 +224,7 @@ h4 {
 
 .mainBody .left-block{
 	float:left;
-	width:250px;
+	width:100%;
 	display:block;
 }
 .mainBody .left-block .title{
@@ -235,7 +235,7 @@ h4 {
 .mainBody .left-block .middle{
 	background:url(images/yellow-title-middle.png);
 	height:30px;
-	width:236px;
+	width:95%;
 	float:left;
 }
 .mainBody .left-block .middle .text{
@@ -247,13 +247,13 @@ h4 {
 .mainBody .left-block .left{
 	background:url(images/yellow-title-left.png);
 	height:30px;
-	width:7px;
+	width:2.5%;
 	float:left;
 }
 .mainBody .left-block .right{
 	background:url(images/yellow-title-right.png);
 	height:30px;
-	width:7px;
+	width:2.5%;
 	float:right;
 }
 .mainBody .left-block .sodrzina{
@@ -266,7 +266,7 @@ h4 {
 
 .mainBody .left-red-block{
 	float:left;
-	width:250px;
+	width:100%;
 	display:block;
 }
 .mainBody .left-red-block .title{
@@ -277,7 +277,7 @@ h4 {
 .mainBody .left-red-block .middle{
 	background:url(images/red-title-middle.png);
 	height:30px;
-	width:236px;
+	width:95%;
 	float:left;
 }
 .mainBody .left-red-block .middle .text{
@@ -289,13 +289,13 @@ h4 {
 .mainBody .left-red-block .left{
 	background:url(images/red-title-left.png);
 	height:30px;
-	width:7px;
+	width:2.5%;
 	float:left;
 }
 .mainBody .left-red-block .right{
 	background:url(images/red-title-right.png);
 	height:30px;
-	width:7px;
+	width:2.5%;
 	float:right;
 }
 .mainBody .left-red-block .sodrzina{
@@ -308,8 +308,8 @@ h4 {
 
 .mainBody .right-block{
 	float:right;
-	width:468px;
-	margin-right:5px;
+	width:100%;
+	margin:0;
 	display:block;
 }
 .mainBody .right-block .title{
@@ -320,7 +320,7 @@ h4 {
 .mainBody .right-block .middle{
 	background:url(images/red-title-middle.png);
 	height:30px;
-	width:454px;
+	width:97%;
 	float:left;
 }
 .mainBody .right-block .middle .text{
@@ -330,31 +330,30 @@ h4 {
 	padding-top:5px;
 }
 .mainBody .right-block .left{
-	background:url(images/red-title-left.png);
+	background:url(images/red-title-left.png) no-repeat;
 	height:30px;
-	width:7px;
+	width:1.5%;
 	float:left;
 }
 .mainBody .right-block .right{
-	background:url(images/red-title-right.png);
+	background:url(images/red-title-right.png) no-repeat;
 	height:30px;
-	width:7px;
+	width:1.5%;
 	float:right;
 }
 .mainBody .right-block .sodrzina{
 	border:thin solid #71312d;
-	border-right:none;
-	border-left:none;
+
 	border-top:none;
 	margin-top:-5px;
+	margin-right:1px;
 	padding:5px;
 }
 
 
 .mainBody .right-yellow-block{
 	float:right;
-	width:468px;
-	margin-right:5px;
+	width:100%;
 	display:block;
 }
 .mainBody .right-yellow-block .title{
@@ -365,7 +364,7 @@ h4 {
 .mainBody .right-yellow-block .middle{
 	background:url(images/yellow-title-middle.png);
 	height:30px;
-	width:454px;
+	width:97%;
 	float:left;
 }
 .mainBody .right-yellow-block .middle .text{
@@ -377,19 +376,17 @@ h4 {
 .mainBody .right-yellow-block .left{
 	background:url(images/yellow-title-left.png);
 	height:30px;
-	width:7px;
+	width:1.5%;
 	float:left;
 }
 .mainBody .right-yellow-block .right{
 	background:url(images/yellow-title-right.png);
 	height:30px;
-	width:7px;
+	width:1.5%;
 	float:right;
 }
 .mainBody .right-yellow-block .sodrzina{
 	border:1px solid #f5e6a2;
-	border-right:none;
-	border-left:none;
 	border-top:none;
 	margin-top:-5px;
 	padding:5px;

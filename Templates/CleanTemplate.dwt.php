@@ -18,6 +18,7 @@ session_start();
 
 
 <script type="text/javascript" src="../mootools.js"></script>
+<script type="text/javascript" src="../JavaScript/cirillic_converter.js"></script>
 
 <script type="text/javascript" src="../rokmoomenu.js"></script>
 <script type="text/javascript">
@@ -85,7 +86,7 @@ transition: Fx.Transitions.sineOut
         </ul>
       <!-- TemplateEndEditable -->
         <div id="menu"></div>
-       <div id="mapMenu">Почетна &gt;</div> 
+       <div id="mapMenu"><!-- TemplateBeginEditable name="SiteMap" -->Почетна &gt;<!-- TemplateEndEditable --></div> 
       </div>
 	</div>
     
@@ -133,15 +134,6 @@ transition: Fx.Transitions.sineOut
         <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
-         <p>&nbsp;</p>
-         <p>&nbsp;</p>
-         <p>&nbsp;</p>
-         <p>&nbsp;</p>
-         <p>&nbsp;</p>
 
       </div>
 

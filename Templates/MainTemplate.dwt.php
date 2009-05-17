@@ -16,7 +16,7 @@ session_start();
 <!-- TemplateEndEditable -->
 <script type="text/javascript" src="../roktools.js"></script>
 
-
+<script type="text/javascript" src="../javaScripts/cirillic_converter.js"></script>
 <script type="text/javascript" src="../mootools.js"></script>
 
 <script type="text/javascript" src="../rokmoomenu.js"></script>
@@ -95,7 +95,7 @@ transition: Fx.Transitions.sineOut
             <div><img src="../images/726-90.jpg" width="728" height="90" /></div>
             <table>
             <tr>
-            <td valign="top">
+            <td valign="top" width="250">
             <div class="left-block">
                 <div class="title">
                     <div class="left"></div>
@@ -108,12 +108,11 @@ transition: Fx.Transitions.sineOut
               </div>
             </div>
             </td>
-            <td valign="top">
+            <td valign="top" width="468">
            <div class="right-block">
                 <div class="title">
                     <div class="left"></div>
                   <div class="middle"><div class="text"><!-- TemplateBeginEditable name="rightTitle" -->Наслов<!-- TemplateEndEditable --> </div>
-                    
                    </div>
                     <div class="right"></div>
                 </div>
@@ -156,15 +155,6 @@ transition: Fx.Transitions.sineOut
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
-         <p>&nbsp;</p>
-         <p>&nbsp;</p>
-         <p>&nbsp;</p>
-         <p>&nbsp;</p>
-         <p>&nbsp;</p>
-
       </div>
 
  

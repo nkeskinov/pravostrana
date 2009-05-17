@@ -66,6 +66,7 @@ function popUpWindow(URLStr, left, top, width, height)
 
 
 </script>
+<form action="documentlaws.php" method="get">
 <table width="100%" border="0">
 <tr>
     <td colspan="2" align="left"><div align="right" style="font-size:11px;"><a href="JavaScript:popUpWindow('help.php?id=1','','',450,'330');">совети за пребарување</a></div>
@@ -109,7 +110,7 @@ function popUpWindow(URLStr, left, top, width, height)
   </tr>
   <tr>
     <td align="left">Име на законот: </td>
-    <td><input name="name" type="text" size="35"></td>
+    <td><input name="name" type="text" size="35" onkeyup="this.form.name.value=toCyr(this.form.name.value)"></td>
   </tr>
   <tr>
     <td align="left">Група: </td>
@@ -151,3 +152,4 @@ do {
     <td>&nbsp;</td>
   </tr>
 </table>
+</form>
