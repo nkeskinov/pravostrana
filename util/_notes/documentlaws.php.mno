@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_Documents" value="name:id_document;datatype:int,name:id_doc_type;datatype:int,name:path;datatype:string,name:title;datatype:string,name:uploaded_date;datatype:datetime,name:id_doc_group;datatype:int,name:description;datatype:blob,name:extension;datatype:string,name:filesize;datatype:int,name:mimetype;datatype:string,name:forcesubscribe;datatype:int,name:published_date;datatype:date,name:id_superdoc;datatype:int" />
+	<infoitem key="UD_SubDocuments" value="name:id_document;datatype:int,name:id_doc_type;datatype:int,name:path;datatype:string,name:title;datatype:string,name:uploaded_date;datatype:datetime,name:id_doc_group;datatype:int,name:description;datatype:blob,name:extension;datatype:string,name:filesize;datatype:int,name:mimetype;datatype:string,name:forcesubscribe;datatype:int,name:published_date;datatype:date,name:id_superdoc;datatype:int" />
+</info>

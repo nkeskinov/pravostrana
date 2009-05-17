@@ -74,7 +74,7 @@ transition: Fx.Transitions.sineOut
         <ul class="nav"><li class="active"><a href="index.php">Почетна</a></li>
         <li><a class="topdaddy" href="#">Документи</a>
           <ul>
-        <li><a href="#">Закони</a></li>
+        <li><a href="documentlaws.php">Закони</a></li>
         <li><a href="#">Анализи</a></li>
         <li><a href="#">Прописи</a></li>
         </ul></li>
