@@ -19,16 +19,21 @@ body {
 }
 a:link {
 	color: #333;
+	text-decoration:none;
 }
 a:visited {
 	color: #333;
+	text-decoration:none;
 }
 a:hover {
-	color: #333;
+	color: #999;
+	text-decoration:none;
 }
 a:active {
 	color: #333;
+	text-decoration:none;
 }
+
 p {
   /* setup some more readable paragraph spacing */
   margin-top: 10px;
@@ -253,9 +258,8 @@ h4 {
 }
 .mainBody .left-block .sodrzina{
 	border:thin solid #f5e6a2;
-	border-right:none;
 	border-top:none;
-	margin-top:-5px;
+	margin-top:-10px;
 	padding:5px;
 }
 

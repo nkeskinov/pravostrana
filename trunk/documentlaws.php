@@ -1,7 +1,10 @@
+<?php 
+session_start();
+?>
 <?php require_once("Connections/pravo.php"); ?>
 <?php include("util/misc.php"); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/SingleRed.dwt.php" codeOutsideHTMLIsLocked="false" -->
+<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/CleanTemplate.dwt.php" codeOutsideHTMLIsLocked="false" -->
 <head>
 <!--templateinfo codeoutsidehtmlislocked="true" -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -9,7 +12,7 @@
 <link href="style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="images/favicon1.png" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>pravo.org.mk | Регистрација</title>
+<title>pravo.org.mk</title>
 <!-- InstanceEndEditable -->
 <script type="text/javascript" src="roktools.js"></script>
 
@@ -67,10 +70,10 @@ transition: Fx.Transitions.sineOut
    	  </div>
       <div id="horiz-menu" class="moomenu"><!-- InstanceBeginEditable name="Menu" -->
         <ul class="nav">
-          <li class="active"><a href="#">Почетна</a></li>
-          <li><a class="topdaddy" href="#">Документи</a>
+          <li ><a href="index.php">Почетна</a></li>
+          <li class="active"><a class="topdaddy" href="#">Документи</a>
             <ul>
-              <li><a href="#">Закони</a></li>
+              <li><a href="documentlaws.php">Закони</a></li>
               <li><a href="#">Анализи</a></li>
               <li><a href="#">Прописи</a></li>
             </ul>
@@ -82,34 +85,74 @@ transition: Fx.Transitions.sineOut
         </ul>
       <!-- InstanceEndEditable -->
         <div id="menu"></div>
-       <div id="mapMenu"><!-- InstanceBeginEditable name="siteMap" --><a href="index.php">Почетна</a>&nbsp;&nbsp;&gt&nbsp;Регистрација <!-- InstanceEndEditable --></div> 
+       <div id="mapMenu">Почетна &gt;</div> 
       </div>
 	</div>
     
     <div class="mainBody">
    	  <div class="content">
             <div><img src="images/726-90.jpg" width="728" height="90" /></div>
-            <table><tr><td>
-            <div class="middle-red-block">
-                <div class="title">
+            <!-- InstanceBeginEditable name="Content" -->
+            <table>
+              <tr>
+                <td valign="top"><div class="left-block">
+                  <div class="title">
                     <div class="left"></div>
-                    <div class="middle"><div class="text"><!-- InstanceBeginEditable name="BlockTitle" -->Креирање на кориснички профил<!-- InstanceEndEditable --></div></div>
+                    <div class="middle">
+                      <div class="text">Категории</div>
+                    </div>
                     <div class="right"></div>
-                </div>
-                 <div class="sodrzina"><!-- InstanceBeginEditable name="BlockContent" -->
-               <?php include("users/model/user.php"); ?>
-             <!-- InstanceEndEditable --></div>
-            </div>
-            </td></tr></table>
-   		 <p>&nbsp;</p>   
+                  </div>
+                  <div class="sodrzina">
+                    <p><?php include("util/doc_category.php"); ?>&nbsp;</p>
+                  </div>
+                </div></td>
+                <td valign="top"><div class="right-block">
+                  <div class="title">
+                    <div class="left"></div>
+                    <div class="middle">
+                      <div class="text">Закони</div>
+                    </div>
+                    <div class="right"></div>
+                  </div>
+                  <div class="sodrzina">
+                    <p><?php include("util/documentlaws.php"); ?>&nbsp;</p>
+                  </div>
+                </div></td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td valign="top"></td>
+                <td valign="top"></td>
+              </tr>
+            </table>
+            <!-- InstanceEndEditable -->
+        <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+            <p>&nbsp;</p>
+         <p>&nbsp;</p>
+         <p>&nbsp;</p>
+         <p>&nbsp;</p>
+         <p>&nbsp;</p>
+         <p>&nbsp;</p>
+
       </div>
+
+ 
         <div class="right">
-            <?php include("loginSmall.php"); ?>
-               <div><img src="images/250-250.jpg" width="250" height="250" /></div>
+        <?php include("loginSmall.php"); ?>
+          <div><img src="images/250-250.jpg" width="250" height="250" /></div>
           </div>
 
     </div>
-    <div class="above-footer"></div>
+    
 	<div class="footer">Copyright &copy; 2008 Сите права задржани</div>	
 </div>
 

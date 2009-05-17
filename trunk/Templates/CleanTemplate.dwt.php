@@ -1,9 +1,16 @@
+<?php 
+session_start();
+?>
+<?php require_once("Connections/pravo.php"); ?>
+<?php include("util/misc.php"); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<!--templateinfo codeoutsidehtmlislocked="true" -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="../rokmoomenu.css" rel="stylesheet" type="text/css" />
 <link href="../style.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="../images/favicon1.png" />
 <!-- TemplateBeginEditable name="doctitle" -->
 <title>pravo.org.mk</title>
 <!-- TemplateEndEditable -->
@@ -63,10 +70,10 @@ transition: Fx.Transitions.sineOut
    	  </div>
       <div id="horiz-menu" class="moomenu"><!-- TemplateBeginEditable name="Menu" -->
         <ul class="nav">
-          <li class="active"><a href="#">Почетна</a></li>
+          <li class="active"><a href="index.php">Почетна</a></li>
           <li><a class="topdaddy" href="#">Документи</a>
             <ul>
-              <li><a href="#">Закони</a></li>
+              <li><a href="documentlaws.php">Закони</a></li>
               <li><a href="#">Анализи</a></li>
               <li><a href="#">Прописи</a></li>
             </ul>
@@ -85,19 +92,45 @@ transition: Fx.Transitions.sineOut
     <div class="mainBody">
    	  <div class="content">
             <div><img src="../images/726-90.jpg" width="728" height="90" /></div>
-        <div class="middle-block">
-       		<div class="title">
-       			<div class="left"></div>
-            	<div class="middle"><div class="text"><!-- TemplateBeginEditable name="BlockTitle" -->Наслов<!-- TemplateEndEditable --></div></div>
-       	  		<div class="right"></div>
-         	</div>
-             <div class="sodrzina"><!-- TemplateBeginEditable name="BlockContent" -->
-               <p>Текст </p>
-               <p>Текст</p>
-               <p>&nbsp;</p>
-             <!-- TemplateEndEditable --></div>
-        </div>
-    <p>&nbsp;</p>
+            <!-- TemplateBeginEditable name="Content" -->
+            <table>
+              <tr>
+                <td valign="top"><div class="left-block">
+                  <div class="title">
+                    <div class="left"></div>
+                    <div class="middle">
+                      <div class="text">Наслов</div>
+                    </div>
+                    <div class="right"></div>
+                  </div>
+                  <div class="sodrzina">
+                    <p>Текст </p>
+                  </div>
+                </div></td>
+                <td valign="top"><div class="right-block">
+                  <div class="title">
+                    <div class="left"></div>
+                    <div class="middle">
+                      <div class="text">Наслов</div>
+                    </div>
+                    <div class="right"></div>
+                  </div>
+                  <div class="sodrzina">
+                    <p>Текст </p>
+                  </div>
+                </div></td>
+              </tr>
+              <tr>
+                <td>&nbsp;</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td valign="top"></td>
+                <td valign="top"></td>
+              </tr>
+            </table>
+            <!-- TemplateEndEditable -->
+        <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
@@ -114,11 +147,12 @@ transition: Fx.Transitions.sineOut
 
  
         <div class="right">
-            <?php include("../loginSmall.php"); ?>
-               <div><img src="../images/250-250.jpg" width="250" height="250" /></div>
+        <?php include("loginSmall.php"); ?>
+          <div><img src="../images/250-250.jpg" width="250" height="250" /></div>
           </div>
 
     </div>
+    
 	<div class="footer">Copyright &copy; 2008 Сите права задржани</div>	
 </div>
 

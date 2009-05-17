@@ -69,24 +69,23 @@ transition: Fx.Transitions.sineOut
    	  <div class="header-top">
    	    <div id="logoText"><img src="../images/banner.png" /></div>
    	  </div>
-      <div id="horiz-menu" class="moomenu">
-
-  		
-        <ul class="nav"><li class="active"><a href="#">Почетна</a></li>
-        <li><a class="topdaddy" href="#">Документи</a>
-          <ul>
-        <li><a href="#">Закони</a></li>
-        <li><a href="#">Анализи</a></li>
-        <li><a href="#">Прописи</a></li>
-        </ul></li>
-      
-        <li><a href="#">Судска Пракса</a></li>
-        <li><a href="#">Форум</a></li>
-        <li><a href="#">Новости</a></li>
-        <li><a href="#">Контакт</a></li>
+      <div id="horiz-menu" class="moomenu"><!-- TemplateBeginEditable name="Menu" -->
+        <ul class="nav">
+          <li class="active"><a href="#">Почетна</a></li>
+          <li><a class="topdaddy" href="#">Документи</a>
+            <ul>
+              <li><a href="#">Закони</a></li>
+              <li><a href="#">Анализи</a></li>
+              <li><a href="#">Прописи</a></li>
+            </ul>
+          </li>
+          <li><a href="#">Судска Пракса</a></li>
+          <li><a href="#">Форум</a></li>
+          <li><a href="#">Новости</a></li>
+          <li><a href="#">Контакт</a></li>
         </ul>
-
-      	<div id="menu"></div>
+      <!-- TemplateEndEditable -->
+        <div id="menu"></div>
        <div id="mapMenu"><!-- TemplateBeginEditable name="siteMap" -->Почетна &gt;<!-- TemplateEndEditable --></div> 
       </div>
 	</div>
