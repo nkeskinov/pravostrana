@@ -2,4 +2,6 @@
 <info>
 	<infoitem key="PageAccessControlMethod" value="useAccessList" />
 	<infoitem key="PageAccessControl" value="user,admin" />
+	<infoitem key="MM_URL1" value="id" />
+	<infoitem key="MM_URL_Count" value="1" />
 </info>
