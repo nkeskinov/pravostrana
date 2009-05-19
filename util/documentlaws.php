@@ -86,14 +86,12 @@ function getSubDocuments($id_document, $pravo, $database_pravo){
 <?php	}?>
 
 <?php
-function getDocumentCategory($id_document, $pravo, $database_pravo){
+function getDocumentCategory($id_document_group, $pravo, $database_pravo){
 	mysql_select_db($database_pravo, $pravo);
 	$id_doc_type_Documents = "1";
-	$query_GroupDocuments = sprintf("SELECT * FROM doc_group as dg, document as d WHERE
-									dg.id_doc_group = d.id_doc_group and d.id_document=%s 
-									and d.id_doc_type = %s", 
-							GetSQLValueString($id_document, "int"),
-							GetSQLValueString($id_doc_type_Documents, "int"));
+	$query_GroupDocuments = sprintf("SELECT * FROM doc_group WHERE
+									id_doc_group = %s", 
+							GetSQLValueString($id_document_group, "int"));
 	$GroupDocuments = mysql_query($query_GroupDocuments, $pravo) or die(mysql_error());
 	//$row_GroupDocuments = mysql_fetch_assoc($GroupDocuments);
 	//$tmp_number=0;
@@ -103,6 +101,7 @@ function getDocumentCategory($id_document, $pravo, $database_pravo){
 	}
 }
 ?>
+
 
 
 <table border="0" width="100%" cellspacing="0">
@@ -134,14 +133,14 @@ function getDocumentCategory($id_document, $pravo, $database_pravo){
   	$timestamp = strtotime($row_Documents['uploaded_date']); 
   ?>
     <tr>
-      <td width="95%" style="border-bottom:1px solid #a25852; background:#f5d6d4;"><strong><a href="#" title="Видете ги деталите за законот" alt="Видете ги деталите за законот"><?php echo $row_Documents['title']; ?></a></strong><br> <span style="color:#666; font-size:11px">&nbsp;<?php echo date("d.m.Y", $timestamp); ?>&nbsp;<?php echo date("G:i", $timestamp); ?></span></td>
-      <td width="5%" align="right" style="border-bottom:1px solid #a25852; background:#f5d6d4;"><a href="util/download.php?id=<?php echo $row_Documents['id_document']; ?> "><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
+      <td width="95%" style="border-bottom:1px solid #a25852; background:#f5d6d4;"><strong><a href="documentDetail.php?id=<?php echo $row_Documents['id_document']; ?>" title="Видете ги деталите за законот" alt="Видете ги деталите за законот"><?php echo $row_Documents['title']; ?></a></strong><br> <span style="color:#666; font-size:11px">&nbsp;<?php echo date("d.m.Y", $timestamp); ?>&nbsp;<?php echo date("G:i", $timestamp); ?></span></td>
+      <td width="5%" align="right" style="border-bottom:1px solid #a25852; background:#f5d6d4;"><a href="download.php?id=<?php echo $row_Documents['id_document']; ?>"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
     </tr>
     <tr>
     	<td colspan="2"><?php getSubDocuments($row_Documents['id_document'], $pravo, $database_pravo); ?></td>
     </tr>
     <tr>
-    	<td  style="border-bottom:1px solid #f5e6a2; background:#fbf7e0;" colspan="2">категорија: <?php  getDocumentCategory($row_Documents['id_document'], $pravo, $database_pravo); ?></td>
+    	<td  style="border-bottom:1px solid #f5e6a2; background:#fbf7e0;" colspan="2">категорија: <?php getDocumentCategory($row_Documents['id_doc_group'], $pravo, $database_pravo); ?></td>
     </tr>
     <tr><td colspan="2">&nbsp;</td></tr>
     <?php } while ($row_Documents = mysql_fetch_assoc($Documents)); ?>
