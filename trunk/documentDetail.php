@@ -112,12 +112,12 @@ transition: Fx.Transitions.sineOut
                   <div class="title">
                     <div class="left"></div>
                     <div class="middle">
-                      <div class="text">Наслов</div>
+                      <div class="text">Детален опис на законот</div>
                     </div>
                     <div class="right"></div>
                   </div>
-                  <div class="sodrzina">
-                    <p>Текст </p>
+                  <div class="sodrzina" style="padding-left:0; padding-right:0;">
+                    <?php include("util/documentdetail.php"); ?>
                   </div>
                 </div></td>
               </tr>

@@ -24,78 +24,100 @@ if (isset($_GET['totalRows_DetailRS1'])) {
   $totalRows_DetailRS1 = mysql_num_rows($all_DetailRS1);
 }
 $totalPages_DetailRS1 = ceil($totalRows_DetailRS1/$maxRows_DetailRS1)-1;
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
-</head>
+?>
+<?php
+function getSubDocuments($id_document, $pravo, $database_pravo){
+	mysql_select_db($database_pravo, $pravo);
+	$id_doc_type_Documents = "1";
+	$query_SubDocuments = sprintf("SELECT * FROM `document` WHERE id_doc_type = %s and id_superdoc is not null and id_superdoc=%s ORDER BY title ASC", GetSQLValueString($id_doc_type_Documents, "int"),GetSQLValueString($id_document, "int"));
+	$SubDocuments = mysql_query($query_SubDocuments, $pravo) or die(mysql_error());
+	$row_SubDocuments = mysql_fetch_assoc($SubDocuments);
+	$tmp_number=0;
+?>
+<?php if(mysql_num_rows($SubDocuments)!=0){ ?>
+<table border="0" width="100%" cellspacing="0" cellpadding="0">
+	<tr>
+    <td colspan="3" style="border-bottom:1px solid #f5e6a2; background:#fbf7e0;"><strong>Измени и дополнувања</strong></td>
+  <tr>
+  <?php  
+	  do { 	$timestamp = strtotime($row_SubDocuments['published_date']); ?>
+    <tr onmouseover="this.className='on'" onmouseout="this.className='off'" style="cursor:default;">
+      <td width="4%" valign="top">
+       <?php if($tmp_number<mysql_num_rows($SubDocuments)-1) {?>
+	      <img src="images/dot_cros.png"/>
+      <?php }else{ ?>
+            <img src="images/dot1.gif"/>
+      <?php }?>
+      </td>
+      <td width="91%">&nbsp;<?php echo $row_SubDocuments['title']; ?><br>
+      <span style="color:#666; font-size:11px">&nbsp;&nbsp;<?php echo date("d.m.Y", $timestamp); ?>&nbsp;</span></td>
+      
+      <td width="5%" align="right"><a href="util/download.php?id=<?php echo $row_SubDocuments['id_document']; ?> "><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
+    </tr>
+    <?php $tmp_number+=1;} while ($row_SubDocuments = mysql_fetch_assoc($SubDocuments)); ?>
+</table>
+<?php	} ?>
+<?php	}?>
 
-<body>
+<?php
+function getDocumentCategory($id_document_group, $pravo, $database_pravo){
+	mysql_select_db($database_pravo, $pravo);
+	$id_doc_type_Documents = "1";
+	$query_GroupDocuments = sprintf("SELECT * FROM doc_group WHERE
+									id_doc_group = %s", 
+							GetSQLValueString($id_document_group, "int"));
+	$GroupDocuments = mysql_query($query_GroupDocuments, $pravo) or die(mysql_error());
+	//$row_GroupDocuments = mysql_fetch_assoc($GroupDocuments);
+	//$tmp_number=0;
+	$row_number =  mysql_num_rows($GroupDocuments);
+	if($row_number){
+		echo mysql_result($GroupDocuments,0,'name');
+	}
+}
+?>
 
-<table border="1" align="center">
+<table border="0" align="center" width="100%">
   <tr>
-    <td>id_document</td>
-    <td><?php echo $row_DetailRS1['id_document']; ?></td>
+    <td colspan="3" style="border-bottom:1px solid #a25852; background:#f5d6d4;"><strong><?php echo $row_DetailRS1['title']; ?></strong></td>
+    
   </tr>
   <tr>
-    <td>id_doc_type</td>
-    <td><?php echo $row_DetailRS1['id_doc_type']; ?></td>
+    <td width="27%">Дата на публикување:</td>
+    <td width="53%"><?php if(isset($row_DetailRS1['published_date'])) echo date("d.m.Y",strtotime($row_DetailRS1['published_date'])); ?></td>
+    <td width="20%" rowspan="4" align="right"><a href="download.php?id=<?php echo $row_DetailRS1['id_document']; ?>"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a><br><span style="font-size:10px; color:#999;">12312 пати спуштено</span></td>
   </tr>
   <tr>
-    <td>path</td>
-    <td><?php echo $row_DetailRS1['path']; ?></td>
+    <td>Дата на закачување:</td>
+    <td><?php echo date("d.m.Y",strtotime($row_DetailRS1['uploaded_date'])); ?></td>
   </tr>
   <tr>
-    <td>title</td>
-    <td><?php echo $row_DetailRS1['title']; ?></td>
+    <td>Категорија</td>
+    <td><?php getDocumentCategory($row_DetailRS1['id_doc_group'], $pravo, $database_pravo); ?></td>
   </tr>
   <tr>
-    <td>uploaded_date</td>
-    <td><?php echo $row_DetailRS1['uploaded_date']; ?></td>
-  </tr>
-  <tr>
-    <td>id_doc_meta</td>
-    <td><?php echo $row_DetailRS1['id_doc_meta']; ?></td>
-  </tr>
-  <tr>
-    <td>id_doc_group</td>
-    <td><?php echo $row_DetailRS1['id_doc_group']; ?></td>
-  </tr>
-  <tr>
-    <td>description</td>
+    <td>Краток опис:</td>
     <td><?php echo $row_DetailRS1['description']; ?></td>
-  </tr>
   <tr>
-    <td>extension</td>
-    <td><?php echo $row_DetailRS1['extension']; ?></td>
-  </tr>
-  <tr>
-    <td>filesize</td>
-    <td><?php echo $row_DetailRS1['filesize']; ?></td>
-  </tr>
-  <tr>
-    <td>mimetype</td>
-    <td><?php echo $row_DetailRS1['mimetype']; ?></td>
-  </tr>
-  <tr>
-    <td>forcesubscribe</td>
-    <td><?php echo $row_DetailRS1['forcesubscribe']; ?></td>
-  </tr>
-  <tr>
-    <td>published_date</td>
-    <td><?php echo $row_DetailRS1['published_date']; ?></td>
-  </tr>
-  <tr>
-    <td>id_superdoc</td>
-    <td><?php echo $row_DetailRS1['id_superdoc']; ?></td>
-  </tr>
-  <tr>
-    <td>created_by</td>
-    <td><?php echo $row_DetailRS1['created_by']; ?></td>
+    <td colspan="3"><?php getSubDocuments($row_DetailRS1['id_document'], $pravo, $database_pravo); ?></td>
   </tr>
 </table>
-</body>
-</html><?php
+<br /> <br />
+<table width="80%" border="0" >
+	<tr>
+    	<td style="padding-left:10px;"><strong>Дискусии околу овој закон</strong></td>
+    </tr>
+	<tr>
+	  <td style="padding:10px; border-bottom:1px solid #f5e6a2; background:#fbf7e0;"><label>
+	    <textarea name="textarea" id="textarea" cols="50" rows="4" style="border:1px solid #f5e6a2;"></textarea>
+        <br>        
+	  </label>
+      <div><input type="button" value="Коментирај" style="background-color:#993300; color:#FFFFFF"></div>
+      </td>
+  </tr>
+	<tr>
+	  <td>&nbsp;</td>
+  </tr>
+</table>
+<?php
 mysql_free_result($DetailRS1);
 ?>
