@@ -108,7 +108,7 @@ transition: Fx.Transitions.sineOut
                     <p><?php include("util/doc_category.php"); ?>&nbsp;</p>
                   </div>
                 </div></td>
-                <td valign="top"><div class="right-block">
+                <td valign="top"><div class="right-block-bigger">
                   <div class="title">
                     <div class="left"></div>
                     <div class="middle">

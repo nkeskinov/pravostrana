@@ -94,9 +94,9 @@ transition: Fx.Transitions.sineOut
    	  <div class="content">
             <div><img src="../images/726-90.jpg" width="728" height="90" /></div>
             <!-- TemplateBeginEditable name="Content" -->
-            <table>
+            <table width="100%">
               <tr>
-                <td valign="top"><div class="left-block">
+                <td width="28%" valign="top"><div class="left-block">
                   <div class="title">
                     <div class="left"></div>
                     <div class="middle">
@@ -108,7 +108,7 @@ transition: Fx.Transitions.sineOut
                     <p>Текст </p>
                   </div>
                 </div></td>
-                <td valign="top"><div class="right-block">
+                <td width="72%" valign="top"><div class="right-block-bigger">
                   <div class="title">
                     <div class="left"></div>
                     <div class="middle">
