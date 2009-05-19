@@ -8,7 +8,7 @@ if (isset($_GET['pageNum_latestLawsRecordset'])) {
 $startRow_latestLawsRecordset = $pageNum_latestLawsRecordset * $maxRows_latestLawsRecordset;
 
 mysql_select_db($database_pravo, $pravo);
-$query_latestLawsRecordset = "SELECT * FROM `document` WHERE `document`.id_doc_type = 1 ORDER BY `document`.uploaded_date desc";
+$query_latestLawsRecordset = "SELECT * FROM `document` WHERE `document`.id_doc_type = 1 and id_superdoc is null ORDER BY `document`.uploaded_date desc";
 $query_limit_latestLawsRecordset = sprintf("%s LIMIT %d, %d", $query_latestLawsRecordset, $startRow_latestLawsRecordset, $maxRows_latestLawsRecordset);
 $latestLawsRecordset = mysql_query($query_limit_latestLawsRecordset, $pravo) or die(mysql_error());
 $row_latestLawsRecordset = mysql_fetch_assoc($latestLawsRecordset);
@@ -28,7 +28,8 @@ $totalPages_latestLawsRecordset = ceil($totalRows_latestLawsRecordset/$maxRows_l
     <?php do { 
 				$timestamp = strtotime($row_latestLawsRecordset['uploaded_date']); ?>
    	<tr onmouseover="this.className='on'" onmouseout="this.className='off'" >
-      	<td width="94%" valign="top"  <?php if($tmp_number<$maxRows_latestLawsRecordset-1) {?>style="border-bottom:1px dotted #CCC;"<?php }?>><span style="cursor:default;"><?php echo $row_latestLawsRecordset['title']; ?>
+      	<td width="94%" valign="top"  <?php if($tmp_number<$maxRows_latestLawsRecordset-1) {?>style="border-bottom:1px dotted #CCC;"<?php }?>><span style="cursor:default;">
+		<a href="documentDetail.php?id=<?php echo $row_latestLawsRecordset['id_document']; ?>" ><?php echo $row_latestLawsRecordset['title']; ?></a>
         <br /><span style="color:#666; font-size:11px">&nbsp;<?php echo date("d.m.Y", $timestamp); ?>&nbsp;<?php echo date("G:i", $timestamp); ?></span></span>
         </td>
       	<td width="6%" valign="top" <?php if($tmp_number<$maxRows_latestLawsRecordset-1) {?>style="border-bottom:1px dotted #CCC;"<?php }?>><a href="download.php?id=<?php echo $row_latestLawsRecordset['id_document']; ?>"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>

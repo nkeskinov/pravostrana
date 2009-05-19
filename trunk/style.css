@@ -308,7 +308,7 @@ h4 {
 
 .mainBody .right-block{
 	float:right;
-	width:100%;
+	width:468px;
 	margin:0;
 	display:block;
 }
@@ -320,7 +320,7 @@ h4 {
 .mainBody .right-block .middle{
 	background:url(images/red-title-middle.png);
 	height:30px;
-	width:97%;
+	width:454px;
 	float:left;
 }
 .mainBody .right-block .middle .text{
@@ -332,13 +332,13 @@ h4 {
 .mainBody .right-block .left{
 	background:url(images/red-title-left.png) no-repeat;
 	height:30px;
-	width:1.5%;
+	width:7px;
 	float:left;
 }
 .mainBody .right-block .right{
 	background:url(images/red-title-right.png) no-repeat;
 	height:30px;
-	width:1.5%;
+	width:7px;
 	float:right;
 }
 .mainBody .right-block .sodrzina{
@@ -346,14 +346,58 @@ h4 {
 
 	border-top:none;
 	margin-top:-5px;
-	margin-right:1px;
+
+	padding:5px;
+}
+
+.mainBody .right-block-bigger{
+	float:right;
+	width:518px;
+	margin:0;
+	display:block;
+}
+.mainBody .right-block-bigger .title{
+	display: block; 
+	overflow:hidden; 
+	clear:both;
+}
+.mainBody .right-block-bigger .middle{
+	background:url(images/red-title-middle.png);
+	height:30px;
+	width:504px;
+	float:left;
+}
+.mainBody .right-block-bigger .middle .text{
+	color:#fcf9ea;
+	font-weight:bold;
+	padding-left:10px;
+	padding-top:5px;
+}
+.mainBody .right-block-bigger .left{
+	background:url(images/red-title-left.png) no-repeat;
+	height:30px;
+	width:7px;
+	float:left;
+}
+.mainBody .right-block-bigger .right{
+	background:url(images/red-title-right.png) no-repeat;
+	height:30px;
+	width:7px;
+	float:right;
+}
+.mainBody .right-block-bigger .sodrzina{
+	border:thin solid #71312d;
+
+	border-top:none;
+	margin-top:-5px;
+
 	padding:5px;
 }
 
 
 .mainBody .right-yellow-block{
 	float:right;
-	width:100%;
+	width:468px;
 	display:block;
 }
 .mainBody .right-yellow-block .title{
@@ -364,7 +408,7 @@ h4 {
 .mainBody .right-yellow-block .middle{
 	background:url(images/yellow-title-middle.png);
 	height:30px;
-	width:97%;
+	width:454px;
 	float:left;
 }
 .mainBody .right-yellow-block .middle .text{
@@ -376,13 +420,13 @@ h4 {
 .mainBody .right-yellow-block .left{
 	background:url(images/yellow-title-left.png);
 	height:30px;
-	width:1.5%;
+	width:7px;
 	float:left;
 }
 .mainBody .right-yellow-block .right{
 	background:url(images/yellow-title-right.png);
 	height:30px;
-	width:1.5%;
+	width:7px;
 	float:right;
 }
 .mainBody .right-yellow-block .sodrzina{
