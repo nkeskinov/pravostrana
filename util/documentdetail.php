@@ -44,15 +44,15 @@ function getSubDocuments($id_document, $pravo, $database_pravo){
     <tr onmouseover="this.className='on'" onmouseout="this.className='off'" style="cursor:default;">
       <td width="4%" valign="top">
        <?php if($tmp_number<mysql_num_rows($SubDocuments)-1) {?>
-	      <img src="images/dot_cros.png"/>
+	      <img src="images/dot_cros1.png"/>
       <?php }else{ ?>
             <img src="images/dot1.gif"/>
       <?php }?>
       </td>
-      <td width="91%">&nbsp;<?php echo $row_SubDocuments['title']; ?><br>
+      <td width="73%" valign="top">&nbsp;<?php echo $row_SubDocuments['title']; ?><br>
       <span style="color:#666; font-size:11px">&nbsp;&nbsp;<?php echo date("d.m.Y", $timestamp); ?>&nbsp;</span></td>
       
-      <td width="5%" align="right"><a href="util/download.php?id=<?php echo $row_SubDocuments['id_document']; ?> "><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
+      <td width="23%" align="right"><a href="util/download.php?id=<?php echo $row_SubDocuments['id_document']; ?> "><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /><br><span style="font-size:10px; color:#999;"><?php getNumDownload($row_SubDocuments['id_document'], $pravo, $database_pravo); ?> пати спуштено</span></a></td>
     </tr>
     <?php $tmp_number+=1;} while ($row_SubDocuments = mysql_fetch_assoc($SubDocuments)); ?>
 </table>
@@ -75,6 +75,21 @@ function getDocumentCategory($id_document_group, $pravo, $database_pravo){
 	}
 }
 ?>
+<?php
+function getNumDownload($id_document, $pravo, $database_pravo){
+	mysql_select_db($database_pravo, $pravo);
+	$query_GroupDocuments = sprintf("SELECT count(*) as nb FROM download WHERE
+									id_document = %s", 
+							GetSQLValueString($id_document, "int"));
+	$GroupDocuments = mysql_query($query_GroupDocuments, $pravo) or die(mysql_error());
+	//$row_GroupDocuments = mysql_fetch_assoc($GroupDocuments);
+	//$tmp_number=0;
+	$row_number =  mysql_num_rows($GroupDocuments);
+	if($row_number){
+		echo mysql_result($GroupDocuments,0,'nb');
+	}
+}
+?>
 
 <table border="0" align="center" width="100%">
   <tr>
@@ -84,14 +99,14 @@ function getDocumentCategory($id_document_group, $pravo, $database_pravo){
   <tr>
     <td width="27%">Дата на публикување:</td>
     <td width="53%"><?php if(isset($row_DetailRS1['published_date'])) echo date("d.m.Y",strtotime($row_DetailRS1['published_date'])); ?></td>
-    <td width="20%" rowspan="4" align="right"><a href="download.php?id=<?php echo $row_DetailRS1['id_document']; ?>"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a><br><span style="font-size:10px; color:#999;">12312 пати спуштено</span></td>
+    <td width="20%" rowspan="4" align="right"><a href="download.php?id=<?php echo $row_DetailRS1['id_document']; ?>"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a><br><span style="font-size:10px; color:#999;"><?php getNumDownload($row_DetailRS1['id_document'], $pravo, $database_pravo); ?> пати спуштено</span></td>
   </tr>
   <tr>
     <td>Дата на закачување:</td>
     <td><?php echo date("d.m.Y",strtotime($row_DetailRS1['uploaded_date'])); ?></td>
   </tr>
   <tr>
-    <td>Категорија</td>
+    <td>Категорија:</td>
     <td><?php getDocumentCategory($row_DetailRS1['id_doc_group'], $pravo, $database_pravo); ?></td>
   </tr>
   <tr>
@@ -102,15 +117,17 @@ function getDocumentCategory($id_document_group, $pravo, $database_pravo){
   </tr>
 </table>
 <br /> <br />
+<div align="center">
+<div style="border-top:1px dotted #999; width:95%;" align="center">&nbsp;</div>
+</div>
 <table width="80%" border="0" >
 	<tr>
     	<td style="padding-left:10px;"><strong>Дискусии околу овој закон</strong></td>
     </tr>
 	<tr>
-	  <td style="padding:10px; border-bottom:1px solid #f5e6a2; background:#fbf7e0;"><label>
+	  <td style="padding:10px; border-bottom:1px solid #f5e6a2; background:#fbf7e0;">
 	    <textarea name="textarea" id="textarea" cols="50" rows="4" style="border:1px solid #f5e6a2;"></textarea>
-        <br>        
-	  </label>
+        <br /><br />        
       <div><input type="button" value="Коментирај" style="background-color:#993300; color:#FFFFFF"></div>
       </td>
   </tr>

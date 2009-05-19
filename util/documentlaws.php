@@ -78,7 +78,7 @@ function getSubDocuments($id_document, $pravo, $database_pravo){
       <td width="91%">&nbsp;<?php echo $row_SubDocuments['title']; ?><br>
       <span style="color:#666; font-size:11px">&nbsp;&nbsp;<?php echo date("d.m.Y", $timestamp); ?>&nbsp;</span></td>
       
-      <td width="5%" align="right"><a href="util/download.php?id=<?php echo $row_SubDocuments['id_document']; ?> "><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
+      <td width="5%" align="right"><a href="download.php?id=<?php echo $row_SubDocuments['id_document']; ?> "><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
     </tr>
     <?php $tmp_number+=1;} while ($row_SubDocuments = mysql_fetch_assoc($SubDocuments)); ?>
 </table>
@@ -98,6 +98,22 @@ function getDocumentCategory($id_document_group, $pravo, $database_pravo){
 	$row_number =  mysql_num_rows($GroupDocuments);
 	if($row_number){
 		echo mysql_result($GroupDocuments,0,'name');
+	}
+}
+?>
+
+<?php
+function getNumDownload($id_document, $pravo, $database_pravo){
+	mysql_select_db($database_pravo, $pravo);
+	$query_GroupDocuments = sprintf("SELECT count(*) as nb FROM download WHERE
+									id_document = %s", 
+							GetSQLValueString($id_document, "int"));
+	$GroupDocuments = mysql_query($query_GroupDocuments, $pravo) or die(mysql_error());
+	//$row_GroupDocuments = mysql_fetch_assoc($GroupDocuments);
+	//$tmp_number=0;
+	$row_number =  mysql_num_rows($GroupDocuments);
+	if($row_number){
+		echo mysql_result($GroupDocuments,0,'nb');
 	}
 }
 ?>
