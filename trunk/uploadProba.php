@@ -1,5 +1,5 @@
 <?php
-$upload_dir = "C:/wamp/www/pravo.org.mk1/download/laws"; // Directory for file storing
+$upload_dir = "download/laws"; // Directory for file storing
                                             // filesystem path
 
 
@@ -15,11 +15,10 @@ $web_upload_dir = "pravo.org.mk1/download/laws"; // Directory for file storing
    web_upload_dir is /files/upload
 */
 
-
 // testing upload dir 
 // remove these lines if you're shure 
 // that your upload dir is really writable to PHP scripts
-/*$tf = $upload_dir.'/'.md5(rand()).".test";
+$tf = $upload_dir.'/'.md5(rand()).".test";
 $f = @fopen($tf, "w");
 if ($f == false) {
     die("Fatal error! {$upload_dir} is not writable. Set 'chmod 777 {$upload_dir}'
@@ -29,7 +28,7 @@ if ($f == false) {
 }
 fclose($f);
 unlink($tf);
-*/
+
 // end up upload dir testing 
 
 
@@ -39,13 +38,14 @@ if (isset($_POST['fileframe']))
 {
     $result = 'ERROR';
     $result_msg = 'No FILE field found';
-
+	
     if (isset($_FILES['file']))  // file was send from browser
     {
         if ($_FILES['file']['error'] == UPLOAD_ERR_OK)  // no error
         {
             $filename = $_FILES['file']['name']; // file name 
-            move_uploaded_file($_FILES['file']['tmp_name'], $upload_dir.'/'.$filename);
+			
+            move_uploaded_file($_FILES['file']['tmp_name'], $upload_dir.'/'. basename( $_FILES['file']['name']));
             // main action -- move uploaded file to $upload_dir 
             $result = 'OK';
         }
@@ -90,7 +90,7 @@ if (isset($_POST['fileframe']))
 // FILEFRAME section END
 
 
-
+/*
 // just userful functions
 // which 'quotes' all HTML-tags and special symbols 
 // from user input 
@@ -161,6 +161,7 @@ if (isset($_COOKIE['msg']) && $_COOKIE['msg'] != '')
     // clearing cookie, we're not going to display same message several times
     setcookie('msg', ''); 
 } 
+*/
 ?>
 <!-- Beginning of main page -->
 <html><head>
@@ -175,7 +176,7 @@ if (isset($msg)) // this is special section for outputing message
 <p>File will begin to upload just after selection. </p>
 <p>You may write file description, while you file is being uploaded.</p>
 
-<form action="<?=$PHP_SELF?>" target="upload_iframe" method="post" enctype="multipart/form-data">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" target="upload_iframe" method="post" enctype="multipart/form-data">
 <input type="hidden" name="fileframe" value="true">
 <!-- Target of the form is set to hidden iframe -->
 <!-- From will send its post data to fileframe section of 
@@ -194,13 +195,13 @@ function jsUpload(upload_field)
     // everything down to line
     // upload_field.form.submit();
 
-    var re_text = /\.txt|\.xml|\.zip|\.pdf|\.png/i;
+    var re_text = /\.gif|\.jpg|\.swf|\.pdf|\.png/i;
     var filename = upload_field.value;
 
     /* Checking file type */
     if (filename.search(re_text) == -1)
     {
-        alert("File does not have text(txt, xml, zip) extension");
+        alert("File does not have text(gif, jpg, swf, png, pdf) extension");
         upload_field.form.reset();
         return false;
     }
@@ -211,7 +212,7 @@ function jsUpload(upload_field)
     return true;
 }
 </script>
-<iframe name="upload_iframe" style="width: 400px; height: 100px; display: none;">
+<iframe name="upload_iframe" style="width: 400px; height: 100px; display: none">
 </iframe>
 <!-- For debugging purposes, it's often useful to remove
      "display: none" from style="" attribute -->
@@ -225,7 +226,7 @@ Upload status:<br>
 File name:<br>
 <input type="text" name="filenamei" id="filenamei" value="none" disabled>
 
-<form action="<?=$PHP_SELF?>" method="POST">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 <!-- one field is "disabled" for displaying-only. Other, hidden one is for 
     sending data -->
 <input type="hidden" name="filename" id="filename">
@@ -238,7 +239,7 @@ File name:<br>
 <input type="submit" id="upload_button" value="save file" disabled>
 </form>
 <br><br>
-<a href="<?=$web_upload_dir?>/upload-log.html">upload-log</a>
+<a href="<?php echo $web_upload_dir; ?>/upload-log.html">upload-log</a>
 <br><br><br>
 
 Example by <a href="http://www.anyexample.com/">AnyExample</a>
