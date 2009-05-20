@@ -33,14 +33,23 @@ function isAuthorized($strUsers, $strGroups, $UserName, $UserGroup) {
   return $isValid; 
 }
 
-$MM_restrictGoTo = "index.php";
+$MM_restrictGoTo = "login.php";
 if (!((isset($_SESSION['MM_Username'])) && (isAuthorized("",$MM_authorizedUsers, $_SESSION['MM_Username'], $_SESSION['MM_UserGroup'])))) {   
   $MM_qsChar = "?";
   $MM_referrer = $_SERVER['PHP_SELF'];
   if (strpos($MM_restrictGoTo, "?")) $MM_qsChar = "&";
-  if (isset($QUERY_STRING) && strlen($QUERY_STRING) > 0) 
+  if (isset($QUERY_STRING) && strlen($QUERY_STRING) > 0)
   $MM_referrer .= "?" . $QUERY_STRING;
-  $MM_restrictGoTo = $MM_restrictGoTo. $MM_qsChar . "accesscheck=" . urlencode($MM_referrer);
+  $http_referer = $_SERVER['HTTP_REFERER'];
+  //trgni go pravo.org.mk od accesscheck stringot
+  $http_referer_array = explode('/', $http_referer);
+  $http_referer_array_count = count($http_referer_array);
+  if ($http_referer_array_count > 1) {
+	  if ($http_referer_array[$http_referer_array_count - 2] == 'admin') $http_referer = 'admin/' . $http_referer_array[$http_referer_array_count - 1];
+	  else 
+	  $http_referer = $http_referer_array[$http_referer_array_count - 1];
+  }
+  $MM_restrictGoTo = $MM_restrictGoTo. $MM_qsChar . "accesscheck=" . urlencode($http_referer);
   header("Location: ". $MM_restrictGoTo); 
   exit;
 }
@@ -71,6 +80,8 @@ if ($totalRows_recordset_document == 1) {
 	$file_size = filesize($path);
 	
 	if ($fp = fopen ($path, "r")) {
+		if (!mysql_query(sprintf("INSERT INTO download (id_document, id_user, downloaded_date) VALUES (%s, %s, '%s')", $row_recordset_document['id_document'], $_SESSION['MM_ID'], date('Y-m-d H:i'))))
+			die('Problem so registracijata na simnuvanjeto: ' . mysql_error());
 		ob_start();
 		header('Content-type: application/pdf');
 		header('Content-Disposition: attachment; filename="'.$row_recordset_document['filename'].'"');
@@ -83,9 +94,11 @@ if ($totalRows_recordset_document == 1) {
 		}
 	
 		fclose($fp);
+		
 		mysql_free_result($recordset_document);
 		mysql_free_result($recordset_doc_type);
-
+		
+		mysql_close($pravo);
 		exit;
 		exit();
 	}

@@ -6,7 +6,9 @@ session_start();
 <?php include("util/misc.php"); ?>
 <?php include("util/login.php"); ?>
 <?php 
-	if(strpos($_SERVER['HTTP_REFERER'],'login.php') == false) { 
+	if(isset($_GET['accesscheck'])) {
+		$_SESSION['referer'] = urldecode($_GET['accesscheck']);
+	} elseif(strpos($_SERVER['HTTP_REFERER'],'login.php') === FALSE) { 
 		$_SESSION['referer'] = $_SERVER['HTTP_REFERER'];
 	}
 ?>
@@ -111,7 +113,7 @@ transition: Fx.Transitions.sineOut
                  <div class="sodrzina">
                   <br />
                   <?php if((!isset( $_SESSION['MM_Username'] )) or (!isset($_SESSION['MM_UserGroup']))){  ?>
-                <form ACTION="<?php echo $loginFormAction; ?>" METHOD="POST" name="form1">
+                <form action="" method="post" name="form1">
                   <table width="337" border="0" align="center" cellspacing="0">
               <tr>
                         <td width="153">Корисничко име:</td>
@@ -141,9 +143,12 @@ transition: Fx.Transitions.sineOut
                       </tr>
                     </table>
                     </form>
-	<?php }else { 
-		 if(isset($_SESSION['referer']))
+	<?php } else { 
+		if(isset($_SESSION['referer'])) {
 			header("Location: ".$_SESSION['referer']); 
+			$_SESSION['referer'] = NULL;
+			unset($_SESSION['referer']);
+		}
 		else 
 			header("Location: index.php"); 
 		
