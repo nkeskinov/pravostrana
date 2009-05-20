@@ -84,8 +84,8 @@ transition: Fx.Transitions.sineOut
    	  </div>
       <div id="horiz-menu" class="moomenu"><!-- InstanceBeginEditable name="Menu" -->
         <ul class="nav">
-          <li class="active"><a href="index.php">Почетна</a></li>
-          <li><a class="topdaddy" href="#">Документи</a>
+          <li><a href="index.php">Почетна</a></li>
+          <li class="active"><a class="topdaddy" href="#">Документи</a>
             <ul>
               <li><a href="documentlaws.php">Закони</a></li>
               <li><a href="#">Анализи</a></li>

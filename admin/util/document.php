@@ -121,7 +121,7 @@ do {
     <tr>
     <tr valign="baseline">
       <td rowspan="2" align="right" valign="top" nowrap>Документ:</td>
-      <td><a href="download.php?id=<?php echo $row_Recordset1['id_document']; ?> "><img src="../images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
+      <td><a href="../download.php?id=<?php echo $row_Recordset1['id_document']; ?> "><img src="../images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
     </tr>
     <tr valign="baseline">
       <td><input type="text" name="filename" value="<?php echo htmlentities($row_Recordset1['filename'], ENT_COMPAT, ''); ?>" size="32"></td>
