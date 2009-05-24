@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_Recordset1" value="name:id_document;datatype:int,name:id_doc_type;datatype:int,name:filename;datatype:string,name:title;datatype:string,name:uploaded_date;datatype:timestamp,name:id_doc_meta;datatype:int,name:id_doc_group;datatype:int,name:description;datatype:blob,name:extension;datatype:string,name:filesize;datatype:int,name:mimetype;datatype:string,name:forcesubscribe;datatype:int,name:published_date;datatype:date,name:id_superdoc;datatype:int,name:created_by;datatype:int" />
+	<infoitem key="UD_DocumentGroups" value="name:id_doc_group;datatype:int,name:id_doc_type;datatype:int,name:id_supergroup;datatype:int,name:name;datatype:string,name:forcesubscribe;datatype:int" />
+	<infoitem key="UD_DocumentTypes" value="name:id_doc_type;datatype:int,name:name;datatype:string,name:directory;datatype:string" />
+</info>

@@ -1,7 +1,10 @@
 <?php
-$upload_dir = "../download/laws"; // Directory for file storing
+if (!isset($_SESSION)) {
+  session_start();
+}
+$upload_dir = "../download/tmp"; // Directory for file storing
                                             // filesystem path
-$web_upload_dir = "pravo.org.mk1/download/laws"; // Directory for file storing
+$web_upload_dir = "download/tmp"; // Directory for file storing
                           // Web-Server dir 
 
 /* upload_dir is filesystem path, something like
@@ -42,7 +45,9 @@ if (isset($_POST['fileframe']))
         if ($_FILES['file']['error'] == UPLOAD_ERR_OK)  // no error
         {
             $filename = $_FILES['file']['name']; // file name 
-			
+			$_SESSION['filename']=$filename;
+			$_SESSION['filetype']=$_FILES['file']['type'];
+			$_SESSION['filesize'] = $_FILES['file']['size'];
             move_uploaded_file($_FILES['file']['tmp_name'], $upload_dir.'/'. basename( $_FILES['file']['name']));
             // main action -- move uploaded file to $upload_dir 
             $result = 'OK';

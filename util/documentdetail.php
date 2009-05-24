@@ -37,7 +37,7 @@ function getSubDocuments($id_document, $pravo, $database_pravo){
 <?php if(mysql_num_rows($SubDocuments)!=0){ ?>
 <table border="0" width="100%" cellspacing="0" cellpadding="0">
 	<tr>
-    <td colspan="3" style="border-bottom:1px solid #f5e6a2; background:#fbf7e0;"><strong>Измени и дополнувања</strong></td>
+    <td colspan="4" style="border-bottom:1px solid #f5e6a2; background:#fbf7e0;"><strong>Измени и дополнувања</strong></td>
   <tr>
   <?php  
 	  do { 	$timestamp = strtotime($row_SubDocuments['published_date']); ?>
@@ -49,14 +49,34 @@ function getSubDocuments($id_document, $pravo, $database_pravo){
             <img src="images/dot1.gif"/>
       <?php }?>
       </td>
-      <td width="73%" valign="top">&nbsp;<?php echo $row_SubDocuments['title']; ?><br>
+      <td width="76%" valign="top">&nbsp;<?php echo $row_SubDocuments['title']; ?><br>
       <span style="color:#666; font-size:11px">&nbsp;&nbsp;<?php echo date("d.m.Y", $timestamp); ?>&nbsp;</span></td>
+      <td width="3%" valign="top">
+      <?php if(isset($_SESSION['MM_UserGroup'])) {
+		if($_SESSION['MM_UserGroup'] =="admin"){ ?>
+      <a href="admin/documents.php?id=<?php echo $row_SubDocuments['id_document']; ?>&edit=true&superdocument=<?php echo $id_document; ?>"><img src="images/edit.png" border="0" width="20" /></a>
+      <?php } }  ?>
+      </td>
       
-      <td width="23%" align="right"><a href="util/download.php?id=<?php echo $row_SubDocuments['id_document']; ?> "><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /><br><span style="font-size:10px; color:#999;"><?php getNumDownload($row_SubDocuments['id_document'], $pravo, $database_pravo); ?> пати спуштено</span></a></td>
+      <td width="17%" align="right"><a href="util/download.php?id=<?php echo $row_SubDocuments['id_document']; ?> "><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /><br><span style="font-size:10px; color:#999;"><?php getNumDownload($row_SubDocuments['id_document'], $pravo, $database_pravo); ?> пати спуштено</span></a></td>
     </tr>
     <?php $tmp_number+=1;} while ($row_SubDocuments = mysql_fetch_assoc($SubDocuments)); ?>
+    <?php if(isset($_SESSION['MM_UserGroup'])) {
+		if($_SESSION['MM_UserGroup'] == "admin"){ ?>
+    <tr onmouseover="this.className='on'" onmouseout="this.className='off'" style="cursor:default;">
+    	<td> <img src="images/dot1.gif"/></td>
+        <td colspan="3"> <a href="admin/documents.php?superdocument=<?php echo $id_document; ?>" ><img src="images/add.png" border="0"  align="absmiddle" /></a> Додадете нови измени и дополнувања</td>
+    </tr>
+    <?php }  } ?>
 </table>
-<?php	} ?>
+<?php	} else {?>
+<?php if(isset($_SESSION['MM_UserGroup'])) {
+		if($_SESSION['MM_UserGroup'] == "admin"){ ?>
+<div>Нема поддокументи на овој документ. Кликнете на плусот за да додадете нови</div>
+<a href="admin/documents.php?superdocument=<?php echo $id_document; ?>" ><img src="images/add.png" border="0" /></a>
+<?php } }  ?>
+<?php } ?>
+
 <?php	}?>
 
 <?php
@@ -91,14 +111,18 @@ function getNumDownload($id_document, $pravo, $database_pravo){
 }
 ?>
 
-<table border="0" align="center" width="100%">
+<table border="0" align="center" width="100%" cellpadding="3">
   <tr>
-    <td colspan="3" style="border-bottom:1px solid #a25852; background:#f5d6d4;"><strong><?php echo $row_DetailRS1['title']; ?></strong></td>
-    
+    <td colspan="3" style="border-bottom:1px solid #a25852; background:#f5d6d4;"><div style="float:left;"><strong><?php echo $row_DetailRS1['title']; ?></strong></div>
+    <div style="float:right;"> <?php if(isset($_SESSION['MM_UserGroup'])) {
+		if($_SESSION['MM_UserGroup'] =="admin"){ ?>
+   <a href="admin/documents.php?id=<?php echo $row_DetailRS1['id_document']; ?>&edit=true"><img src="images/edit.png" border="0" width="20" /></a>
+    <?php } }  ?></div>
+    </td>
   </tr>
   <tr>
-    <td width="27%">Дата на публикување:</td>
-    <td width="53%"><?php if(isset($row_DetailRS1['published_date'])) echo date("d.m.Y",strtotime($row_DetailRS1['published_date'])); ?></td>
+    <td width="30%">Дата на публикување:</td>
+    <td width="50%"><?php if(isset($row_DetailRS1['published_date'])) echo date("d.m.Y",strtotime($row_DetailRS1['published_date'])); ?></td>
     <td width="20%" rowspan="4" align="right"><a href="download.php?id=<?php echo $row_DetailRS1['id_document']; ?>"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a><br><span style="font-size:10px; color:#999;"><?php getNumDownload($row_DetailRS1['id_document'], $pravo, $database_pravo); ?> пати спуштено</span></td>
   </tr>
   <tr>
