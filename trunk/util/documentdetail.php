@@ -58,7 +58,7 @@ function getSubDocuments($id_document, $pravo, $database_pravo){
       <?php } }  ?>
       </td>
       
-      <td width="17%" align="right"><a href="util/download.php?id=<?php echo $row_SubDocuments['id_document']; ?> "><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /><br><span style="font-size:10px; color:#999;"><?php getNumDownload($row_SubDocuments['id_document'], $pravo, $database_pravo); ?> пати спуштено</span></a></td>
+      <td width="17%" align="right"><a href="download.php?id=<?php echo $row_SubDocuments['id_document']; ?> "><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /><br><span style="font-size:10px; color:#999;"><?php getNumDownload($row_SubDocuments['id_document'], $pravo, $database_pravo); ?> пати спуштено</span></a></td>
     </tr>
     <?php $tmp_number+=1;} while ($row_SubDocuments = mysql_fetch_assoc($SubDocuments)); ?>
     <?php if(isset($_SESSION['MM_UserGroup'])) {
