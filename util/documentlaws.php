@@ -118,7 +118,14 @@ function getNumDownload($id_document, $pravo, $database_pravo){
 }
 ?>
 
-
+<?php if(isset($_SESSION['MM_UserGroup'])) {
+		if($_SESSION['MM_UserGroup'] =="admin"){ ?>
+   <div align="center">
+   <form action="admin/documents.php">
+   	<input type="submit" value="Внеси нов" />
+   </form>
+   </div>
+    <?php } }  ?>
 
 <table border="0" width="100%" cellspacing="0">
 <tr>
