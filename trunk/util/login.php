@@ -31,18 +31,13 @@ if (isset($_POST['username_login'])) {
 	$loginStrSurname  = mysql_result($LoginRS,0,'surname');
 	$id_user = mysql_result($LoginRS,0,'id_user');
 	
-	$Group_query = sprintf("select uc.name from user u, user_category uc, user_category_has_user uchu \n"
-    . "where u.id_user = uchu.id_user and uc.id_user_category = uchu.id_user_category\n"
+	$Group_query = sprintf("select uc.name from user u, user_category uc \n"
+    . "where u.id_user_category = uc.id_user_category\n"
     . "and u.id_user = %s ",$id_user);
 	
 	$loginResult = mysql_query($Group_query, $pravo) or die(mysql_error());
    
-	
-	$loginStrGroup = array();
-	while($row = mysql_fetch_array($loginResult,MYSQL_ASSOC)){
-		array_push($loginStrGroup, $row["name"]);	
-	}
-	
+	$loginStrGroup  = mysql_result($loginResult,0,'name');
 
 	$Update_query = sprintf("UPDATE user SET last_login_date = now() where id_user = %s",GetSQLValueString($id_user, "int") );
 	mysql_query($Update_query, $pravo) or die(mysql_error());

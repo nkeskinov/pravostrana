@@ -1,4 +1,30 @@
 <?php
+// *** Restrict Access To Page: Grant or deny access to this page
+function isAuthorized($strUsers, $strGroups, $UserName, $UserGroup) { 
+  // For security, start by assuming the visitor is NOT authorized. 
+  $isValid = False; 
+
+  // When a visitor has logged into this site, the Session variable MM_Username set equal to their username. 
+  // Therefore, we know that a user is NOT logged in if that Session variable is blank. 
+  if (!empty($UserName)) { 
+    // Besides being logged in, you may restrict access to only certain users based on an ID established when they login. 
+    // Parse the strings into arrays. 
+    $arrUsers = Explode(",", $strUsers); 
+    $arrGroups = Explode(",", $strGroups); 
+    if (in_array($UserName, $arrUsers)) { 
+      $isValid = true; 
+    } 
+    // Or, you may restrict access to only certain users based on their username. 
+    if (in_array($UserGroup, $arrGroups)) { 
+      $isValid = true; 
+    } 
+    if (($strUsers == "") && false) { 
+      $isValid = true; 
+    } 
+  } 
+  return $isValid; 
+}
+if (!function_exists("_show_message_color")) {
 function _show_message_color($_message,$_color="")
 	{
 		$bgcolor_table = "";
@@ -13,7 +39,7 @@ function _show_message_color($_message,$_color="")
 		}
 		?><table bgcolor="<?php echo $bgcolor_table?>" width="100%" cellspacing="1" align="center"><tr><td bgcolor="<?php echo $bgcolor_td?>" align="center" valign="middle" ><img src="images/<?php echo $_image?>" align="absmiddle"/>&nbsp;<?php echo $_message?></div></td></tr></table><?php 
 	}
-
+}
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
@@ -44,7 +70,7 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
   return $theValue;
 }
 }
-
+if (!function_exists("cyr2lat")) {
 	function cyr2lat($input){
 			$cyr=array(
     "а","б","в","г","д","ѓ","е","ж","з","ѕ","и","ј","к","л","љ","м","н","њ","о","п","р","с","т","ќ","у","ф","х","ц","ч","џ","ш");
@@ -59,7 +85,8 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 		 }
     	return($input);
     }
-
+}
+if (!function_exists("lat2cyr")) {
 	function lat2cyr($input){
 			$cyr=array(
     "а","б","в","г","д","ѓ","е","ж","з","ѕ","и","ј","к","л","љ","м","н","њ","о","п","р","с","т","ќ","у","ф","х","ц","ч","џ","ш","А","Б","В","Г","Д","Ѓ","Е","Ж","З","Ѕ","И","Ј","К","Л","Љ","М","Н","Њ","О","П","Р","С","Т","Ќ","У","Ф","Х","Ц","Ч","Џ","Ш");
@@ -75,6 +102,8 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
      }
     return($input);
     }
+}
+if (!function_exists("send_mail")) {
 	function send_mail($_from_name,$_from_email,$_to,$_subject,$_message)
 	{
 		# Is the OS Windows or Mac or Linux 
@@ -103,5 +132,6 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 		ini_restore("sendmail_from");
 		return $res;
 	}
+}
 
 ?>

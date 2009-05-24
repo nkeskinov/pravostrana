@@ -10,7 +10,7 @@
                         <td ><input name="username_login" type="text" id="username_login" size="17" /></td>
                     </tr>
                       <tr>
-                        <td>Лозинка:</td>
+                        <td>Лозинка:</td>`
                         <td><input name="password_login" type="password" id="password_login" size="17" /></td>
                       </tr>
                       <tr>
@@ -26,7 +26,7 @@
                         </td>
                       </tr>
                       <tr>
-                        <td colspan="2"><div align="center" class="down">Заборави лозинка? |<a href="register.php?new">Регистрирај се!</a></div></td>
+                        <td colspan="2"><div align="center" class="down">Заборави лозинка? |<a href="../register.php?new">Регистрирај се!</a></div></td>
                       </tr>
                       <tr>
                         <td colspan="2">&nbsp;</td>
@@ -42,7 +42,7 @@
                 
                   <table width="100%" border="0" cellspacing="0">
               		<tr>
-                        <td colspan="2" align="right">Добредојде,  <a href="profile.php" title="Промени ги твоите лични податоци" alt="Промени ги твоите лични податоци"><strong><?php if(isset($_SESSION['MM_Name'])) echo $_SESSION['MM_Name']; ?></strong></a></td>
+                        <td colspan="2" align="right">Добредојде,  <a href="../profile.php" title="Промени ги твоите лични податоци" alt="Промени ги твоите лични податоци"><strong><?php if(isset($_SESSION['MM_Name'])) echo $_SESSION['MM_Name']; ?></strong></a></td>
                     </tr>
                       <tr>
                         <td></td>

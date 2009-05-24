@@ -139,7 +139,7 @@ transition: Fx.Transitions.sineOut
 
  
         <div class="right">
-        <?php include("loginSmall.php"); ?>
+        <?php include("util/loginSmall.php"); ?>
           <div><img src="images/250-250.jpg" width="250" height="250" /></div>
           </div>
 

@@ -1,8 +1,24 @@
-<?php 
-session_start();
-?>
 <?php require_once("../Connections/pravo.php"); ?>
 <?php include("../util/misc.php"); ?>
+<?php
+if (!isset($_SESSION)) {
+  session_start();
+}
+$MM_authorizedUsers = "admin";
+$MM_donotCheckaccess = "false";
+
+$MM_restrictGoTo = "../login.php";
+if (!((isset($_SESSION['MM_Username'])) && (isAuthorized("",$MM_authorizedUsers, $_SESSION['MM_Username'], $_SESSION['MM_UserGroup'])))) {   
+  $MM_qsChar = "?";
+  $MM_referrer = $_SERVER['PHP_SELF'];
+  if (strpos($MM_restrictGoTo, "?")) $MM_qsChar = "&";
+  if (isset($_SERVER['QUERY_STRING']) && strlen($_SERVER['QUERY_STRING']) > 0) 
+  $MM_referrer .= "?" . $_SERVER['QUERY_STRING'];
+  $MM_restrictGoTo = $MM_restrictGoTo. $MM_qsChar . "accesscheck=" . urlencode($MM_referrer);
+  header("Location: ". $MM_restrictGoTo); 
+  exit;
+}
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/CleanAdminTemplate.dwt.php" codeOutsideHTMLIsLocked="false" -->
 <head>
@@ -152,7 +168,7 @@ transition: Fx.Transitions.sineOut
 
  
         <div class="right">
-        <?php include("../loginSmall.php"); ?>
+        <?php include("util/loginSmall.php"); ?>
           <div><img src="../images/250-250.jpg" width="250" height="250" /></div>
           </div>
 
@@ -162,14 +178,4 @@ transition: Fx.Transitions.sineOut
 </div>
 
 </body>
-<!-- InstanceEnd -->
-<!-- TinyMCE -->
-<script type="text/javascript" src="../javaScripts/tiny_mce/tiny_mce.js"></script>
-<script type="text/javascript">
-	tinyMCE.init({
-		mode : "textareas",
-		theme : "simple"
-	});
-</script>
-<!-- /TinyMCE -->
-</html>
+<!-- InstanceEnd --></html>

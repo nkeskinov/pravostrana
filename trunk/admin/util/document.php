@@ -35,22 +35,140 @@ $editFormAction = $_SERVER['PHP_SELF'];
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
+if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
+	mysql_select_db($database_pravo, $pravo);
+	
+	
+	$filetype = $_SESSION['filetype'];
+	$filename = $_SESSION['filename'];
+	$filesize = $_SESSION['filesize'];
+	$ext =  substr(strrpos($filetype,"/"),3);
+	$created_by = isset($_SESSION['MM_ID']) ? $_SESSION['MM_ID'] : 0 ;
+	
+	$published_date = date("Y-m-d", strtotime($_POST['published_date']));
+  $insertSQL = sprintf("INSERT INTO `document` (id_doc_type, filename, title, id_doc_group, `description`, extension, filesize, mimetype, forcesubscribe, published_date, created_by) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                       GetSQLValueString($_POST['id_doc_type'], "int"),
+                       GetSQLValueString($filename, "text"),
+                       GetSQLValueString($_POST['title'], "text"),
+                       GetSQLValueString($_POST['id_doc_group'], "int"),
+                       GetSQLValueString($_POST['description'], "text"),
+                       GetSQLValueString($ext, "text"),
+                       GetSQLValueString($filesize, "int"),
+                       GetSQLValueString($filetype, "text"),
+                       GetSQLValueString(isset($_POST['forcesubscribe']) ? "true" : "", "defined","1","0"),
+                       GetSQLValueString($published_date , "date"),
+                       GetSQLValueString($created_by, "int"));
 
-if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
+  
+  $Result1 = mysql_query($insertSQL, $pravo) or die(mysql_error());
+
+  if($Result1){
+		  	 
+	  	if(isset($_GET['superdocument']) && $_GET['superdocument'] != ""){
+
+				$updateSQL = sprintf("UPDATE `document` SET id_superdoc=%s where id_document = %s",GetSQLValueString($_GET['superdocument'],"int"),GetSQLValueString(mysql_insert_id(),"int"));
+				$Result2 = mysql_query($updateSQL, $pravo) or die(mysql_error());
+				$redirect = "../documentDetail.php?id=".$_GET['superdocument'];
+		
+		}else{
+	  		$redirect = "../documentDetail.php?id=".mysql_insert_id();
+		}
+		header("Location: " .$redirect );
+  }
+}
+
+if ((isset($_POST["MM_update"]))) {
+	 mysql_select_db($database_pravo, $pravo);
+	if($_POST['published_date']!="")
+		$published_date = date("Y-m-d", strtotime($_POST['published_date']));
+	else
+		$published_date="";
+	if(isset($_GET['change']) && $_GET['change']="true"){
+		$DocumentQuery=sprintf("SELECT * FROM document where id_document=%s",GetSQLValueString($_GET['id'],"int"));
+		$Document = mysql_query($DocumentQuery,$pravo) or die(mysql_error());
+		$id_doc_type = mysql_result($Document,0,'id_doc_type');
+		$file = mysql_result($Document, 0, 'filename');
+		$DocTypeQuery_old = sprintf("SELECT * FROM doc_type WHERE id_doc_type=%s", GetSQLValueString($_POST['id_doc_type'],"int"));
+		$DocType_old = mysql_query($DocTypeQuery_old, $pravo) or die(mysql_error());
+		$directory_old = mysql_result($DocType_old,0,'directory');
+		
+		$file_to_unlink = "../download/".$directory_old."/".$file;
+		
+		if(file_exists($file_to_unlink)){
+			unlink($file_to_unlink);
+			$message = "Документот ".$file_to_unlink." e избришан!";
+			_show_message_color($message,'YELLOW');  	
+		}
+	
+	
+	$DocTypeQuery = sprintf("SELECT * FROM doc_type WHERE id_doc_type=%s", GetSQLValueString($_POST['id_doc_type'],"int"));
+	$DocType = mysql_query($DocTypeQuery, $pravo) or die(mysql_error());
+	$directory = mysql_result($DocType,0,'directory');
+	
+	$filetype = $_SESSION['filetype'];
+	$filename = $_SESSION['filename'];
+	$filesize = $_SESSION['filesize'];
+	$ext =  substr(strrpos($filetype,"/"),3);
+	$old = "../download/tmp/".$filename;
+	$new = "../download/".$directory."/".$filename;
+	if(!file_exists($new)){
+		rename($old,$new); //move the file from the tmp folder
+		$message = "Документот ".$new." e закачен!";
+		_show_message_color($message,'YELLOW');  	
+	}
+	}else{
+		$filename = $_POST['filename'];	
+	}
+	$created_by = isset($_SESSION['MM_ID']) ? $_SESSION['MM_ID'] : 0 ;
+	
+	
   $updateSQL = sprintf("UPDATE `document` SET title=%s, published_date=%s, `description`=%s, id_doc_type=%s, id_doc_group=%s, filename=%s, forcesubscribe=%s WHERE id_document=%s",
                        GetSQLValueString($_POST['title'], "text"),
-                       GetSQLValueString($_POST['published_date'], "date"),
+                       GetSQLValueString($published_date, "date"),
                        GetSQLValueString($_POST['description'], "text"),
                        GetSQLValueString($_POST['id_doc_type'], "int"),
                        GetSQLValueString($_POST['id_doc_group'], "int"),
-                       GetSQLValueString($_POST['filename'], "text"),
+                       GetSQLValueString($filename, "text"),
                        GetSQLValueString(isset($_POST['forcesubscribe']) ? "true" : "", "defined","1","0"),
 					   GetSQLValueString($_POST['id_document'], "int"));
 
-  mysql_select_db($database_pravo, $pravo);
+ 
   $Result1 = mysql_query($updateSQL, $pravo) or die(mysql_error());
+  
+  if($Result1){
+			_show_message_color('Документот е успешно изменет!','GREEN');  
+  }
 }
 
+if ((isset($_POST['id_document'])) && ($_POST['id_document'] != "") && (isset($_POST['delete']))) {
+		mysql_select_db($database_pravo, $pravo);
+		$DocumentQuery=sprintf("SELECT * FROM document where id_document=%s",GetSQLValueString($_POST['id_document'],"int"));
+		$Document = mysql_query($DocumentQuery,$pravo) or die(mysql_error());
+		$id_doc_type = mysql_result($Document,0,'id_doc_type');
+		$file = mysql_result($Document, 0, 'filename');
+		$DocTypeQuery_old = sprintf("SELECT * FROM doc_type WHERE id_doc_type=%s", GetSQLValueString($_POST['id_doc_type'],"int"));
+		$DocType_old = mysql_query($DocTypeQuery_old, $pravo) or die(mysql_error());
+		$directory_old = mysql_result($DocType_old,0,'directory');
+		
+		$file_to_unlink = "../download/".$directory_old."/".$file;
+		
+		if(file_exists($file_to_unlink)){
+			unlink($file_to_unlink);
+			$message = "Документот ".$file_to_unlink." e избришан!";
+			_show_message_color($message,'YELLOW');  	
+		}
+	
+  $deleteSQL = sprintf("DELETE FROM `document` WHERE id_document=%s",
+                       GetSQLValueString($_POST['id_document'], "int"));
+
+  
+  $Result1 = mysql_query($deleteSQL, $pravo) or die(mysql_error());
+  if($Result1){
+			_show_message_color('Документот е успешно избришан!','GREEN');  
+			unset($_GET['id']);
+			unset($_GET['edit']);
+  }
+}
 
 $colname_Recordset1 = "-1";
 if (isset($_GET['id'])) {
@@ -75,6 +193,7 @@ $row_DocumentTypes = mysql_fetch_assoc($DocumentTypes);
 $totalRows_DocumentTypes = mysql_num_rows($DocumentTypes);
 
 ?>
+<?php if((isset($_GET['change']) && ($_GET['change']=="true")) || (!(isset($_GET['edit'])) && ($_GET['edit']="true"))) { ?>
 <form method="post" name="form1" target="upload_iframe" action="<?php echo $editFormAction; ?>" enctype="multipart/form-data">
 <table width="100%" align="center">
 <tr>
@@ -89,6 +208,7 @@ $totalRows_DocumentTypes = mysql_num_rows($DocumentTypes);
   </tr>
 </table>
 </form>
+<?php } ?>
 <script type="text/javascript">
 /* This function is called when user selects file in file dialog */
 function jsUpload(upload_field)
@@ -110,6 +230,8 @@ function jsUpload(upload_field)
     }
 
     upload_field.form.submit();
+	document.getElementById('upload_status').style.backgroundColor = "#EEFFEE";
+	document.getElementById('upload_status').style.borderColor = "#00FF00";
     document.getElementById('upload_status').value = "uploading file...";
     upload_field.disabled = true;
     return true;
@@ -133,7 +255,7 @@ function jsUpload(upload_field)
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Дата на публикување:</td>
-      <td><input type="text" name="published_date" id="published_date" value="<?php echo htmlentities($row_Recordset1['published_date'], ENT_COMPAT, ''); ?>"  readonly="1" />        <img src="../javaScripts/jscalendar/img.gif" id="f_trigger_c" style="cursor: pointer; border: 1px solid red;" title="Date selector"
+      <td><input type="text" name="published_date" id="published_date" value="<?php if($row_Recordset1['published_date']!=NULL) echo date("d.m.Y", strtotime(htmlentities($row_Recordset1['published_date'], ENT_COMPAT, ''))); ?>" />        <img src="../javaScripts/jscalendar/img.gif" id="f_trigger_c" style="cursor: pointer; border: 1px solid red;" title="Date selector"
       onmouseover="this.style.background='red';" onMouseOut="this.style.background=''" />
 
       </td>
@@ -166,10 +288,10 @@ do {
 ?>
       </select> </td>
     <tr>
-    <?php if(isset($_GET['id'])) { ?>
+    <?php if(isset($_GET['id']) && isset($_GET['edit'])) { ?>
     <tr valign="baseline">
       <td rowspan="2" align="right" valign="top" nowrap>Документ:</td>
-      <td><a href="../download.php?id=<?php echo $row_Recordset1['id_document']; ?> "><img src="../images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
+      <td><a href="../download.php?id=<?php echo $row_Recordset1['id_document']; ?> "><img src="../images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a>&nbsp;&nbsp;<a href="<?php echo "?".$_SERVER['QUERY_STRING']."&change=true" ?>">замени</a></td>
     </tr>
    
     <tr valign="baseline">
@@ -181,15 +303,22 @@ do {
     <tr valign="baseline">
       <td nowrap align="right">Форсирај претплата:</td>
       <td>
-      <input type="checkbox" name="forcesubscribe" value=""  <?php if (!(strcmp(htmlentities($row_Recordset1['forcesubscribe'], ENT_COMPAT, 'utf-8'),""))) {echo "checked=\"checked\"";} ?> />
+      <input type="checkbox" name="forcesubscribe" value=""  <?php if (!(strcmp(htmlentities($row_Recordset1['forcesubscribe'], ENT_COMPAT, 'utf-8'),"1"))) {echo "checked=\"checked\"";} ?> />
       </td>
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">&nbsp;</td>
-      <td><input type="submit" value="Измени"></td>
+      <td>
+      <?php if(isset($_GET['id'])){ ?>
+      <input type="submit" name="MM_update" value="Измени" >
+      <input type="submit" name="delete" onClick="return confirm('Дали навистина сакате да го избришете документот!')"  value="Бриши" >
+      <?php }else{ ?>
+      <input type="submit" id="upload_button" value="Зачувај" disabled>	
+      <input type="hidden" name="MM_insert" value="form1" />
+      <?php } ?>
+      </td>
     </tr>
   </table>
-  <input type="hidden" name="MM_update" value="form1">
   <input type="hidden" name="id_document" value="<?php echo $row_Recordset1['id_document']; ?>">
 </form>
 <script type="text/javascript">
