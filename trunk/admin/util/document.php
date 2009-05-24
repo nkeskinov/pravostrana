@@ -38,11 +38,21 @@ if (isset($_SERVER['QUERY_STRING'])) {
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 	mysql_select_db($database_pravo, $pravo);
 	
+	$DocTypeQuery = sprintf("SELECT * FROM doc_type WHERE id_doc_type=%s", GetSQLValueString($_POST['id_doc_type'],"int"));
+	$DocType = mysql_query($DocTypeQuery, $pravo) or die(mysql_error());
+	$directory = mysql_result($DocType,0,'directory');
 	
 	$filetype = $_SESSION['filetype'];
 	$filename = $_SESSION['filename'];
 	$filesize = $_SESSION['filesize'];
 	$ext =  substr(strrpos($filetype,"/"),3);
+	$old = "../download/tmp/".$filename;
+	$new = "../download/".$directory."/".$filename;
+	if(!file_exists($new)){
+		rename($old,$new); //move the file from the tmp folder
+		$message = "Документот ".$new." e закачен!";
+		_show_message_color($message,'YELLOW');  	
+	}
 	$created_by = isset($_SESSION['MM_ID']) ? $_SESSION['MM_ID'] : 0 ;
 	
 	$published_date = date("Y-m-d", strtotime($_POST['published_date']));
@@ -83,7 +93,7 @@ if ((isset($_POST["MM_update"]))) {
 		$published_date = date("Y-m-d", strtotime($_POST['published_date']));
 	else
 		$published_date="";
-	if(isset($_GET['change']) && $_GET['change']="true"){
+	if(isset($_GET['change']) && $_GET['change']="true" ){
 		$DocumentQuery=sprintf("SELECT * FROM document where id_document=%s",GetSQLValueString($_GET['id'],"int"));
 		$Document = mysql_query($DocumentQuery,$pravo) or die(mysql_error());
 		$id_doc_type = mysql_result($Document,0,'id_doc_type');
