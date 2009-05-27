@@ -42,7 +42,7 @@
                 
                   <table width="100%" border="0" cellspacing="0">
               		<tr>
-                        <td colspan="2" align="right">Добредојде,  <a href="../profile.php" title="Промени ги твоите лични податоци" alt="Промени ги твоите лични податоци"><strong><?php if(isset($_SESSION['MM_Name'])) echo $_SESSION['MM_Name']; ?></strong></a></td>
+                        <td colspan="2" align="right">Добредојде,  <a href="profile.php" title="Промени ги твоите лични податоци" alt="Промени ги твоите лични податоци"><strong><?php if(isset($_SESSION['MM_Name'])) echo $_SESSION['MM_Name']; ?></strong></a></td>
                     </tr>
                       <tr>
                         <td></td>
