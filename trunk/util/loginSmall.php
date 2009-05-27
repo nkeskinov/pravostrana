@@ -26,7 +26,7 @@
                         </td>
                       </tr>
                       <tr>
-                        <td colspan="2"><div align="center" class="down">Заборави лозинка? |<a href="../register.php?new">Регистрирај се!</a></div></td>
+                        <td colspan="2"><div align="center" class="down">Заборави лозинка? |<a href="register.php?new">Регистрирај се!</a></div></td>
                       </tr>
                       <tr>
                         <td colspan="2">&nbsp;</td>
