@@ -77,7 +77,11 @@ if ($totalRows_recordset_document == 1) {
 		mysql_close($pravo);
 		exit;
 		exit();
+	} else {
+		die('Problem so otvoranje na patekata: ' . $path);
 	}
+} else {
+	die('Nepoznat dokument.');
 }
 
 ?>
