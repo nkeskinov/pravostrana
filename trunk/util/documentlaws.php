@@ -127,6 +127,7 @@ function getNumDownload($id_document, $pravo, $database_pravo){
    </div>
     <?php } }  ?>
 
+<?php include("util/search.php"); ?>
 <table border="0" width="100%" cellspacing="0">
 <tr>
     	<td width="70%">Закони <?php echo ($startRow_Documents + 1) ?> до <?php echo min($startRow_Documents + $maxRows_Documents, $totalRows_Documents) ?> од <?php echo $totalRows_Documents ?></td>
