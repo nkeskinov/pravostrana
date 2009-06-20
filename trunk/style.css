@@ -721,3 +721,15 @@ tr.on {
 tr.off {
 	background:none;
 }
+
+.picture-button-over{
+	background:url(images/picture_button.png);
+
+}
+.picture-button-out{
+	background:none;
+}
+
+.picture-button{
+	width:25px; float:left;
+}

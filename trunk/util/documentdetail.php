@@ -49,23 +49,30 @@ function getSubDocuments($id_document, $pravo, $database_pravo){
             <img src="images/dot1.gif"/>
       <?php }?>
       </td>
-      <td width="76%" valign="top">&nbsp;<?php echo $row_SubDocuments['title']; ?><br>
+      <td width="66%" valign="top">&nbsp;<?php echo $row_SubDocuments['title']; ?><br>
       <span style="color:#666; font-size:11px">&nbsp;&nbsp;<?php echo date("d.m.Y", $timestamp); ?>&nbsp;</span></td>
-      <td width="3%" valign="top">
+      <td width="14%" align="right" valign="top">
+       <div style="padding:3px;">
       <?php if(isset($_SESSION['MM_UserGroup'])) {
 		if($_SESSION['MM_UserGroup'] =="admin"){ ?>
-      <a href="admin/documents.php?id=<?php echo $row_SubDocuments['id_document']; ?>&edit=true&superdocument=<?php echo $id_document; ?>"><img src="images/edit.png" border="0" width="20" /></a>
-      <?php } }  ?>
+         <div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
+         <a href="admin/documents.php?id_document=<?php echo $row_SubDocuments['id_document']; ?>&id_doc_type=<?php echo $row_SubDocuments['id_doc_type']; ?>&delete=true" onClick="return confirm('Дали навистина сакате да го избришете документот!')"><img src="images/delete.png" border="0" title="Бриши" /></a></div><div style="float:left;">
+         <div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
+      <a href="admin/documents.php?id=<?php echo $row_SubDocuments['id_document']; ?>&edit=true&superdocument=<?php echo $id_document; ?>" title="Измени"><img src="images/edit.png" border="0"  /></a
+      ></div></div><?php } }  ?>
+      </div>
       </td>
       
-      <td width="17%" align="right"><a href="download.php?id=<?php echo $row_SubDocuments['id_document']; ?> "><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /><br><span style="font-size:10px; color:#999;"><?php getNumDownload($row_SubDocuments['id_document'], $pravo, $database_pravo); ?> пати спуштено</span></a></td>
+      <td width="16%" align="right"><a href="download.php?id=<?php echo $row_SubDocuments['id_document']; ?> "><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /><br><span style="font-size:10px; color:#999;"><?php getNumDownload($row_SubDocuments['id_document'], $pravo, $database_pravo); ?> пати спуштено</span></a></td>
     </tr>
     <?php $tmp_number+=1;} while ($row_SubDocuments = mysql_fetch_assoc($SubDocuments)); ?>
     <?php if(isset($_SESSION['MM_UserGroup'])) {
 		if($_SESSION['MM_UserGroup'] == "admin"){ ?>
-    <tr onmouseover="this.className='on'" onmouseout="this.className='off'" style="cursor:default;">
+    <tr height="23" onmouseover="this.className='on'" onmouseout="this.className='off'" style="cursor:default;">
     	<td> <img src="images/dot1.gif"/></td>
-        <td colspan="3"> <a href="admin/documents.php?superdocument=<?php echo $id_document; ?>" ><img src="images/add.png" border="0"  align="absmiddle" /></a> Додадете нови измени и дополнувања</td>
+        <td colspan="3" style="padding:3px;"> 
+        <div style="width:26px; height:22px; padding-top:1.5px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
+        <a href="admin/documents.php?superdocument=<?php echo $id_document; ?>" ><img src="images/new.png" border="0"  align="absmiddle" /></a> </div> <a href="admin/documents.php?superdocument=<?php echo $id_document; ?>" >Додадете нови поддокументи</a></td>
     </tr>
     <?php }  } ?>
 </table>
@@ -116,7 +123,10 @@ function getNumDownload($id_document, $pravo, $database_pravo){
     <td colspan="3" style="border-bottom:1px solid #a25852; background:#f5d6d4;"><div style="float:left;"><strong><?php echo $row_DetailRS1['title']; ?></strong></div>
     <div style="float:right;"> <?php if(isset($_SESSION['MM_UserGroup'])) {
 		if($_SESSION['MM_UserGroup'] =="admin"){ ?>
-   <a href="admin/documents.php?id=<?php echo $row_DetailRS1['id_document']; ?>&edit=true"><img src="images/edit.png" border="0" width="20" /></a>
+       <div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
+        <a href="admin/documents.php?id=<?php echo $row_DetailRS1['id_document']; ?>&id_doc_type=<?php echo $row_DetailRS1['id_doc_type']; ?>&delete=true" onClick="return confirm('Дали навистина сакате да го избришете документот!')"><img src="images/delete.png" border="0" title="Бриши"  /></a></div>
+        <div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
+   <a href="admin/documents.php?id=<?php echo $row_DetailRS1['id_document']; ?>&edit=true"><img src="images/edit.png" border="0" title="Измени" /> </a></div>
     <?php } }  ?></div>
     </td>
   </tr>

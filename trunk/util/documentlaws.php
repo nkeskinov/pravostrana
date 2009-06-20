@@ -117,36 +117,69 @@ function getNumDownload($id_document, $pravo, $database_pravo){
 	}
 }
 ?>
-
 <?php if(isset($_SESSION['MM_UserGroup'])) {
 		if($_SESSION['MM_UserGroup'] =="admin"){ ?>
-   <div align="center">
-   <form action="admin/documents.php">
-   	<input type="submit" value="Внеси нов" />
-   </form>
+   <div align="left" style=" margin-left:-5px; height:22px; margin-top:-15px; width:512px;border-bottom:1px solid #a25852; background:#f5d6d4;  padding:3px; padding-top:1px;">
+   <div style="width:26px; height:21px; padding-top:1.5px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
+        <a href="admin/documents.php"><img src="images/new.png" border="0" title="Нов документ" /></a></div>
+        <div style="width:26px; height:21px; padding-top:1.5px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
+        <a href="#"><img src="images/print.png" border="0" title="Печати страна" /></a></div>
+   
    </div>
     <?php } }  ?>
 
 <?php include("util/search.php"); ?>
 <table border="0" width="100%" cellspacing="0">
 <tr>
-    	<td width="70%">Закони <?php echo ($startRow_Documents + 1) ?> до <?php echo min($startRow_Documents + $maxRows_Documents, $totalRows_Documents) ?> од <?php echo $totalRows_Documents ?></td>
-    	<td width="30%" align="right">
-          <table border="0" style="font-size:11px;">
+    	<td width="50%">Закони <?php echo ($startRow_Documents + 1) ?> до <?php echo min($startRow_Documents + $maxRows_Documents, $totalRows_Documents) ?> од <?php echo $totalRows_Documents ?></td>
+    	<td width="50%" align="right">
+          <table border="0" style="font-size:12px;">
             <tr>
-              <td><?php if ($pageNum_Documents > 0) { // Show if not first page ?>
-                  <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, 0, $queryString_Documents); ?>">&lt;&lt;Прва</a>
-                  <?php } // Show if not first page ?></td>
-              <td><?php if ($pageNum_Documents > 0) { // Show if not first page ?>
-                  <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, max(0, $pageNum_Documents - 1), $queryString_Documents); ?>">&lt;Претходна</a>
-                  <?php } // Show if not first page ?></td>
+              
+              <td ><?php if ($pageNum_Documents > 0  ) { // Show if not first page ?>
+                  <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, max(0, $pageNum_Documents - 1), $queryString_Documents); ?>"><img src="images/pPrev.png" border="0"/></a>
+                  <?php }else{ // Show if not first page ?>
                   
-              <td><?php if ($pageNum_Documents < $totalPages_Documents) { // Show if not last page ?>
-                  <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, min($totalPages_Documents, $pageNum_Documents + 1), $queryString_Documents); ?>">Следна&gt;</a>
+                  		<img src="images/pPrevDisabled.png" border="0"/>
+                  <?php } ?></td>
+              <td >
+              	<?php $l=$pageNum_Documents-4;
+					  $h=$pageNum_Documents+4;
+					  //echo "l=".$l;
+					  if($l<0) $l=0;
+					  if($h<7 && $h<$totalPages_Documents) $h=7;
+					  if($h>$totalPages_Documents){
+						  $h=$totalPages_Documents;
+						  $l=$h-7;
+						  if($l<0)$l=0;
+					  }
+					  if ($h >7 && $l>0) { // Show if not first page ?>
+                  <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, 0, $queryString_Documents); ?>"><?php echo '<u>'; echo 1; echo '</u>';?></a>...
+
+				  <?php }
+					for($i=$l;$i<=$h; $i++){
+						
+						if($i == $pageNum_Documents){ 
+							echo "<b>[";
+							echo $i+1;
+							echo "]</b>";
+						}elseif($i<=$h){ ?>
+								<a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, $i, $queryString_Documents); ?>"><?php echo '<u>'; echo $i+1; echo '</u>';?></a>
+						
+						<?php }
+					}
+				?>
+                <?php if ($pageNum_Documents < $totalPages_Documents && ($h-$l)>=7) { // Show if not last page ?>...
+                  <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, $totalPages_Documents, $queryString_Documents); ?>"><?php echo '<u>'; echo $totalPages_Documents+1; echo '</u>';?></a>
                   <?php } // Show if not last page ?></td>
-              <td><?php if ($pageNum_Documents < $totalPages_Documents) { // Show if not last page ?>
-                  <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, $totalPages_Documents, $queryString_Documents); ?>">Последна&gt;&gt;</a>
-                  <?php } // Show if not last page ?></td>
+
+              </td> 
+              <td ><?php if ($pageNum_Documents < $totalPages_Documents) { // Show if not last page ?>
+                  <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, min($totalPages_Documents, $pageNum_Documents + 1), $queryString_Documents); ?>"><img src="images/pNext.png" border="0"/></a>
+                  <?php }else{ ?>
+					  <img src="images/pNextDisabled.png" border="0"/>
+				 <?php }// Show if not last page ?></td>
+              
             </tr>
         </table></td>
     </tr>
@@ -169,6 +202,61 @@ function getNumDownload($id_document, $pravo, $database_pravo){
     <tr><td colspan="2">&nbsp;</td></tr>
     <?php } while ($row_Documents = mysql_fetch_assoc($Documents)); ?>
     
+</table>
+<table border="0" width="100%" cellspacing="0">
+<tr>
+    	<td width="50%">Закони <?php echo ($startRow_Documents + 1) ?> до <?php echo min($startRow_Documents + $maxRows_Documents, $totalRows_Documents) ?> од <?php echo $totalRows_Documents ?></td>
+    	<td width="50%" align="right">
+          <table border="0" style="font-size:12px;">
+            <tr>
+              
+              <td ><?php if ($pageNum_Documents > 0  ) { // Show if not first page ?>
+                  <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, max(0, $pageNum_Documents - 1), $queryString_Documents); ?>"><img src="images/pPrev.png" border="0"/></a>
+                  <?php }else{ // Show if not first page ?>
+                  
+                  		<img src="images/pPrevDisabled.png" border="0"/>
+                  <?php } ?></td>
+              <td >
+              	<?php $l=$pageNum_Documents-4;
+					  $h=$pageNum_Documents+4;
+					  //echo "l=".$l;
+					  if($l<0) $l=0;
+					  if($h<7 && $h<$totalPages_Documents) $h=7;
+					  if($h>$totalPages_Documents){
+						  $h=$totalPages_Documents;
+						  $l=$h-7;
+						  if($l<0)$l=0;
+					  }
+					  if ($h >7 && $l>0) { // Show if not first page ?>
+                  <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, 0, $queryString_Documents); ?>"><?php echo '<u>'; echo 1; echo '</u>';?></a>...
+
+				  <?php }
+					for($i=$l;$i<=$h; $i++){
+						
+						if($i == $pageNum_Documents){ 
+							echo "<b>[";
+							echo $i+1;
+							echo "]</b>";
+						}elseif($i<=$h){ ?>
+								<a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, $i, $queryString_Documents); ?>"><?php echo '<u>'; echo $i+1; echo '</u>';?></a>
+						
+						<?php }
+					}
+				?>
+                <?php if ($pageNum_Documents < $totalPages_Documents && ($h-$l)>=7) { // Show if not last page ?>...
+                  <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, $totalPages_Documents, $queryString_Documents); ?>"><?php echo '<u>'; echo $totalPages_Documents+1; echo '</u>';?></a>
+                  <?php } // Show if not last page ?></td>
+
+              </td> 
+              <td ><?php if ($pageNum_Documents < $totalPages_Documents) { // Show if not last page ?>
+                  <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, min($totalPages_Documents, $pageNum_Documents + 1), $queryString_Documents); ?>"><img src="images/pNext.png" border="0"/></a>
+                  <?php }else{ ?>
+					  <img src="images/pNextDisabled.png" border="0"/>
+				 <?php }// Show if not last page ?></td>
+              
+            </tr>
+        </table></td>
+    </tr>
 </table>
 <?php
 mysql_free_result($Documents);
