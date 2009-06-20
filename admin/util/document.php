@@ -150,13 +150,22 @@ if ((isset($_POST["MM_update"]))) {
   }
 }
 
-if ((isset($_POST['id_document'])) && ($_POST['id_document'] != "") && (isset($_POST['delete']))) {
+if ((isset($_GET['id_document'])) && ($_GET['id_document'] != "") && (isset($_GET['delete']))) {
 		mysql_select_db($database_pravo, $pravo);
-		$DocumentQuery=sprintf("SELECT * FROM document where id_document=%s",GetSQLValueString($_POST['id_document'],"int"));
+		
+		/*$id_doc_type=-1;
+		if((isset($_POST['id_doc_type']))){
+			$id_doc_type=$_POST['id_doc_type'];
+		}elseif((isset($_GET['id_doc_type']))){
+			$id_doc_type=$_GET['id_doc_type'];
+		}*/
+		
+		$DocumentQuery=sprintf("SELECT * FROM document where id_document=%s",GetSQLValueString($_GET['id_document'],"int"));
 		$Document = mysql_query($DocumentQuery,$pravo) or die(mysql_error());
 		$id_doc_type = mysql_result($Document,0,'id_doc_type');
 		$file = mysql_result($Document, 0, 'filename');
-		$DocTypeQuery_old = sprintf("SELECT * FROM doc_type WHERE id_doc_type=%s", GetSQLValueString($_POST['id_doc_type'],"int"));
+		
+		$DocTypeQuery_old = sprintf("SELECT * FROM doc_type WHERE id_doc_type=%s", GetSQLValueString($id_doc_type,"int"));
 		$DocType_old = mysql_query($DocTypeQuery_old, $pravo) or die(mysql_error());
 		$directory_old = mysql_result($DocType_old,0,'directory');
 		
@@ -169,14 +178,14 @@ if ((isset($_POST['id_document'])) && ($_POST['id_document'] != "") && (isset($_
 		}
 	
   $deleteSQL = sprintf("DELETE FROM `document` WHERE id_document=%s",
-                       GetSQLValueString($_POST['id_document'], "int"));
+                       GetSQLValueString($_GET['id_document'], "int"));
 
   
   $Result1 = mysql_query($deleteSQL, $pravo) or die(mysql_error());
   if($Result1){
 			_show_message_color('Документот е успешно избришан!','GREEN');  
-			unset($_GET['id']);
-			unset($_GET['edit']);
+			unset($_GET['id_document']);
+			unset($_GET['delete']);
   }
 }
 
@@ -203,6 +212,25 @@ $row_DocumentTypes = mysql_fetch_assoc($DocumentTypes);
 $totalRows_DocumentTypes = mysql_num_rows($DocumentTypes);
 
 ?>
+<div align="left" style="height:22px; margin-left:-5px;  margin-top:-15px; width:510px; border-bottom:1px solid #a25852; background:#f5d6d4;  padding:3px; padding-top:1px;">
+  <table cellpadding="0" cellspacing="0">
+	<tr>
+  		<td>
+        	 <div style="width:26px; height:21px; padding-top:1.5px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
+  <a href="documents.php"><img src="../images/new.png" border="0" title="Нов документ" /></a></div>
+        </td>
+        <td>
+        	<div style="width:26px; height:21px; padding-top:1.5px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
+        <a href="#"><img src="../images/save.png" border="0" title="Зачувај документ" /></a></div>
+        </td>
+        <td>
+        	<div style="width:26px; height:21px; padding-top:1.5px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
+        <a href="#"><img src="../images/print.png" border="0" title="Печати страна" /></a></div>
+        </td>
+  	</tr>
+  </table>
+  </div>
+   <br />
 <?php if((isset($_GET['change']) && ($_GET['change']=="true")) || (!(isset($_GET['edit'])) && ($_GET['edit']="true"))) { ?>
 <form method="post" name="form1" target="upload_iframe" action="<?php echo $editFormAction; ?>" enctype="multipart/form-data">
 <table width="100%" align="center">
