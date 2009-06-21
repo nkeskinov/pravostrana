@@ -11,9 +11,12 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
 $tmp_number=0;
 ?>
 <table border="0" cellspacing="0" cellpadding="2px">
+  <tr onmouseover="this.className='on'" onmouseout="this.className='off'">
+      <td style="border-bottom:1px dotted #CCC;">&raquo; <a href="documentlaws.php">Сите</a></td>
+    </tr>
   <?php do { ?>
     <tr onmouseover="this.className='on'" onmouseout="this.className='off'">
-      <td style="border-bottom:1px dotted #CCC;"><a href="?id_doc_group=<?php echo $row_Recordset1['id_doc_group']; ?>"><strong><?php echo $row_Recordset1['name']; ?></strong></a></td>
+      <td style="border-bottom:1px dotted #CCC;">&raquo; <a href="?id_doc_group=<?php echo $row_Recordset1['id_doc_group']; ?>"><?php echo $row_Recordset1['name']; ?></a></td>
     </tr>
     <?php } while ($row_Recordset1 = mysql_fetch_assoc($Recordset1)); ?>
 </table>

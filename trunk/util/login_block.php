@@ -10,7 +10,7 @@
                         <td ><input name="username_login" type="text" id="username_login" size="17" /></td>
                     </tr>
                       <tr>
-                        <td>Лозинка:</td>`
+                        <td>Лозинка:</td>
                         <td><input name="password_login" type="password" id="password_login" size="17" /></td>
                       </tr>
                       <tr>

@@ -21,6 +21,22 @@ session_start();
 
 <script type="text/javascript" src="javaScripts/cirillic_converter.js"></script>
 <script type="text/javascript" src="rokmoomenu.js"></script>
+<script language="javascript" type="text/javascript" src="javaScripts/prototype.js"></script><script language="javascript" type="text/javascript" src="javaScripts/autoExpandContract.js"></script>
+ <script type="text/javascript">  
+         // <![CDATA[  
+         document.observe('dom:loaded', function() {  
+             $$('.highlight').each(function(item) {  
+                 item.observe('focus', function(){   
+                     item.style.backgroundColor = "FDFFDE";  
+                 });  
+                 item.observe('blur', function(){   
+                     item.style.backgroundColor = "ffffff";  
+                 });               
+             });  
+             
+         });  
+         //   
+         </script> 
 <script type="text/javascript">
 <!--
 function MM_jumpMenu(targ,selObj,restore){ //v3.0
@@ -157,7 +173,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
                     </div>
                     <div class="right"></div>
                   </div>
-                  <div class="sodrzina" style="border-left:none; border-right:none;">
+                  <div class="sodrzina" style="border-left:none; border-right:none; margin:0; padding:0;">
                     <p><?php include("util/documentlaws.php"); ?>&nbsp;</p>
                   </div>
                 </div></td>
@@ -180,7 +196,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 
  
         <div class="right">
-        <?php include("util/loginSmall.php"); ?>
+        <?php include("util/login_block.php"); ?>
           <div style="width:250px; margin-top:5px; margin-bottom:5px;"><!-- InstanceBeginEditable name="SearchRegion" -->
             <div class="left-block">
                 <div class="title">

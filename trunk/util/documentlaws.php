@@ -69,7 +69,7 @@ $queryString_Documents = sprintf("&totalRows_Documents=%d%s", $totalRows_Documen
 function getSubDocuments($id_document, $pravo, $database_pravo){
 	mysql_select_db($database_pravo, $pravo);
 	$id_doc_type_Documents = "1";
-	$query_SubDocuments = sprintf("SELECT * FROM `document` WHERE id_doc_type = %s and id_superdoc is not null and id_superdoc=%s ORDER BY title ASC", GetSQLValueString($id_doc_type_Documents, "int"),GetSQLValueString($id_document, "int"));
+	$query_SubDocuments = sprintf("SELECT * FROM document left join doc_meta on document.id_doc_meta = doc_meta.id_doc_meta WHERE document.id_doc_type = %s and document.id_superdoc is not null and document.id_superdoc=%s ORDER BY published_date ASC", GetSQLValueString($id_doc_type_Documents, "int"),GetSQLValueString($id_document, "int"));
 	$SubDocuments = mysql_query($query_SubDocuments, $pravo) or die(mysql_error());
 	$row_SubDocuments = mysql_fetch_assoc($SubDocuments);
 	$tmp_number=0;
@@ -87,7 +87,7 @@ function getSubDocuments($id_document, $pravo, $database_pravo){
       <?php }?>
       </td>
       <td width="91%">&nbsp;<?php echo $row_SubDocuments['title']; ?><br>
-      <span style="color:#666; font-size:11px">&nbsp;&nbsp;<?php echo date("d.m.Y", $timestamp); ?>&nbsp;</span></td>
+      <span style="color:#666; font-size:10px">&nbsp;&nbsp;<?php echo date("d.m.Y", $timestamp); ?>&nbsp;|</span><span style="color:#666; font-size:10px"> Сл. весник/година:</span> <span style="font-size:10px;"><?php echo $row_SubDocuments['ordinal']; ?>/<?php echo date("Y",strtotime($row_SubDocuments['date'])); ?></span></td>
       
       <td width="5%" align="right"><a href="download.php?id=<?php echo $row_SubDocuments['id_document']; ?> "><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
     </tr>
@@ -129,7 +129,7 @@ function getNumDownload($id_document, $pravo, $database_pravo){
 }
 ?>
 
-   <div align="left" style=" margin-left:-5px; height:22px; margin-top:-15px; width:512px;border-bottom:1px solid #a25852; background:#f5d6d4;  padding:3px; padding-top:1px;">
+   <div align="left" style="height:22px; margin-top:-15px; width:512px;border-bottom:1px solid #a25852; background:#f5d6d4;  padding:3px; padding-top:1px;">
    <?php if(isset($_SESSION['MM_UserGroup'])) {
 		if($_SESSION['MM_UserGroup'] =="admin"){ ?>
    <div style="width:26px; height:21px; padding-top:1.5px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
@@ -230,8 +230,8 @@ function getNumDownload($id_document, $pravo, $database_pravo){
   	$timestamp = strtotime($row_Documents['uploaded_date']); 
   ?>
     <tr>
-      <td width="95%" style="border-bottom:1px solid #a25852; background:#f5d6d4;"><strong><a href="documentDetail.php?id=<?php echo $row_Documents['id_document']; ?>" title="Видете ги деталите за законот" alt="Видете ги деталите за законот"><?php echo $row_Documents['title']; ?></a></strong><br> <span style="color:#666; font-size:11px">&nbsp;<?php echo date("d.m.Y", $timestamp); ?>&nbsp;<?php echo date("G:i", $timestamp); ?></span> |<span style="color:#666; font-size:11px"> Сл. весник/година:</span> <span style="font-size:11px; font-weight:bold;"><?php echo $row_Documents['ordinal']; ?></span>/<span style="font-size:11px; font-weight:bold;"><?php echo date("Y",strtotime($row_Documents['date'])); ?></span></td>
-      <td width="5%" align="right" style="border-bottom:1px solid #a25852; background:#f5d6d4;"><a href="download.php?id=<?php echo $row_Documents['id_document']; ?>"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
+      <td width="100%" style="border-bottom:1px solid #a25852; background:#fae9e8; padding-left:5px;"><strong><a href="documentDetail.php?id=<?php echo $row_Documents['id_document']; ?>" title="Видете ги деталите за законот" alt="Видете ги деталите за законот"><?php echo $row_Documents['title']; ?></a></strong><br> <span style="color:#666; font-size:11px">&nbsp;<?php echo date("d.m.Y", $timestamp); ?></span> |<span style="color:#666; font-size:11px"> Сл. весник/година:</span> <span style="font-size:11px; font-weight:bold;"><?php echo $row_Documents['ordinal']; ?></span>/<span style="font-size:11px; font-weight:bold;"><?php echo date("Y",strtotime($row_Documents['date'])); ?></span></td>
+      <td width="5%" align="right" style="border-bottom:1px solid #a25852; background:#fae9e8;;"><a href="download.php?id=<?php echo $row_Documents['id_document']; ?>"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
     </tr>
     <tr>
     	<td colspan="2"><?php getSubDocuments($row_Documents['id_document'], $pravo, $database_pravo); ?></td>

@@ -12,7 +12,7 @@ if (isset($_GET['id'])) {
   $colname_DetailRS1 = $_GET['id'];
 }
 mysql_select_db($database_pravo, $pravo);
-$query_DetailRS1 = sprintf("SELECT * FROM `document` WHERE id_document = %s", GetSQLValueString($colname_DetailRS1, "-1"));
+$query_DetailRS1 = sprintf("SELECT * FROM document left join doc_meta on document.id_doc_meta = doc_meta.id_doc_meta WHERE document.id_document = %s", GetSQLValueString($colname_DetailRS1, "-1"));
 $query_limit_DetailRS1 = sprintf("%s LIMIT %d, %d", $query_DetailRS1, $startRow_DetailRS1, $maxRows_DetailRS1);
 $DetailRS1 = mysql_query($query_limit_DetailRS1, $pravo) or die(mysql_error());
 $row_DetailRS1 = mysql_fetch_assoc($DetailRS1);
@@ -29,7 +29,7 @@ $totalPages_DetailRS1 = ceil($totalRows_DetailRS1/$maxRows_DetailRS1)-1;
 function getSubDocuments($id_document, $pravo, $database_pravo){
 	mysql_select_db($database_pravo, $pravo);
 	$id_doc_type_Documents = "1";
-	$query_SubDocuments = sprintf("SELECT * FROM `document` WHERE id_doc_type = %s and id_superdoc is not null and id_superdoc=%s ORDER BY title ASC", GetSQLValueString($id_doc_type_Documents, "int"),GetSQLValueString($id_document, "int"));
+	$query_SubDocuments = sprintf("SELECT * FROM document left join doc_meta on document.id_doc_meta = doc_meta.id_doc_meta WHERE document.id_doc_type = %s and document.id_superdoc is not null and document.id_superdoc=%s ORDER BY published_date ASC", GetSQLValueString($id_doc_type_Documents, "int"),GetSQLValueString($id_document, "int"));
 	$SubDocuments = mysql_query($query_SubDocuments, $pravo) or die(mysql_error());
 	$row_SubDocuments = mysql_fetch_assoc($SubDocuments);
 	$tmp_number=0;
@@ -50,7 +50,7 @@ function getSubDocuments($id_document, $pravo, $database_pravo){
       <?php }?>
       </td>
       <td width="66%" valign="top">&nbsp;<?php echo $row_SubDocuments['title']; ?><br>
-      <span style="color:#666; font-size:11px">&nbsp;&nbsp;<?php echo date("d.m.Y", $timestamp); ?>&nbsp;</span></td>
+      <span style="color:#666; font-size:11px">&nbsp;&nbsp;<?php echo date("d.m.Y", $timestamp); ?>&nbsp;|</span></span><span style="color:#666; font-size:10px"> Сл. весник/година:</span> <span style="font-size:10px;"><?php echo $row_SubDocuments['ordinal']; ?>/<?php echo date("Y",strtotime($row_SubDocuments['date'])); ?></span></td>
       <td width="14%" align="right" valign="top">
        <div style="padding:3px;">
       <?php if(isset($_SESSION['MM_UserGroup'])) {
@@ -120,7 +120,7 @@ function getNumDownload($id_document, $pravo, $database_pravo){
 
 <table border="0" align="center" width="100%" cellpadding="3">
   <tr>
-    <td colspan="3" style="border-bottom:1px solid #a25852; background:#f5d6d4;"><div style="float:left;"><strong><?php echo $row_DetailRS1['title']; ?></strong></div>
+    <td colspan="3" style="border-bottom:1px solid #a25852; background:#f5d6d4;"><div style="float:left; font-size:15px; font-weight:bold;"><?php echo $row_DetailRS1['title']; ?></div>
     <div style="float:right;"> <?php if(isset($_SESSION['MM_UserGroup'])) {
 		if($_SESSION['MM_UserGroup'] =="admin"){ ?>
        <div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
@@ -140,11 +140,15 @@ function getNumDownload($id_document, $pravo, $database_pravo){
     <td><?php echo date("d.m.Y",strtotime($row_DetailRS1['uploaded_date'])); ?></td>
   </tr>
   <tr>
+    <td>Сл. весник/година:</td>
+    <td><?php echo $row_DetailRS1['ordinal']; ?>/<?php echo date("Y",strtotime($row_DetailRS1['date'])); ?></td>
+  </tr>
+  <tr>
     <td>Категорија:</td>
     <td><?php getDocumentCategory($row_DetailRS1['id_doc_group'], $pravo, $database_pravo); ?></td>
   </tr>
   <tr>
-    <td>Краток опис:</td>
+    <td>Забелешка:</td>
     <td><?php echo $row_DetailRS1['description']; ?></td>
   <tr>
     <td colspan="3"><?php getSubDocuments($row_DetailRS1['id_document'], $pravo, $database_pravo); ?></td>
@@ -154,21 +158,7 @@ function getNumDownload($id_document, $pravo, $database_pravo){
 <div align="center">
 <div style="border-top:1px dotted #999; width:95%;" align="center">&nbsp;</div>
 </div>
-<table width="80%" border="0" >
-	<tr>
-    	<td style="padding-left:10px;"><strong>Дискусии околу овој закон</strong></td>
-    </tr>
-	<tr>
-	  <td style="padding:10px; border-bottom:1px solid #f5e6a2; background:#fbf7e0;">
-	    <textarea name="textarea" id="textarea" cols="50" rows="4" style="border:1px solid #f5e6a2;"></textarea>
-        <br /><br />        
-      <div><input type="button" value="Коментирај" style="background-color:#993300; color:#FFFFFF"></div>
-      </td>
-  </tr>
-	<tr>
-	  <td>&nbsp;</td>
-  </tr>
-</table>
+<?php include("document_discussion.php"); ?>
 <?php
 mysql_free_result($DetailRS1);
 ?>
