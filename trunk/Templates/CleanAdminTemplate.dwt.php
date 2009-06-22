@@ -18,7 +18,7 @@ session_start();
 
 
 <script type="text/javascript" src="../mootools.js"></script>
-<script type="text/javascript" src="../JavaScript/cirillic_converter.js"></script>
+<script type="text/javascript" src="../javaScripts/cirillic_converter.js"></script>
 
 <script type="text/javascript" src="../rokmoomenu.js"></script>
 <!-- calendar stylesheet -->

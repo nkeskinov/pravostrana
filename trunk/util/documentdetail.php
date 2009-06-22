@@ -79,8 +79,7 @@ function getSubDocuments($id_document, $pravo, $database_pravo){
 <?php	} else {?>
 <?php if(isset($_SESSION['MM_UserGroup'])) {
 		if($_SESSION['MM_UserGroup'] == "admin"){ ?>
-<div>Нема поддокументи на овој документ. Кликнете на плусот за да додадете нови</div>
-<a href="admin/documents.php?superdocument=<?php echo $id_document; ?>" ><img src="images/add.png" border="0" /></a>
+<div><a href="admin/documents.php?superdocument=<?php echo $id_document; ?>" ><img src="images/new.png" border="0"  align="absmiddle" /></a> </div> <a href="admin/documents.php?superdocument=<?php echo $id_document; ?>" >Додадете нови поддокументи</a>
 <?php } }  ?>
 <?php } ?>
 

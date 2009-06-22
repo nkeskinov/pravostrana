@@ -14,8 +14,9 @@ session_start();
 <!-- TemplateBeginEditable name="doctitle" -->
 <title>pravo.org.mk</title>
 <!-- TemplateEndEditable -->
-<script type="text/javascript" src="../roktools.js"></script>
 
+
+<script type="text/javascript" src="../roktools.js"></script>
 
 <script type="text/javascript" src="../mootools.js"></script>
 
@@ -111,7 +112,7 @@ transition: Fx.Transitions.sineOut
 <!-- TemplateEndEditable -->
 </head>
 
-<body >
+<body>
 
 <div id="wrapper">
 	<div class="header">
