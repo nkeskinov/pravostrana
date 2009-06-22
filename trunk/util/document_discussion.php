@@ -186,7 +186,7 @@ function MM_swapImage() { //v3.0
 </table>
 </form>
 
-</div>
+</div> 
 <?php } ?>
 <div style=" margin-left:5px;">
 <table border="0" width="98%" cellspacing="0">
