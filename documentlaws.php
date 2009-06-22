@@ -14,8 +14,9 @@ session_start();
 <!-- InstanceBeginEditable name="doctitle" -->
 <title>pravo.org.mk</title>
 <!-- InstanceEndEditable -->
-<script type="text/javascript" src="roktools.js"></script>
 
+
+<script type="text/javascript" src="roktools.js"></script>
 
 <script type="text/javascript" src="mootools.js"></script>
 
@@ -119,7 +120,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 <!-- InstanceEndEditable -->
 </head>
 
-<body >
+<body>
 
 <div id="wrapper">
 	<div class="header">

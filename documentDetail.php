@@ -14,8 +14,9 @@ session_start();
 <!-- InstanceBeginEditable name="doctitle" -->
 <title>pravo.org.mk</title>
 <!-- InstanceEndEditable -->
-<script type="text/javascript" src="roktools.js"></script>
 
+
+<script type="text/javascript" src="roktools.js"></script>
 
 <script type="text/javascript" src="mootools.js"></script>
 
@@ -111,7 +112,7 @@ transition: Fx.Transitions.sineOut
 <!-- InstanceEndEditable -->
 </head>
 
-<body >
+<body>
 
 <div id="wrapper">
 	<div class="header">
