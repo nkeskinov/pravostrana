@@ -5,9 +5,9 @@
 session_start();
 } 
  */
-$loginFormAction = $_SERVER['PHP_SELF'];
+$loginFormAction = $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
 if (isset($_GET['accesscheck'])) {
-  $_SESSION['PrevUrl'] = $_GET['accesscheck'];
+  $_SESSION['PrevUrl'] = $_SERVER['HTTP_REFERER'];//$_GET['accesscheck'];
 }
 
 if (isset($_POST['username_login'])) {
@@ -60,7 +60,8 @@ if (isset($_POST['username_login'])) {
     if (isset($_SESSION['PrevUrl']) && false) {
       $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];	
     }
-    //header("Location: " . $MM_redirectLoginSuccess );
+	$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
+    header("Location: " . $MM_redirectLoginSuccess );
   }
   else {
    // header("Location: ". $MM_redirectLoginFailed );

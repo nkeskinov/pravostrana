@@ -14,6 +14,7 @@ if(isset($_SESSION['MM_Name'])){
 	$edit_message="---<br />Изменето од: ".$editBy."<br />Оригинално внесен на: ";
 }
 
+
 mysql_select_db($database_pravo, $pravo);
 $query_Post = sprintf("SELECT post.id_post,`user`.name, `user`.surname, post.date_created, post.content, post.subject, post.date_modified FROM discussion, post, post_category, `user` WHERE discussion.id_discussion=post.id_discussion   AND post_category.id_post_category=discussion.id_post_category AND post.id_user=`user`.id_user  AND discussion.id_document=%s ORDER BY date_created DESC",GetSQLValueString($id_document, "-1"));
 $query_limit_Post = sprintf("%s LIMIT %d, %d", $query_Post, $startRow_Post, $maxRows_Post);
@@ -49,6 +50,8 @@ if ((isset($_POST["DeletePost"])) && ($_POST["DeletePost"] != "")) {
 	$ResultDelete = mysql_query($deleteSQL, $pravo) or die(mysql_error());
 	 if($ResultDelete){
 			_show_message_color('Постот е успешно избришан!','GREEN');  
+			$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
+    		header("Location: " . $MM_redirectLoginSuccess );
   	}
 }
 
@@ -61,6 +64,9 @@ if ((isset($_POST["Comment_edit"])) && ($_POST["Comment_edit"] == "edit")) {
 	 $ResultEdit = mysql_query($editSQL, $pravo) or die(mysql_error());
 	 if($ResultEdit){
 			_show_message_color('Постот е успешно изменет!','GREEN');  
+			$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
+    		header("Location: " . $MM_redirectLoginSuccess );
+			
   	} 
 }
 if ((isset($_POST["Comment_insert"])) && ($_POST["Comment_insert"] == "insert")) {
@@ -70,10 +76,12 @@ if ((isset($_POST["Comment_insert"])) && ($_POST["Comment_insert"] == "insert"))
   $discussionSQL=sprintf("SELECT * from discussion where id_document=%s",GetSQLValueString($colname_DetailRS1, "-1"));
   $discussionResult = mysql_query($discussionSQL, $pravo) or die(mysql_error());
   $discussionFound = mysql_num_rows($discussionResult);
-  $id_discussion = mysql_result($discussionResult,0,'id_discussion');
+  $id_discussion=-1;
+  if($discussionFound)
+  	$id_discussion = mysql_result($discussionResult,0,'id_discussion');
   
   if(!$discussionFound){
-  	$insertSQL = sprintf("INSERT INTO discussion (name, id_post_category, id_user, id_document) VALUES (%s, %s, %s, %s, %s, %s)",
+  	$insertSQL = sprintf("INSERT INTO discussion (name, id_post_category, id_user, id_document) VALUES (%s, %s, %s, %s)",
                        GetSQLValueString($discussionName, "text"),
                        GetSQLValueString(1, "int"),
                        GetSQLValueString($_SESSION['MM_ID'], "int"),
@@ -90,7 +98,10 @@ if ((isset($_POST["Comment_insert"])) && ($_POST["Comment_insert"] == "insert"))
 						GetSQLValueString($id_discussion, "int"),
 						GetSQLValueString("text", "text"));
 	$Result2 = mysql_query($insertPostSQL, $pravo) or die(mysql_error());	
-	
+	if($Result2){
+		$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
+    		header("Location: " . $MM_redirectLoginSuccess );
+  	}
 	if (mysql_error())
 		mysql_query('rollback');
 	else
@@ -104,8 +115,9 @@ if ((isset($_POST["Comment_insert"])) && ($_POST["Comment_insert"] == "insert"))
 						GetSQLValueString("text", "text"));
 	$Result2 = mysql_query($insertPostSQL, $pravo) or die(mysql_error());
 	if($Result2){
-			_show_message_color('Вашиот пост е пратен!','GREEN');  
-  }
+		$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
+    		header("Location: " . $MM_redirectLoginSuccess );
+  	}
   }
   
   
@@ -155,19 +167,19 @@ function MM_swapImage() { //v3.0
 }
 //-->
 </script>
-<body onLoad="MM_preloadImages('images/delete-small.png')">
+<?php if($num_of_posts){ ?>
+	<div style="padding:10px;"><strong>Дискусии околу овој закон</strong</div>
+<?php } ?>
 <?php if(isset($_SESSION['MM_UserGroup'])) { ?>
 <div style="margin-left:5px;">
 <form method="post" name="form_comment" action="<?php echo $editFormAction; ?>">
 <table width="80%" border="0" >
-	<tr>
-    	<td style="padding-left:10px;"><strong>Дискусии околу овој закон</strong></td>
-    </tr>
+	
 	<tr>
 	  <td style="padding:10px; border-bottom:1px solid #f5e6a2; background:#fbf7e0;">
 	    <textarea name="content" id="content" class="highlight expand demoTextarea" cols="50" rows="4" style="border:1px solid #f5e6a2;"><?php if(isset($row_Post1['content'])){ echo $row_Post1['content']; echo '<i><span style="font-size:10px; color:#666;">'.$edit_message.''.date("d.m.Y H:i",strtotime($row_Post1['date_created'])).'</span></i>';}?></textarea>
-        <br /><br />        
-      <div>
+        <br />       
+      <div align="right">
       <?php if(!isset($_POST['EditPost'])){ ?>
       <input name="Submit" type="submit" style="background-color:#993300; color:#FFFFFF" value="Коментирај" />
 	  <input type="hidden" name="Comment_insert" id="Comment_insert" value="insert" />
@@ -176,7 +188,6 @@ function MM_swapImage() { //v3.0
       <input type="hidden" name="document_id" value="<?php echo $row_Post1['id_post']; ?>" />
 	  <input type="hidden" name="Comment_edit" id="Comment_edit" value="edit" />
       <?php } ?>
-      
       </div>
       </td>
   </tr>
@@ -206,9 +217,9 @@ function MM_swapImage() { //v3.0
 		if($_SESSION['MM_UserGroup'] =="admin"){ 
 		?>
 	<form method="post" name="form_post" action="<?php echo $editFormAction; ?>">
-     <div style="vertical-align:middle; width:15px; height:15px; float:left;"><input type="image" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Edit1<?php echo $row_Post['id_post']; ?>','','images/edit-small.png',1)"src="images/edit-small1.png" name="EditPost" border="0" id="Edit1<?php echo $row_Post['id_post']; ?>" value="<?php echo $row_Post['id_post']; ?>" title="Измени"/></div>
+     <div style="vertical-align:middle; width:15px; height:15px; float:left;"><input type="image" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Edit1<?php echo $row_Post['id_post']; ?>','','images/edit-small.png',1)"src="images/edit-small1.png" name="EditPost" border="0" id="Edit1<?php echo $row_Post['id_post']; ?>" value="<?php echo $row_Post['id_post']; ?>" title="Измени"/></div>
       
-      <div style="vertical-align:middle; width:15px; height:15px; float:left;"><input type="image" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image1<?php echo $row_Post['id_post']; ?>','','images/delete-small.png',1)" src="images/delete-small1.png" name="DeletePost" border="0" id="Image1<?php echo $row_Post['id_post']; ?>" value="<?php echo $row_Post['id_post']; ?>" title="Бриши" onClick="return confirm('Дали навистина сакате да го избришете документот!')"/></div>
+      <div style="vertical-align:middle; width:15px; height:15px; float:left;"><input type="image" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image1<?php echo $row_Post['id_post']; ?>','','images/delete-small.png',1)" src="images/delete-small1.png" name="DeletePost" border="0" id="Image1<?php echo $row_Post['id_post']; ?>" value="<?php echo $row_Post['id_post']; ?>" title="Бриши" onClick="return confirm('Дали навистина сакате да го избришете документот!')"/></div>
       </form>
       <?php } } ?>
       
