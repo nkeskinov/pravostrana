@@ -122,21 +122,23 @@ transition: Fx.Transitions.sineOut
       <div id="horiz-menu" class="moomenu"><!-- InstanceBeginEditable name="Menu" -->
         <ul class="nav">
           <li><a href="index.php">Почетна</a></li>
-          <li class="active"><a class="topdaddy" href="#">Документи</a>
-            <ul>
-              <li><a href="documentlaws.php">Закони</a></li>
-              <li><a href="#">Анализи</a></li>
-              <li><a href="#">Прописи</a></li>
-            </ul>
+          <li class="active"><a class="topdaddy" href="documentlaws.php">Закони</a></li>
+          <li><a href="#">Анализи</a></li>
+          <li><a href="#">Прописи</a></li>
+          <li><a href="#">Судска Пракса</a>
+           <ul>
+            <li><a href="#">Студентска</a></li>
+            <li><a href="#">Непозната</a></li>
+           </ul>
           </li>
-          <li><a href="#">Судска Пракса</a></li>
           <li><a href="#">Форум</a></li>
           <li><a href="#">Новости</a></li>
           <li><a href="#">Контакт</a></li>
         </ul>
       <!-- InstanceEndEditable -->
         <div id="menu"></div>
-       <div id="mapMenu"><!-- InstanceBeginEditable name="SiteMap" -->Почетна &gt;<!-- InstanceEndEditable --></div> 
+       <div id="mapMenu"><!-- InstanceBeginEditable name="SiteMap" -->
+       <a href="index.php">Почетна</a> &nbsp; &raquo; <a href="index.php">Почетна</a><!-- InstanceEndEditable --></div> 
       </div>
 	</div>
     
@@ -154,8 +156,8 @@ transition: Fx.Transitions.sineOut
                     </div>
                     <div class="right"></div>
                   </div>
-                  <div class="sodrzina">
-                    <p>Текст </p>
+                  <div class="sodrzina" style="padding-left:-25px; padding-top:10px; margin-bottom:-20px; ">
+                    <?php include("util/documents_by_category.php"); ?>
                   </div>
                 </div></td>
                 <td valign="top"><div class="right-block-bigger">
@@ -190,7 +192,7 @@ transition: Fx.Transitions.sineOut
  
         <div class="right">
         <?php include("util/login_block.php"); ?>
-          <div style="width:250px; margin-top:5px; margin-bottom:5px;"><!-- InstanceBeginEditable name="SearchRegion" -->SearchRegion<!-- InstanceEndEditable --></div>
+          <div style="width:250px; margin-top:5px; margin-bottom:5px;"><!-- InstanceBeginEditable name="SearchRegion" --><!-- InstanceEndEditable --></div>
          &nbsp;
           <div><img src="images/250-250.jpg" width="250" height="250" />
           </div>

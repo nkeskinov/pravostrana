@@ -122,14 +122,15 @@ transition: Fx.Transitions.sineOut
       <div id="horiz-menu" class="moomenu"><!-- TemplateBeginEditable name="Menu" -->
         <ul class="nav">
           <li class="active"><a href="index.php">Почетна</a></li>
-          <li><a class="topdaddy" href="#">Документи</a>
-            <ul>
-              <li><a href="documentlaws.php">Закони</a></li>
-              <li><a href="#">Анализи</a></li>
-              <li><a href="#">Прописи</a></li>
-            </ul>
+          <li><a class="topdaddy" href="documentlaws.php">Закони</a></li>
+          <li><a href="#">Анализи</a></li>
+          <li><a href="#">Прописи</a></li>
+          <li><a href="#">Судска Пракса</a>
+           <ul>
+            <li><a href="#">Студентска</a></li>
+            <li><a href="#">Непозната</a></li>
+           </ul>
           </li>
-          <li><a href="#">Судска Пракса</a></li>
           <li><a href="#">Форум</a></li>
           <li><a href="#">Новости</a></li>
           <li><a href="#">Контакт</a></li>
