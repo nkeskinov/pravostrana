@@ -12,9 +12,12 @@ session_start();
 <link href="style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="images/favicon1.png" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>pravo.org.mk</title>
+<title>Pravo.org.mk | Закони</title>
 <!-- InstanceEndEditable -->
-
+<link href="YUI/2.6.0/build/fonts/fonts-min.css" rel="stylesheet" type="text/css" />
+<link href="YUI/2.6.0/build/container/assets/skins/sam/container.css" rel="stylesheet" type="text/css" />
+<script src="YUI/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
+<script src="YUI/2.6.0/build/container/container-min.js" type="text/javascript"></script>
 
 <script type="text/javascript" src="roktools.js"></script>
 
@@ -128,23 +131,26 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
    	    <div id="logoText"><img src="images/banner.png" /></div>
    	  </div>
       <div id="horiz-menu" class="moomenu"><!-- InstanceBeginEditable name="Menu" -->
-        <ul class="nav">
-          <li ><a href="index.php">Почетна</a></li>
-          <li class="active"><a class="topdaddy" href="#">Документи</a>
-            <ul>
-              <li><a href="documentlaws.php">Закони</a></li>
-              <li><a href="#">Анализи</a></li>
-              <li><a href="#">Прописи</a></li>
-            </ul>
+         <ul class="nav">
+          <li><a href="index.php">Почетна</a></li>
+          <li class="active"><a class="topdaddy" href="documentlaws.php">Закони</a></li>
+          <li><a href="#">Анализи</a></li>
+          <li><a href="#">Прописи</a></li>
+          <li><a href="#">Судска Пракса</a>
+           <ul>
+            <li><a href="#">Студентска</a></li>
+            <li><a href="#">Непозната</a></li>
+           </ul>
           </li>
-          <li><a href="#">Судска Пракса</a></li>
           <li><a href="#">Форум</a></li>
           <li><a href="#">Новости</a></li>
           <li><a href="#">Контакт</a></li>
         </ul>
       <!-- InstanceEndEditable -->
         <div id="menu"></div>
-       <div id="mapMenu"><!-- InstanceBeginEditable name="SiteMap" -->Документи &gt; Закони<!-- InstanceEndEditable --></div> 
+        <div id="mapMenu">
+       <!-- InstanceBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна&nbsp;&nbsp;</a>&nbsp;&raquo;&nbsp;</td><td>Закони&nbsp;&raquo;</td></tr></table> <!-- InstanceEndEditable -->
+       </div>
       </div>
 	</div>
     
@@ -199,17 +205,10 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
         <div class="right">
         <?php include("util/login_block.php"); ?>
           <div style="width:250px; margin-top:5px; margin-bottom:5px;"><!-- InstanceBeginEditable name="SearchRegion" -->
-            <div class="left-block">
-                <div class="title">
-                    <div class="left"></div>
-                    <div class="middle"><div class="text">Пребарување</div></div>
-                    <div class="right"></div>
-                </div>
-                 <div class="sodrzina" style="background:#fbf7e0;">
+            
                    <?php include("util/search_reduced.php"); ?>
                     
-              </div>
-            </div>
+              
 			
           <!-- InstanceEndEditable --></div>
          &nbsp;

@@ -14,7 +14,10 @@ session_start();
 <!-- TemplateBeginEditable name="doctitle" -->
 <title>pravo.org.mk</title>
 <!-- TemplateEndEditable -->
-
+<link href="YUI/2.6.0/build/fonts/fonts-min.css" rel="stylesheet" type="text/css" />
+<link href="YUI/2.6.0/build/container/assets/skins/sam/container.css" rel="stylesheet" type="text/css" />
+<script src="YUI/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
+<script src="YUI/2.6.0/build/container/container-min.js" type="text/javascript"></script>
 
 <script type="text/javascript" src="../roktools.js"></script>
 
@@ -137,7 +140,9 @@ transition: Fx.Transitions.sineOut
         </ul>
       <!-- TemplateEndEditable -->
         <div id="menu"></div>
-       <div id="mapMenu"><!-- TemplateBeginEditable name="SiteMap" -->Почетна &gt;<!-- TemplateEndEditable --></div> 
+        <div id="mapMenu">
+       <!-- TemplateBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp; &raquo;&nbsp;&nbsp;</td><td><a href="documentlaws.php">Закони</a>&nbsp; &raquo;&nbsp;</td><td> Детален опис на законот</td></tr></table><!-- TemplateEndEditable -->
+       </div>
       </div>
 	</div>
     

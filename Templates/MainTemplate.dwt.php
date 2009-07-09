@@ -12,8 +12,13 @@ session_start();
 <link href="../style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="../images/favicon1.png" />
 <!-- TemplateBeginEditable name="doctitle" -->
-<title>pravo.org.mk</title>
+<title>Pravo.org.mk</title>
 <!-- TemplateEndEditable -->
+<link href="YUI/2.6.0/build/fonts/fonts-min.css" rel="stylesheet" type="text/css" />
+<link href="YUI/2.6.0/build/container/assets/skins/sam/container.css" rel="stylesheet" type="text/css" />
+<script src="YUI/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
+<script src="YUI/2.6.0/build/container/container-min.js" type="text/javascript"></script>
+
 <script type="text/javascript" src="../roktools.js"></script>
 
 <script type="text/javascript" src="../javaScripts/cirillic_converter.js"></script>
@@ -68,28 +73,29 @@ transition: Fx.Transitions.sineOut
    	  <div class="header-top">
    	    <div id="logoText"><img src="../images/banner.png" /></div>
    	  </div>
-      <div id="horiz-menu" class="moomenu">
 
-  		
+      <div id="horiz-menu" class="moomenu">
         <ul class="nav"><li class="active"><a href="index.php">Почетна</a></li>
-        <li><a class="topdaddy" href="#">Документи</a>
-          <ul>
-        <li><a href="documentlaws.php">Закони</a></li>
-        <li><a href="#">Анализи</a></li>
-        <li><a href="#">Прописи</a></li>
-        </ul></li>
-      
-        <li><a href="#">Судска Пракса</a></li>
-        <li><a href="#">Форум</a></li>
-        <li><a href="#">Новости</a></li>
-        <li><a href="#">Контакт</a></li>
+          <li><a class="topdaddy" href="documentlaws.php">Закони</a></li>
+          <li><a href="#">Анализи</a></li>
+          <li><a href="#">Прописи</a></li>
+          <li><a href="#">Судска Пракса</a>
+           <ul>
+            <li><a href="#">Студентска</a></li>
+            <li><a href="#">Непозната</a></li>
+           </ul>
+          </li>
+          <li><a href="#">Форум</a></li>
+          <li><a href="#">Новости</a></li>
+          <li><a href="#">Контакт</a></li>
         </ul>
 
       	<div id="menu"></div>
-       <div id="mapMenu">Почетна &gt;</div> 
+       <table><tr><td><div id="mapMenu">Почетна &raquo;</div> </td></tr></table>
+       </div>
       </div>
-	</div>
-    
+
+
     <div class="mainBody">
    	  <div class="content">
             <div><img src="../images/726-90.jpg" width="728" height="90" /></div>
@@ -159,7 +165,7 @@ transition: Fx.Transitions.sineOut
 
  
         <div class="right">
-        <?php include("util/loginSmall.php"); ?>
+        <?php include("util/login_block.php"); ?>
           <div><img src="../images/250-250.jpg" width="250" height="250" /></div>
           </div>
 

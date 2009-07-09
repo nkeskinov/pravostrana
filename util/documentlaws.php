@@ -66,7 +66,7 @@ $queryString_Documents = sprintf("&totalRows_Documents=%d%s", $totalRows_Documen
 
 ?>
 <?php
-function getSubDocuments($id_document, $pravo, $database_pravo){
+function getSubDocuments($id_document, $pravo, $database_pravo,$gid){
 	mysql_select_db($database_pravo, $pravo);
 	$id_doc_type_Documents = "1";
 	$query_SubDocuments = sprintf("SELECT * FROM document left join doc_meta on document.id_doc_meta = doc_meta.id_doc_meta WHERE document.id_doc_type = %s and document.id_superdoc is not null and document.id_superdoc=%s ORDER BY published_date ASC", GetSQLValueString($id_doc_type_Documents, "int"),GetSQLValueString($id_document, "int"));
@@ -75,6 +75,8 @@ function getSubDocuments($id_document, $pravo, $database_pravo){
 	$tmp_number=0;
 ?>
 <?php if(mysql_num_rows($SubDocuments)!=0){ ?>
+
+
 <table border="0" width="100%" cellspacing="0" cellpadding="0">
   <?php  
 	  do { 	$timestamp = strtotime($row_SubDocuments['published_date']); ?>
@@ -89,7 +91,7 @@ function getSubDocuments($id_document, $pravo, $database_pravo){
       <td width="91%">&nbsp;<?php echo $row_SubDocuments['title']; ?><br>
       <span style="color:#666; font-size:10px">&nbsp;&nbsp;<?php echo date("d.m.Y", $timestamp); ?>&nbsp;|</span><span style="color:#666; font-size:10px"> Сл. весник/година:</span> <span style="font-size:10px;"><?php echo $row_SubDocuments['ordinal']; ?>/<?php echo date("Y",strtotime($row_SubDocuments['date'])); ?></span></td>
       
-      <td width="5%" align="right"><a href="download.php?id=<?php echo $row_SubDocuments['id_document']; ?> "><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
+      <td width="5%" align="right"><a href="documentDetail.php?id=<?php echo $id_document; ?>&gid=<?php echo $gid; ?>" title="Преземи го документот"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
     </tr>
     <?php $tmp_number+=1;} while ($row_SubDocuments = mysql_fetch_assoc($SubDocuments)); ?>
 </table>
@@ -230,11 +232,11 @@ function getNumDownload($id_document, $pravo, $database_pravo){
   	$timestamp = strtotime($row_Documents['uploaded_date']); 
   ?>
     <tr>
-      <td width="100%" style="border-bottom:1px solid #a25852; background:#fae9e8; padding-left:5px;"><strong><a href="documentDetail.php?id=<?php echo $row_Documents['id_document']; ?>&gid=<?php echo $row_Documents['id_doc_group']; ?>" title="Видете ги деталите за законот" alt="Видете ги деталите за законот"><span style="font-variant:small-caps; font-weight:bolder; font-size:15px; "><?php echo $row_Documents['title']; ?></span></a></strong><br> <span style="color:#666; font-size:11px">&nbsp;<?php echo date("d.m.Y", $timestamp); ?></span> |<span style="color:#666; font-size:11px"> Сл. весник/година:</span> <span style="font-size:11px; font-weight:bold;"><?php echo $row_Documents['ordinal']; ?></span>/<span style="font-size:11px; font-weight:bold;"><?php echo date("Y",strtotime($row_Documents['date'])); ?></span></td>
-      <td width="5%" align="right" style="border-bottom:1px solid #a25852; background:#fae9e8;;"><a href="download.php?id=<?php echo $row_Documents['id_document']; ?>"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
+      <td width="100%" style="border-bottom:1px solid #a25852; background:#fae9e8; padding-left:5px;"><strong><a href="documentDetail.php?id=<?php echo $row_Documents['id_document']; ?>&gid=<?php echo $row_Documents['id_doc_group']; ?>" title="Видете ги деталите за законот" ><span style="font-variant:small-caps; font-weight:bolder; font-size:15px; "><?php echo $row_Documents['title']; ?></span></a></strong><br> <span style="color:#666; font-size:11px">&nbsp;<?php echo date("d.m.Y", $timestamp); ?></span> |<span style="color:#666; font-size:11px"> Сл. весник/година:</span> <span style="font-size:11px; font-weight:bold;"><?php echo $row_Documents['ordinal']; ?></span>/<span style="font-size:11px; font-weight:bold;"><?php echo date("Y",strtotime($row_Documents['date'])); ?></span></td>
+      <td width="5%" align="right" style="border-bottom:1px solid #a25852; background:#fae9e8;;"><a href="documentDetail.php?id=<?php echo $row_Documents['id_document']; ?>&gid=<?php echo $row_Documents['id_doc_group']; ?>" title="Преземи го документот"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
     </tr>
     <tr>
-    	<td colspan="2"><?php getSubDocuments($row_Documents['id_document'], $pravo, $database_pravo); ?></td>
+    	<td colspan="2"><?php getSubDocuments($row_Documents['id_document'], $pravo, $database_pravo,$row_Documents['id_doc_group']); ?></td>
     </tr>
     <tr>
     	<td  style="border-bottom:1px solid #f5e6a2; background:#fbf7e0;" colspan="2">категорија: <?php getDocumentCategory($row_Documents['id_doc_group'], $pravo, $database_pravo); ?></td>
@@ -287,7 +289,7 @@ function getNumDownload($id_document, $pravo, $database_pravo){
                   <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, $totalPages_Documents, $queryString_Documents); ?>"><?php echo '<u>'; echo $totalPages_Documents+1; echo '</u>';?></a>
                   <?php } // Show if not last page ?></td>
 
-            </td> 
+
               <td ><?php if ($pageNum_Documents < $totalPages_Documents) { // Show if not last page ?>
                   <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, min($totalPages_Documents, $pageNum_Documents + 1), $queryString_Documents); ?>"><img src="images/pNext.png" border="0"/></a>
                   <?php }else{ ?>
@@ -298,6 +300,9 @@ function getNumDownload($id_document, $pravo, $database_pravo){
         </table></td>
     </tr>
 </table>
+
+
+
 <?php
 mysql_free_result($Documents);
 ?>
