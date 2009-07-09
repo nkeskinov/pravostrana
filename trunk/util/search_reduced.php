@@ -66,42 +66,91 @@ function popUpWindow(URLStr, left, top, width, height)
 
 
 </script>
-<form action="documentlaws.php" method="get">
-<table width="240" border="0" cellpadding="1" cellspacing="0" >
-<tr>
-    <td colspan="2" align="left"><div align="right" style="font-size:11px;"><a href="JavaScript:popUpWindow('help.php?id=1','','',450,'330');">совети за пребарување</a></div></td>
-  </tr>
-  <tr>
-    <td width="55%">&nbsp;</td>
-    <td width="45%">&nbsp;</td>
-  </tr>
-  <tr>
-    <td align="left">Име на законот: </td>
-    <td><input name="name" type="text" size="18" onkeyup="this.form.name.value=toCyr(this.form.name.value)"></td>
-  </tr>
-  <tr>
-    <td align="left">Број / Година: </td>
-    <td><label>
-      <input name="number" type="text" id="number" size="2">
-      /
-      <input name="year" type="text" id="year" size="2">
-      </label></td>
-  </tr>
-  <tr>
-    <td align="left">Клучен збор: </td>
-    <td><label>
-      <input name="keyword" type="text" id="keyword" size="18">
-    </label></td>
-  </tr>
-  <tr>
-    <td align="right">&nbsp;</td>
-    <td><label>
-      <input type="submit" name="button" id="button" value="Барај">
-    </label></td>
-  </tr>
-  <tr>
-    <td align="right">&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
-</table>
-</form>
+
+
+<div class="left-block">
+	
+                <div class="title">
+                    <div class="left"></div>
+                    <div class="middle"><div class="text">Пребарување</div></div>
+                    <div class="right"></div>
+  </div>
+  <div class="sodrzina" style="background:#fbf7e0;">
+    <form action="documentlaws.php" method="get">
+                    <table width="240" border="0" cellpadding="1" cellspacing="0" >
+                    <tr>
+                        <td colspan="2" align="left"><div align="right" style="font-size:11px;"><a href="JavaScript:popUpWindow('help.php?id=1','','',450,'330');">совети за пребарување</a></div></td>
+                      </tr>
+                      <tr>
+                        <td colspan="2">&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td width="55%" align="left">Име на законот: </td>
+                       </tr>
+                       <tr>
+                        <td><input name="name" type="text" size="33" id="idname" onkeyup="this.form.name.value=toCyr(this.form.name.value)"></td>
+                      </tr>
+                      <tr>
+                        <td align="left">Број&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  / &nbsp;Година: </td>
+                      </tr>
+                      <tr>
+                        <td width="55%"><label>
+                          <input name="number" type="text" id="number" size="2">
+                          /
+                          <input name="year" type="text" id="year" size="2">
+                        </label></td>
+                      </tr>
+                      <tr>
+                        <td align="left">Клучен збор: </td>
+                      </tr>
+                      <tr>
+                        <td><label>
+                          <input name="keyword" type="text" id="keyword" size="33">
+                        </label></td>
+                      </tr>
+                      <tr>
+                        <td><label>
+                          <input type="submit" name="button" id="button" value="Барај">
+                        </label></td>
+                      </tr>
+                      <tr>
+                        <td colspan="2" align="right">&nbsp;</td>
+                      </tr>
+                    </table>
+    </form>
+				</div>
+</div>
+<p>&nbsp;</p>
+<script type="text/javascript">
+// BeginWebWidget YUI_Tooltip: contextid1
+
+  (function() { 
+    var cn = document.body.className.toString();
+    if (cn.indexOf('yui-skin-sam') == -1) {
+      document.body.className += " yui-skin-sam";
+    }
+  })();
+  
+  var yuitooltip1 = new YAHOO.widget.Tooltip("yuitooltip1",
+                                            {
+                                              context:"idname", 
+                                              text:"Име на законот." 
+                                            });
+   var yuitooltip2 = new YAHOO.widget.Tooltip("yuitooltip2",
+                                            {
+                                              context:"number", 
+                                              text:"Број на службен весник" 
+                                            });
+	 var yuitooltip3 = new YAHOO.widget.Tooltip("yuitooltip3",
+                                            {
+                                              context:"year", 
+                                              text:"Година на службен весник" 
+                                            });
+	  var yuitooltip4 = new YAHOO.widget.Tooltip("yuitooltip4",
+                                            {
+                                              context:"keyword", 
+                                              text:"Клучен збор" 
+                                            });
+
+// EndWebWidget YUI_Tooltip: contextid1
+  </script>

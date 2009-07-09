@@ -60,8 +60,10 @@ if (isset($_POST['username_login'])) {
     if (isset($_SESSION['PrevUrl']) && false) {
       $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];	
     }
-	$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
-    header("Location: " . $MM_redirectLoginSuccess );
+	if($_SERVER['QUERY_STRING']!=""){
+		$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
+		header("Location: " . $MM_redirectLoginSuccess );
+	}
   }
   else {
    // header("Location: ". $MM_redirectLoginFailed );

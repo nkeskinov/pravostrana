@@ -66,6 +66,8 @@ function popUpWindow(URLStr, left, top, width, height)
 
 
 </script>
+
+
 <form action="documentlaws.php" method="get">
 <table width="100%" border="0">
 <tr>
@@ -110,12 +112,12 @@ function popUpWindow(URLStr, left, top, width, height)
   </tr>
   <tr>
     <td align="left">Име на законот: </td>
-    <td><input name="name" type="text" size="35" onkeyup="this.form.name.value=toCyr(this.form.name.value)"></td>
+    <td><input name="name" id="name" type="text" size="35" onkeyup="this.form.name.value=toCyr(this.form.name.value)"></td>
   </tr>
   <tr>
     <td align="left">Група: </td>
     <td>
-    	<select name="id_doc_group">
+    	<select name="id_doc_group" id="group">
         <option value="0">Изберете група</option>
         <?php 
 do {  
@@ -153,3 +155,43 @@ do {
   </tr>
 </table>
 </form>
+
+<script type="text/javascript">
+// BeginWebWidget YUI_Tooltip: contextid1
+
+  (function() { 
+    var cn = document.body.className.toString();
+    if (cn.indexOf('yui-skin-sam') == -1) {
+      document.body.className += " yui-skin-sam";
+    }
+  })();
+  
+  var yuitooltip1 = new YAHOO.widget.Tooltip("yuitooltip1",
+                                            {
+                                              context:"name", 
+                                              text:"Име на законот" 
+                                            });
+  var yuitooltip1 = new YAHOO.widget.Tooltip("yuitooltip2",
+                                            {
+											  context:"group", 
+                                              text:"Група на која припаѓа законот" 
+                                            });
+   var yuitooltip1 = new YAHOO.widget.Tooltip("yuitooltip3",
+                                            {
+											  context:"number", 
+                                              text:"Број на службен весник" 
+                                            });
+   var yuitooltip1 = new YAHOO.widget.Tooltip("yuitooltip4",
+                                            {
+											  context:"year", 
+                                              text:"Година на службен весник" 
+                                            });
+
+  var yuitooltip1 = new YAHOO.widget.Tooltip("yuitooltip5",
+                                            {
+											  context:"keyword", 
+                                              text:"Клучен збор" 
+                                            });
+
+// EndWebWidget YUI_Tooltip: contextid1
+</script>

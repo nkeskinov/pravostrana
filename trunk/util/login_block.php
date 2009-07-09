@@ -6,12 +6,12 @@
                 <form ACTION="<?php echo $loginFormAction; ?>" METHOD="POST" name="form1">
                   <table width="100%" border="0" cellspacing="0">
               <tr>
-                        <td>Корисничко име:</td>
-                        <td ><input name="username_login" type="text" id="username_login" size="17" /></td>
+                        <td width="88%">Корисничко име:</td>
+                        <td width="12%" ><input name="username_login" type="text" id="username_login" size="16" /></td>
                     </tr>
                       <tr>
                         <td>Лозинка:</td>
-                        <td><input name="password_login" type="password" id="password_login" size="17" /></td>
+                        <td><input name="password_login" type="password" id="password_login" size="16" /></td>
                       </tr>
                       <tr>
                         <td>&nbsp;</td>
@@ -26,7 +26,7 @@
                         </td>
                       </tr>
                       <tr>
-                        <td colspan="2"><div align="center" class="down">Заборави лозинка? |<a href="register.php?new">Регистрирај се!</a></div></td>
+                        <td colspan="2"><div align="center" class="down">Заборави лозинка? | <a href="register.php?new">Регистрирај се!</a></div></td>
                       </tr>
                       <tr>
                         <td colspan="2">&nbsp;</td>
