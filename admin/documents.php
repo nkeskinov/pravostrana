@@ -40,16 +40,7 @@ if (!((isset($_SESSION['MM_Username'])) && (isAuthorized("",$MM_authorizedUsers,
 <!-- calendar stylesheet -->
 
 
-<link rel="stylesheet" type="text/css" media="all" href="../javaScripts/jscalendar/calendar-brown.css" title="summer" />
-  <!-- main calendar program -->
-  <script type="text/javascript" src="../javaScripts/jscalendar/calendar.js"></script>
-
-  <!-- language for the calendar -->
-  <script type="text/javascript" src="../javaScripts/jscalendar/lang/calendar-en.js"></script>
-
-  <!-- the following script defines the Calendar.setup helper function, which makes
-       adding a calendar a matter of 1 or 2 lines of code. -->
-  <script type="text/javascript" src="../javaScripts/jscalendar/calendar-setup.js"></script>
+ 
 <script type="text/javascript">
 
 window.addEvent('domready', function() {
@@ -100,15 +91,16 @@ transition: Fx.Transitions.sineOut
    	  </div>
       <div id="horiz-menu" class="moomenu"><!-- InstanceBeginEditable name="Menu" -->
         <ul class="nav">
-          <li><a href="../index.php">Почетна</a></li>
-          <li class="active"><a class="topdaddy" href="#">Документи</a>
-            <ul>
-              <li><a href="../documentlaws.php">Закони</a></li>
-              <li><a href="#">Анализи</a></li>
-              <li><a href="#">Прописи</a></li>
-            </ul>
+           <li><a href="../index.php">Почетна</a></li>
+          <li class="active"><a class="topdaddy" href="../documentlaws.php">Закони</a></li>
+          <li><a href="#">Анализи</a></li>
+          <li><a href="#">Прописи</a></li>
+          <li><a href="#">Судска Пракса</a>
+           <ul>
+            <li><a href="#">Студентска</a></li>
+            <li><a href="#">Непозната</a></li>
+           </ul>
           </li>
-          <li><a href="#">Судска Пракса</a></li>
           <li><a href="#">Форум</a></li>
           <li><a href="#">Новости</a></li>
           <li><a href="#">Контакт</a></li>

@@ -68,7 +68,7 @@ function popUpWindow(URLStr, left, top, width, height)
 </script>
 
 
-<form action="documentlaws.php" method="get">
+<form action="documentlaws.php" method="get" enctype="application/x-www-form-urlencoded">
 <table width="100%" border="0">
 <tr>
     <td colspan="2" align="left"><div align="right" style="font-size:11px;"><a href="JavaScript:popUpWindow('help.php?id=1','','',450,'330');">совети за пребарување</a></div>
@@ -76,35 +76,36 @@ function popUpWindow(URLStr, left, top, width, height)
     </td>
   </tr>
 <tr>
-    <td colspan="2" align="left"><div><a href="#">А</a> 
-    <a href="#">Б</a> 
-    <a href="#">В</a> 
-    <a href="#">Г</a> 
-    <a href="#">Д</a> 
-    <a href="#">Ѓ</a> 
-    <a href="#">Е</a> 
-    <a href="#">Ж</a> 
-    <a href="#">З</a> 
-    <a href="#">Ѕ</a> 
-    <a href="#">И</a> 
-    <a href="#">Ј</a> 
-    <a href="#">К</a> 
-    <a href="#">Л</a> 
-    <a href="#">Љ</a> 
-    <a href="#">М</a> 
-    <a href="#">Њ</a> 
-    <a href="#">О</a> 
-    <a href="#">П</a> 
-    <a href="#">Р</a> 
-    <a href="#">С</a> 
-    <a href="#">Т</a> 
-    <a href="#">Ќ</a> 
-    <a href="#">У</a> 
-    <a href="#">Ф</a> 
-    <a href="#">Х</a> 
-    <a href="#">Ц</a> 
-    <a href="#">Џ</a> 
-    <a href="#">Ш</a></div></td>
+    <td colspan="2" align="left"><div><a href="documentlaws.php?starts_with=а">А</a> 
+    <a href="documentlaws.php?starts_with=б">Б</a> 
+    <a href="documentlaws.php?starts_with=в">В</a> 
+    <a href="documentlaws.php?starts_with=г">Г</a> 
+    <a href="documentlaws.php?starts_with=д">Д</a> 
+    <a href="documentlaws.php?starts_with=ѓ">Ѓ</a> 
+    <a href="documentlaws.php?starts_with=е">Е</a> 
+    <a href="documentlaws.php?starts_with=ж">Ж</a> 
+    <a href="documentlaws.php?starts_with=з">З</a> 
+    <a href="documentlaws.php?starts_with=ѕ">Ѕ</a> 
+    <a href="documentlaws.php?starts_with=и">И</a> 
+    <a href="documentlaws.php?starts_with=ј">Ј</a> 
+    <a href="documentlaws.php?starts_with=к">К</a> 
+    <a href="documentlaws.php?starts_with=л">Л</a> 
+    <a href="documentlaws.php?starts_with=љ">Љ</a> 
+    <a href="documentlaws.php?starts_with=м">М</a> 
+	<a href="documentlaws.php?starts_with=н">Н</a> 
+    <a href="documentlaws.php?starts_with=њ">Њ</a> 
+    <a href="documentlaws.php?starts_with=о">О</a> 
+    <a href="documentlaws.php?starts_with=п">П</a> 
+    <a href="documentlaws.php?starts_with=р">Р</a> 
+    <a href="documentlaws.php?starts_with=с">С</a> 
+    <a href="documentlaws.php?starts_with=т">Т</a> 
+    <a href="documentlaws.php?starts_with=ќ">Ќ</a> 
+    <a href="documentlaws.php?starts_with=у">У</a> 
+    <a href="documentlaws.php?starts_with=ф">Ф</a> 
+    <a href="documentlaws.php?starts_with=х">Х</a> 
+    <a href="documentlaws.php?starts_with=ц">Ц</a> 
+    <a href="documentlaws.php?starts_with=џ">Џ</a> 
+    <a href="documentlaws.php?starts_with=ш">Ш</a></div></td>
   </tr>
   <tr>
     <td width="24%">&nbsp;</td>
