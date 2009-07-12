@@ -4,13 +4,13 @@
 
 $currentPage = $_SERVER["PHP_SELF"];
 
-$sort_order="asc";
+$sort_order="desc";
 if(isset($_POST['desc']))
 	$sort_order="desc";
 else
 	$sort_order="asc";
 	
-$sort="title";
+$sort="date";
 if(isset($_POST['sort']) && $_POST['sort']!=""){
 	$sort=$_POST['sort'];
 }
@@ -26,14 +26,37 @@ if (isset($_GET['id_doc_group'])) {
   $id_doc_group_Documents = $_GET['id_doc_group'];
 }
 mysql_select_db($database_pravo, $pravo);
-$query_Documents = sprintf("SELECT * FROM document left join doc_meta on document.id_doc_meta = doc_meta.id_doc_meta WHERE document.id_doc_type= %s and document.id_superdoc is null ", GetSQLValueString($id_doc_type_Documents, "int"));
+$query_Documents = sprintf("SELECT DISTINCT document. * , doc_meta. *
+							FROM document
+							LEFT JOIN doc_meta ON document.id_doc_meta = doc_meta.id_doc_meta
+							LEFT JOIN document_has_keyword dhk ON document.id_document = dhk.id_document
+							LEFT JOIN keyword k ON k.id_keyword = dhk.id_keyword
+							WHERE document.id_doc_type =%s
+							AND document.id_superdoc IS NULL ", GetSQLValueString($id_doc_type_Documents, "int"));
 if(isset($_GET['id_doc_group']) && $_GET['id_doc_group']!=0){
 		$query_Documents = sprintf("%s and id_doc_group=%s",$query_Documents,GetSQLValueString($_GET['id_doc_group'], "int"));
 }
 if(isset($_GET['name'])){
-	$query_Documents = sprintf("%s and title like %s",$query_Documents,GetSQLValueString("%".$_GET['name']."%", "text"));
+	$query_Documents = sprintf("%s AND lower(title) LIKE %s",$query_Documents,GetSQLValueString("закон% за ".$_GET['name']."%", "text"));
 }
-
+if(isset($_GET['starts_with'])){
+	$query_Documents = sprintf("%s AND lower(title) LIKE %s",$query_Documents,GetSQLValueString("закон за ".$_GET['starts_with']."\%", "text"));
+}
+if(isset($_GET['keyword'])){
+	$keywords_arr=explode(",", $_GET['keyword']);
+	$keyQuery=" AND ";
+	foreach($keywords_arr as $key){
+		$key1=str_replace("\n","",str_replace("\t","",$key));
+		if(strpos($key1," ")==0){
+			$key1=substr($key1,1);		
+		}
+		$keyQuery.=sprintf("lower(k.val) LIKE %s OR ",GetSQLValueString($key1,"text"));
+	}
+	$keyQuery=substr($keyQuery,0,-3);
+	$query_Documents = sprintf("%s %s",$query_Documents,$keyQuery);
+	
+	//echo $query_Documents;
+}
 $query_limit_Documents = sprintf("%s ORDER BY %s %s LIMIT %d, %d", $query_Documents, $sort,$sort_order,$startRow_Documents, $maxRows_Documents);
 
 $Documents = mysql_query($query_limit_Documents, $pravo) or die(mysql_error());

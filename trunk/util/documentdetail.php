@@ -56,7 +56,7 @@ function getSubDocuments($id_document, $pravo, $database_pravo){
       <?php if(isset($_SESSION['MM_UserGroup'])) {
 		if($_SESSION['MM_UserGroup'] =="admin"){ ?>
          <div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
-         <a href="admin/documents.php?id_document=<?php echo $row_SubDocuments['id_document']; ?>&id_doc_type=<?php echo $row_SubDocuments['id_doc_type']; ?>&delete=true" onClick="return confirm('Дали навистина сакате да го избришете документот!')"><img src="images/delete.png" border="0" title="Бриши" /></a></div><div style="float:left;">
+         <a href="admin/documents.php?id_document=<?php echo $row_SubDocuments['id_document']; ?>&id_doc_type=<?php echo $row_SubDocuments['id_doc_type']; ?>&id_doc_meta=<?php echo $row_SubDocuments['id_doc_meta']; ?>&delete=true" onClick="return confirm('Дали навистина сакате да го избришете документот!')"><img src="images/delete.png" border="0" title="Бриши" /></a></div><div style="float:left;">
          <div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
       <a href="admin/documents.php?id=<?php echo $row_SubDocuments['id_document']; ?>&edit=true&superdocument=<?php echo $id_document; ?>" title="Измени"><img src="images/edit.png" border="0"  /></a
       ></div></div><?php } }  ?>
@@ -123,7 +123,7 @@ function getNumDownload($id_document, $pravo, $database_pravo){
     <div style="float:right;"> <?php if(isset($_SESSION['MM_UserGroup'])) {
 		if($_SESSION['MM_UserGroup'] =="admin"){ ?>
        <div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
-        <a href="admin/documents.php?id=<?php echo $row_DetailRS1['id_document']; ?>&id_doc_type=<?php echo $row_DetailRS1['id_doc_type']; ?>&delete=true" onClick="return confirm('Дали навистина сакате да го избришете документот!')"><img src="images/delete.png" border="0" title="Бриши"  /></a></div>
+        <a href="admin/documents.php?id=<?php echo $row_DetailRS1['id_document']; ?>&id_doc_type=<?php echo $row_DetailRS1['id_doc_type']; ?>&id_doc_meta=<?php echo $row_DetailRS1['id_doc_meta']; ?>&delete=true" onClick="return confirm('Дали навистина сакате да го избришете документот!')"><img src="images/delete.png" border="0" title="Бриши"  /></a></div>
         <div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
    <a href="admin/documents.php?id=<?php echo $row_DetailRS1['id_document']; ?>&edit=true"><img src="images/edit.png" border="0" title="Измени" /> </a></div>
     <?php } }  ?></div>
