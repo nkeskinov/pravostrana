@@ -77,17 +77,17 @@ transition: Fx.Transitions.sineOut
         <ul class="nav">
            <li><a href="../index.php">Почетна</a></li>
           <li class="active"><a class="topdaddy" href="../documentlaws.php">Закони</a></li>
-          <li><a href="#">Анализи</a></li>
-          <li><a href="#">Прописи</a></li>
+         <li><a href="../analysis.php">Анализи</a></li>
+          <li><a href="../regulation.php">Прописи</a></li>
           <li><a href="#">Судска Пракса</a>
            <ul>
-            <li><a href="#">Студентска</a></li>
+            <li><a href="../studentpractice.php">Студентска Пракса</a></li>
             <li><a href="#">Непозната</a></li>
            </ul>
           </li>
-          <li><a href="#">Форум</a></li>
-          <li><a href="#">Новости</a></li>
-          <li><a href="#">Контакт</a></li>
+          <li><a href="../forum.php">Форум</a></li>
+          <li><a href="../news.php">Новости</a></li>
+          <li><a href="../contact.php">Контакт</a></li>
         </ul>
       <!-- TemplateEndEditable -->
         <div id="menu"></div>

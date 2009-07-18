@@ -1,6 +1,4 @@
-<?php 
-session_start();
-?>
+<?php session_start(); ?>
 <?php require_once("Connections/pravo.php"); ?>
 <?php include("util/misc.php"); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -125,18 +123,18 @@ transition: Fx.Transitions.sineOut
       <div id="horiz-menu" class="moomenu"><!-- InstanceBeginEditable name="Menu" -->
         <ul class="nav">
           <li><a href="index.php">Почетна</a></li>
-          <li class="active"><a class="topdaddy" href="documentlaws.php">Закони</a></li>
-          <li><a href="#">Анализи</a></li>
-          <li><a href="#">Прописи</a></li>
+          <li class="active"><a href="documentlaws.php">Закони</a></li>
+          <li><a href="analysis.php">Анализи</a></li>
+          <li><a href="regulation.php">Прописи</a></li>
           <li><a href="#">Судска Пракса</a>
-           <ul>
-            <li><a href="#">Студентска</a></li>
-            <li><a href="#">Непозната</a></li>
-           </ul>
+          	<ul>
+            	<li><a href="studentpractice.php">Студентска Пракса</a></li>
+                <li><a href="#">Непозната</a></li>
+             </ul>
           </li>
-          <li><a href="#">Форум</a></li>
-          <li><a href="#">Новости</a></li>
-          <li><a href="#">Контакт</a></li>
+          <li><a href="forum.php">Форум</a></li>
+          <li><a href="news.php">Новости</a></li>
+          <li><a href="contact.php">Контакт</a></li>
         </ul>
       <!-- InstanceEndEditable -->
         <div id="menu"></div>

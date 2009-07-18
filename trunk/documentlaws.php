@@ -134,17 +134,17 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
          <ul class="nav">
           <li><a href="index.php">Почетна</a></li>
           <li class="active"><a class="topdaddy" href="documentlaws.php">Закони</a></li>
-          <li><a href="#">Анализи</a></li>
-          <li><a href="#">Прописи</a></li>
+          <li><a href="analysis.php">Анализи</a></li>
+          <li><a href="regulation.php">Прописи</a></li>
           <li><a href="#">Судска Пракса</a>
            <ul>
-            <li><a href="#">Студентска</a></li>
+            <li><a href="studentpractice.php">Студентска Пракса</a></li>
             <li><a href="#">Непозната</a></li>
            </ul>
           </li>
-          <li><a href="#">Форум</a></li>
-          <li><a href="#">Новости</a></li>
-          <li><a href="#">Контакт</a></li>
+          <li><a href="forum.php">Форум</a></li>
+          <li><a href="news.php">Новости</a></li>
+          <li><a href="contact.php">Контакт</a></li>
         </ul>
       <!-- InstanceEndEditable -->
         <div id="menu"></div>
@@ -204,13 +204,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
  
         <div class="right">
         <?php include("util/login_block.php"); ?>
-          <div style="width:250px; margin-top:5px; margin-bottom:5px;"><!-- InstanceBeginEditable name="SearchRegion" -->
-            
-                   <?php include("util/search_reduced.php"); ?>
-                    
-              
-			
-          <!-- InstanceEndEditable --></div>
+          <div style="width:250px; margin-top:5px; margin-bottom:5px;"><!-- InstanceBeginEditable name="SearchRegion" --><?php include("util/search_reduced.php"); ?><!-- InstanceEndEditable --></div>
          &nbsp;
           <div><img src="images/250-250.jpg" width="250" height="250" />
           </div>
