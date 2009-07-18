@@ -141,7 +141,7 @@ do {
   <tr>
     <td align="left">Клучен збор: </td>
     <td><label>
-      <input name="keyword" type="text" id="keyword" size="50">
+      <input name="keyword" type="text" id="keyword" onkeyup="this.form.keyword.value=toCyr(this.form.keyword.value)" size="50">
     </label></td>
   </tr>
   <tr>

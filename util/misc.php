@@ -133,5 +133,4 @@ if (!function_exists("send_mail")) {
 		return $res;
 	}
 }
-
 ?>

@@ -17,6 +17,9 @@ $query_limit_Documents2 = sprintf("%s LIMIT %d, %d", $query_Documents2, $startRo
 $Documents2 = mysql_query($query_limit_Documents2, $pravo) or die(mysql_error());
 $row_Documents2 = mysql_fetch_assoc($Documents2);
 
+$Documents3 = mysql_query($query_limit_Documents2, $pravo) or die(mysql_error());
+$row_Documents3 = mysql_fetch_assoc($Documents3);
+
 if (isset($_GET['totalRows_Documents'])) {
   $totalRows_Documents2 = $_GET['totalRows_Documents'];
 } else {
@@ -27,6 +30,11 @@ $totalPages_Documents2 = ceil($totalRows_Documents2/$maxRows_Documents2)-1;
 
 
 ?>
+<link href="../YUI/2.6.0/build/fonts/fonts-min.css" rel="stylesheet" type="text/css" />
+<link href="../YUI/2.6.0/build/container/assets/skins/sam/container.css" rel="stylesheet" type="text/css" />
+<script src="../YUI/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
+<script src="../YUI/2.6.0/build/container/container-min.js" type="text/javascript"></script>
+
 
 <table border="0" cellspacing="0" cellpadding="0">
   <?php do { 
@@ -44,9 +52,14 @@ $totalPages_Documents2 = ceil($totalRows_Documents2/$maxRows_Documents2)-1;
   ?>
     <tr onmouseover="this.className='on'" onmouseout="this.className='off'">
       <td style="border-bottom:1px dotted #CCC;">
-	  &raquo; <a href="?id=<?php echo $row_Documents2['id_document']; ?>&gid=<?php echo $row_Documents2['id_doc_group']; ?>"><?php  if($n<10) echo $title; else echo $title." ..."; ?></a>
-      </td>
+	  &raquo; <a href="?id=<?php echo $row_Documents2['id_document']; ?>&gid=<?php echo $row_Documents2['id_doc_group']; ?>" title="<?php echo $row_Documents2['title']; ?>"><?php  if($n<10) echo $title; else echo $title." ..."; ?></a>
+     
+	  </td>
     </tr>
     <?php } while ($row_Documents2 = mysql_fetch_assoc($Documents2)); ?>
 </table>
+
+
+
 <?php mysql_free_result($Documents2); ?>
+

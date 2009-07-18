@@ -105,7 +105,7 @@ function popUpWindow(URLStr, left, top, width, height)
                       </tr>
                       <tr>
                         <td><label>
-                          <input name="keyword" type="text" id="keyword" size="33">
+                          <input name="keyword" type="text" id="keyword" onkeyup="this.form.keyword.value=toCyr(this.form.keyword.value)" size="33">
                         </label></td>
                       </tr>
                       <tr>

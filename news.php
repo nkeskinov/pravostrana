@@ -4,28 +4,28 @@ session_start();
 <?php require_once("Connections/pravo.php"); ?>
 <?php include("util/misc.php"); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/CleanTemplate.dwt.php" codeOutsideHTMLIsLocked="false" -->
 <head>
 <!--templateinfo codeoutsidehtmlislocked="true" -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="../rokmoomenu.css" rel="stylesheet" type="text/css" />
-<link href="../style.css" rel="stylesheet" type="text/css" />
-<link rel="shortcut icon" href="../images/favicon1.png" />
-<!-- TemplateBeginEditable name="doctitle" -->
+<link href="rokmoomenu.css" rel="stylesheet" type="text/css" />
+<link href="style.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="images/favicon1.png" />
+<!-- InstanceBeginEditable name="doctitle" -->
 <title>pravo.org.mk</title>
-<!-- TemplateEndEditable -->
+<!-- InstanceEndEditable -->
 <link href="YUI/2.6.0/build/fonts/fonts-min.css" rel="stylesheet" type="text/css" />
 <link href="YUI/2.6.0/build/container/assets/skins/sam/container.css" rel="stylesheet" type="text/css" />
 <script src="YUI/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
 <script src="YUI/2.6.0/build/container/container-min.js" type="text/javascript"></script>
 
-<script type="text/javascript" src="../roktools.js"></script>
+<script type="text/javascript" src="roktools.js"></script>
 
-<script type="text/javascript" src="../mootools.js"></script>
+<script type="text/javascript" src="mootools.js"></script>
 
-<script type="text/javascript" src="../javaScripts/cirillic_converter.js"></script>
-<script type="text/javascript" src="../rokmoomenu.js"></script>
-<script language="javascript" type="text/javascript" src="../javaScripts/prototype.js"></script><script language="javascript" type="text/javascript" src="../javaScripts/autoExpandContract.js"></script>
+<script type="text/javascript" src="javaScripts/cirillic_converter.js"></script>
+<script type="text/javascript" src="rokmoomenu.js"></script>
+<script language="javascript" type="text/javascript" src="javaScripts/prototype.js"></script><script language="javascript" type="text/javascript" src="javaScripts/autoExpandContract.js"></script>
  <script type="text/javascript">  
          // <![CDATA[  
          document.observe('dom:loaded', function() {  
@@ -111,8 +111,8 @@ transition: Fx.Transitions.sineOut
 
 -->
 </style>
-<!-- TemplateBeginEditable name="head" -->
-<!-- TemplateEndEditable -->
+<!-- InstanceBeginEditable name="head" -->
+<!-- InstanceEndEditable -->
 </head>
 
 <body>
@@ -120,9 +120,9 @@ transition: Fx.Transitions.sineOut
 <div id="wrapper">
 	<div class="header">
    	  <div class="header-top">
-   	    <div id="logoText"><img src="../images/banner.png" /></div>
+   	    <div id="logoText"><img src="images/banner.png" /></div>
    	  </div>
-      <div id="horiz-menu" class="moomenu"><!-- TemplateBeginEditable name="Menu" -->
+      <div id="horiz-menu" class="moomenu"><!-- InstanceBeginEditable name="Menu" -->
         <ul class="nav">
           <li class="active"><a href="index.php">Почетна</a></li>
           <li><a class="topdaddy" href="documentlaws.php">Закони</a></li>
@@ -138,25 +138,25 @@ transition: Fx.Transitions.sineOut
           <li><a href="news.php">Новости</a></li>
           <li><a href="contact.php">Контакт</a></li>
         </ul>
-      <!-- TemplateEndEditable -->
+      <!-- InstanceEndEditable -->
         <div id="menu"></div>
         <div id="mapMenu">
-       <!-- TemplateBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp; &raquo;&nbsp;&nbsp;</td><td><a href="documentlaws.php">Закони</a>&nbsp; &raquo;&nbsp;</td><td> Детален опис на законот</td></tr></table><!-- TemplateEndEditable -->
+       <!-- InstanceBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp; &raquo;&nbsp;&nbsp;</td><td>Новости</td></tr></table><!-- InstanceEndEditable -->
        </div>
       </div>
 	</div>
     
     <div class="mainBody">
    	  <div class="content">
-            <div><img src="../images/726-90.jpg" width="728" height="90" /></div>
-            <!-- TemplateBeginEditable name="Content" -->
+            <div><img src="images/726-90.jpg" width="728" height="90" /></div>
+            <!-- InstanceBeginEditable name="Content" -->
             <table width="100%">
               <tr>
                 <td width="28%" valign="top"><div class="left-block">
                   <div class="title">
                     <div class="left"></div>
                     <div class="middle">
-                      <div class="text">Наслов</div>
+                      <div class="text">Архива</div>
                     </div>
                     <div class="right"></div>
                   </div>
@@ -168,12 +168,12 @@ transition: Fx.Transitions.sineOut
                   <div class="title">
                     <div class="left"></div>
                     <div class="middle">
-                      <div class="text">Наслов</div>
+                      <div class="text">Новости</div>
                     </div>
                     <div class="right"></div>
                   </div>
                   <div class="sodrzina">
-                    <p>Текст </p>
+					<?php include("util/news.php"); ?>
                   </div>
                 </div></td>
               </tr>
@@ -186,7 +186,7 @@ transition: Fx.Transitions.sineOut
                 <td valign="top"></td>
               </tr>
             </table>
-            <!-- TemplateEndEditable -->
+            <!-- InstanceEndEditable -->
         <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
@@ -196,9 +196,9 @@ transition: Fx.Transitions.sineOut
  
         <div class="right">
         <?php include("util/login_block.php"); ?>
-          <div style="width:250px; margin-top:5px; margin-bottom:5px;"><!-- TemplateBeginEditable name="SearchRegion" -->SearchRegion<!-- TemplateEndEditable --></div>
+          <div style="width:250px; margin-top:5px; margin-bottom:5px;"><!-- InstanceBeginEditable name="SearchRegion" --><!-- InstanceEndEditable --></div>
          &nbsp;
-          <div><img src="../images/250-250.jpg" width="250" height="250" />
+          <div><img src="images/250-250.jpg" width="250" height="250" />
           </div>
           </div>
 
@@ -208,4 +208,4 @@ transition: Fx.Transitions.sineOut
 </div>
 
 </body>
-</html>
+<!-- InstanceEnd --></html>

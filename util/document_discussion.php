@@ -1,5 +1,5 @@
 <?php
-
+ob_start();
 $maxRows_Post = 10;
 $pageNum_Post = 0;
 if (isset($_GET['pageNum_Post'])) {
@@ -16,7 +16,7 @@ if(isset($_SESSION['MM_Name'])){
 
 
 mysql_select_db($database_pravo, $pravo);
-$query_Post = sprintf("SELECT post.id_post,`user`.name, `user`.surname, post.date_created, post.content, post.subject, post.date_modified FROM discussion, post, post_category, `user` WHERE discussion.id_discussion=post.id_discussion   AND post_category.id_post_category=discussion.id_post_category AND post.id_user=`user`.id_user  AND discussion.id_document=%s ORDER BY date_created DESC",GetSQLValueString($id_document, "-1"));
+$query_Post = sprintf("SELECT post.id_post,`user`.name, `user`.surname, post.date_created, post.content, post.subject, post.date_modified FROM discussion, post, post_category, `user` WHERE discussion.id_discussion=post.id_discussion   AND post_category.id_post_category=discussion.id_post_category AND post.id_user=`user`.id_user  AND post_category.id_post_category=1 AND discussion.id_document=%s ORDER BY date_created DESC",GetSQLValueString($id_document, "-1"));
 $query_limit_Post = sprintf("%s LIMIT %d, %d", $query_Post, $startRow_Post, $maxRows_Post);
 $Post = mysql_query($query_limit_Post, $pravo) or die(mysql_error());
 $row_Post = mysql_fetch_assoc($Post);
@@ -65,9 +65,10 @@ if ((isset($_POST["Comment_edit"])) && ($_POST["Comment_edit"] == "edit")) {
 	 if($ResultEdit){
 			_show_message_color('Постот е успешно изменет!','GREEN');  
 			$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
-    		header("Location: " . $MM_redirectLoginSuccess );
-			
-  	} 
+    		//header("Location: ".$MM_redirectLoginSuccess );
+			echo "<script>document.location.href='".$MM_redirectLoginSuccess."'</script>";
+			echo "<script>'Content-type: application/octet-stream'</script>";
+  	}
 }
 if ((isset($_POST["Comment_insert"])) && ($_POST["Comment_insert"] == "insert")) {
    mysql_select_db($database_pravo, $pravo);
@@ -100,7 +101,9 @@ if ((isset($_POST["Comment_insert"])) && ($_POST["Comment_insert"] == "insert"))
 	$Result2 = mysql_query($insertPostSQL, $pravo) or die(mysql_error());	
 	if($Result2){
 		$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
-    		header("Location: " . $MM_redirectLoginSuccess );
+    		//header("Location: " . $MM_redirectLoginSuccess );
+			echo "<script>document.location.href='".$MM_redirectLoginSuccess."'</script>";
+			echo "<script>'Content-type: application/octet-stream'</script>";
   	}
 	if (mysql_error())
 		mysql_query('rollback');
@@ -116,11 +119,9 @@ if ((isset($_POST["Comment_insert"])) && ($_POST["Comment_insert"] == "insert"))
 	$Result2 = mysql_query($insertPostSQL, $pravo) or die(mysql_error());
 	if($Result2){
 		$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
-    		header("Location: " . $MM_redirectLoginSuccess );
+    		header("Location: ".$MM_redirectLoginSuccess );
   	}
-  }
-  
-  
+  }  
 }
 ?>
 <script type="text/javascript" src="javaScripts/tiny_mce/tiny_mce.js"></script>
@@ -168,26 +169,22 @@ function MM_swapImage() { //v3.0
 //-->
 </script>
 <?php if($num_of_posts){ ?>
-	<div style="padding:10px;"><strong>Дискусии околу овој закон</strong</div>
+	<div style="padding:10px;"><strong>Дискусии околу овој закон</strong></div>
 <?php } ?>
 <?php if(isset($_SESSION['MM_UserGroup'])) { ?>
 <div style="margin-left:5px;">
 <form method="post" name="form_comment" action="<?php echo $editFormAction; ?>">
 <table width="80%" border="0" >
-	
 	<tr>
 	  <td style="padding:10px; border-bottom:1px solid #f5e6a2; background:#fbf7e0;">
 	    <textarea name="content" id="content" class="highlight expand demoTextarea" cols="50" rows="4" style="border:1px solid #f5e6a2;"><?php if(isset($row_Post1['content'])){ echo $row_Post1['content']; echo '<i><span style="font-size:10px; color:#666;">'.$edit_message.''.date("d.m.Y H:i",strtotime($row_Post1['date_created'])).'</span></i>';}?></textarea>
         <br />       
-      <div align="right">
-      <?php if(!isset($_POST['EditPost'])){ ?>
+      <div align="right"><?php if(!isset($_POST['EditPost'])){ ?>
       <input name="Submit" type="submit" style="background-color:#993300; color:#FFFFFF" value="Коментирај" />
-	  <input type="hidden" name="Comment_insert" id="Comment_insert" value="insert" />
-	  <?php }else{ ?>
+	  <input type="hidden" name="Comment_insert" id="Comment_insert" value="insert" /><?php }else{ ?>
       <input name="Submit" type="submit" style="background-color:#993300; color:#FFFFFF" value="Измени">
       <input type="hidden" name="document_id" value="<?php echo $row_Post1['id_post']; ?>" />
-	  <input type="hidden" name="Comment_edit" id="Comment_edit" value="edit" />
-      <?php } ?>
+	  <input type="hidden" name="Comment_edit" id="Comment_edit" value="edit" /><?php } ?>
       </div>
       </td>
   </tr>
@@ -196,44 +193,27 @@ function MM_swapImage() { //v3.0
   </tr>
 </table>
 </form>
-
 </div> 
 <?php } ?>
 <div style=" margin-left:5px;">
-<table border="0" width="98%" cellspacing="0">
-  
-  <?php 
+<table border="0" width="98%" cellspacing="0"><?php 
   do { 
-  	if($num_of_posts){
-  ?>
-    <tr>
+  	if($num_of_posts){ ?><tr>
       <td width="92%" style=" padding:5px;background:#fbf7e0;">
-	  	<span style="color:#C63"><?php echo $row_Post['name']; ?> <?php echo $row_Post['surname']; ?></span>
-      	<span style="font-size:10px; color:#666;"> на
-		<?php  echo date("d.m.Y H:i",strtotime($row_Post['date_created'])); ?> </span>
+	  	<span style="color:#C63"><?php echo $row_Post['name']; ?><?php echo $row_Post['surname']; ?></span>
+      	<span style="font-size:10px; color:#666;"> на<?php  echo date("d.m.Y H:i",strtotime($row_Post['date_created'])); ?></span>
       </td>
-      <td width="8%" align="right" style="padding:5px;background:#fbf7e0;">
-      <?php if(isset($_SESSION['MM_UserGroup'])) {
+      <td width="8%" align="right" style="padding:5px;background:#fbf7e0;"><?php if(isset($_SESSION['MM_UserGroup'])) {
 		if($_SESSION['MM_UserGroup'] =="admin"){ 
-		?>
-	<form method="post" name="form_post" action="<?php echo $editFormAction; ?>">
+		?><form method="post" name="form_post" action="<?php echo $editFormAction; ?>">
      <div style="vertical-align:middle; width:15px; height:15px; float:left;"><input type="image" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Edit1<?php echo $row_Post['id_post']; ?>','','images/edit-small.png',1)"src="images/edit-small1.png" name="EditPost" border="0" id="Edit1<?php echo $row_Post['id_post']; ?>" value="<?php echo $row_Post['id_post']; ?>" title="Измени"/></div>
-      
       <div style="vertical-align:middle; width:15px; height:15px; float:left;"><input type="image" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image1<?php echo $row_Post['id_post']; ?>','','images/delete-small.png',1)" src="images/delete-small1.png" name="DeletePost" border="0" id="Image1<?php echo $row_Post['id_post']; ?>" value="<?php echo $row_Post['id_post']; ?>" title="Бриши" onClick="return confirm('Дали навистина сакате да го избришете документот!')"/></div>
-      </form>
-      <?php } } ?>
-      
-     </td>
+      </form><?php } } ?></td>
      </tr>
      <tr>
-      <td colspan="2" style="padding:5px; padding-top:0px; background:#fbf7e0;"><?php 	 
-	  echo $row_Post['content'];
-	  ?></td>
+      <td colspan="2" style="padding:5px; padding-top:0px; background:#fbf7e0;"><?php echo $row_Post['content'];?></td>
     </tr>
-    <tr><td height="3" colspan="2" style="font-size:6px;"></td></tr>
-    <?php }} while ($row_Post = mysql_fetch_assoc($Post)); ?>
+    <tr><td height="3" colspan="2" style="font-size:6px;"></td></tr><?php }} while ($row_Post = mysql_fetch_assoc($Post)); ?>
 </table>
 </div>
-<?php
-mysql_free_result($Post);
-?>
+<?php mysql_free_result($Post);?>
