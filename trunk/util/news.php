@@ -247,20 +247,32 @@ if ((isset($_POST["Comment_insert"])) && ($_POST["Comment_insert"] == "insert"))
   
 }
 ?>
+<script type="text/javascript" src="javaScripts/tiny_mce/plugins/swampy_browser_1.2/sb.js"></script>
 <script type="text/javascript" src="javaScripts/tiny_mce/tiny_mce.js"></script>
 <script type="text/javascript">
 	tinyMCE.init({
 		// General options
-		mode : "textareas",
+		mode : "specific_textareas",
+		editor_selector : "mceEditor",
 		theme : "advanced",
-plugins : "safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+plugins : "safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,imagemanager",
 
 
-		theme_advanced_buttons1 : "mymenubutton,bold,italic,underline,separator,strikethrough,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,emotions,undo,redo,link,unlink",
-		theme_advanced_buttons2 : "",
-		theme_advanced_buttons3 : "",
+		theme_advanced_buttons1 : "save,newdocument,|,mymenubutton,bold,italic,underline,separator,strikethrough,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,forecolor,backcolor",
+		theme_advanced_buttons2 : "cut,copy,paste,pastetext,pasteword,|,formatselect,fontselect,fontsizeselect,",
+		theme_advanced_buttons3 : "undo,redo,emotions,|,link,unlink,anchor,image,cleanup,code,|,insertfile,insertimage",
+		theme_advanced_toolbar_location : "top",
+		theme_advanced_toolbar_align : "left",
+		theme_advanced_statusbar_location : "bottom",
+		theme_advanced_resizing : true,
 
-		
+		// Drop lists for link/image/media/template dialogs
+		//template_external_list_url : "js/template_list.js",
+		//external_link_list_url : "js/link_list.js",
+		//external_image_list_url : "js/image_list.js",
+		//media_external_list_url : "js/media_list.js",
+		file_browser_callback : "openSwampyBrowser" /* you need this line for SwampyBrowser */
+
 		
 	});
 	
@@ -305,7 +317,7 @@ function MM_swapImage() { //v3.0
 	  </tr>
 	<tr>
 	  <td align="right" valign="top">Содржина:</td>
-	  <td><textarea name="content" id="content" class="highlight expand demoTextarea" cols="63" rows="4" style="border:1px solid #f5e6a2;"  onkeyup="this.form.content.value=toCyr(this.form.content.value)"><?php if(isset($row_Post1['content'])){ echo $row_Post1['content']; }?>
+	  <td><textarea name="content" id="content"  class="mceEditor"  wrap='VIRTUAL' class="highlight expand demoTextarea" cols="63" rows="4" style="border:1px solid #f5e6a2;"  onkeyup="this.form.content.value=toCyr(this.form.content.value)"><?php if(isset($row_Post1['content'])){ echo $row_Post1['content']; }?>
 	  </textarea></td>
     </tr>
 	<tr>
@@ -336,7 +348,7 @@ function MM_swapImage() { //v3.0
 </div> 
 <br />
 <?php } ?>
-<div style="">
+<div>
 <table border="0" width="100%" cellspacing="0" cellpadding="0">
   
   <?php 
@@ -345,6 +357,7 @@ function MM_swapImage() { //v3.0
   ?>
     <tr>
       <td width="84%" style=" padding:5px;background:#fbf7e0; border-bottom:1px solid #f5e6a2;">
+      	<a name="<?php echo $row_Post['id_post']; ?>"></a>
 	  	<span style="color:#C63; font-size:14px;"><strong><?php echo $row_Post['subject']; ?></strong></span>
       	<br /><span style="font-size:10px; color:#666;"> на
 		<?php  echo date("d.m.Y H:i",strtotime($row_Post['date_created'])); ?> </span>

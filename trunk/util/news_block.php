@@ -32,10 +32,14 @@ if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
 ?>
-
+<div style="margin-top:3px;">
 <table width="100%" cellspacing="0">
 <?php do {
-	$content_exp=explode(" ",$row_Post['content']);
+	$content1=$row_Post['content'];
+	$content1= str_replace("<p>","",$content1);
+	$content1= str_replace("</p>","",$content1);
+	$content1= str_replace(substr($content1, strpos($content1,"<img"), strpos($content1,"/>",strpos($content1,"<img"))-strpos($content1,"<img")+2),"",$content1);
+	$content_exp=explode(" ",$content1);
 	$content_arr=array();
 	$n=10;
 	if(sizeof($content_exp)<10)
@@ -44,15 +48,18 @@ if (isset($_SERVER['QUERY_STRING'])) {
 		$content_arr[$i]=$content_exp[$i];
 	
 	$content=implode(" ",$content_arr);
-	$content= str_replace("<p>","",$content);
-	$content= str_replace("</p>","",$content);
+	
+	//$content= 
+	//echo substr($content, strpos($content,"<img"), strpos($content,"/>",strpos($content,"<img"))-strpos($content,"<img")+2)."<br>";
+	
 	?>
 	<tr onmouseover="this.className='on'" onmouseout="this.className='off'">
 	    <td style="border-bottom:1px dotted #CCC;">
-		<span style="color:#C63; font-size:14px;"><?php echo $row_Post['subject']; ?></span>
+		<span class="news-block"><a href="news.php#<?php echo $row_Post['id_post']; ?>"><?php echo $row_Post['subject']; ?></a></span>
         <span style="font-size:10px; color:#666;"><?php  echo date("d.m.Y H:i",strtotime($row_Post['date_created'])); ?> </span>
         <br />
 		<?php echo $content; ?></td>
     </tr>
  <?php } while ($row_Post = mysql_fetch_assoc($Post)); ?>
 </table>
+</div>
