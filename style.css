@@ -723,3 +723,28 @@ tr.off {
 .picture-button{
 	width:25px; float:left;
 }
+
+.news-block{
+	color:#C63; 
+}
+
+.news-block a:link {
+	color:#C63;
+	font-size:14px;
+	font-weight:normal;
+}
+.news-block a:visited {
+	color:#C63; 
+	font-weight:normal;
+	font-size:14px;	
+}
+.news-block a:hover {
+	color: #FC9;
+	font-weight:normal;	
+	font-size:14px;
+}
+.news-block a:active {
+	color:#C63; 
+	font-weight:normal;
+	font-size:14px;	
+}
