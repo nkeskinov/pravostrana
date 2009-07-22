@@ -76,7 +76,7 @@ function popUpWindow(URLStr, left, top, width, height)
                     <div class="right"></div>
   </div>
   <div class="sodrzina" style="background:#fbf7e0;">
-    <form action="documentlaws.php" method="get">
+    <form action="<?php echo $page; ?>" method="get">
                     <table width="240" border="0" cellpadding="1" cellspacing="0" >
                     <tr>
                         <td colspan="2" align="left"><div align="right" style="font-size:11px;"><a href="JavaScript:popUpWindow('help.php?id=1','','',450,'330');">совети за пребарување</a></div></td>

@@ -67,11 +67,11 @@ $totalRows_DocumentTypes = mysql_num_rows($DocumentTypes);
   <table cellpadding="0" cellspacing="0">
   <tr></tr>
   <tr>
-    <td><div style="width:26px; height:21px; padding-top:1.5px; float:left; text-align:center;" onmouseover="this.className='picture-button-over'" onmouseout="this.className='picture-button-out'"> <a href="documents.php"><img src="../images/new.png" border="0" title="Нов документ" /></a></div></td>
+    <td><div style="width:26px; height:21px; padding-top:1.5px; float:left; text-align:center;" onmouseover="this.className='picture-button-over'" onmouseout="this.className='picture-button-out'"> <a href="documentlaws.php"><img src="../images/new.png" border="0" title="Нов документ" /></a></div></td>
     <td><div style="width:26px; height:21px; padding-top:1.5px; float:left; text-align:center;" onmouseover="this.className='picture-button-over'" onmouseout="this.className='picture-button-out'"> <a href="#"><img src="../images/save.png" border="0" title="Зачувај документ" /></a></div></td>
     <td>
     <div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
-        <a href="documents.php?id=<?php echo $row_Recordset1['id_document']; ?>&id_doc_type=<?php echo $row_Recordset1['id_doc_type']; ?>&id_doc_meta=<?php echo $row_Recordset1['id_doc_meta']; ?>&delete=true" onClick="return confirm('Дали навистина сакате да го избришете документот!')"><img src="../images/delete.png" border="0" title="Бриши"  /></a></div>
+        <a href="documentlaws.php?id=<?php echo $row_Recordset1['id_document']; ?>&id_doc_type=<?php echo $row_Recordset1['id_doc_type']; ?>&id_doc_meta=<?php echo $row_Recordset1['id_doc_meta']; ?>&delete=true" onClick="return confirm('Дали навистина сакате да го избришете документот!')"><img src="../images/delete.png" border="0" title="Бриши"  /></a></div>
     </td>
     <td><div style="width:26px; height:21px; padding-top:1.5px; text-align:center;" onmouseover="this.className='picture-button-over'" onmouseout="this.className='picture-button-out'"> <a href="#"><img src="../images/print.png" border="0" title="Печати страна" /></a></div></td>
   </tr>

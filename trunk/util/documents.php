@@ -18,7 +18,7 @@ if (isset($_GET['pageNum_Documents'])) {
 }
 $startRow_Documents = $pageNum_Documents * $maxRows_Documents;
 
-$id_doc_type_Documents = "1";
+//$id_doc_type_Documents = "1";
 if (isset($_GET['id_doc_group'])) {
   $id_doc_group_Documents = $_GET['id_doc_group'];
 }
@@ -37,7 +37,8 @@ if(isset($_GET['name'])){
 	$query_Documents = sprintf("%s AND lower(title) LIKE %s",$query_Documents,GetSQLValueString("закон% за ".$_GET['name']."%", "text"));
 }
 if(isset($_GET['starts_with'])){
-	$query_Documents = sprintf("%s AND lower(title) LIKE %s",$query_Documents,GetSQLValueString("закон за ".$_GET['starts_with']."\%", "text"));
+	$query_Documents = sprintf("%s AND lower(title) LIKE %s",$query_Documents,GetSQLValueString("закон за ".$_GET['starts_with']."%", "text"));
+	//echo $query_Documents;
 }
 if(isset($_GET['keyword'])){
 	$keywords_arr=explode(",", $_GET['keyword']);
