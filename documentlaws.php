@@ -1,5 +1,7 @@
 <?php 
 session_start();
+$id_doc_type_Documents = "1";
+$page="documentlaws.php";
 ?>
 <?php require_once("Connections/pravo.php"); ?>
 <?php include("util/misc.php"); ?>
@@ -135,7 +137,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
           <li><a href="index.php">Почетна</a></li>
           <li class="active"><a class="topdaddy" href="documentlaws.php">Закони</a></li>
           <li><a href="analysis.php">Анализи</a></li>
-          <li><a href="regulation.php">Прописи</a></li>
+          <li><a href="policies.php">Прописи</a></li>
           <li><a href="#">Судска Пракса</a>
            <ul>
             <li><a href="studentpractice.php">Студентска Пракса</a></li>
@@ -181,7 +183,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
                     <div class="right"></div>
                   </div>
                   <div class="sodrzina" style="border-left:none; border-right:none; margin:0; padding:0;">
-                    <p><?php include("util/documentlaws.php"); ?>&nbsp;</p>
+                    <p><?php include("util/documents.php"); ?>&nbsp;</p>
                   </div>
                 </div></td>
               </tr>

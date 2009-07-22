@@ -42,6 +42,16 @@ $query_Recordset1 = "SELECT * FROM doc_group";
 $Recordset1 = mysql_query($query_Recordset1, $pravo) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysql_num_rows($Recordset1);
+
+
+$query_Documents = sprintf("SELECT count(*) total, min(published_date) from_date, max(published_date) to_date
+							FROM document
+							WHERE document.id_doc_type =1
+							AND document.id_superdoc IS NULL ");
+$all_Documents = mysql_query($query_Documents);
+$total=mysql_result($all_Documents,0,'total');
+$from_date=date("Y",strtotime(mysql_result($all_Documents,0,'from_date')));
+$to_date=date("Y",strtotime(mysql_result($all_Documents,0,'to_date')));
 ?>
 
 <script language="JavaScript">
@@ -69,7 +79,7 @@ function popUpWindow(URLStr, left, top, width, height)
 
 
 <form action="documentlaws.php" method="get" enctype="application/x-www-form-urlencoded">
-<table width="100%" border="0">
+<table width="100%" border="0" height="250">
 <tr>
     <td colspan="2" align="left"><div align="right" style="font-size:11px;"><a href="JavaScript:popUpWindow('help.php?id=1','','',450,'330');">совети за пребарување</a></div>
     <strong>Пребарувај по почетна буква на законот</strong>
@@ -118,7 +128,7 @@ function popUpWindow(URLStr, left, top, width, height)
   <tr>
     <td align="left">Група: </td>
     <td>
-    	<select name="id_doc_group" id="group">
+    	<select name="id_doc_group" id="group" style="width:350px;">
         <option value="0">Изберете група</option>
         <?php 
 do {  
@@ -151,9 +161,9 @@ do {
     </label></td>
   </tr>
   <tr>
-    <td align="right">&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
+    <td colspan="2" align="left">Базата содржи вкупно <strong><?php echo $total; ?></strong> закони донесени во периодот од <strong><?php echo $from_date; ?></strong> до <strong><?php echo $to_date; ?></strong> година. </td>
+    </tr>
+  
 </table>
 </form>
 

@@ -78,7 +78,7 @@ transition: Fx.Transitions.sineOut
         <ul class="nav"><li class="active"><a href="index.php">Почетна</a></li>
           <li><a class="topdaddy" href="documentlaws.php">Закони</a></li>
           <li><a href="analysis.php">Анализи</a></li>
-          <li><a href="regulation.php">Прописи</a></li>
+          <li><a href="policies.php">Прописи</a></li>
           <li><a href="#">Судска Пракса</a>
            <ul>
             <li><a href="studentpractice.php">Студентска Пракса</a></li>
@@ -156,14 +156,27 @@ transition: Fx.Transitions.sineOut
         </div>
         </td>
         </tr>
-        </table>  
-    <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
+        </table> 
+        <p>&nbsp;</p>
+ <!--<div style="height:50px; background:#a25852; margin-bottom:-12px; padding:5px; color:#FFF;">
+        <table width="200" border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td>Реализирано од</td>
+    <td>Подржано од</td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+</div> 
+!-->
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
       </div>
-
- 
         <div class="right">
         <?php include("util/login_block.php"); ?>
           <div><img src="../images/250-250.jpg" width="250" height="250" /></div>
@@ -171,7 +184,8 @@ transition: Fx.Transitions.sineOut
 
     </div>
     
-	<div class="footer">Copyright &copy; 2008 Сите права задржани</div>	
+	<div class="footer">Copyright &copy; 2009 Сите права задржани</div>	
+    <div style="margin-top:-30px; color:#999;">Pravo.org.mk не превзема одговорност за евентуалните грешки во текстот на законите</div>
 </div>
 
 </body>
