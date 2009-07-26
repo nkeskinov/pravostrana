@@ -30,7 +30,11 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
   return $theValue;
 }
 }
+	$_SESSION['edit']="-1";
+if(isset($_GET['id']))
+	$_SESSION['edit']="edit";
 
+//echo $_SESSION['edit'];
 $editFormAction = $_SERVER['PHP_SELF'];
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
@@ -44,6 +48,46 @@ $query_Recordset1 = sprintf("SELECT * FROM `document` d LEFT JOIN doc_meta dm ON
 $Recordset1 = mysql_query($query_Recordset1, $pravo) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysql_num_rows($Recordset1);
+
+$_SESSION['id_doc_group']=$row_Recordset1['id_doc_group'];
+$query_DocGroup=sprintf("SELECT id_doc_group, name
+						FROM doc_group
+						WHERE id_doc_group = (
+							SELECT id_supergroup
+							FROM doc_group
+							WHERE id_doc_group = (
+								SELECT id_supergroup
+								FROM doc_group
+								WHERE id_doc_group = %s
+							)
+						)						UNION
+						SELECT id_doc_group, name
+						FROM doc_group
+						WHERE id_doc_group = (
+							SELECT id_supergroup
+							FROM doc_group
+							WHERE id_doc_group = %s
+						)UNION
+						SELECT id_doc_group, name FROM doc_group
+						WHERE id_doc_group = %s 
+						",GetSQLValueString($row_Recordset1['id_doc_group'],"int"),GetSQLValueString($row_Recordset1['id_doc_group'],"int"),GetSQLValueString($row_Recordset1['id_doc_group'],"int"));
+						
+$DocGroup = mysql_query($query_DocGroup, $pravo) or die(mysql_error());
+//$row_DocGroup = mysql_fetch_assoc($DocGroup);
+$row_number =  mysql_num_rows($DocGroup);
+$cat=-1;
+$subcat=-1;
+$subsubcat=-1;
+if($row_number==3){
+	$cat=mysql_result($DocGroup,0,'id_doc_group');
+	$subcat=mysql_result($DocGroup,1,'id_doc_group');
+	$subsubcat=mysql_result($DocGroup,2,'id_doc_group');
+}elseif($row_number==2){
+	$cat=mysql_result($DocGroup,0,'id_doc_group');
+	$subcat=mysql_result($DocGroup,1,'id_doc_group');
+}elseif($row_number==1){
+	$cat=mysql_result($DocGroup,0,'id_doc_group');
+}
 
 
 $query_RecordsetKeyword = sprintf("SELECT k.val FROM keyword k, document_has_keyword dk, document d WHERE dk.id_keyword=k.id_keyword AND dk.id_document=d.id_document AND d.id_document=%s", GetSQLValueString($colname_Recordset1, "int"));
@@ -119,12 +163,24 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 	
 	 if($Result1){
 		/* Insert new document*/
+		if(isset($_POST['subsubcategory'])){
+			$id_group=$_POST['subsubcategory'];
+		}elseif(isset($_POST['subcategory'])){
+			$id_group=$_POST['subcategory'];
+		}elseif(isset($_POST['category']))
+			$id_group=$_POST['category'];
+		
+		//echo $_POST['subsubcategory']."<br>";
+		//echo $_POST['subcategory']."<br>";
+		//echo $_POST['category']."<br>";		
+		//echo $id_group;
+		
 		$published_date = date("Y-m-d", strtotime($_POST['published_date']));
 		$insertSQL = sprintf("INSERT INTO `document` (id_doc_type, filename, title, id_doc_group, `description`, extension, filesize, mimetype, forcesubscribe, published_date, created_by,id_doc_meta) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
 						   GetSQLValueString($_POST['id_doc_type'], "int"),
 						   GetSQLValueString($filename, "text"),
 						   GetSQLValueString($_POST['title'], "text"),
-						   GetSQLValueString($_POST['id_doc_group'], "int"),
+						   GetSQLValueString($id_group, "int"),
 						   GetSQLValueString($_POST['description'], "text"),
 						   GetSQLValueString($ext, "text"),
 						   GetSQLValueString($filesize, "int"),
@@ -249,19 +305,29 @@ if ((isset($_POST["MM_update"]))) {
 	}
 	$created_by = isset($_SESSION['MM_ID']) ? $_SESSION['MM_ID'] : 0 ;
 	
+	if(isset($_POST['subsubcategory'])){
+		$id_group=$_POST['subsubcategory'];
+	}elseif(isset($_POST['subcategory'])){
+		$id_group=$_POST['subcategory'];
+	}elseif(isset($_POST['category']))
+		$id_group=$_POST['category'];
 	
+	echo $_POST['subsubcategory']."<br>";
+	echo $_POST['subcategory']."<br>";
+	echo $_POST['category']."<br>";		
+	echo $id_group."<br>";
 	
   $updateSQL = sprintf("UPDATE `document` SET title=%s, published_date=%s, `description`=%s, id_doc_type=%s, id_doc_group=%s, filename=%s, forcesubscribe=%s WHERE id_document=%s",
                        GetSQLValueString($_POST['title'], "text"),
                        GetSQLValueString($published_date, "date"),
                        GetSQLValueString($_POST['description'], "text"),
                        GetSQLValueString($_POST['id_doc_type'], "int"),
-                       GetSQLValueString($_POST['id_doc_group'], "int"),
+                       GetSQLValueString($id_group, "int"),
                        GetSQLValueString($filename, "text"),
                        GetSQLValueString(isset($_POST['forcesubscribe']) ? "true" : "", "defined","1","0"),
 					   GetSQLValueString($_POST['id_document'], "int"));
 
- 	
+  echo $updateSQL;
   $Result1 = mysql_query($updateSQL, $pravo) or die(mysql_error());
   
   /* Update the ordinal and date from the doc_meta*/
@@ -313,14 +379,17 @@ if ((isset($_POST["MM_update"]))) {
 			}
 	  if($Result1){
 				//echo "<div style='margin-top:-20px; color:#66CC00;'>";
-				_show_message_color('Документот е успешно изменет!','GREEN');  
+				_show_message_color('Документот е успешно изменет!','GREEN'); 
+				$success=true;
 				//echo "</div>";
 	  }
 	 if ($success == true)
 	  {
+		  echo "COMMIT";
 		 $query = "COMMIT";
 		 $result_query = @mysql_query($query, $pravo);
 	  }else{
+		  echo "ROLLBACK";
 		  $query = "ROLLBACK";
 		  $result_query = @mysql_query($query, $pravo);
 	  }
@@ -487,7 +556,8 @@ jQuery("#jQueryUICalendar1").datepicker({ dateFormat: 'dd.mm.yy',  altField: '#a
 
 
 // EndWebWidget jQuery_UI_Calendar: jQueryUICalendar1
-        </script></td>
+        </script>        
+        </td>
     </tr>
     <tr valign="baseline">
       <td nowrap align="right" valign="top">Сл. весник/година:</td>
@@ -513,19 +583,40 @@ do {
         <?php
 } while ($row_DocumentTypes = mysql_fetch_assoc($DocumentTypes));
 ?>
-      </select></td>
+      </select>
+      <a href="document_type.php?mode=new&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/add.gif" border="0" /></a>
+      <a href="document_type.php?id=<?php echo $row_Recordset1['id_doc_type']; ?>&mode=edit&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/pencil.png" border="0" /></a>
+      </td>
     <tr>
-    <tr valign="baseline">
-      <td nowrap align="right">Група:</td>
-      <td><select name="id_doc_group">
-        <?php 
-do {  
-?>
-        <option value="<?php echo $row_DocumentGroups['id_doc_group']?>" <?php if (!(strcmp($row_DocumentGroups['id_doc_group'], htmlentities($row_Recordset1['id_doc_group'], ENT_COMPAT, '')))) {echo "SELECTED";} ?>><?php echo $row_DocumentGroups['name']?></option>
-        <?php
-} while ($row_DocumentGroups = mysql_fetch_assoc($DocumentGroups));
-?>
-      </select> </td>
+  	<tr>
+        <td align='right'>Категорија: </td>
+        <td>
+            <form name=sel>
+            <font id=category><select style='width:300px;'>
+            <option value='0'>Категорија</option> 
+            </select></font>
+            <a href="document_category.php?mode=new&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/add.gif" border="0" /></a>
+      <a href="document_category.php?id=<?php echo $row_Recordset1['id_doc_group']; ?>&mode=edit&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/pencil.png" border="0" /></a>
+        </td>
+  	</tr>
+	<tr>
+        <td align='right'>Податегорија: </td>
+        <td>
+            <font id=subcategory><select style='width:300px;' disabled>
+            <option value='0'>Подакатегорија</option> 
+            </select></font>
+            <a href="document_category.php?mode=new&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/add.gif" border="0" /></a>
+      <a href="document_category.php?id=<?php echo $row_Recordset1['id_doc_group']; ?>&mode=edit&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/pencil.png" border="0" /></a>
+        </td>
+  	</tr>
+         <td align='right'>Под-податегорија: </td>
+         <td>
+            <font id=subsubcategory><select style='width:300px;' disabled>
+            <option value='0'>Под-подакатегорија</option>
+            </select></font>
+      <a href="document_category.php?mode=new&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/add.gif" border="0" /></a>
+      <a href="document_category.php?id=<?php echo $row_Recordset1['id_doc_group']; ?>&mode=edit&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/pencil.png" border="0" /></a>
+      </td>
     <tr>
     <?php if(isset($_GET['id']) && isset($_GET['edit'])) { ?>
     <tr valign="baseline">
@@ -560,7 +651,35 @@ do {
   <input type="hidden" name="id_document" value="<?php echo $row_Recordset1['id_document']; ?>">
 </form>
 
+<script language=Javascript>
+function Inint_AJAX() {
+   try { return new ActiveXObject("Msxml2.XMLHTTP");  } catch(e) {} //IE
+   try { return new ActiveXObject("Microsoft.XMLHTTP"); } catch(e) {} //IE
+   try { return new XMLHttpRequest();          } catch(e) {} //Native Javascript
+   alert("XMLHttpRequest not supported");
+   return null;
+};
 
+function dochange(src, val,sel) {
+     var req = Inint_AJAX();
+     req.onreadystatechange = function () { 
+          if (req.readyState==4) {
+               if (req.status==200) {
+                    document.getElementById(src).innerHTML=req.responseText; //ÃÑº¤èÒ¡ÅÑºÁÒ
+               } 
+          }
+     };
+     req.open("GET", "util/categoryAjax.php?data="+src+"&val="+val+"&sel="+sel); //ÊÃéÒ§ connection
+     req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=tis-620"); // set Header
+     req.send(null); //Êè§¤èÒ
+}
+
+
+	window.onload=dochange('category',-1,<?php echo $cat; ?> );
+	window.onload=dochange('subcategory',<?php echo $cat; ?>,<?php echo $subcat; ?>);
+	window.onload=dochange('subsubcategory',<?php echo $subcat; ?>,<?php echo $subsubcat; ?>);
+
+</script>
 
 <p>&nbsp;</p>
 <?php

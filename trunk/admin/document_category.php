@@ -1,19 +1,35 @@
-<?php 
-session_start();
-?>
 <?php require_once("../Connections/pravo.php"); ?>
 <?php include("../util/misc.php"); ?>
+<?php
+if (!isset($_SESSION)) {
+  session_start();
+}
+$MM_authorizedUsers = "admin";
+$MM_donotCheckaccess = "false";
+
+$MM_restrictGoTo = "../login.php";
+if (!((isset($_SESSION['MM_Username'])) && (isAuthorized("",$MM_authorizedUsers, $_SESSION['MM_Username'], $_SESSION['MM_UserGroup'])))) {   
+  $MM_qsChar = "?";
+  $MM_referrer = $_SERVER['PHP_SELF'];
+  if (strpos($MM_restrictGoTo, "?")) $MM_qsChar = "&";
+  if (isset($_SERVER['QUERY_STRING']) && strlen($_SERVER['QUERY_STRING']) > 0) 
+  $MM_referrer .= "?" . $_SERVER['QUERY_STRING'];
+  $MM_restrictGoTo = $MM_restrictGoTo. $MM_qsChar . "accesscheck=" . urlencode($MM_referrer);
+  header("Location: ". $MM_restrictGoTo); 
+  exit;
+}
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/CleanAdminTemplate.dwt.php" codeOutsideHTMLIsLocked="false" -->
 <head>
 <!--templateinfo codeoutsidehtmlislocked="true" -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="../rokmoomenu.css" rel="stylesheet" type="text/css" />
 <link href="../style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="../images/favicon1.png" />
-<!-- TemplateBeginEditable name="doctitle" -->
+<!-- InstanceBeginEditable name="doctitle" -->
 <title>pravo.org.mk</title>
-<!-- TemplateEndEditable -->
+<!-- InstanceEndEditable -->
 <script type="text/javascript" src="../roktools.js"></script>
 
 
@@ -62,8 +78,8 @@ transition: Fx.Transitions.sineOut
 
 -->
 </style>
-<!-- TemplateBeginEditable name="head" -->
-<!-- TemplateEndEditable -->
+<!-- InstanceBeginEditable name="head" -->
+<!-- InstanceEndEditable -->
 </head>
 
 <body>
@@ -73,7 +89,7 @@ transition: Fx.Transitions.sineOut
    	  <div class="header-top">
    	    <div id="logoText"><img src="../images/banner.png" /></div>
    	  </div>
-      <div id="horiz-menu" class="moomenu"><!-- TemplateBeginEditable name="Menu" -->
+      <div id="horiz-menu" class="moomenu"><!-- InstanceBeginEditable name="Menu" -->
         <ul class="nav">
            <li><a href="../index.php">Почетна</a></li>
           <li class="active"><a class="topdaddy" href="../documentlaws.php">Закони</a></li>
@@ -89,16 +105,16 @@ transition: Fx.Transitions.sineOut
           <li><a href="../news.php">Новости</a></li>
           <li><a href="../contact.php">Контакт</a></li>
         </ul>
-      <!-- TemplateEndEditable -->
+      <!-- InstanceEndEditable -->
         <div id="menu"></div>
-       <div id="mapMenu"><!-- TemplateBeginEditable name="SiteMap" -->Почетна &gt;<!-- TemplateEndEditable --></div> 
+       <div id="mapMenu"><!-- InstanceBeginEditable name="SiteMap" -->Почетна &gt;<!-- InstanceEndEditable --></div> 
       </div>
 	</div>
     
     <div class="mainBody">
    	  <div class="content">
             <div><img src="../images/726-90.jpg" width="728" height="90" /></div>
-            <!-- TemplateBeginEditable name="Content" -->
+            <!-- InstanceBeginEditable name="Content" -->
             <table width="100%">
               <tr>
                 <td width="28%" valign="top"><div class="left-block1">
@@ -110,19 +126,19 @@ transition: Fx.Transitions.sineOut
                     <div class="right"></div>
                   </div>
                   <div class="sodrzina" style="padding-top:10px;">
-                    <?php include("util/menu.php"); ?>
+                      <?php include("util/menu.php"); ?>
                   </div>
                 </div></td>
                 <td width="72%" valign="top"><div class="right-block-bigger">
                   <div class="title">
                     <div class="left"></div>
                     <div class="middle">
-                      <div class="text">Наслов</div>
+                      <div class="text">Категории</div>
                     </div>
                     <div class="right"></div>
                   </div>
                   <div class="sodrzina">
-                    <p>Текст </p>
+                    <p><?php include("util/document_category.php") ?></p>
                   </div>
                 </div></td>
               </tr>
@@ -135,7 +151,7 @@ transition: Fx.Transitions.sineOut
                 <td valign="top"></td>
               </tr>
             </table>
-            <!-- TemplateEndEditable -->
+            <!-- InstanceEndEditable -->
         <p>&nbsp;</p>
             <p>&nbsp;</p>
             <p>&nbsp;</p>
@@ -154,4 +170,4 @@ transition: Fx.Transitions.sineOut
 </div>
 
 </body>
-</html>
+<!-- InstanceEnd --></html>

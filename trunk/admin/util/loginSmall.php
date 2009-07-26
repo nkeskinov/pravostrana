@@ -36,21 +36,17 @@
 	</div>
 </div>
 <?php }elseif((isset( $_SESSION['MM_Username'] )) and  (isset($_SESSION['MM_UserGroup']))){ ?>
-	<div class="login">
-              <div class="title">Успешно најавен</div>
-                <div class="forms">
+	<div class="login" style="border-bottom:1px solid #f5e6a2; height:87px;">
+              <div class="title" style="text-align:left; padding-left:10px;">Добредојде</div>
+                <div class="forms" >
                 
                   <table width="100%" border="0" cellspacing="0">
               		<tr>
-                        <td colspan="2" align="right">Добредојде,  <a href="../profile.php" title="Промени ги твоите лични податоци" alt="Промени ги твоите лични податоци"><strong><?php if(isset($_SESSION['MM_Name'])) echo $_SESSION['MM_Name']; ?></strong></a></td>
+                        <td colspan="2" align="left" style=" padding-left:5px;"><a href="profile.php" title="Промени ги твоите лични податоци" alt="Промени ги твоите лични податоци"><strong><?php if(isset($_SESSION['MM_Name'])) echo $_SESSION['MM_Name']; ?></strong></a>&nbsp;[<a href="logout.php?doLogout=true">Одјави се</a>]</td>
                     </tr>
                       <tr>
                         <td></td>
-                        <td align="right">[<a href="../logout.php?doLogout=true">Одјави се</a>]</td>
-                      </tr>
-                      <tr>
-                        <td>&nbsp;</td>
-                        <td align="right">&nbsp;</td>
+                        <td align="right" >&nbsp;</td>
                       </tr>
                     </table>
                     <br />

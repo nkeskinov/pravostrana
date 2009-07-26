@@ -14,4 +14,5 @@ mysql_query('set NAMES utf8');
 
 # Set local timezone for all scripts that include this file
 date_default_timezone_set('Europe/Skopje');
+set_time_limit(0);
 ?>

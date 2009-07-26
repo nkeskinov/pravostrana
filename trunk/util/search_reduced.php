@@ -68,14 +68,14 @@ function popUpWindow(URLStr, left, top, width, height)
 </script>
 
 
-<div class="left-block">
+<div class="left-block1">
 	
                 <div class="title">
                     <div class="left"></div>
                     <div class="middle"><div class="text">Пребарување</div></div>
                     <div class="right"></div>
   </div>
-  <div class="sodrzina" style="background:#fbf7e0;">
+  <div class="sodrzina" style="/*background:#fbf7e0;*/">
     <form action="<?php echo $page; ?>" method="get">
                     <table width="240" border="0" cellpadding="1" cellspacing="0" >
                     <tr>

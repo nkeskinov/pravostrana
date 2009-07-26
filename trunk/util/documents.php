@@ -23,15 +23,35 @@ if (isset($_GET['id_doc_group'])) {
   $id_doc_group_Documents = $_GET['id_doc_group'];
 }
 mysql_select_db($database_pravo, $pravo);
+$id_doc_group=-1;
+if(isset($_GET['subsubcategory'])){
+	$id_doc_group=$_GET['subsubcategory'];
+}elseif(isset($_GET['subcategory'])){
+	$id_doc_group=$_GET['subcategory'];
+}elseif(isset($_GET['category']))
+	$id_doc_group=$_GET['category'];
+
+if(isset($_GET['id_doc_group']))
+	$id_doc_group=$_GET['id_doc_group'];
+//echo $id_doc_group;
 $query_Documents = sprintf("SELECT DISTINCT document. * , doc_meta. *
 							FROM document
 							LEFT JOIN doc_meta ON document.id_doc_meta = doc_meta.id_doc_meta
 							LEFT JOIN document_has_keyword dhk ON document.id_document = dhk.id_document
 							LEFT JOIN keyword k ON k.id_keyword = dhk.id_keyword
+							LEFT JOIN doc_group dg ON document.id_doc_group = dg.id_doc_group
 							WHERE document.id_doc_type =%s
 							AND document.id_superdoc IS NULL ", GetSQLValueString($id_doc_type_Documents, "int"));
-if(isset($_GET['id_doc_group']) && $_GET['id_doc_group']!=0){
-		$query_Documents = sprintf("%s and id_doc_group=%s",$query_Documents,GetSQLValueString($_GET['id_doc_group'], "int"));
+if($id_doc_group!=-1){
+		$query_Documents = sprintf("%s AND dg.id_doc_group =%s
+									OR dg.id_supergroup =%s
+									OR id_supergroup
+									IN (
+									SELECT id_doc_group
+									FROM doc_group
+									WHERE id_supergroup =%s
+									)
+								   ",$query_Documents,GetSQLValueString($id_doc_group, "int"),GetSQLValueString($id_doc_group, "int"),GetSQLValueString($id_doc_group, "int"));
 }
 if(isset($_GET['name'])){
 	$query_Documents = sprintf("%s AND lower(title) LIKE %s",$query_Documents,GetSQLValueString("закон% за ".$_GET['name']."%", "text"));
@@ -120,18 +140,36 @@ function getSubDocuments($id_document, $pravo, $database_pravo,$gid){
 <?php	}?>
 <?php
 function getDocumentCategory($id_document_group, $pravo, $database_pravo){
-	mysql_select_db($database_pravo, $pravo);
-	$id_doc_type_Documents = "1";
-	$query_GroupDocuments = sprintf("SELECT * FROM doc_group WHERE
-									id_doc_group = %s", 
-							GetSQLValueString($id_document_group, "int"));
-	$GroupDocuments = mysql_query($query_GroupDocuments, $pravo) or die(mysql_error());
-	//$row_GroupDocuments = mysql_fetch_assoc($GroupDocuments);
-	//$tmp_number=0;
-	$row_number =  mysql_num_rows($GroupDocuments);
-	if($row_number){
-		echo mysql_result($GroupDocuments,0,'name');
-	}
+	
+//Selecting the subsubgroup, subgroup and group for the document
+$query_DocGroup=sprintf("SELECT id_doc_group, name
+						FROM doc_group
+						WHERE id_doc_group = (
+							SELECT id_supergroup
+							FROM doc_group
+							WHERE id_doc_group = (
+								SELECT id_supergroup
+								FROM doc_group
+								WHERE id_doc_group = %s
+							)
+						)						UNION
+						SELECT id_doc_group, name
+						FROM doc_group
+						WHERE id_doc_group = (
+							SELECT id_supergroup
+							FROM doc_group
+							WHERE id_doc_group = %s
+						)UNION
+						SELECT id_doc_group, name FROM doc_group
+						WHERE id_doc_group = %s 
+						",GetSQLValueString($id_document_group,"int"),GetSQLValueString($id_document_group,"int"),GetSQLValueString($id_document_group,"int"));
+						
+$DocGroup = mysql_query($query_DocGroup, $pravo) or die(mysql_error());
+$row_DocGroup = mysql_fetch_assoc($DocGroup);
+$row_number =  mysql_num_rows($DocGroup);
+if($row_number){
+	do{ echo $row_DocGroup['name']." &raquo; "; }while ($row_DocGroup = mysql_fetch_assoc($DocGroup));
+}
 }
 ?>
 <?php
