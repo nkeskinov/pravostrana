@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_Users" value="name:id_user;datatype:int,name:name;datatype:string,name:surname;datatype:string,name:email;datatype:string,name:is_approved;datatype:int,name:deleted;datatype:int,name:last_login_date;datatype:timestamp,name:count( d.id_user );datatype:int,name:count( v.id_user );datatype:int" />
+</info>

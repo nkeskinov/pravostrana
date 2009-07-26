@@ -37,12 +37,12 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 
-mysql_select_db($database_pravo, $pravo);
-$query_Recordset1 = "SELECT * FROM doc_group";
+/*mysql_select_db($database_pravo, $pravo);
+$query_Recordset1 = "SELECT id_doc_group, dg.name name FROM doc_group dg, doc_type dt WHERE dg.id_doc_type=dt.id_doc_type AND id_supergroup is NULL";
 $Recordset1 = mysql_query($query_Recordset1, $pravo) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysql_num_rows($Recordset1);
-
+*/
 
 $query_Documents = sprintf("SELECT count(*) total, min(published_date) from_date, max(published_date) to_date
 							FROM document
@@ -125,22 +125,7 @@ function popUpWindow(URLStr, left, top, width, height)
     <td align="left">Име на законот: </td>
     <td><input name="name" id="name" type="text" size="35" onkeyup="this.form.name.value=toCyr(this.form.name.value)"></td>
   </tr>
-  <tr>
-    <td align="left">Група: </td>
-    <td>
-    	<select name="id_doc_group" id="group" style="width:350px;">
-        <option value="0">Изберете група</option>
-        <?php 
-do {  
-?>
-        <option value="<?php echo $row_Recordset1['id_doc_group']?>" ><?php echo $row_Recordset1['name']?></option>
-        <?php
-} while ($row_Recordset1 = mysql_fetch_assoc($Recordset1));
-?>
-      </select>
-    </td>
-  </tr>
-  <tr>
+   <tr>
     <td align="left">Број / Година: </td>
     <td><label>
       <input name="number" type="text" id="number" size="4">
@@ -148,6 +133,30 @@ do {
       <input name="year" type="text" id="year" size="4">
     </label></td>
   </tr>
+ 	<tr>
+        <td align='left'>Категорија: </td>
+        <td>
+            <form name=sel>
+            <font id=category><select style='width:320px;'>
+            <option value='0'>Категорија</option> 
+            </select></font>
+        </td>
+  	</tr>
+	<tr>
+        <td align='left'>Податегорија: </td>
+        <td>
+            <font id=subcategory><select style='width:320px;' disabled>
+            <option value='0'>Подакатегорија</option> 
+            </select></font>
+        </td>
+  	</tr>
+         <td align='left'>ПодПодатегорија: </td>
+         <td>
+            <font id=subsubcategory><select style='width:320px;' disabled>
+            <option value='0'>ПодПодакатегорија</option>
+            </select></font>
+		</td>
+  	</tr>
   <tr>
     <td align="left">Клучен збор: </td>
     <td><label>
@@ -166,6 +175,32 @@ do {
   
 </table>
 </form>
+
+<script language=Javascript>
+function Inint_AJAX() {
+   try { return new ActiveXObject("Msxml2.XMLHTTP");  } catch(e) {} //IE
+   try { return new ActiveXObject("Microsoft.XMLHTTP"); } catch(e) {} //IE
+   try { return new XMLHttpRequest();          } catch(e) {} //Native Javascript
+   alert("XMLHttpRequest not supported");
+   return null;
+};
+
+function dochange(src, val) {
+     var req = Inint_AJAX();
+     req.onreadystatechange = function () { 
+          if (req.readyState==4) {
+               if (req.status==200) {
+                    document.getElementById(src).innerHTML=req.responseText; //ÃÑº¤èÒ¡ÅÑºÁÒ
+               } 
+          }
+     };
+     req.open("GET", "util/categoryAjax.php?data="+src+"&val="+val); //ÊÃéÒ§ connection
+     req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=tis-620"); // set Header
+     req.send(null); //Êè§¤èÒ
+}
+
+window.onLoad=dochange('category', -1);     
+</script>
 
 <script type="text/javascript">
 // BeginWebWidget YUI_Tooltip: contextid1

@@ -16,6 +16,34 @@ $query_limit_DetailRS1 = sprintf("%s LIMIT %d, %d", $query_DetailRS1, $startRow_
 $DetailRS1 = mysql_query($query_limit_DetailRS1, $pravo) or die(mysql_error());
 $row_DetailRS1 = mysql_fetch_assoc($DetailRS1);
 
+
+//Selecting the subsubgroup, subgroup and group for the document
+$query_DocGroup=sprintf("SELECT id_doc_group, name
+						FROM doc_group
+						WHERE id_doc_group = (
+							SELECT id_supergroup
+							FROM doc_group
+							WHERE id_doc_group = (
+								SELECT id_supergroup
+								FROM doc_group
+								WHERE id_doc_group = %s
+							)
+						)						UNION
+						SELECT id_doc_group, name
+						FROM doc_group
+						WHERE id_doc_group = (
+							SELECT id_supergroup
+							FROM doc_group
+							WHERE id_doc_group = %s
+						)UNION
+						SELECT id_doc_group, name FROM doc_group
+						WHERE id_doc_group = %s 
+						",GetSQLValueString($row_DetailRS1['id_doc_group'],"int"),GetSQLValueString($row_DetailRS1['id_doc_group'],"int"),GetSQLValueString($row_DetailRS1['id_doc_group'],"int"));
+						
+$DocGroup = mysql_query($query_DocGroup, $pravo) or die(mysql_error());
+$row_DocGroup = mysql_fetch_assoc($DocGroup);
+//print_r($row_DocGroup);
+
 if (isset($_GET['totalRows_DetailRS1'])) {
   $totalRows_DetailRS1 = $_GET['totalRows_DetailRS1'];
 } else {
@@ -48,9 +76,9 @@ function getSubDocuments($id_document, $pravo, $database_pravo){
             <img src="images/dot1.gif"/>
       <?php }?>
       </td>
-      <td width="66%" valign="top">&nbsp;<?php echo $row_SubDocuments['title']; ?><br>
+      <td width="61%" valign="top">&nbsp;<?php echo $row_SubDocuments['title']; ?><br>
       <span style="color:#666; font-size:11px">&nbsp;&nbsp;<?php echo date("d.m.Y", $timestamp); ?>&nbsp;|</span></span><span style="color:#666; font-size:10px"> Сл. весник/година:</span> <span style="font-size:10px;"><?php echo $row_SubDocuments['ordinal']; ?>/<?php echo date("Y",strtotime($row_SubDocuments['date'])); ?></span></td>
-      <td width="14%" align="right" valign="top">
+      <td width="15%" align="right" valign="top">
        <div style="padding:3px;">
       <?php if(isset($_SESSION['MM_UserGroup'])) {
 		if($_SESSION['MM_UserGroup'] =="admin"){ ?>
@@ -62,7 +90,7 @@ function getSubDocuments($id_document, $pravo, $database_pravo){
       </div>
       </td>
       
-      <td width="16%" align="right"><a href="download.php?id=<?php echo $row_SubDocuments['id_document']; ?> "><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /><br><span style="font-size:10px; color:#999;"><?php getNumDownload($row_SubDocuments['id_document'], $pravo, $database_pravo); ?> пати спуштено</span></a></td>
+      <td width="20%" align="right"><a href="download.php?id=<?php echo $row_SubDocuments['id_document']; ?> "><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /><br><span style="font-size:10px; color:#999;"><?php getNumDownload($row_SubDocuments['id_document'], $pravo, $database_pravo); ?> пати спуштено</span></a></td>
     </tr>
     <?php $tmp_number+=1;} while ($row_SubDocuments = mysql_fetch_assoc($SubDocuments)); ?>
     <?php if(isset($_SESSION['MM_UserGroup'])) {
@@ -143,7 +171,7 @@ function getNumDownload($id_document, $pravo, $database_pravo){
   </tr>
   <tr>
     <td>Категорија:</td>
-    <td><?php getDocumentCategory($row_DetailRS1['id_doc_group'], $pravo, $database_pravo); ?></td>
+    <td><?php do{ echo $row_DocGroup['name']." &raquo; "; }while ($row_DocGroup = mysql_fetch_assoc($DocGroup)); ?></td>
   </tr>
   <tr>
     <td>Забелешка:</td>

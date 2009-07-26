@@ -102,7 +102,7 @@ transition: Fx.Transitions.sineOut
             <table>
             <tr>
             <td valign="top" width="250">
-            <div class="left-block">
+            <div class="left-block1">
                 <div class="title">
                     <div class="left"></div>
                     <div class="middle"><div class="text"><!-- TemplateBeginEditable name="leftTitle" -->Наслов<!-- TemplateEndEditable --></div></div>

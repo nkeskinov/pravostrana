@@ -253,6 +253,46 @@ h4 {
 	padding:5px;
 }
 
+.mainBody .left-block1{
+	float:left;
+	width:100%;
+	display:block;
+}
+.mainBody .left-block1 .title{
+	display: block; 
+	overflow:hidden; 
+	clear:both;
+}
+.mainBody .left-block1 .middle{
+	background:url(images/yellow-title-middle1.png);
+	height:30px;
+	width:95%;
+	float:left;
+}
+.mainBody .left-block1 .middle .text{
+	color:#8c2800;
+	font-weight:bold;
+	padding-left:10px;
+	padding-top:5px;
+}
+.mainBody .left-block1 .left{
+	background:url(images/yellow-title-left1.png);
+	height:30px;
+	width:2.5%;
+	float:left;
+}
+.mainBody .left-block1 .right{
+	background:url(images/yellow-title-right1.png);
+	height:30px;
+	width:2.5%;
+	float:right;
+}
+.mainBody .left-block1 .sodrzina{
+	/*border:thin solid #f5e6a2;*/
+	border-top:none;
+	margin-top:-10px;
+	padding-top:5px;
+}
 
 .mainBody .left-red-block{
 	float:left;

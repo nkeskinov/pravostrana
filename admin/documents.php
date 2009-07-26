@@ -117,16 +117,16 @@ transition: Fx.Transitions.sineOut
             <!-- InstanceBeginEditable name="Content" -->
             <table width="100%">
               <tr>
-                <td width="28%" valign="top"><div class="left-block">
+                <td width="28%" valign="top"><div class="left-block1">
                   <div class="title">
                     <div class="left"></div>
                     <div class="middle">
-                      <div class="text">Наслов</div>
+                      <div class="text">Администраторско Мени</div>
                     </div>
                     <div class="right"></div>
                   </div>
-                  <div class="sodrzina">
-                    <p>Текст </p>
+                  <div class="sodrzina" style="padding-top:10px;">
+                     <?php include("util/menu.php"); ?>
                   </div>
                 </div></td>
                 <td width="72%" valign="top"><div class="right-block-bigger">
