@@ -1,6 +1,20 @@
 <?php session_start(); ?>
 <?php require_once("Connections/pravo.php"); ?>
 <?php include("util/misc.php"); ?>
+<?php 
+$ip_address=$_SERVER['REMOTE_ADDR'];
+$page=substr(strrchr($_SERVER['PHP_SELF'],"/"),1);
+$from_page=substr(strrchr($_SERVER['HTTP_REFERER'],"/"),1);
+$referrer=$_SERVER['HTTP_REFERER'];
+$browser=$_SERVER['HTTP_USER_AGENT'];
+$language=$_SERVER['HTTP_ACCEPT_LANGUAGE'];
+$id_user=1;
+if(isset($_SESSION['MM_ID']))
+	$id_user=$_SESSION['MM_ID'];
+
+trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_page, $database_pravo, $pravo);
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/CleanTemplate.dwt.php" codeOutsideHTMLIsLocked="false" -->
 <head>
@@ -10,7 +24,7 @@
 <link href="style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="images/favicon1.png" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>Pravo.org.mk | Детален опис на закон</title>
+<title>Pravo.org.mk | Детален опис на документот</title>
 <!-- InstanceEndEditable -->
 <link href="YUI/2.6.0/build/fonts/fonts-min.css" rel="stylesheet" type="text/css" />
 <link href="YUI/2.6.0/build/container/assets/skins/sam/container.css" rel="stylesheet" type="text/css" />
@@ -123,16 +137,15 @@ transition: Fx.Transitions.sineOut
       <div id="horiz-menu" class="moomenu"><!-- InstanceBeginEditable name="Menu" -->
         <ul class="nav">
           <li><a href="index.php">Почетна</a></li>
-          <li class="active"><a href="documentlaws.php">Закони</a></li>
-          <li><a href="analysis.php">Анализи</a></li>
-          <li><a href="policies.php">Прописи</a></li>
-          <li><a href="#">Судска Пракса</a>
+          <li <?php if($_GET['page']=="documentlaws.php") echo 'class="active"' ?>><a href="documentlaws.php">Закони</a></li>
+          <li <?php if($_GET['page']=="analysis.php") echo 'class="active"' ?>><a href="analysis.php">Анализи</a></li>
+          <li <?php if($_GET['page']=="regulations.php") echo 'class="active"' ?>><a href="regulations.php">Прописи</a></li>
+          <li <?php if($_GET['page']=="courtpractice.php" || $_GET['page']=="europeancourt.php") echo 'class="active"' ?>><a href="#">Судска Пракса</a>
           	<ul>
-            	<li><a href="studentpractice.php">Студентска Пракса</a></li>
-                <li><a href="#">Непозната</a></li>
+            	 <li><a href="courtpractice.php">Судска Пракса</a></li>
+            	 <li><a href="europeancourt.php">Европски суд</a></li>
              </ul>
           </li>
-          <li><a href="forum.php">Форум</a></li>
           <li><a href="news.php">Новости</a></li>
           <li><a href="contact.php">Контакт</a></li>
         </ul>
@@ -140,7 +153,9 @@ transition: Fx.Transitions.sineOut
         <div id="menu"></div>
         <div id="mapMenu">
        <!-- InstanceBeginEditable name="SiteMap" -->
-       <table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp; &raquo;&nbsp;&nbsp;</td><td><a href="documentlaws.php">Закони</a>&nbsp; &raquo;&nbsp;</td><td> Детален опис на законот</td></tr></table> 
+       <table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp; &raquo;&nbsp;&nbsp;</td><td>
+	   <?php if($_GET['page']=="documentlaws.php") echo '<a href="documentlaws.php">Закони</a>&nbsp; &raquo;&nbsp;'; if($_GET['page']=="analysis.php") echo '<a href="analysis.php">Анализи</a>&nbsp; &raquo;&nbsp;';  if($_GET['page']=="regulations.php") echo '<a href="regulations.php">Прописи</a>&nbsp; &raquo;&nbsp;'; if($_GET['page']=="courtpractice.php") echo '<a href="courtpractice.php">Судска Пракса</a>&nbsp; &raquo;&nbsp;';  if($_GET['page']=="europeancourt.php") echo '<a href="europeancourt.php">Судска Пракса на Европски суд</a>&nbsp; &raquo;&nbsp;';?>
+       </td><td> Детален опис на документот</td></tr></table> 
       <!-- InstanceEndEditable -->
        </div>
       </div>
@@ -152,7 +167,7 @@ transition: Fx.Transitions.sineOut
             <!-- InstanceBeginEditable name="Content" -->
             <table width="100%">
               <tr>
-                <td width="200" valign="top"><div class="left-block">
+                <td width="200" valign="top"><div class="left-block1">
                   <div class="title">
                     <div class="left"></div>
                     <div class="middle">
@@ -168,7 +183,7 @@ transition: Fx.Transitions.sineOut
                   <div class="title">
                     <div class="left"></div>
                     <div class="middle">
-                      <div class="text">Детален опис на законот</div>
+                      <div class="text">Детален опис на документот</div>
                     </div>
                     <div class="right"></div>
                   </div>

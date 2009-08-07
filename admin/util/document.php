@@ -49,7 +49,7 @@ $Recordset1 = mysql_query($query_Recordset1, $pravo) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysql_num_rows($Recordset1);
 
-$_SESSION['id_doc_group']=$row_Recordset1['id_doc_group'];
+
 $query_DocGroup=sprintf("SELECT id_doc_group, name
 						FROM doc_group
 						WHERE id_doc_group = (
@@ -148,7 +148,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 		$message = "Документот ".$new." e закачен!";
 		_show_message_color($message,'YELLOW');  	
 	}
-	echo $_POST['keywords'];
+	//echo $_POST['keywords'];
 	
 	
 	$created_by = isset($_SESSION['MM_ID']) ? $_SESSION['MM_ID'] : 0 ;
@@ -488,14 +488,14 @@ plugins : "safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotio
 <form method="post" name="form1" target="upload_iframe" action="<?php echo $editFormAction; ?>" enctype="multipart/form-data">
 <table width="100%" align="center">
 <tr>
-<td width="28%" align="right" valign="top">Избери документ:</td>
-<td width="72%">
-<input type="hidden" name="fileframe" value="true">
-<input type="file" name="file" id="file" onChange="jsUpload(this)">
-      <br />
-<input type="text" name="upload_status" id="upload_status" 
-       value="Документот не е закачен" size="50" disabled>
-       </td>
+    <td width="28%" align="right" valign="top">Избери документ:</td>
+    <td width="72%">
+    <input type="hidden" name="fileframe" value="true">
+    <input type="file" name="file" id="file" onChange="jsUpload(this)">
+          <br />
+    <input type="text" name="upload_status" id="upload_status" 
+           value="Документот не е закачен" size="50" disabled>
+      </td>
   </tr>
 </table>
 </form>
@@ -563,7 +563,8 @@ jQuery("#jQueryUICalendar1").datepicker({ dateFormat: 'dd.mm.yy',  altField: '#a
       <td nowrap align="right" valign="top">Сл. весник/година:</td>
       <td>
         <input name="ordinal" type="text" id="ordinal" size="3" value="<?php if(isset($_GET['id'])) echo htmlentities($row_Recordset1['ordinal'], ENT_COMPAT, 'UTF-8');?>" />
-      /<input name="year" type="text" id="year" size="5"  value="<?php if(isset($_GET['id'])) echo htmlentities($row_Recordset1['date'], ENT_COMPAT, 'UTF-8');?>" /><input type="hidden" name="id_doc_meta" value="<?php if(isset($_GET['id'])) echo htmlentities($row_Recordset1['id_doc_meta'], ENT_COMPAT, 'UTF-8');?>" /></td>
+      /<input name="year" type="text" id="year" size="5"  value="<?php if(isset($_GET['id'])) echo htmlentities($row_Recordset1['date'], ENT_COMPAT, 'UTF-8');?>" /><input type="hidden" name="id_doc_meta" value="<?php if(isset($_GET['id'])) echo htmlentities($row_Recordset1['id_doc_meta'], ENT_COMPAT, 'UTF-8');?>" />
+      </td>
     </tr>
     <tr valign="baseline">
       <td nowrap align="right" valign="top">Забелешка:</td>
@@ -587,16 +588,18 @@ do {
       <a href="document_type.php?mode=new&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/add.gif" border="0" /></a>
       <a href="document_type.php?id=<?php echo $row_Recordset1['id_doc_type']; ?>&mode=edit&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/pencil.png" border="0" /></a>
       </td>
-    <tr>
+    </tr>
+    <form name=sel>
   	<tr>
         <td align='right'>Категорија: </td>
         <td>
-            <form name=sel>
+
             <font id=category><select style='width:300px;'>
             <option value='0'>Категорија</option> 
             </select></font>
             <a href="document_category.php?mode=new&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/add.gif" border="0" /></a>
-      <a href="document_category.php?id=<?php echo $row_Recordset1['id_doc_group']; ?>&mode=edit&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/pencil.png" border="0" /></a>
+      <a href="document_category.php?id=<?php echo $cat; ?>&mode=edit&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/pencil.png" border="0" /></a>
+      	
         </td>
   	</tr>
 	<tr>
@@ -606,27 +609,27 @@ do {
             <option value='0'>Подакатегорија</option> 
             </select></font>
             <a href="document_category.php?mode=new&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/add.gif" border="0" /></a>
-      <a href="document_category.php?id=<?php echo $row_Recordset1['id_doc_group']; ?>&mode=edit&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/pencil.png" border="0" /></a>
+      <a href="document_category.php?id=<?php echo $subcat; ?>&mode=edit&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/pencil.png" border="0" /></a>
         </td>
   	</tr>
+    <tr>
          <td align='right'>Под-податегорија: </td>
          <td>
             <font id=subsubcategory><select style='width:300px;' disabled>
             <option value='0'>Под-подакатегорија</option>
             </select></font>
       <a href="document_category.php?mode=new&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/add.gif" border="0" /></a>
-      <a href="document_category.php?id=<?php echo $row_Recordset1['id_doc_group']; ?>&mode=edit&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/pencil.png" border="0" /></a>
+      <a href="document_category.php?id=<?php echo $subsubcat; ?>&mode=edit&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/pencil.png" border="0" /></a>
       </td>
-    <tr>
+	</tr>
+    </form>
     <?php if(isset($_GET['id']) && isset($_GET['edit'])) { ?>
     <tr valign="baseline">
       <td rowspan="2" align="right" valign="top" nowrap>Документ:</td>
       <td><a href="../download.php?id=<?php echo $row_Recordset1['id_document']; ?> "><img src="../images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a>&nbsp;&nbsp;<a href="<?php echo "?".$_SERVER['QUERY_STRING']."&change=true" ?>">замени</a></td>
-    </tr>
-   
+   </tr>
     <tr valign="baseline">
       <td>
-       
       </td>
     </tr>
      <?php } ?>
@@ -670,7 +673,7 @@ function dochange(src, val,sel) {
           }
      };
      req.open("GET", "util/categoryAjax.php?data="+src+"&val="+val+"&sel="+sel); //ÊÃéÒ§ connection
-     req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=tis-620"); // set Header
+     req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8"); // set Header
      req.send(null); //Êè§¤èÒ
 }
 

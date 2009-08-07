@@ -5,22 +5,22 @@ session_start();
 <?php require_once("Connections/pravo.php"); ?>
 <?php include("util/misc.php"); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/SingleRed.dwt.php" codeOutsideHTMLIsLocked="false" -->
 <head>
 <!--templateinfo codeoutsidehtmlislocked="true" -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="../rokmoomenu.css" rel="stylesheet" type="text/css" />
-<link href="../style.css" rel="stylesheet" type="text/css" />
-<link rel="shortcut icon" href="../images/favicon1.png" />
-<!-- TemplateBeginEditable name="doctitle" -->
-<title>pravo.org.mk</title>
-<!-- TemplateEndEditable -->
-<script type="text/javascript" src="../roktools.js"></script>
+<link href="rokmoomenu.css" rel="stylesheet" type="text/css" />
+<link href="style.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="images/favicon1.png" />
+<!-- InstanceBeginEditable name="doctitle" -->
+<title>Pravo.org.mk | Ресетирање на лозинка</title>
+<!-- InstanceEndEditable -->
+<script type="text/javascript" src="roktools.js"></script>
 
 
-<script type="text/javascript" src="../mootools.js"></script>
+<script type="text/javascript" src="mootools.js"></script>
 
-<script type="text/javascript" src="../rokmoomenu.js"></script>
+<script type="text/javascript" src="rokmoomenu.js"></script>
 <script type="text/javascript">
 
 window.addEvent('domready', function() {
@@ -58,8 +58,8 @@ transition: Fx.Transitions.sineOut
 
 -->
 </style>
-<!-- TemplateBeginEditable name="head" -->
-<!-- TemplateEndEditable -->
+<!-- InstanceBeginEditable name="head" -->
+<!-- InstanceEndEditable -->
 </head>
 
 <body>
@@ -67,9 +67,9 @@ transition: Fx.Transitions.sineOut
 <div id="wrapper">
 	<div class="header">
    	  <div class="header-top">
-   	    <div id="logoText"><img src="../images/banner.png" /></div>
+   	    <div id="logoText"><img src="images/banner.png" /></div>
    	  </div>
-      <div id="horiz-menu" class="moomenu"><!-- TemplateBeginEditable name="Menu" -->
+      <div id="horiz-menu" class="moomenu"><!-- InstanceBeginEditable name="Menu" -->
           <ul class="nav">
           <li class="active"><a href="index.php">Почетна</a></li>
           <li><a class="topdaddy" href="documentlaws.php">Закони</a></li>
@@ -84,34 +84,32 @@ transition: Fx.Transitions.sineOut
           <li><a href="news.php">Новости</a></li>
           <li><a href="contact.php">Контакт</a></li>
         </ul>
-      <!-- TemplateEndEditable -->
+      <!-- InstanceEndEditable -->
         <div id="menu"></div>
-       <div id="mapMenu"><!-- TemplateBeginEditable name="siteMap" -->Почетна &gt;<!-- TemplateEndEditable --></div> 
+       <div id="mapMenu"><!-- InstanceBeginEditable name="siteMap" -->Почетна &gt;<!-- InstanceEndEditable --></div> 
       </div>
 	</div>
     
     <div class="mainBody">
    	  <div class="content">
-            <div><img src="../images/726-90.jpg" width="728" height="90" /></div>
+            <div><img src="images/726-90.jpg" width="728" height="90" /></div>
             <table><tr><td>
             <div class="middle-red-block">
                 <div class="title">
                     <div class="left"></div>
-                    <div class="middle"><div class="text"><!-- TemplateBeginEditable name="BlockTitle" -->Наслов<!-- TemplateEndEditable --></div></div>
+                    <div class="middle"><div class="text"><!-- InstanceBeginEditable name="BlockTitle" -->Ја заборавивте вашата лозинка?<!-- InstanceEndEditable --></div></div>
                     <div class="right"></div>
                 </div>
-                 <div class="sodrzina"><!-- TemplateBeginEditable name="BlockContent" -->
-                   <p>Текст </p>
-                   <p>Текст</p>
-                   <p>&nbsp;</p>
-                 <!-- TemplateEndEditable --></div>
+                 <div class="sodrzina"><!-- InstanceBeginEditable name="BlockContent" -->
+                 <p> <?php include("util/reset_password.php"); ?></p>
+                 <!-- InstanceEndEditable --></div>
             </div>
             </td></tr></table>
    		 <p>&nbsp;</p>   
       </div>
         <div class="right">
-            <?php include("../util/login_block.php"); ?>
-               <div><img src="../images/250-250.jpg" width="250" height="250" /></div>
+            <?php include("util/login_block.php"); ?>
+               <div><img src="images/250-250.jpg" width="250" height="250" /></div>
           </div>
 
     </div>
@@ -120,4 +118,4 @@ transition: Fx.Transitions.sineOut
 </div>
 
 </body>
-</html>
+<!-- InstanceEnd --></html>

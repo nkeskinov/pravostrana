@@ -62,13 +62,20 @@ if (isset($_POST['username_login'])) {
     }
 	if($_SERVER['QUERY_STRING']!=""){
 		$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
-		header("Location: " . $MM_redirectLoginSuccess );
+		//header("Location: " . $MM_redirectLoginSuccess );
+		echo "<script>document.location.href='".$MM_redirectLoginSuccess."'</script>";
+		echo "<script>'Content-type: application/octet-stream'</script>";
+	}else{
+		$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
+		//header("Location: " . $MM_redirectLoginSuccess );
+		echo "<script>document.location.href='".$MM_redirectLoginSuccess."'</script>";
+		echo "<script>'Content-type: application/octet-stream'</script>";
 	}
   }
   else {
    // header("Location: ". $MM_redirectLoginFailed );
    $count = $count + 1;
-   echo $count;
+   //echo $count;
   }
 }
 ?>

@@ -1,9 +1,10 @@
+<?php 
+session_start();
+?>
 <?php require_once("../Connections/pravo.php"); ?>
 <?php include("../util/misc.php"); ?>
 <?php
-if (!isset($_SESSION)) {
-  session_start();
-}
+
 $MM_authorizedUsers = "admin";
 $MM_donotCheckaccess = "false";
 
@@ -94,14 +95,13 @@ transition: Fx.Transitions.sineOut
            <li><a href="../index.php">Почетна</a></li>
           <li class="active"><a class="topdaddy" href="../documentlaws.php">Закони</a></li>
          <li><a href="../analysis.php">Анализи</a></li>
-          <li><a href="../policies.php">Прописи</a></li>
+          <li><a href="../regulations.php">Прописи</a></li>
           <li><a href="#">Судска Пракса</a>
            <ul>
-            <li><a href="../studentpractice.php">Студентска Пракса</a></li>
-            <li><a href="#">Непозната</a></li>
+             <li><a href="../courtpractice.php">Судска Пракса</a></li>
+             <li><a href="../europeancourt.php">Судска Пракса на Европски суд</a></li>
            </ul>
           </li>
-          <li><a href="../forum.php">Форум</a></li>
           <li><a href="../news.php">Новости</a></li>
           <li><a href="../contact.php">Контакт</a></li>
         </ul>

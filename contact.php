@@ -4,7 +4,8 @@ session_start();
 <?php require_once("Connections/pravo.php"); ?>
 <?php include("util/misc.php"); ?>
 <?php 
-$id_doc_type_Documents = "3";
+$id_post_category=3; //ID for news
+$discussionName="Контакт"; //The name of the Discusion
 $ip_address=$_SERVER['REMOTE_ADDR'];
 $page=substr(strrchr($_SERVER['PHP_SELF'],"/"),1);
 $from_page=substr(strrchr($_SERVER['HTTP_REFERER'],"/"),1);
@@ -26,7 +27,7 @@ trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_p
 <link href="style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="images/favicon1.png" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>Pravo.org.mk | Анализи</title>
+<title>pravo.org.mk</title>
 <!-- InstanceEndEditable -->
 <link href="YUI/2.6.0/build/fonts/fonts-min.css" rel="stylesheet" type="text/css" />
 <link href="YUI/2.6.0/build/container/assets/skins/sam/container.css" rel="stylesheet" type="text/css" />
@@ -138,14 +139,14 @@ transition: Fx.Transitions.sineOut
    	  </div>
       <div id="horiz-menu" class="moomenu"><!-- InstanceBeginEditable name="Menu" -->
         <ul class="nav">
-          <li><a href="index.php">Почетна</a></li>
+          <li class="active"><a href="index.php">Почетна</a></li>
           <li><a class="topdaddy" href="documentlaws.php">Закони</a></li>
-          <li class="active"><a href="analysis.php">Анализи</a></li>
-          <li><a href="regulations.php">Прописи</a></li>
+          <li><a href="analysis.php">Анализи</a></li>
+          <li><a href="policies.php">Прописи</a></li>
           <li><a href="#">Судска Пракса</a>
            <ul>
-             <li><a href="courtpractice.php">Судска Пракса</a></li>
-             <li><a href="europeancourt.php">Европски суд</a></li>
+            <li><a href="courtpractice.php">Судска Пракса</a></li>
+            <li><a href="europeancourt.php">Европски суд</a></li>
            </ul>
           </li>
           <li><a href="news.php">Новости</a></li>
@@ -154,7 +155,7 @@ transition: Fx.Transitions.sineOut
       <!-- InstanceEndEditable -->
         <div id="menu"></div>
         <div id="mapMenu">
-       <!-- InstanceBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp; &raquo;&nbsp;&nbsp;</td><td>Анализи&nbsp;&raquo;</td></tr></table><!-- InstanceEndEditable -->
+       <!-- InstanceBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp; &raquo;&nbsp;&nbsp;</td><td><a href="documentlaws.php">Закони</a>&nbsp; &raquo;&nbsp;</td><td> Детален опис на законот</td></tr></table><!-- InstanceEndEditable -->
        </div>
       </div>
 	</div>
@@ -165,28 +166,28 @@ transition: Fx.Transitions.sineOut
             <!-- InstanceBeginEditable name="Content" -->
             <table width="100%">
               <tr>
-                <td width="28%" valign="top"><div class="left-block">
+                <td width="28%" valign="top"><div class="left-block1">
                   <div class="title">
                     <div class="left"></div>
                     <div class="middle">
-                      <div class="text">Категории</div>
+                      <div class="text">Информации</div>
                     </div>
                     <div class="right"></div>
                   </div>
                   <div class="sodrzina">
-                    <p><?php include("util/doc_category.php"); ?>&nbsp;</p>
+                    <p> </p>
                   </div>
                 </div></td>
                 <td width="72%" valign="top"><div class="right-block-bigger">
                   <div class="title">
                     <div class="left"></div>
                     <div class="middle">
-                      <div class="text">Анализи</div>
+                      <div class="text">Контакт</div>
                     </div>
                     <div class="right"></div>
                   </div>
-                  <div class="sodrzina" style="border-left:none; border-right:none; margin:0; padding:0;">
-					<p><?php include("util/documents.php"); ?>&nbsp;</p>
+                  <div class="sodrzina">
+                    <?php include("util/news.php"); ?>
                   </div>
                 </div></td>
               </tr>
@@ -209,7 +210,7 @@ transition: Fx.Transitions.sineOut
  
         <div class="right">
         <?php include("util/login_block.php"); ?>
-          <div style="width:250px; margin-top:5px; margin-bottom:5px;"><!-- InstanceBeginEditable name="SearchRegion" --><?php include("util/search_reduced.php"); ?><!-- InstanceEndEditable --></div>
+          <div style="width:250px; margin-top:5px; margin-bottom:5px;"><!-- InstanceBeginEditable name="SearchRegion" --><!-- InstanceEndEditable --></div>
          &nbsp;
           <div><img src="images/250-250.jpg" width="250" height="250" />
           </div>

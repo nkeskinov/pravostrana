@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_Court" value="name:id_doc_meta;datatype:int,name:id_doc_type;datatype:int,name:name;datatype:string,name:ordinal;datatype:int,name:date;datatype:date" />
+	<infoitem key="UD_CourtCategory" value="name:id_doc_group;datatype:int,name:id_doc_type;datatype:int,name:id_supergroup;datatype:int,name:name;datatype:string,name:forcesubscribe;datatype:int" />
+</info>

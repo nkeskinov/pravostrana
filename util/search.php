@@ -49,9 +49,26 @@ $query_Documents = sprintf("SELECT count(*) total, min(published_date) from_date
 							WHERE document.id_doc_type =1
 							AND document.id_superdoc IS NULL ");
 $all_Documents = mysql_query($query_Documents);
-$total=mysql_result($all_Documents,0,'total');
-$from_date=date("Y",strtotime(mysql_result($all_Documents,0,'from_date')));
-$to_date=date("Y",strtotime(mysql_result($all_Documents,0,'to_date')));
+if(mysql_num_rows($all_Documents)>0){
+	$total=mysql_result($all_Documents,0,'total');
+	$from_date=date("Y",strtotime(mysql_result($all_Documents,0,'from_date')));
+	$to_date=date("Y",strtotime(mysql_result($all_Documents,0,'to_date')));
+}
+
+$query_Index = sprintf("SELECT DISTINCT idx
+							FROM document
+							WHERE document.id_doc_type =1
+							AND document.id_superdoc IS NULL ORDER BY idx ASC ");
+$Index = mysql_query($query_Index);
+
+$row_Index = mysql_fetch_assoc($Index);
+$index_array=array();
+do{
+	array_push($index_array,$row_Index['idx']);
+}while($row_Index=mysql_fetch_assoc($Index));
+
+//print_r($index_array);
+
 ?>
 
 <script language="JavaScript">
@@ -86,36 +103,38 @@ function popUpWindow(URLStr, left, top, width, height)
     </td>
   </tr>
 <tr>
-    <td colspan="2" align="left"><div><a href="documentlaws.php?starts_with=а">А</a> 
-    <a href="documentlaws.php?starts_with=б">Б</a> 
-    <a href="documentlaws.php?starts_with=в">В</a> 
-    <a href="documentlaws.php?starts_with=г">Г</a> 
-    <a href="documentlaws.php?starts_with=д">Д</a> 
-    <a href="documentlaws.php?starts_with=ѓ">Ѓ</a> 
-    <a href="documentlaws.php?starts_with=е">Е</a> 
-    <a href="documentlaws.php?starts_with=ж">Ж</a> 
-    <a href="documentlaws.php?starts_with=з">З</a> 
-    <a href="documentlaws.php?starts_with=ѕ">Ѕ</a> 
-    <a href="documentlaws.php?starts_with=и">И</a> 
-    <a href="documentlaws.php?starts_with=ј">Ј</a> 
-    <a href="documentlaws.php?starts_with=к">К</a> 
-    <a href="documentlaws.php?starts_with=л">Л</a> 
-    <a href="documentlaws.php?starts_with=љ">Љ</a> 
-    <a href="documentlaws.php?starts_with=м">М</a> 
-	<a href="documentlaws.php?starts_with=н">Н</a> 
-    <a href="documentlaws.php?starts_with=њ">Њ</a> 
-    <a href="documentlaws.php?starts_with=о">О</a> 
-    <a href="documentlaws.php?starts_with=п">П</a> 
-    <a href="documentlaws.php?starts_with=р">Р</a> 
-    <a href="documentlaws.php?starts_with=с">С</a> 
-    <a href="documentlaws.php?starts_with=т">Т</a> 
-    <a href="documentlaws.php?starts_with=ќ">Ќ</a> 
-    <a href="documentlaws.php?starts_with=у">У</a> 
-    <a href="documentlaws.php?starts_with=ф">Ф</a> 
-    <a href="documentlaws.php?starts_with=х">Х</a> 
-    <a href="documentlaws.php?starts_with=ц">Ц</a> 
-    <a href="documentlaws.php?starts_with=џ">Џ</a> 
-    <a href="documentlaws.php?starts_with=ш">Ш</a></div></td>
+    <td colspan="2" align="left"><div class="laters">
+    <?php if(in_array("А",$index_array)) echo '<a href="documentlaws.php?starts_with=а">А</a>'; else echo "<span style='color:#ccc'>А</span>"; ?>
+    <?php if(in_array("Б",$index_array)) echo '<a href="documentlaws.php?starts_with=б">Б</a>'; else echo "<span style='color:#ccc'>Б</span>"; ?>
+    <?php if(in_array("В",$index_array)) echo '<a href="documentlaws.php?starts_with=в">В</a>'; else echo "<span style='color:#ccc'>В</span>"; ?>
+    <?php if(in_array("Г",$index_array)) echo '<a href="documentlaws.php?starts_with=г">Г</a>'; else echo "<span style='color:#ccc'>Г</span>"; ?>
+    <?php if(in_array("Д",$index_array)) echo '<a href="documentlaws.php?starts_with=д">Д</a>'; else echo "<span style='color:#ccc'>д</span>"; ?>
+    <?php if(in_array("Ѓ",$index_array)) echo '<a href="documentlaws.php?starts_with=ѓ">Ѓ</a>'; else echo "<span style='color:#ccc'>Ѓ</span>"; ?>
+    <?php if(in_array("Е",$index_array)) echo '<a href="documentlaws.php?starts_with=е">Е</a>'; else echo "<span style='color:#ccc'>Е</span>"; ?>
+    <?php if(in_array("Ж",$index_array)) echo '<a href="documentlaws.php?starts_with=ж">Ж</a>'; else echo "<span style='color:#ccc'>ж</span>"; ?>
+    <?php if(in_array("З",$index_array)) echo '<a href="documentlaws.php?starts_with=з">З</a>'; else echo "<span style='color:#ccc'>З</span>"; ?> 
+    <?php if(in_array("Ѕ",$index_array)) echo '<a href="documentlaws.php?starts_with=ѕ">Ѕ</a>'; else echo "<span style='color:#ccc'>Ѕ</span>"; ?>
+    <?php if(in_array("И",$index_array)) echo '<a href="documentlaws.php?starts_with=и">И</a>'; else echo "<span style='color:#ccc'>И</span>"; ?> 
+    <?php if(in_array("Ј",$index_array)) echo '<a href="documentlaws.php?starts_with=ј">Ј</a>'; else echo "<span style='color:#ccc'>Ј</span>"; ?>
+    <?php if(in_array("К",$index_array)) echo '<a href="documentlaws.php?starts_with=к">К</a>'; else echo "<span style='color:#ccc'>К</span>"; ?>
+    <?php if(in_array("Л",$index_array)) echo '<a href="documentlaws.php?starts_with=л">Л</a>'; else echo "<span style='color:#ccc'>Л</span>"; ?>
+    <?php if(in_array("Љ",$index_array)) echo '<a href="documentlaws.php?starts_with=љ">Љ</a>'; else echo "<span style='color:#ccc'>Љ</span>"; ?>
+    <?php if(in_array("М",$index_array)) echo '<a href="documentlaws.php?starts_with=м">М</a>'; else echo "<span style='color:#ccc'>М</span>"; ?>
+	<?php if(in_array("Н",$index_array)) echo '<a href="documentlaws.php?starts_with=н">Н</a>'; else echo "<span style='color:#ccc'>Н</span>"; ?>
+    <?php if(in_array("Њ",$index_array)) echo '<a href="documentlaws.php?starts_with=њ">Њ</a>'; else echo "<span style='color:#ccc'>Њ</span>"; ?>
+    <?php if(in_array("О",$index_array)) echo '<a href="documentlaws.php?starts_with=о">О</a>'; else echo "<span style='color:#ccc'>О</span>"; ?>
+    <?php if(in_array("П",$index_array)) echo '<a href="documentlaws.php?starts_with=п">П</a>'; else echo "<span style='color:#ccc'>П</span>"; ?>
+    <?php if(in_array("Р",$index_array)) echo '<a href="documentlaws.php?starts_with=р">Р</a>'; else echo "<span style='color:#ccc'>Р</span>"; ?>
+    <?php if(in_array("С",$index_array)) echo '<a href="documentlaws.php?starts_with=с">С</a>'; else echo "<span style='color:#ccc'>С</span>"; ?>
+    <?php if(in_array("Т",$index_array)) echo '<a href="documentlaws.php?starts_with=т">Т</a>'; else echo "<span style='color:#ccc'>Т</span>"; ?>
+    <?php if(in_array("Ќ",$index_array)) echo '<a href="documentlaws.php?starts_with=ќ">Ќ</a>'; else echo "<span style='color:#ccc'>Ќ</span>"; ?>
+   <?php if(in_array("У",$index_array)) echo '<a href="documentlaws.php?starts_with=у">У</a>'; else echo "<span style='color:#ccc'>У</span>"; ?>
+    <?php if(in_array("Ф",$index_array)) echo '<a href="documentlaws.php?starts_with=ф">Ф</a>'; else echo "<span style='color:#ccc'>Ф</span>"; ?>
+    <?php if(in_array("Х",$index_array)) echo '<a href="documentlaws.php?starts_with=х">Х</a>'; else echo "<span style='color:#ccc'>Х</span>"; ?>
+    <?php if(in_array("Ц",$index_array)) echo '<a href="documentlaws.php?starts_with=ц">Ц</a>'; else echo "<span style='color:#ccc'>Ц</span>"; ?>
+    <?php if(in_array("Џ",$index_array)) echo '<a href="documentlaws.php?starts_with=џ">Џ</a>'; else echo "<span style='color:#ccc'>Џ</span>"; ?>
+    <?php if(in_array("Ш",$index_array)) echo '<a href="documentlaws.php?starts_with=ш">Ш</a>'; else echo "<span style='color:#ccc'>Ш</span>"; ?>
+    </div></td>
   </tr>
   <tr>
     <td width="24%">&nbsp;</td>
@@ -136,24 +155,25 @@ function popUpWindow(URLStr, left, top, width, height)
  	<tr>
         <td align='left'>Категорија: </td>
         <td>
-            <form name=sel>
-            <font id=category><select style='width:320px;'>
-            <option value='0'>Категорија</option> 
+            <form name="sel">
+            <font id="category"><select style='width:320px;' name="category">
+            <option value='0'>Изберете категорија</option> 
             </select></font>
         </td>
   	</tr>
 	<tr>
-        <td align='left'>Податегорија: </td>
+        <td align='left'>Подкатегорија: </td>
         <td>
-            <font id=subcategory><select style='width:320px;' disabled>
-            <option value='0'>Подакатегорија</option> 
+            <font id="subcategory"><select style='width:320px;' disabled name="subcategory">
+            <option value='0'>Изберете подкатегорија</option> 
             </select></font>
         </td>
   	</tr>
-         <td align='left'>ПодПодатегорија: </td>
+    <tr>
+         <td align='left'>Под-податегорија: </td>
          <td>
-            <font id=subsubcategory><select style='width:320px;' disabled>
-            <option value='0'>ПодПодакатегорија</option>
+            <font id="subsubcategory"><select style='width:320px;' disabled name="subsubcategory">
+            <option value='0'>Изберете под-подакатегорија</option>
             </select></font>
 		</td>
   	</tr>
@@ -170,7 +190,7 @@ function popUpWindow(URLStr, left, top, width, height)
     </label></td>
   </tr>
   <tr>
-    <td colspan="2" align="left">Базата содржи вкупно <strong><?php echo $total; ?></strong> закони донесени во периодот од <strong><?php echo $from_date; ?></strong> до <strong><?php echo $to_date; ?></strong> година. </td>
+    <td colspan="2" align="left">Базата содржи вкупно <strong><?php echo $total; ?></strong> закони донесени во периодот од <strong>1992</strong> до <strong><?php echo $to_date; ?></strong> година. </td>
     </tr>
   
 </table>

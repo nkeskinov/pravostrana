@@ -130,11 +130,10 @@ transition: Fx.Transitions.sineOut
           <li><a href="policies.php">Прописи</a></li>
           <li><a href="#">Судска Пракса</a>
            <ul>
-            <li><a href="studentpractice.php">Студентска Пракса</a></li>
-            <li><a href="#">Непозната</a></li>
+            <li><a href="courtpractice.php">Судска Пракса</a></li>
+            <li><a href="europeancourt.php">Европски суд</a></li>
            </ul>
           </li>
-          <li><a href="forum.php">Форум</a></li>
           <li><a href="news.php">Новости</a></li>
           <li><a href="contact.php">Контакт</a></li>
         </ul>

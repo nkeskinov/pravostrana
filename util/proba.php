@@ -1,10 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Untitled Document</title>
-</head>
+<?php 
+echo date("d.m.Y");
+echo "<br>";
+echo date("d.m.Y")+30; 
+echo "<br>";
+$curdate = date("d.m.Y");
+$term = 30;
+$expdate = date( "d.m.Y", mktime(0, 0, 0, date("m"), date("d")+$term, date("y")) );
+echo $curdate . "<br>" . $expdate;
+?>
 
-<body>
-</body>
-</html>
+<a href="http://pravo.org.mk.previewdns.com/pravo.org.mk/" >Pravo.org.mk</a>

@@ -180,16 +180,17 @@ h4 {
 	color:#333;
 }
 .mainBody .login .down a:link {
-	color: #8c2800;
+	;
 }
 .mainBody .login .down a:visited {
 	color: #8c2800;
 }
 .mainBody .login .down a:hover {
-	color: #FFF;
+	color: #633;
+	text-decoration:underline;
 }
 .mainBody .login .down a:active {
-	color: #FFF;
+	color: #f5e6a2;
 }
 .mainBody .login .title{
 	padding:5px;
@@ -247,7 +248,7 @@ h4 {
 	float:right;
 }
 .mainBody .left-block .sodrzina{
-	border:thin solid #f5e6a2;
+	border:1px solid #f5e6a2;
 	border-top:none;
 	margin-top:-10px;
 	padding:5px;
@@ -332,6 +333,46 @@ h4 {
 	border:thin solid #71312d;
 	border-right:none;
 	border-top:none;
+	margin-top:-5px;
+	padding:5px;
+}
+
+
+.mainBody .left-red-block1{
+	float:left;
+	width:100%;
+	display:block;
+}
+.mainBody .left-red-block1 .title{
+	display: block; 
+	overflow:hidden; 
+	clear:both;
+}
+.mainBody .left-red-block1 .middle{
+	background:url(images/red-title-middle1.png);
+	height:30px;
+	width:95%;
+	float:left;
+}
+.mainBody .left-red-block1 .middle .text{
+	color:#fcf9ea;
+	font-weight:bold;
+	padding-left:10px;
+	padding-top:5px;
+}
+.mainBody .left-red-block1 .left{
+	background:url(images/red-title-left1.png);
+	height:30px;
+	width:2.5%; 
+	float:left; 
+}
+.mainBody .left-red-block1 .right{
+	background:url(images/red-title-right1.png);
+	height:30px;
+	width:2.5%;
+	float:right;
+}
+.mainBody .left-red-block1 .sodrzina{
 	margin-top:-5px;
 	padding:5px;
 }
@@ -787,4 +828,19 @@ tr.off {
 	color:#C63; 
 	font-weight:normal;
 	font-size:14px;	
+}
+
+
+.laters a:link {
+	color:#333;
+}
+.laters a:visited {
+	color: #333;
+}
+.laters a:hover {
+	color:#666;
+	text-decoration:underline;
+}
+.laters a:active {
+	color: #333;
 }

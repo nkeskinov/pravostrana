@@ -60,6 +60,48 @@ $row_RecordsetDocCategoryEdit = mysql_fetch_assoc($RecordsetDocCategoryEdit);
 $totalRows_RecordsetDocCategoryEdit = mysql_num_rows($RecordsetDocCategoryEdit);
 
 
+$query_DocGroup=sprintf("SELECT id_doc_group, name
+						FROM doc_group
+						WHERE id_doc_group = (
+							SELECT id_supergroup
+							FROM doc_group
+							WHERE id_doc_group = (
+								SELECT id_supergroup
+								FROM doc_group
+								WHERE id_doc_group = %s
+							)
+						)UNION
+						SELECT id_doc_group, name
+						FROM doc_group
+						WHERE id_doc_group = (
+							SELECT id_supergroup
+							FROM doc_group
+							WHERE id_doc_group = %s
+						)UNION
+						SELECT id_doc_group, name FROM doc_group
+						WHERE id_doc_group = %s 
+						",GetSQLValueString($row_RecordsetDocCategoryEdit['id_doc_group'],"int"),GetSQLValueString($row_RecordsetDocCategoryEdit['id_doc_group'],"int"),GetSQLValueString($row_RecordsetDocCategoryEdit['id_doc_group'],"int"));
+						
+$DocGroup = mysql_query($query_DocGroup, $pravo) or die(mysql_error());
+//$row_DocGroup = mysql_fetch_assoc($DocGroup);
+$row_number =  mysql_num_rows($DocGroup);
+$cat=-1;
+$subcat=-1;
+$subsubcat=-1;
+if($row_number==3){
+	$cat=mysql_result($DocGroup,0,'id_doc_group');
+	$subcat=mysql_result($DocGroup,1,'id_doc_group');
+	$subsubcat=mysql_result($DocGroup,2,'id_doc_group');
+}elseif($row_number==2){
+	$cat=mysql_result($DocGroup,0,'id_doc_group');
+	$subcat=mysql_result($DocGroup,1,'id_doc_group');
+}elseif($row_number==1){
+	$cat=mysql_result($DocGroup,0,'id_doc_group');
+}
+//echo $cat."<br>";
+//echo $subcat."<br>";
+//echo $subsubcat."<br>";
+
 $maxRows_RecordsetDocGroupSuper = 100;
 $pageNum_RecordsetDocGroupSuper = 0;
 if (isset($_GET['pageNum_RecordsetDocGroupSuper'])) {
@@ -109,6 +151,12 @@ $totalPages_RecordsetDocGroupSuper = ceil($totalRows_RecordsetDocGroupSuper/$max
 	  <input type="checkbox" name="forcesubscribe" value="1"  disabled <?php if (!(strcmp(htmlentities($row_RecordsetDocCategorySub['forcesubscribe'], ENT_COMPAT, ''),1))) {echo "checked=\"checked\"";} ?>>
 	  </td>
     </tr>
+    <tr>
+    	<td></td>
+    	<td colspan="5">
+        <?php subCategory($row_RecordsetDocCategorySub['id_doc_group'],$database_pravo, $pravo); ?>
+        </td>
+     </tr>
     <?php $i++;} while ($row_RecordsetDocCategorySub = mysql_fetch_assoc($RecordsetDocCategorySub)); ?>
 </table>
 <?php }} ?>
@@ -133,9 +181,14 @@ $totalPages_RecordsetDocGroupSuper = ceil($totalRows_RecordsetDocGroupSuper/$max
    <br />
 <?php 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form2")) {
+		$id_supergroup=NULL;
+		if(isset($_POST['subcategory'])){
+			$id_supergroup=$_POST['subcategory'];
+		}elseif(isset($_POST['category']))
+			$id_supergroup=$_POST['category'];
   $insertSQL = sprintf("INSERT INTO doc_group ( id_doc_type, id_supergroup, name, forcesubscribe) VALUES (%s, %s, %s, %s)",
                        GetSQLValueString($_POST['id_doc_type'], "int"),
-                       GetSQLValueString($_POST['id_supergroup'], "int"),
+                       GetSQLValueString($id_supergroup, "int"),
                        GetSQLValueString($_POST['name'], "text"),
                        GetSQLValueString(isset($_POST['forcesubscribe']) ? "true" : "", "defined","1","0"));
 
@@ -153,10 +206,15 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form2")) {
 }
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form2")) {
+	$id_supergroup=NULL;
+	if(isset($_POST['subcategory'])){
+		$id_supergroup=$_POST['subcategory'];
+	}elseif(isset($_POST['category']))
+		$id_supergroup=$_POST['category'];
   $updateSQL = sprintf("UPDATE doc_group SET name=%s, id_doc_type=%s, id_supergroup=%s, forcesubscribe=%s WHERE id_doc_group=%s",
                        GetSQLValueString($_POST['name'], "text"),
                        GetSQLValueString($_POST['id_doc_type'], "int"),
-                       GetSQLValueString($_POST['id_supergroup'], "int"),
+                       GetSQLValueString($id_supergroup, "int"),
                        GetSQLValueString(isset($_POST['forcesubscribe']) ? "true" : "", "defined","1","0"),
                        GetSQLValueString($_POST['id_doc_group'], "int"));
 
@@ -210,19 +268,24 @@ do {
 ?>
       </select></td>
     <tr>
-    <tr valign="baseline">
-      <td nowrap align="right">Супер категорија:</td>
-      <td><select name="id_supergroup" style="width:350px;">
-      	<option value="">супер категорија</option>
-        <?php 
-do {  
-?>
-        <option value="<?php echo $row_RecordsetDocCategoryEdit['id_doc_group']?>" <?php if (!(strcmp($row_RecordsetDocGroup['id_doc_group'], htmlentities($row_RecordsetDocCategoryEdit['id_supergroup'], ENT_COMPAT, '')))) {echo "SELECTED";} ?>><?php echo $row_RecordsetDocGroup['name']?></option>
-        <?php
-} while ($row_RecordsetDocGroup = mysql_fetch_assoc($RecordsetDocGroup));
-?>
-      </select></td>
-    <tr>
+    <form name=sel>
+  	<tr>
+        <td align='right'>Супер Супер категорија: </td>
+        <td>
+            <font id=category><select style='width:300px;'>
+            <option value='0'>Супер Супер категорија</option> 
+            </select></font>
+        </td>
+  	</tr>
+	<tr>
+        <td align='right'>Супер категорија: </td>
+        <td>
+            <font id=subcategory><select style='width:300px;' disabled>
+            <option value='0'>Супер категорија</option> 
+            </select></font>
+        </td>
+  	</tr>
+    </form>
     <tr valign="baseline">
       <td nowrap align="right">Форсирај претплата:</td>
       <td><input type="checkbox" name="forcesubscribe" value="1"  <?php if(isset($_GET['mode']) && ($_GET['mode']=="edit")) if (!(strcmp(htmlentities($row_RecordsetDocCategoryEdit['forcesubscribe'], ENT_COMPAT, ''),1))) {echo "checked=\"checked\"";} ?>></td>
@@ -269,9 +332,39 @@ do {
     <?php $i++;} while ($row_RecordsetDocGroupSuper = mysql_fetch_assoc($RecordsetDocGroupSuper)); ?>
 </table>
 <?php } ?>
+<script language=Javascript>
+function Inint_AJAX() {
+   try { return new ActiveXObject("Msxml2.XMLHTTP");  } catch(e) {} //IE
+   try { return new ActiveXObject("Microsoft.XMLHTTP"); } catch(e) {} //IE
+   try { return new XMLHttpRequest();          } catch(e) {} //Native Javascript
+   alert("XMLHttpRequest not supported");
+   return null;
+};
+
+function dochange(src, val,sel) {
+     var req = Inint_AJAX();
+     req.onreadystatechange = function () { 
+          if (req.readyState==4) {
+               if (req.status==200) {
+                    document.getElementById(src).innerHTML=req.responseText; //ÃÑº¤èÒ¡ÅÑºÁÒ
+               } 
+          }
+     };
+     req.open("GET", "util/categoryAjax.php?data="+src+"&val="+val+"&sel="+sel); //ÊÃéÒ§ connection
+     req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=tis-620"); // set Header
+     req.send(null); //Êè§¤èÒ
+}
+
+	<?php if($subcat!=-1) { ?>
+	window.onload=dochange('category',-1,<?php echo $cat; ?> );
+	<?php }if($subsubcat!=-1) { ?>
+	window.onload=dochange('subcategory',<?php echo $cat; ?>,<?php echo $subcat; ?>);
+	<?php }if($cat==-1){ ?>
+	window.onload=dochange('category',-1,-1 );
+	<?php } ?>
+</script>
 <?php
 mysql_free_result($RecordsetDocType);
 mysql_free_result($RecordsetDocGroup);
 mysql_free_result($RecordsetDocCategoryEdit);
-mysql_free_result($RecordsetDocGroupSuper);
 ?>
