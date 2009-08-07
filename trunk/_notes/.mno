@@ -6,6 +6,7 @@
 	<infoitem key="MM_URL_Count" value="3" />
 	<infoitem key="MM_URL2" value="accesscheck" />
 	<infoitem key="MM_Session1" value="MM_ID" />
-	<infoitem key="MM_Session_Count" value="1" />
+	<infoitem key="MM_Session_Count" value="2" />
 	<infoitem key="MM_URL3" value="superdocument" />
+	<infoitem key="MM_Session2" value="id_visit" />
 </info>

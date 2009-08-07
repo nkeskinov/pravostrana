@@ -24,13 +24,18 @@ if (isset($_GET['id_doc_group'])) {
 }
 mysql_select_db($database_pravo, $pravo);
 $id_doc_group=-1;
-if(isset($_GET['subsubcategory'])){
+if(isset($_GET['subsubcategory']) && $_GET['subsubcategory']!=0 ){
 	$id_doc_group=$_GET['subsubcategory'];
-}elseif(isset($_GET['subcategory'])){
+}elseif(isset($_GET['subcategory']) && $_GET['subcategory']!=0){
 	$id_doc_group=$_GET['subcategory'];
-}elseif(isset($_GET['category']))
+}elseif(isset($_GET['category']) && $_GET['category']!=0)
 	$id_doc_group=$_GET['category'];
 
+if(isset($_GET['subcategory1']) && $_GET['subcategory1']!=0){
+	$id_doc_group=$_GET['subcategory1'];
+}elseif(isset($_GET['category1']) && $_GET['category1']!=0)
+	$id_doc_group=$_GET['category1'];
+	
 if(isset($_GET['id_doc_group']))
 	$id_doc_group=$_GET['id_doc_group'];
 //echo $id_doc_group;
@@ -42,7 +47,7 @@ $query_Documents = sprintf("SELECT DISTINCT document. * , doc_meta. *
 							LEFT JOIN doc_group dg ON document.id_doc_group = dg.id_doc_group
 							WHERE document.id_doc_type =%s
 							AND document.id_superdoc IS NULL ", GetSQLValueString($id_doc_type_Documents, "int"));
-if($id_doc_group!=-1){
+if($id_doc_group!=-1 && $id_doc_group!=0){
 		$query_Documents = sprintf("%s AND dg.id_doc_group =%s
 									OR dg.id_supergroup =%s
 									OR id_supergroup
@@ -53,11 +58,25 @@ if($id_doc_group!=-1){
 									)
 								   ",$query_Documents,GetSQLValueString($id_doc_group, "int"),GetSQLValueString($id_doc_group, "int"),GetSQLValueString($id_doc_group, "int"));
 }
-if(isset($_GET['name'])){
-	$query_Documents = sprintf("%s AND lower(title) LIKE %s",$query_Documents,GetSQLValueString("закон% за ".$_GET['name']."%", "text"));
+if(isset($_GET['name']) && $_GET['name']!=""){
+	$query_Documents = sprintf("%s AND lower(title) LIKE %s ",$query_Documents,GetSQLValueString("%".$_GET['name']."%", "text"));
+}
+if(isset($_GET['year']) && $_GET['year']!="" ){
+	$query_Documents = sprintf("%s AND YEAR(doc_meta.`date`)=%s ",$query_Documents,GetSQLValueString($_GET['year'], "text"));
+}
+if(isset($_GET['year1']) && $_GET['year1']!="" ){
+	$query_Documents = sprintf("%s AND YEAR(document.`published_date`)=%s ",$query_Documents,GetSQLValueString($_GET['year1'], "text"));
+}
+if(isset($_GET['number']) && $_GET['number']!=""){
+	//echo"1".$_GET['number']."number";
+	$query_Documents = sprintf("%s AND doc_meta.ordinal=%s ",$query_Documents,GetSQLValueString($_GET['number'], "int"));
+}
+if(isset($_GET['court']) && $_GET['court']!=0){
+	//echo $_GET['court'];
+	$query_Documents = sprintf("%s AND doc_meta.id_doc_meta=%s ",$query_Documents,GetSQLValueString($_GET['court'], "int"));
 }
 if(isset($_GET['starts_with'])){
-	$query_Documents = sprintf("%s AND lower(title) LIKE %s",$query_Documents,GetSQLValueString("закон за ".$_GET['starts_with']."%", "text"));
+	$query_Documents = sprintf("%s AND lower(idx)=%s ",$query_Documents,GetSQLValueString($_GET['starts_with'], "text"));
 	//echo $query_Documents;
 }
 if(isset($_GET['keyword'])){
@@ -132,7 +151,7 @@ function getSubDocuments($id_document, $pravo, $database_pravo,$gid){
       <td width="91%">&nbsp;<?php echo $row_SubDocuments['title']; ?><br>
       <span style="color:#666; font-size:10px">&nbsp;&nbsp;<?php echo date("d.m.Y", $timestamp); ?>&nbsp;|</span><span style="color:#666; font-size:10px"> Сл. весник/година:</span> <span style="font-size:10px;"><?php echo $row_SubDocuments['ordinal']; ?>/<?php echo date("Y",strtotime($row_SubDocuments['date'])); ?></span></td>
       
-      <td width="5%" align="right"><a href="documentDetail.php?id=<?php echo $id_document; ?>&gid=<?php echo $gid; ?>" title="Преземи го документот"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
+      <td width="5%" align="right"><a href="documentDetail.php?id=<?php echo $id_document; ?>&gid=<?php echo $gid; ?>&page=<?php echo $page; ?>" title="Преземи го документот"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
     </tr>
     <?php $tmp_number+=1;} while ($row_SubDocuments = mysql_fetch_assoc($SubDocuments)); ?>
 </table>
@@ -286,8 +305,8 @@ function getNumDownload($id_document, $pravo, $database_pravo){
   	$timestamp = strtotime($row_Documents['published_date']); 
   ?>
     <tr>
-      <td width="100%" style="border-bottom:1px solid #a25852; background:#fae9e8; padding-left:5px;"><strong><a href="documentDetail.php?id=<?php echo $row_Documents['id_document']; ?>&gid=<?php echo $row_Documents['id_doc_group']; ?>" title="Видете ги деталите за законот" ><span style="font-variant:small-caps; font-weight:bolder; font-size:15px; "><?php echo $row_Documents['title']; ?></span></a></strong><br> <span style="color:#666; font-size:11px">&nbsp;<?php echo date("d.m.Y", $timestamp); ?></span> |<span style="color:#666; font-size:11px"> Сл. весник/година:</span> <span style="font-size:11px; font-weight:bold;"><?php echo $row_Documents['ordinal']; ?></span>/<span style="font-size:11px; font-weight:bold;"><?php echo date("Y",strtotime($row_Documents['date'])); ?></span></td>
-      <td width="5%" align="right" style="border-bottom:1px solid #a25852; background:#fae9e8;;"><a href="documentDetail.php?id=<?php echo $row_Documents['id_document']; ?>&gid=<?php echo $row_Documents['id_doc_group']; ?>" title="Преземи го документот"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
+      <td width="100%" style="border-bottom:1px solid #a25852; background:#fae9e8; padding-left:5px;"><strong><a href="documentDetail.php?id=<?php echo $row_Documents['id_document']; ?>&gid=<?php echo $row_Documents['id_doc_group']; ?>&page=<?php echo $page; ?>" title="Видете ги деталите за законот" ><span style="font-variant:small-caps; font-weight:bolder; font-size:15px; "><?php echo $row_Documents['title']; ?></span></a></strong><br> <span style="color:#666; font-size:11px">&nbsp;<?php echo date("d.m.Y", $timestamp); ?></span> |<span style="color:#666; font-size:11px"> Сл. весник/година:</span> <span style="font-size:11px; font-weight:bold;"><?php echo $row_Documents['ordinal']; ?></span>/<span style="font-size:11px; font-weight:bold;"><?php echo date("Y",strtotime($row_Documents['date'])); ?></span></td>
+      <td width="5%" align="right" style="border-bottom:1px solid #a25852; background:#fae9e8;;"><a href="documentDetail.php?id=<?php echo $row_Documents['id_document']; ?>&gid=<?php echo $row_Documents['id_doc_group']; ?>&page=<?php echo $page; ?>" title="Преземи го документот"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
     </tr>
     <tr>
     	<td colspan="2"><?php getSubDocuments($row_Documents['id_document'], $pravo, $database_pravo,$row_Documents['id_doc_group']); ?></td>

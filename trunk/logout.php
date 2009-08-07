@@ -22,6 +22,7 @@ if ((isset($_GET['doLogout'])) &&($_GET['doLogout']=="true")){
   unset($_SESSION['PrevUrl']);
   unset($_SESSION['MM_Name']);
   unset($_SESSION['MM_ID']);
+  unset($_SESSION['id_visit']);
 	
   $logoutGoTo = "index.php";
   if ($logoutGoTo) {

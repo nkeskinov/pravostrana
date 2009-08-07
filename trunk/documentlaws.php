@@ -1,10 +1,23 @@
+<?php require("config.php"); ?>
 <?php 
 session_start();
-$id_doc_type_Documents = "1";
-$page="documentlaws.php";
 ?>
 <?php require_once("Connections/pravo.php"); ?>
 <?php include("util/misc.php"); ?>
+<?php 
+$id_doc_type_Documents = LAWS;
+$ip_address=$_SERVER['REMOTE_ADDR'];
+$page=substr(strrchr($_SERVER['PHP_SELF'],"/"),1);
+$from_page=substr(strrchr($_SERVER['HTTP_REFERER'],"/"),1);
+$referrer=$_SERVER['HTTP_REFERER'];
+$browser=$_SERVER['HTTP_USER_AGENT'];
+$language=$_SERVER['HTTP_ACCEPT_LANGUAGE'];
+$id_user=1;
+if(isset($_SESSION['MM_ID']))
+	$id_user=$_SESSION['MM_ID'];
+
+trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_page, $database_pravo, $pravo);
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/CleanTemplate.dwt.php" codeOutsideHTMLIsLocked="false" -->
 <head>
@@ -137,21 +150,20 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
           <li><a href="index.php">Почетна</a></li>
           <li class="active"><a class="topdaddy" href="documentlaws.php">Закони</a></li>
           <li><a href="analysis.php">Анализи</a></li>
-          <li><a href="policies.php">Прописи</a></li>
+          <li><a href="regulations.php">Прописи</a></li>
           <li><a href="#">Судска Пракса</a>
            <ul>
-            <li><a href="studentpractice.php">Студентска Пракса</a></li>
-            <li><a href="#">Непозната</a></li>
+             <li><a href="courtpractice.php">Судска Пракса</a></li>
+             <li><a href="europeancourt.php">Европски суд</a></li>
            </ul>
           </li>
-          <li><a href="forum.php">Форум</a></li>
           <li><a href="news.php">Новости</a></li>
           <li><a href="contact.php">Контакт</a></li>
         </ul>
       <!-- InstanceEndEditable -->
         <div id="menu"></div>
         <div id="mapMenu">
-       <!-- InstanceBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна&nbsp;&nbsp;</a>&nbsp;&raquo;&nbsp;</td><td>Закони&nbsp;&raquo;</td></tr></table> <!-- InstanceEndEditable -->
+       <!-- InstanceBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp; &raquo;&nbsp;&nbsp;</td><td>Закони&nbsp;&raquo;</td></tr></table><!-- InstanceEndEditable -->
        </div>
       </div>
 	</div>
@@ -206,7 +218,9 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
  
         <div class="right">
         <?php include("util/login_block.php"); ?>
-          <div style="width:250px; margin-top:5px; margin-bottom:5px;"><!-- InstanceBeginEditable name="SearchRegion" --><?php include("util/search_reduced.php"); ?><!-- InstanceEndEditable --></div>
+          <div style="width:250px; margin-top:5px; margin-bottom:5px;"><!-- InstanceBeginEditable name="SearchRegion" --><?php include("util/search_reduced.php"); ?>
+		  <a href="http://www.adobe.com/go/EN_US-H-GET-READER" target="_blank"><img src="images/get_adobe_reader.png" border="0"/></a>
+		  <!-- InstanceEndEditable --></div>
          &nbsp;
           <div><img src="images/250-250.jpg" width="250" height="250" />
           </div>

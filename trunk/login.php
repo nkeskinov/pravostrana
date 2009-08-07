@@ -21,7 +21,7 @@ session_start();
 <link href="style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="images/favicon1.png" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>pravo.org.mk</title>
+<title>pravo.org.mk | Логирање</title>
 <!-- InstanceEndEditable -->
 <script type="text/javascript" src="roktools.js"></script>
 
@@ -83,14 +83,13 @@ transition: Fx.Transitions.sineOut
          <ul class="nav"><li class="active"><a href="index.php">Почетна</a></li>
           <li><a class="topdaddy" href="documentlaws.php">Закони</a></li>
           <li><a href="analysis.php">Анализи</a></li>
-          <li><a href="policies.php">Прописи</a></li>
+          <li><a href="regulations.php">Прописи</a></li>
           <li><a href="#">Судска Пракса</a>
            <ul>
-            <li><a href="studentpractice.php">Студентска Пракса</a></li>
-            <li><a href="#">Непозната</a></li>
+             <li><a href="courtpractice.php">Судска Пракса</a></li>
+             <li><a href="europeancourt.php">Судска Пракса на Европски суд</a></li>
            </ul>
           </li>
-          <li><a href="forum.php">Форум</a></li>
           <li><a href="news.php">Новости</a></li>
           <li><a href="contact.php">Контакт</a></li>
         </ul>
@@ -137,7 +136,7 @@ transition: Fx.Transitions.sineOut
                         </td>
                       </tr>
                       <tr>
-                        <td colspan="2"><div align="center" class="down">Заборави лозинка? |<a href="register.php?new">Регистрирај се!</a></div></td>
+                        <td colspan="2"><div align="center" class="down"><a href="resetPassword.php">Заборави лозинка?</a> | <a href="register.php?new">Регистрирај се!</a></div></td>
                       </tr>
                       <tr>
                         <td colspan="2">&nbsp;</td>

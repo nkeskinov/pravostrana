@@ -5,31 +5,35 @@
                 <div class="forms">
                 <form ACTION="<?php echo $loginFormAction; ?>" METHOD="POST" name="form1">
                   <table width="100%" border="0" cellspacing="0">
-              <tr>
-                        <td width="88%">Корисничко име:</td>
-                        <td width="12%" ><input name="username_login" type="text" id="username_login" size="16" /></td>
-                    </tr>
-                      <tr>
-                        <td>Лозинка:</td>
-                        <td><input name="password_login" type="password" id="password_login" size="16" /></td>
+              		  <tr>
+                        <td>Корисничко име:</td>
                       </tr>
                       <tr>
-                        <td>&nbsp;</td>
+                        <td><input name="username_login" type="text" id="username_login" size="33" />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Лозинка:</td>
+                      </tr>
+                      <tr> 
+                        <td><input name="password_login" type="password" id="password_login" size="33" /></td>
+                      </tr>
+                      <tr>
                         <td><div align="right" style="padding-top:5px;">
                           <input type="submit" name="button" id="button" value="Логирај ме!" style="background-color:#993300; color:#FFFFFF" />
                         </div></td>
                       </tr>
                       <tr>
-                        <td colspan="2"><?php if(isset($loginFoundUser) && !$loginFoundUser) {?>
+                        <td><?php if(isset($loginFoundUser) && !$loginFoundUser) {?>
                         <div style="color:#F00;">Корисничкото име и лозинката не се совпаѓаат</div>
                         <?php } ?>
                         </td>
                       </tr>
                       <tr>
-                        <td colspan="2"><div align="center" class="down">Заборави лозинка? | <a href="register.php?new">Регистрирај се!</a></div></td>
+                        <td><div align="center" class="down"><a href="resetPassword.php">Заборави лозинка?</a> | <a href="register.php?new">Регистрирај се!</a></div></td>
                       </tr>
                       <tr>
-                        <td colspan="2">&nbsp;</td>
+                        <td>&nbsp;</td>
                       </tr>
                     </table>
                     </form>

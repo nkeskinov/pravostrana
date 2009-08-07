@@ -78,14 +78,13 @@ transition: Fx.Transitions.sineOut
         <ul class="nav"><li class="active"><a href="index.php">Почетна</a></li>
           <li><a class="topdaddy" href="documentlaws.php">Закони</a></li>
           <li><a href="analysis.php">Анализи</a></li>
-          <li><a href="policies.php">Прописи</a></li>
+          <li><a href="regulations.php">Прописи</a></li>
           <li><a href="#">Судска Пракса</a>
            <ul>
-            <li><a href="studentpractice.php">Студентска Пракса</a></li>
-            <li><a href="#">Непозната</a></li>
+            <li><a href="courtpractice.php">Судска Пракса</a></li>
+            <li><a href="europeancourt.php">Европски суд</a></li>
            </ul>
           </li>
-          <li><a href="forum.php">Форум</a></li>
           <li><a href="news.php">Новости</a></li>
           <li><a href="contact.php">Контакт</a></li>
         </ul>
@@ -131,7 +130,7 @@ transition: Fx.Transitions.sineOut
             <tr><td>&nbsp;</td><td></td></tr>
             <tr>
             <td valign="top">
-            <div class="left-red-block">
+            <div class="left-red-block1">
                 <div class="title">
                     <div class="left"></div>
                     <div class="middle"><div class="text"><!-- TemplateBeginEditable name="leftTitle2" -->Наслов<!-- TemplateEndEditable --></div></div>
@@ -156,6 +155,11 @@ transition: Fx.Transitions.sineOut
         </div>
         </td>
         </tr>
+        <tr>
+        <td colspan="2" valign="top">
+        	<div><img src="../images/eurocort.png" width="720" /></div>
+            <div><!-- TemplateBeginEditable name="EuroCourtRegion" -->EuroCourtRegion<!-- TemplateEndEditable --></div>
+        </td>
         </table> 
         <p>&nbsp;</p>
  <!--<div style="height:50px; background:#a25852; margin-bottom:-12px; padding:5px; color:#FFF;">
@@ -175,7 +179,6 @@ transition: Fx.Transitions.sineOut
 !-->
         <p>&nbsp;</p>
         <p>&nbsp;</p>
-        <p>&nbsp;</p>
       </div>
         <div class="right">
         <?php include("util/login_block.php"); ?>
@@ -185,7 +188,9 @@ transition: Fx.Transitions.sineOut
     </div>
     
 	<div class="footer">Copyright &copy; 2009 Сите права задржани</div>	
-    <div style="margin-top:-30px; color:#999;">Pravo.org.mk не превзема одговорност за евентуалните грешки во текстот на законите</div>
+    <div style="margin-top:-30px; color:#999; float:left; width:100%;">Pravo.org.mk не превзема одговорност за евентуалните грешки во текстот на законите <div style="float:right;"><img src="images/most.jpg"/></div>
+    
+    </div>
 </div>
 
 </body>

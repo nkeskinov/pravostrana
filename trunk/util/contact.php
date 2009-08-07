@@ -2,6 +2,7 @@
 
 $maxRows_Post = 10;
 $pageNum_Post = 0;
+$id_post_category=3; //ID for contact
 if (isset($_GET['pageNum_Post'])) {
   $pageNum_Post = $_GET['pageNum_Post'];
 }
@@ -215,7 +216,7 @@ if ((isset($_POST["Comment_insert"])) && ($_POST["Comment_insert"] == "insert"))
 	if($priority==0 or $priority==NULL)
 		$priority=1;
    
-
+   $discussionName="Контакт";
    
   $discussionSQL=sprintf("SELECT * from discussion where id_post_category=%s",GetSQLValueString($id_post_category, "int"));
   $discussionResult = mysql_query($discussionSQL, $pravo) or die(mysql_error());
@@ -386,21 +387,16 @@ function MM_swapImage() { //v3.0
   	if($num_of_posts){
   ?>
     <tr>
-    <?php if($id_post_category==2) { ?>
-      <td width="82%" style=" padding:5px;background:#fbf7e0; border-bottom:1px solid #f5e6a2;" colspan="<?php if(isset($_SESSION['MM_UserGroup'])&& ($_SESSION['MM_UserGroup'] =="admin")){ echo 0; }else echo 2;
-		?>">
+     <?php if(isset($_SESSION['MM_UserGroup'])) {
+		if($_SESSION['MM_UserGroup'] =="admin"){ 
+		?>
+      <td width="82%" style=" padding:5px;background:#fbf7e0; border-bottom:1px solid #f5e6a2;">
       	<a name="<?php echo $row_Post['id_post']; ?>"></a>
-        
+        <a name="<?php echo $row_Post['id_post']; ?>"></a>
 	  	<span style="color:#C63; font-size:14px;"><strong><?php echo $row_Post['subject']; ?></strong></span>
       	<br /><span style="font-size:10px; color:#666;"> на
 		<?php  echo date("d.m.Y H:i",strtotime($row_Post['date_created'])); ?> </span>
-        
       </td>
-      <?php } ?>
-       <?php if(isset($_SESSION['MM_UserGroup'])) {
-		if($_SESSION['MM_UserGroup'] =="admin"){ 
-		?>
-     
         <td width="18%" align="right" valign="top" style="padding:5px;background:#fbf7e0; border-bottom:1px solid #f5e6a2;">
 	<form method="post" name="form_post" action="<?php echo $editFormAction; ?>">
     <div style="vertical-align:middle; width:15px; height:15px; float:left;">
@@ -428,59 +424,6 @@ function MM_swapImage() { //v3.0
     <tr><td height="3" colspan="2" style="font-size:6px;"></td></tr>
     <?php }} while ($row_Post = mysql_fetch_assoc($Post)); ?>
 </table>
- <?php if($id_post_category==2) { ?>
-<table border="0" width="100%" cellspacing="0">
-<tr>
-    	<td width="50%">Вести <?php echo ($startRow_Post + 1) ?> до <?php echo min($startRow_Post + $maxRows_Post, $totalRows_Post) ?> од <?php echo $totalRows_Post ?></td>
-    	<td width="50%" align="right">
-          <table border="0" style="font-size:12px;">
-            <tr>
-              
-              <td ><?php if ($pageNum_Post > 0  ) { // Show if not first page ?>
-                  <a href="<?php printf("%s?pageNum_Post=%d%s", $currentPage, max(0, $pageNum_Post - 1), $queryString_Post); ?>"><img src="images/pPrev.png" border="0"/></a>
-                  <?php }else{ // Show if not first page ?> 
-                  		<img src="images/pPrevDisabled.png" border="0"/>
-                  <?php } ?></td>
-              <td >
-              	<?php $l=$pageNum_Post-4;
-					  $h=$pageNum_Post+4;
-					  //echo "l=".$l;
-					  if($l<0) $l=0;
-					  if($h<7 && $h<$totalPages_Post) $h=7;
-					  if($h>$totalPages_Post){
-						  $h=$totalPages_Post;
-						  $l=$h-7;
-						  if($l<0)$l=0;
-					  }
-					  if ($h >7 && $l>0) { // Show if not first page ?>
-                  <a href="<?php printf("%s?pageNum_Post=%d%s", $currentPage, 0, $queryString_Post); ?>"><?php echo '<u>'; echo 1; echo '</u>';?></a>...
-				  <?php }
-					for($i=$l;$i<=$h; $i++){
-						
-						if($i == $pageNum_Post){ 
-							echo "<b>[";
-							echo $i+1;
-							echo "]</b>";
-						}elseif($i<=$h){ ?>
-								<a href="<?php printf("%s?pageNum_Post=%d%s", $currentPage, $i, $queryString_Post); ?>"><?php echo '<u>'; echo $i+1; echo '</u>';?></a>
-						
-						<?php }
-					}
-				?>
-                <?php if ($pageNum_Post < $totalPages_Post && ($h-$l)>=7) { // Show if not last page ?>...
-                  <a href="<?php printf("%s?pageNum_Post=%d%s", $currentPage, $totalPages_Post, $queryString_Post); ?>"><?php echo '<u>'; echo $totalPages_Post+1; echo '</u>';?></a>
-                  <?php } // Show if not last page ?></td>
-              <td ><?php if ($pageNum_Post < $totalPages_Post) { // Show if not last page ?>
-                  <a href="<?php printf("%s?pageNum_Post=%d%s", $currentPage, min($totalPages_Post, $pageNum_Post + 1), $queryString_Post); ?>"><img src="images/pNext.png" border="0"/></a>
-                  <?php }else{ ?>
-					  <img src="images/pNextDisabled.png" border="0"/>
-				 <?php }// Show if not last page ?></td>
-              
-            </tr>
-        </table></td>
-    </tr>
-</table>
-<?php } ?>
 </div>
 <?php
 mysql_free_result($Post);

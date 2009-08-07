@@ -43,7 +43,11 @@ $totalPages_latestLawsRecordset = ceil($totalRows_latestLawsRecordset/$maxRows_l
 			$latestLaw_superdoc = mysql_query($query_latestLaw_superdoc, $pravo) or die(mysql_error());
 			$row_latestLaw_superdoc = mysql_fetch_assoc($latestLaw_superdoc);
 			echo ' - ' . $row_latestLaw_superdoc['title'];
+		}	
+		if(strtotime(date("d.m.Y", $timestamp)) > strtotime(date("d.m.Y",mktime(0, 0, 0, date("m"), date("d")-30, date("y"))))){
+			echo "&nbsp;<sup><span style='color:#F00;'><i>НОВ</i></span></sup>";
 		}
+		
 		?>
         <br /><span style="color:#666; font-size:11px">&nbsp;<?php echo date("d.m.Y", $timestamp); ?></span>
         </a></td>

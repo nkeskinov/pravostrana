@@ -52,7 +52,7 @@ $totalPages_Documents2 = ceil($totalRows_Documents2/$maxRows_Documents2)-1;
   ?>
     <tr onmouseover="this.className='on'" onmouseout="this.className='off'">
       <td style="border-bottom:1px dotted #CCC;">
-	  &raquo; <a href="?id=<?php echo $row_Documents2['id_document']; ?>&gid=<?php echo $row_Documents2['id_doc_group']; ?>" title="<?php echo $row_Documents2['title']; ?>"><?php  if($n<10) echo $title; else echo $title." ..."; ?></a>
+	  &raquo; <a href="?id=<?php echo $row_Documents2['id_document']; ?>&gid=<?php echo $row_Documents2['id_doc_group']; ?>&page=<?php echo $_GET['page']; ?>" title="<?php echo $row_Documents2['title']; ?>"><?php  if($n<10) echo $title; else echo $title." ..."; ?></a>
      
 	  </td>
     </tr>

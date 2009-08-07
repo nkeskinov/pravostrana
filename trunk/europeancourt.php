@@ -4,7 +4,7 @@ session_start();
 <?php require_once("Connections/pravo.php"); ?>
 <?php include("util/misc.php"); ?>
 <?php 
-$id_doc_type_Documents = "3";
+$id_doc_type_Documents = "5";
 $ip_address=$_SERVER['REMOTE_ADDR'];
 $page=substr(strrchr($_SERVER['PHP_SELF'],"/"),1);
 $from_page=substr(strrchr($_SERVER['HTTP_REFERER'],"/"),1);
@@ -17,6 +17,7 @@ if(isset($_SESSION['MM_ID']))
 
 trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_page, $database_pravo, $pravo);
 ?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/CleanTemplate.dwt.php" codeOutsideHTMLIsLocked="false" -->
 <head>
@@ -26,7 +27,7 @@ trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_p
 <link href="style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="images/favicon1.png" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>Pravo.org.mk | Анализи</title>
+<title>Pravo.org.mk | Судкса пракса на Европски суд</title>
 <!-- InstanceEndEditable -->
 <link href="YUI/2.6.0/build/fonts/fonts-min.css" rel="stylesheet" type="text/css" />
 <link href="YUI/2.6.0/build/container/assets/skins/sam/container.css" rel="stylesheet" type="text/css" />
@@ -140,12 +141,12 @@ transition: Fx.Transitions.sineOut
         <ul class="nav">
           <li><a href="index.php">Почетна</a></li>
           <li><a class="topdaddy" href="documentlaws.php">Закони</a></li>
-          <li class="active"><a href="analysis.php">Анализи</a></li>
-          <li><a href="regulations.php">Прописи</a></li>
-          <li><a href="#">Судска Пракса</a>
+          <li><a href="analysis.php">Анализи</a></li>
+          <li><a href="policies.php">Прописи</a></li>
+          <li class="active"><a href="#">Судска Пракса</a>
            <ul>
-             <li><a href="courtpractice.php">Судска Пракса</a></li>
-             <li><a href="europeancourt.php">Европски суд</a></li>
+            <li><a href="courtpractice.php">Судска Пракса</a></li>
+            <li><a href="europeancourt.php">Европски суд</a></li>
            </ul>
           </li>
           <li><a href="news.php">Новости</a></li>
@@ -154,7 +155,7 @@ transition: Fx.Transitions.sineOut
       <!-- InstanceEndEditable -->
         <div id="menu"></div>
         <div id="mapMenu">
-       <!-- InstanceBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp; &raquo;&nbsp;&nbsp;</td><td>Анализи&nbsp;&raquo;</td></tr></table><!-- InstanceEndEditable -->
+       <!-- InstanceBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp; &raquo;&nbsp;</td><td>Судкса пракса на Европски суд</td></tr></table><!-- InstanceEndEditable -->
        </div>
       </div>
 	</div>
@@ -181,7 +182,7 @@ transition: Fx.Transitions.sineOut
                   <div class="title">
                     <div class="left"></div>
                     <div class="middle">
-                      <div class="text">Анализи</div>
+                      <div class="text">Судкса пракса на Европски суд</div>
                     </div>
                     <div class="right"></div>
                   </div>

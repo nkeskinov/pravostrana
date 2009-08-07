@@ -1,22 +1,11 @@
 <?php 
 if (!isset($_SESSION)) {
 session_start();
+$id_post_category=4; //ID for news
+$discussionName="Европски суд туторијал"; //The name of the Discusion
 } ?>
 <?php require_once("Connections/pravo.php"); ?>
 <?php include("util/misc.php"); ?>
-<?php 
-$ip_address=$_SERVER['REMOTE_ADDR'];
-$page=substr(strrchr($_SERVER['PHP_SELF'],"/"),1);
-$from_page=substr(strrchr($_SERVER['HTTP_REFERER'],"/"),1);
-$referrer=$_SERVER['HTTP_REFERER'];
-$browser=$_SERVER['HTTP_USER_AGENT'];
-$language=$_SERVER['HTTP_ACCEPT_LANGUAGE'];
-$id_user=1;
-if(isset($_SESSION['MM_ID']))
-	$id_user=$_SESSION['MM_ID'];
-
-trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_page, $database_pravo, $pravo);
-?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/SingleRed.dwt.php" codeOutsideHTMLIsLocked="false" -->
 <head>
@@ -26,7 +15,7 @@ trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_p
 <link href="style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="images/favicon1.png" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>Pravo.org.mk | Регистрација</title>
+<title>Pravo.org.mk | Правна рамка на Европската Унија</title>
 <!-- InstanceEndEditable -->
 <script type="text/javascript" src="roktools.js"></script>
 
@@ -84,14 +73,14 @@ transition: Fx.Transitions.sineOut
    	  </div>
       <div id="horiz-menu" class="moomenu"><!-- InstanceBeginEditable name="Menu" -->
           <ul class="nav">
-          <li class="active"><a href="index.php">Почетна</a></li>
+          <li><a href="index.php">Почетна</a></li>
           <li><a class="topdaddy" href="documentlaws.php">Закони</a></li>
           <li><a href="analysis.php">Анализи</a></li>
-          <li><a href="regulations.php">Прописи</a></li>
-          <li><a href="#">Судска Пракса</a>
+          <li><a href="policies.php">Прописи</a></li>
+          <li class="active"><a href="#">Судска Пракса</a>
            <ul>
-             <li><a href="courtpractice.php">Судска Пракса</a></li>
-             <li><a href="europeancourt.php">Европски суд</a></li>
+            <li><a href="courtpractice.php">Судска Пракса</a></li>
+            <li><a href="europeancourt.php">Европски суд</a></li>
            </ul>
           </li>
           <li><a href="news.php">Новости</a></li>
@@ -99,7 +88,7 @@ transition: Fx.Transitions.sineOut
         </ul>
       <!-- InstanceEndEditable -->
         <div id="menu"></div>
-       <div id="mapMenu"><!-- InstanceBeginEditable name="siteMap" --><a href="index.php">Почетна</a>&nbsp;&nbsp;&gt&nbsp;Регистрација <!-- InstanceEndEditable --></div> 
+       <div id="mapMenu"><!-- InstanceBeginEditable name="siteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp; &raquo;&nbsp;</td><td>Правна рамка на Европската Унија</td></tr></table><!-- InstanceEndEditable --></div> 
       </div>
 	</div>
     
@@ -110,12 +99,12 @@ transition: Fx.Transitions.sineOut
             <div class="middle-red-block">
                 <div class="title">
                     <div class="left"></div>
-                    <div class="middle"><div class="text"><!-- InstanceBeginEditable name="BlockTitle" -->Креирање на кориснички профил<!-- InstanceEndEditable --></div></div>
+                    <div class="middle"><div class="text"><!-- InstanceBeginEditable name="BlockTitle" -->Правна рамка на Европската Унија<!-- InstanceEndEditable --></div></div>
                     <div class="right"></div>
                 </div>
                  <div class="sodrzina"><!-- InstanceBeginEditable name="BlockContent" -->
-               <?php include("users/model/user.php"); ?>
-             <!-- InstanceEndEditable --></div>
+                   <?php include("util/news.php"); ?>
+                 <!-- InstanceEndEditable --></div>
             </div>
             </td></tr></table>
    		 <p>&nbsp;</p>   

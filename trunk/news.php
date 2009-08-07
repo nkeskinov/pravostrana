@@ -3,6 +3,22 @@ session_start();
 ?>
 <?php require_once("Connections/pravo.php"); ?>
 <?php include("util/misc.php"); ?>
+<?php 
+$id_post_category=2; //ID for news
+$discussionName="Вести"; //The name of the Discusion
+$ip_address=$_SERVER['REMOTE_ADDR'];
+$page=substr(strrchr($_SERVER['PHP_SELF'],"/"),1);
+$from_page=substr(strrchr($_SERVER['HTTP_REFERER'],"/"),1);
+$referrer=$_SERVER['HTTP_REFERER'];
+$browser=$_SERVER['HTTP_USER_AGENT'];
+$language=$_SERVER['HTTP_ACCEPT_LANGUAGE'];
+$id_user=1;
+if(isset($_SESSION['MM_ID']))
+	$id_user=$_SESSION['MM_ID'];
+
+trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_page, $database_pravo, $pravo);
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/CleanTemplate.dwt.php" codeOutsideHTMLIsLocked="false" -->
 <head>
@@ -12,7 +28,7 @@ session_start();
 <link href="style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="images/favicon1.png" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>pravo.org.mk</title>
+<title>pravo.org.mk | Новости</title>
 <!-- InstanceEndEditable -->
 <link href="YUI/2.6.0/build/fonts/fonts-min.css" rel="stylesheet" type="text/css" />
 <link href="YUI/2.6.0/build/container/assets/skins/sam/container.css" rel="stylesheet" type="text/css" />
@@ -127,14 +143,13 @@ transition: Fx.Transitions.sineOut
           <li class="active"><a href="index.php">Почетна</a></li>
           <li><a class="topdaddy" href="documentlaws.php">Закони</a></li>
           <li><a href="analysis.php">Анализи</a></li>
-          <li><a href="policies.php">Прописи</a></li>
+          <li><a href="regulations.php">Прописи</a></li>
           <li><a href="#">Судска Пракса</a>
            <ul>
-            <li><a href="studentpractice.php">Студентска Пракса</a></li>
-            <li><a href="#">Непозната</a></li>
+             <li><a href="courtpractice.php">Судска Пракса</a></li>
+             <li><a href="europeancourt.php">Судска Пракса на Европски суд</a></li>>
            </ul>
           </li>
-          <li><a href="forum.php">Форум</a></li>
           <li><a href="news.php">Новости</a></li>
           <li><a href="contact.php">Контакт</a></li>
         </ul>

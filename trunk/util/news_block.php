@@ -11,7 +11,7 @@ $id_document=$colname_DetailRS1;
 
 
 mysql_select_db($database_pravo, $pravo);
-$query_Post = sprintf("SELECT post.id_post, post.date_created, post.content, post.subject, post.date_modified, post.priority FROM discussion, post, post_category WHERE discussion.id_discussion=post.id_discussion   AND post_category.id_post_category=discussion.id_post_category  AND post_category.id_post_category=%s ORDER BY priority DESC",GetSQLValueString($id_post_category, "int"));
+$query_Post = sprintf("SELECT post.id_post, post.date_created, post.content, post.subject, post.date_modified, post.priority FROM discussion, post, post_category WHERE discussion.id_discussion=post.id_discussion   AND post_category.id_post_category=discussion.id_post_category  AND post_category.id_post_category=%s  AND archive!=1 ORDER BY priority DESC",GetSQLValueString($id_post_category, "int"));
 $query_limit_Post = sprintf("%s LIMIT %d, %d", $query_Post, $startRow_Post, $maxRows_Post);
 $Post = mysql_query($query_limit_Post, $pravo) or die(mysql_error());
 //$Post2 = mysql_query($query_limit_Post, $pravo) or die(mysql_error());
@@ -33,7 +33,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 ?>
 <div style="margin-top:3px;">
-<table width="100%" cellspacing="0" height="250">
+<table width="100%" cellspacing="0" cellpadding="5" height="250">
 <?php do {
 	$content1=$row_Post['content'];
 	$subject1=$row_Post['subject'];
@@ -65,10 +65,25 @@ if (isset($_SERVER['QUERY_STRING'])) {
 	
 	?>
 	<tr onmouseover="this.className='on'" onmouseout="this.className='off'">
-	    <td style="border-bottom:1px dotted #CCC;  padding-top:5px;" valign="top">
-		<span style="font-size:10px; color:#666;"><?php  echo date("d.m.Y",strtotime($row_Post['date_created'])); ?></span>
+	    <td style="border-bottom:1px dotted #CCC;  padding:5px;" align="center" valign="top" width="30%">
+		<div style=" height:56px; width:55px; background:url(images/calendar1.png) no-repeat;" title="<?php echo date("d.m.Y",strtotime($row_Post['date_created'])); ?>">
+        <div align="center" style="color:#FFF;"><?php  
+		switch(date("m",strtotime($row_Post['date_created']))){ 
+			case "01": echo "јануари"; break; 
+			case "02": echo "фебруари"; break; 
+			case "03": echo "март"; break; 
+			case "04": echo "април"; break; 
+			case "05": echo "мау"; break; 
+			case "06": echo "јуни"; break; 
+			case "07": echo "јули"; break; 
+			case "08": echo "август"; break; 
+			case "09": echo "септември"; break; 
+			case "10": echo "октомври"; break; 
+			case "11": echo "ноември"; break; 
+			case "12": echo "декември"; break; 
+		}?></div><div style="padding:8px;" align="center" ><span style="font-size:18px; font-weight:bold;"><?php echo date("d",strtotime($row_Post['date_created'])); ?></span></div></div>
         </td>
-	    <td style="border-bottom:1px dotted #CCC;"><a href="news.php#<?php echo $row_Post['id_post']; ?>"><?php echo $subject; ?></a></td>
+	    <td style="border-bottom:1px dotted #CCC;"><a href="news.php#<?php echo $row_Post['id_post']; ?>"><?php echo $row_Post['subject']; ?></a></td>
     </tr>
  <?php } while ($row_Post = mysql_fetch_assoc($Post)); ?>
 </table>

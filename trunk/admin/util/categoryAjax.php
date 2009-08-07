@@ -31,7 +31,7 @@
 	   	$result = mysql_query($query1, $pravo) or die(mysql_error());     
 		echo "<select name='subcategory' ";
 		if($sel<0 && mysql_num_rows($result)==0) echo "disabled='disabled'";
-		echo " style='width:300px;' onChange=\"dochange('subsubcategory', this.value,".$sel.")\">\n"; //onChange=\"dochange('tumbon', this.value)
+		echo " style='width:300px;' onChange=\"dochange('subsubcategory', this.value,".$sel.")\">\n"; 
         echo "<option value='0'>Подкатегорија</option>\n";	                            
        	while(list($id, $name)=mysql_fetch_array($result)){       
                echo "<option value=\"$id\" ";
