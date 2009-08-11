@@ -7,13 +7,13 @@ if (isset($_GET['pageNum_Post'])) {
 }
 $startRow_Post = $pageNum_Post * $maxRows_Post;
 
-$id_document=$colname_DetailRS1;
+//$id_document=$colname_DetailRS1;
 
 
 mysql_select_db($database_pravo, $pravo);
 $query_Post = sprintf("SELECT post.id_post, post.date_created, post.content, post.subject, post.date_modified, post.priority, post.archive FROM discussion, post, post_category WHERE discussion.id_discussion=post.id_discussion   AND post_category.id_post_category=discussion.id_post_category  AND post_category.id_post_category=%s",GetSQLValueString($id_post_category, "int"));
 
-if(!isset($_SESSION['MM_UserGroup']) && ($_SESSION['MM_UserGroup']!="admin")) {
+if(!isset($_SESSION['MM_UserGroup']) || ($_SESSION['MM_UserGroup']!="admin")) {
 	$query_Post=sprintf("%s AND archive!=1",$query_Post);
 }
 $query_limit_Post = sprintf("%s ORDER BY priority DESC LIMIT %d, %d", $query_Post, $startRow_Post, $maxRows_Post);

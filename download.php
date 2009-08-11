@@ -16,16 +16,21 @@ if (!((isset($_SESSION['MM_Username'])) && (isAuthorized("",$MM_authorizedUsers,
   if (strpos($MM_restrictGoTo, "?")) $MM_qsChar = "&";
   if (isset($QUERY_STRING) && strlen($QUERY_STRING) > 0)
   $MM_referrer .= "?" . $QUERY_STRING;
-  $http_referer = $_SERVER['HTTP_REFERER'];
-  //trgni go pravo.org.mk od accesscheck stringot
-  $http_referer_array = explode('/', $http_referer);
-  $http_referer_array_count = count($http_referer_array);
-  if ($http_referer_array_count > 1) {
-	  if ($http_referer_array[$http_referer_array_count - 2] == 'admin') $http_referer = 'admin/' . $http_referer_array[$http_referer_array_count - 1];
-	  else 
-	  $http_referer = $http_referer_array[$http_referer_array_count - 1];
+  $http_referrer = "";
+  if (isset($_SERVER['HTTP_REFERER'])) {
+  	$http_referrer = $_SERVER['HTTP_REFERER'];
   }
-  $MM_restrictGoTo = $MM_restrictGoTo. $MM_qsChar . "accesscheck=" . urlencode($http_referer);
+  //trgni go pravo.org.mk od accesscheck stringot
+  $http_referrer_array = explode('/', $http_referrer);
+  $http_referrer_array_count = count($http_referrer_array);
+  if ($http_referrer_array_count > 1) {
+	  if ($http_referrer_array[$http_referrer_array_count - 2] == 'admin') {
+		  $http_referrer = 'admin/' . $http_referrer_array[$http_referrer_array_count - 1];
+	  } else {
+	  	$http_referrer = $http_referrer_array[$http_referrer_array_count - 1];
+	  }
+  }
+  $MM_restrictGoTo = $MM_restrictGoTo. $MM_qsChar . "accesscheck=" . urlencode($http_referrer);
   header("Location: ". $MM_restrictGoTo); 
   exit;
 }
@@ -56,8 +61,9 @@ if ($totalRows_recordset_document == 1) {
 	$file_size = filesize($path);
 	
 	if ($fp = fopen ($path, "r")) {
-		if (!mysql_query(sprintf("INSERT INTO download (id_document, id_user, downloaded_date) VALUES (%s, %s, '%s')", $row_recordset_document['id_document'], $_SESSION['MM_ID'], date('Y-m-d H:i'))))
+		if (!mysql_query(sprintf("INSERT INTO download (id_document, id_user, downloaded_date) VALUES (%s, %s, '%s')", $row_recordset_document['id_document'], $_SESSION['MM_ID'], date('Y-m-d H:i'))) || !mysql_query(sprintf("UPDATE document SET no_downloads = no_downloads + 1 WHERE id_document = %s", $row_recordset_document['id_document'])))
 			die('Problem so registracijata na simnuvanjeto: ' . mysql_error());
+		
 		ob_start();
 		header('Content-type: application/pdf');
 		header('Content-Disposition: attachment; filename="'.$row_recordset_document['filename'].'"');

@@ -215,7 +215,7 @@ function dochange(src, val) {
           }
      };
      req.open("GET", "util/categoryAjax.php?data="+src+"&val="+val); //ÊÃéÒ§ connection
-     req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=tis-620"); // set Header
+     req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8"); // set Header
      req.send(null); //Êè§¤èÒ
 }
 

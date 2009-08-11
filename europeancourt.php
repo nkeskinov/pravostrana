@@ -7,8 +7,12 @@ session_start();
 $id_doc_type_Documents = "5";
 $ip_address=$_SERVER['REMOTE_ADDR'];
 $page=substr(strrchr($_SERVER['PHP_SELF'],"/"),1);
-$from_page=substr(strrchr($_SERVER['HTTP_REFERER'],"/"),1);
-$referrer=$_SERVER['HTTP_REFERER'];
+$from_page="";
+$referrer = "";
+if (isset($_SERVER['HTTP_REFERER'])) {
+	$from_page=substr(strrchr($_SERVER['HTTP_REFERER'],"/"),1);
+	$referrer=$_SERVER['HTTP_REFERER'];
+}
 $browser=$_SERVER['HTTP_USER_AGENT'];
 $language=$_SERVER['HTTP_ACCEPT_LANGUAGE'];
 $id_user=1;
