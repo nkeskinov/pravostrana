@@ -7,9 +7,9 @@ session_start();
 <?php include("util/login.php"); ?>
 <?php 
 	if(isset($_GET['accesscheck'])) {
-		$_SESSION['referer'] = urldecode($_GET['accesscheck']);
-	} elseif(strpos($_SERVER['HTTP_REFERER'],'login.php') === FALSE) { 
-		$_SESSION['referer'] = $_SERVER['HTTP_REFERER'];
+		$_SESSION['referrer'] = urldecode($_GET['accesscheck']);
+	} elseif(isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'],'login.php') === FALSE) { 
+		$_SESSION['referrer'] = $_SERVER['HTTP_REFERER'];
 	}
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -144,10 +144,10 @@ transition: Fx.Transitions.sineOut
                     </table>
                     </form>
 	<?php } else { 
-		if(isset($_SESSION['referer'])) {
-			header("Location: ".$_SESSION['referer']); 
-			$_SESSION['referer'] = NULL;
-			unset($_SESSION['referer']);
+		if(isset($_SESSION['referrer'])) {
+			header("Location: ".$_SESSION['referrer']); 
+			$_SESSION['referrer'] = NULL;
+			unset($_SESSION['referrer']);
 		}
 		else 
 			header("Location: index.php"); 

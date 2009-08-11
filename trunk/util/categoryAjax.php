@@ -7,7 +7,7 @@
      header ("Cache-Control: no-cache, must-revalidate");
      header ("Pragma: no-cache");
      
-     header("content-type: application/x-javascript; charset=UTF-8");
+     header("content-type: application/x-javascript; charset=utf-8");
 	 
 	 $data=$_GET['data'];
      $val=$_GET['val'];

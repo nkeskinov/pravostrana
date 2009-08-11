@@ -180,7 +180,7 @@ h4 {
 	color:#333;
 }
 .mainBody .login .down a:link {
-	;
+	color:#333;
 }
 .mainBody .login .down a:visited {
 	color: #8c2800;
@@ -245,7 +245,7 @@ h4 {
 	background:url(images/yellow-title-right.png);
 	height:30px;
 	width:2.5%;
-	float:right;
+	float:left;
 }
 .mainBody .left-block .sodrzina{
 	border:1px solid #f5e6a2;
@@ -286,7 +286,7 @@ h4 {
 	background:url(images/yellow-title-right1.png);
 	height:30px;
 	width:2.5%;
-	float:right;
+	float:left;
 }
 .mainBody .left-block1 .sodrzina{
 	/*border:thin solid #f5e6a2;*/
@@ -327,7 +327,7 @@ h4 {
 	background:url(images/red-title-right.png);
 	height:30px;
 	width:2.5%;
-	float:right;
+	float:left;
 }
 .mainBody .left-red-block .sodrzina{
 	border:thin solid #71312d;
@@ -370,7 +370,7 @@ h4 {
 	background:url(images/red-title-right1.png);
 	height:30px;
 	width:2.5%;
-	float:right;
+	float:left;
 }
 .mainBody .left-red-block1 .sodrzina{
 	margin-top:-5px;
@@ -410,7 +410,7 @@ h4 {
 	background:url(images/red-title-right.png) no-repeat;
 	height:30px;
 	width:7px;
-	float:right;
+	float:left;
 }
 .mainBody .right-block .sodrzina{
 	border:thin solid #71312d;
@@ -454,7 +454,7 @@ h4 {
 	background:url(images/red-title-right.png) no-repeat;
 	height:30px;
 	width:7px;
-	float:right;
+	float:left;
 }
 .mainBody .right-block-bigger .sodrzina{
 	border:thin solid #71312d;
@@ -498,7 +498,7 @@ h4 {
 	background:url(images/yellow-title-right.png);
 	height:30px;
 	width:7px;
-	float:right;
+	float:left;
 }
 .mainBody .right-yellow-block .sodrzina{
 	border:1px solid #f5e6a2;
@@ -542,7 +542,7 @@ h4 {
 	background:url(images/yellow-title-right.png);
 	height:30px;
 	width:7px;
-	float:right;
+	float:left;
 }
 .mainBody .middle-block .sodrzina{
 	border:thin solid #f5e6a2;
@@ -584,7 +584,7 @@ h4 {
 	background:url(images/red-title-right.png);
 	height:30px;
 	width:7px;
-	float:right;
+	float:left;
 }
 .mainBody .middle-red-block .sodrzina{
 	border:thin solid #71312d;
@@ -629,7 +629,7 @@ h4 {
 	background:url(images/red-title-right.png);
 	height:30px;
 	width:7px;
-	float:right;
+	float:left;
 }
 .mainBody .middle-red-block-small .sodrzina{
 	border:thin solid #71312d;;

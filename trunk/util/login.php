@@ -6,9 +6,9 @@ session_start();
 } 
  */
 $loginFormAction = $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
-if (isset($_GET['accesscheck'])) {
+/*if (isset($_GET['accesscheck']) && isset($_SERVER['HTTP_REFERER'])) {
   $_SESSION['PrevUrl'] = $_SERVER['HTTP_REFERER'];//$_GET['accesscheck'];
-}
+}*/
 
 if (isset($_POST['username_login'])) {
   $count = 0;
@@ -57,15 +57,15 @@ if (isset($_POST['username_login'])) {
 		echo $_SESSION['MM_ID'];
 		echo $_SERVER['PHP_SELF'];
 	} */
-    if (isset($_SESSION['PrevUrl']) && false) {
+    /*if (isset($_SESSION['PrevUrl']) && false) {
       $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];	
-    }
+    }*/
 	if($_SERVER['QUERY_STRING']!=""){
 		$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
 		//header("Location: " . $MM_redirectLoginSuccess );
 		echo "<script>document.location.href='".$MM_redirectLoginSuccess."'</script>";
 		echo "<script>'Content-type: application/octet-stream'</script>";
-	}else{
+	} else {
 		$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
 		//header("Location: " . $MM_redirectLoginSuccess );
 		echo "<script>document.location.href='".$MM_redirectLoginSuccess."'</script>";

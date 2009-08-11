@@ -7,7 +7,7 @@ if (isset($_GET['pageNum_Post'])) {
 }
 $startRow_Post = $pageNum_Post * $maxRows_Post;
 
-$id_document=$colname_DetailRS1;
+//$id_document=$colname_DetailRS1;
 
 
 mysql_select_db($database_pravo, $pravo);
