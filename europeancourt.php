@@ -31,7 +31,7 @@ trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_p
 <link href="style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="images/favicon1.png" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>Pravo.org.mk | Судкса пракса на Европски суд</title>
+<title>Pravo.org.mk | Судска пракса на Европски суд за човекови права</title>
 <!-- InstanceEndEditable -->
 <link href="YUI/2.6.0/build/fonts/fonts-min.css" rel="stylesheet" type="text/css" />
 <link href="YUI/2.6.0/build/container/assets/skins/sam/container.css" rel="stylesheet" type="text/css" />
@@ -150,7 +150,7 @@ transition: Fx.Transitions.sineOut
           <li class="active"><a href="#">Судска Пракса</a>
            <ul>
             <li><a href="courtpractice.php">Судска Пракса</a></li>
-            <li><a href="europeancourt.php">Европски суд</a></li>
+            <li><a href="europeancourt.php">Европски суд за човекови права</a></li>
            </ul>
           </li>
           <li><a href="news.php">Новости</a></li>
@@ -159,7 +159,7 @@ transition: Fx.Transitions.sineOut
       <!-- InstanceEndEditable -->
         <div id="menu"></div>
         <div id="mapMenu">
-       <!-- InstanceBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp; &raquo;&nbsp;</td><td>Судкса пракса на Европски суд</td></tr></table><!-- InstanceEndEditable -->
+       <!-- InstanceBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;</td><td>Судска пракса на Европски суд за човекови права&nbsp;</td></tr></table><!-- InstanceEndEditable -->
        </div>
       </div>
 	</div>

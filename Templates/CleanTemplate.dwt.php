@@ -128,10 +128,10 @@ transition: Fx.Transitions.sineOut
           <li><a class="topdaddy" href="documentlaws.php">Закони</a></li>
           <li><a href="analysis.php">Анализи</a></li>
           <li><a href="policies.php">Прописи</a></li>
-          <li><a href="#">Судска Пракса</a>
+          <li><a href="#">Судска пракса</a>
            <ul>
-            <li><a href="courtpractice.php">Судска Пракса</a></li>
-            <li><a href="europeancourt.php">Европски суд</a></li>
+            <li><a href="courtpractice.php">Судска пракса</a></li>
+            <li><a href="europeancourt.php">Европски суд за човекови права</a></li>
            </ul>
           </li>
           <li><a href="news.php">Новости</a></li>
@@ -140,7 +140,7 @@ transition: Fx.Transitions.sineOut
       <!-- TemplateEndEditable -->
         <div id="menu"></div>
         <div id="mapMenu">
-       <!-- TemplateBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp; &raquo;&nbsp;&nbsp;</td><td><a href="documentlaws.php">Закони</a>&nbsp; &raquo;&nbsp;</td><td> Детален опис на законот</td></tr></table><!-- TemplateEndEditable -->
+       <!-- TemplateBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;</td></tr></table><!-- TemplateEndEditable -->
        </div>
       </div>
 	</div>

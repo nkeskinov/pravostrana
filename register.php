@@ -95,7 +95,7 @@ transition: Fx.Transitions.sineOut
           <li><a href="#">Судска Пракса</a>
            <ul>
              <li><a href="courtpractice.php">Судска Пракса</a></li>
-             <li><a href="europeancourt.php">Европски суд</a></li>
+             <li><a href="europeancourt.php">Европски суд за човекови права</a></li>
            </ul>
           </li>
           <li><a href="news.php">Новости</a></li>
@@ -103,7 +103,7 @@ transition: Fx.Transitions.sineOut
         </ul>
       <!-- InstanceEndEditable -->
         <div id="menu"></div>
-       <div id="mapMenu"><!-- InstanceBeginEditable name="siteMap" --><a href="index.php">Почетна</a>&nbsp;&nbsp;&gt&nbsp;Регистрација <!-- InstanceEndEditable --></div> 
+       <div id="mapMenu"><!-- InstanceBeginEditable name="siteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;</td><td>Регистрација&nbsp;</td></tr></table><!-- InstanceEndEditable --></div> 
       </div>
 	</div>
     

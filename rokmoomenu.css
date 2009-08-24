@@ -25,7 +25,7 @@
 	text-decoration:none;
 	background-image: none;
 	float:none;
-	width:120px
+	width:185px;
 }
 
 div#horiz-menu li li a {
@@ -60,7 +60,7 @@ div#horiz-menu li.active.sfHover li a {
 	float:none;
 	top:-999em;
 	position:absolute;
-	width: 165px;
+	width: 210px;
 	z-index: 5;
 }
 
@@ -75,13 +75,13 @@ div#horiz-menu li.active.sfHover li a {
 }
 .nav li li:hover ul,
 .nav li li.sfHover ul {
-	left: 168px;
+	left: 213px;
 	top:0px;
-	width: 165px;
+	width: 210px;
 }
 .nav li li {
 	float:none;
-	width: 165px;
+	width: 210px;
 }
 
 
