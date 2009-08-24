@@ -83,11 +83,11 @@ transition: Fx.Transitions.sineOut
          <ul class="nav"><li class="active"><a href="index.php">Почетна</a></li>
           <li><a class="topdaddy" href="documentlaws.php">Закони</a></li>
           <li><a href="analysis.php">Анализи</a></li>
-          <li><a href="regulations.php">Прописи</a></li>
-          <li><a href="#">Судска Пракса</a>
+          <li><a href="policies.php">Прописи</a></li>
+          <li><a href="#">Судска пракса</a>
            <ul>
-             <li><a href="courtpractice.php">Судска Пракса</a></li>
-             <li><a href="europeancourt.php">Судска Пракса на Европски суд</a></li>
+             <li><a href="courtpractice.php">Судска пракса</a></li>
+             <li><a href="europeancourt.php">Европски суд за човекови права</a></li>
            </ul>
           </li>
           <li><a href="news.php">Новости</a></li>
@@ -95,7 +95,7 @@ transition: Fx.Transitions.sineOut
         </ul>
 
       	<div id="menu"></div>
-       <div id="mapMenu"><!-- InstanceBeginEditable name="siteMap" -->Почетна &gt;<!-- InstanceEndEditable --></div> 
+       <div id="mapMenu"><!-- InstanceBeginEditable name="siteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a></td>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;<td>Логирање&nbsp;</td></tr></table><!-- InstanceEndEditable --></div> 
       </div>
 	</div>
     

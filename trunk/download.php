@@ -44,7 +44,7 @@ if (isset($_GET['id'])) {
   $colname_recordset_document = $_GET['id'];
 }
 mysql_select_db($database_pravo, $pravo);
-$query_recordset_document = sprintf("SELECT id_document, id_doc_type, filename, title FROM `document` WHERE id_document = %s", GetSQLValueString($colname_recordset_document, "int"));
+$query_recordset_document = sprintf("SELECT id_document, id_doc_type, filename, title, mimetype FROM `document` WHERE id_document = %s", GetSQLValueString($colname_recordset_document, "int"));
 $recordset_document = mysql_query($query_recordset_document, $pravo) or die(mysql_error());
 $row_recordset_document = mysql_fetch_assoc($recordset_document);
 $totalRows_recordset_document = mysql_num_rows($recordset_document);
@@ -65,7 +65,7 @@ if ($totalRows_recordset_document == 1) {
 			die('Problem so registracijata na simnuvanjeto: ' . mysql_error());
 		
 		ob_start();
-		header('Content-type: application/pdf');
+		header('Content-type: '.$row_recordset_document['mimetype']);
 		header('Content-Disposition: attachment; filename="'.$row_recordset_document['filename'].'"');
 		header('Content-length: '.$file_size);
 		ob_end_flush();

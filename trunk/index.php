@@ -97,10 +97,10 @@ transition: Fx.Transitions.sineOut
           <li><a class="topdaddy" href="documentlaws.php">Закони</a></li>
           <li><a href="analysis.php">Анализи</a></li>
           <li><a href="regulations.php">Прописи</a></li>
-          <li><a href="#">Судска Пракса</a>
+          <li><a href="#">Судска пракса</a>
            <ul>
-            <li><a href="courtpractice.php">Судска Пракса</a></li>
-            <li><a href="europeancourt.php">Европски суд</a></li>
+            <li><a href="courtpractice.php">Судска пракса</a></li>
+            <li><a href="europeancourt.php">Европски суд за човекови права</a></li>
            </ul>
           </li>
           <li><a href="news.php">Новости</a></li>
@@ -207,7 +207,7 @@ transition: Fx.Transitions.sineOut
     </div>
     
 	<div class="footer">Copyright &copy; 2009 Сите права задржани</div>	
-    <div style="margin-top:-30px; color:#999; float:left; width:100%;">Pravo.org.mk не превзема одговорност за евентуалните грешки во текстот на законите <div style="float:right;"><img src="images/most.jpg"/></div>
+    <div style="margin-top:-30px; color:#999; float:left; width:100%;">Pravo.org.mk не презема одговорност за евентуалните грешки во текстот на законите <div style="float:right;"><img src="images/most.jpg"/></div>
     
     </div>
 </div>

@@ -147,7 +147,7 @@ transition: Fx.Transitions.sineOut
           <li <?php if($_GET['page']=="courtpractice.php" || $_GET['page']=="europeancourt.php") echo 'class="active"' ?>><a href="#">Судска Пракса</a>
           	<ul>
             	 <li><a href="courtpractice.php">Судска Пракса</a></li>
-            	 <li><a href="europeancourt.php">Европски суд</a></li>
+            	 <li><a href="europeancourt.php">Европски суд за човекови права</a></li>
              </ul>
           </li>
           <li><a href="news.php">Новости</a></li>
@@ -157,7 +157,7 @@ transition: Fx.Transitions.sineOut
         <div id="menu"></div>
         <div id="mapMenu">
        <!-- InstanceBeginEditable name="SiteMap" -->
-       <table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp; &raquo;&nbsp;&nbsp;</td><td>
+       <table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp;</td><td>
 	   <?php if($_GET['page']=="documentlaws.php") echo '<a href="documentlaws.php">Закони</a>&nbsp; &raquo;&nbsp;'; if($_GET['page']=="analysis.php") echo '<a href="analysis.php">Анализи</a>&nbsp; &raquo;&nbsp;';  if($_GET['page']=="regulations.php") echo '<a href="regulations.php">Прописи</a>&nbsp; &raquo;&nbsp;'; if($_GET['page']=="courtpractice.php") echo '<a href="courtpractice.php">Судска Пракса</a>&nbsp; &raquo;&nbsp;';  if($_GET['page']=="europeancourt.php") echo '<a href="europeancourt.php">Судска Пракса на Европски суд</a>&nbsp; &raquo;&nbsp;';?>
        </td><td> Детален опис на документот</td></tr></table> 
       <!-- InstanceEndEditable -->
