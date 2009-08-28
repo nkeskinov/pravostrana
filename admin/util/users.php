@@ -311,10 +311,10 @@ do {
         	<table border="0" cellspacing="0" style="font-size:12px;">
             <tr>
               <td ><?php if ($pageNum_Users > 0  ) { // Show if not first page ?>
-                  <a href="<?php printf("%s?pageNum_Users=%d%s", $currentPage, max(0, $pageNum_Users - 1), $queryString_Users); ?>"><img src="images/pPrev.png" border="0"/></a>
+                  <a href="<?php printf("%s?pageNum_Users=%d%s", $currentPage, max(0, $pageNum_Users - 1), $queryString_Users); ?>"><img src="../images/pPrev.png" border="0"/></a>
                   <?php }else{ // Show if not first page ?>
                   
-                  		<img src="images/pPrevDisabled.png" border="0"/>
+                  		<img src="../images/pPrevDisabled.png" border="0"/>
                   <?php } ?>
               </td>
               <td>
@@ -349,9 +349,9 @@ do {
                   <?php } // Show if not last page ?>
               </td>
               <td ><?php if ($pageNum_Users < $totalPages_Users) { // Show if not last page ?>
-                  <a href="<?php printf("%s?pageNum_Users=%d%s", $currentPage, min($totalPages_Users, $pageNum_Users + 1), $queryString_Users); ?>"><img src="images/pNext.png" border="0"/></a>
+                  <a href="<?php printf("%s?pageNum_Users=%d%s", $currentPage, min($totalPages_Users, $pageNum_Users + 1), $queryString_Users); ?>"><img src="../images/pNext.png" border="0"/></a>
                   <?php }else{ ?>
-					  <img src="images/pNextDisabled.png" border="0"/>
+					  <img src="../images/pNextDisabled.png" border="0"/>
 				 <?php }// Show if not last page ?>
               </td>
             </tr>

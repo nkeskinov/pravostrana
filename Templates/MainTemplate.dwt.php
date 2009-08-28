@@ -73,6 +73,7 @@ transition: Fx.Transitions.sineOut
 	<div class="header">
    	  <div class="header-top">
    	    <div id="logoText"><img src="../images/banner.png" /></div>
+        <div id="bannerDiv1"><?php getBanner($database_pravo, $pravo, 2); ?></div>
    	  </div>
 
       <div id="horiz-menu" class="moomenu">
@@ -184,13 +185,13 @@ transition: Fx.Transitions.sineOut
       </div>
         <div class="right">
         <?php include("util/login_block.php"); ?>
-
+		  <br />
           <div><?php getBanner($database_pravo, $pravo, 3); ?></div>
           <br />
           <div><?php getBanner($database_pravo, $pravo, 4); ?></div>
           <br />
           <div><?php getBanner($database_pravo, $pravo, 5); ?></div>
-          </div>
+      </div>
 
     </div>
     
@@ -199,6 +200,5 @@ transition: Fx.Transitions.sineOut
     
     </div>
 </div>
-
 </body>
 </html>
