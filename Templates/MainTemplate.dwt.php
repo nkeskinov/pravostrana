@@ -3,6 +3,7 @@ session_start();
 ?>
 <?php require_once("Connections/pravo.php"); ?>
 <?php include("util/misc.php"); ?>
+<?php include("util/banner.php"); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -97,7 +98,7 @@ transition: Fx.Transitions.sineOut
 
     <div class="mainBody">
    	  <div class="content">
-            <div><img src="../images/726-90.jpg" width="728" height="90" /></div>
+            <div><?php getBanner($database_pravo, $pravo, 1); ?></div>
             <table>
             <tr>
             <td valign="top" width="250">
@@ -127,7 +128,7 @@ transition: Fx.Transitions.sineOut
             </div>
             </td>
             </tr>
-            <tr><td>&nbsp;</td><td></td></tr>
+            <tr><td colspan="2" align="center"><?php getBanner($database_pravo, $pravo, 6); ?></td></tr>
             <tr>
             <td valign="top">
             <div class="left-red-block1">
@@ -155,6 +156,7 @@ transition: Fx.Transitions.sineOut
         </div>
         </td>
         </tr>
+        <tr><td colspan="2" align="center"><?php getBanner($database_pravo, $pravo, 7); ?></td></tr>
         <tr>
         <td colspan="2" valign="top">
         	<div><img src="../images/eurocort.png" width="720" /></div>
@@ -182,7 +184,12 @@ transition: Fx.Transitions.sineOut
       </div>
         <div class="right">
         <?php include("util/login_block.php"); ?>
-          <div><img src="../images/250-250.jpg" width="250" height="250" /></div>
+
+          <div><?php getBanner($database_pravo, $pravo, 3); ?></div>
+          <br />
+          <div><?php getBanner($database_pravo, $pravo, 4); ?></div>
+          <br />
+          <div><?php getBanner($database_pravo, $pravo, 5); ?></div>
           </div>
 
     </div>

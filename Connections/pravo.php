@@ -2,7 +2,7 @@
 # FileName="Connection_php_mysql.htm"
 # Type="MYSQL"
 # HTTP="true"
-$hostname_pravo = "97.74.31.44"; //pravodb.db.4351964.hostedresource.com
+$hostname_pravo = "pravodb.db.4351964.hostedresource.com"; //97.74.31.44"; //pravodb.db.4351964.hostedresource.com
 $database_pravo = "pravodb"; 
 $username_pravo = "pravodb";
 $password_pravo = "Pravoorgmk1";

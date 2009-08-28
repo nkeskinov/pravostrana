@@ -54,7 +54,7 @@ $totalRows_DocumentTypeEdit = mysql_num_rows($DocumentTypeEdit);
 
 
 
-<div align="left" style="height:22px; margin-left:-5px;  margin-top:-15px; width:510px; border-bottom:1px solid #a25852; background:#f5d6d4;  padding:3px; padding-top:1px;">
+<div align="left" style="height:22px; margin-left:-5px;  width:100.5%; border-bottom:1px solid #a25852; background:#f5d6d4;  padding:3px; padding-top:1px;">
   <table cellpadding="0" cellspacing="0">
   <tr></tr>
   <tr>

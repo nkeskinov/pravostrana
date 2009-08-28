@@ -35,9 +35,9 @@ if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
 
-if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
+if((isset($_POST['MM_insert'])) && ($_POST['MM_insert']=="form1")){
 	$birth_date = date("Y-m-d", strtotime($_POST['date_of_birth']));
-  $updateSQL = sprintf("UPDATE `user` SET name=%s, surname=%s, username=%s, email=%s, date_of_birth=%s, sex=%s, address=%s, city=%s, country=%s, phone=%s, id_user_occupation=%s, id_user_organization=%s, is_locked_out=%s, is_approved=%s, deleted=%s, create_date=%s, last_login_date=%s, last_password_changed_date=%s, id_user_category=%s WHERE id_user=%s",
+  $insertSQL = sprintf("INSERT INTO `user`(name, surname, username, email, date_of_birth, sex, address, city, country, phone, id_user_occupation, id_user_organization, is_locked_out, is_approved, deleted, id_user_category) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
                        GetSQLValueString($_POST['name'], "text"),
                        GetSQLValueString($_POST['surname'], "text"),
                        GetSQLValueString($_POST['username'], "text"),
@@ -51,16 +51,42 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
                        GetSQLValueString($_POST['id_user_occupation'], "int"),
                        GetSQLValueString($_POST['id_user_organization'], "int"),
                        GetSQLValueString(isset($_POST['is_locked_out']) ? "true" : "", "defined","1","0"),
-                       GetSQLValueString($_POST['is_approved'], "int"),
-                       GetSQLValueString($_POST['deleted'], "int"),
-                       GetSQLValueString($_POST['create_date'], "date"),
-                       GetSQLValueString($_POST['last_login_date'], "date"),
-                       GetSQLValueString($_POST['last_password_changed_date'], "date"),
+                       GetSQLValueString(isset($_POST['is_approved']) ? "true" : "" , "defined","1","0"),
+                       GetSQLValueString(isset($_POST['deleted']) ? "true" : "", "defined","1","0"),
+                       GetSQLValueString($_POST['id_user_category'], "int"));
+
+  mysql_select_db($database_pravo, $pravo);
+  $Result1 = mysql_query($insertSQL, $pravo) or die(mysql_error());
+	
+}
+if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
+	$birth_date = date("Y-m-d", strtotime($_POST['date_of_birth']));
+  $updateSQL = sprintf("UPDATE `user` SET name=%s, surname=%s, email=%s, date_of_birth=%s, sex=%s, address=%s, city=%s, country=%s, phone=%s, id_user_occupation=%s, id_user_organization=%s, is_locked_out=%s, is_approved=%s, deleted=%s,  id_user_category=%s WHERE id_user=%s",
+                       GetSQLValueString($_POST['name'], "text"),
+                       GetSQLValueString($_POST['surname'], "text"),
+                       GetSQLValueString($_POST['email'], "text"),
+                       GetSQLValueString($birth_date, "date"),
+                       GetSQLValueString($_POST['sex'], "int"),
+                       GetSQLValueString($_POST['address'], "text"),
+                       GetSQLValueString($_POST['city'], "text"),
+                       GetSQLValueString($_POST['country'], "text"),
+                       GetSQLValueString($_POST['phone'], "text"),
+                       GetSQLValueString($_POST['id_user_occupation'], "int"),
+                       GetSQLValueString($_POST['id_user_organization'], "int"),
+                       GetSQLValueString(isset($_POST['is_locked_out']) ? "true" : "", "defined","1","0"),
+                       GetSQLValueString(isset($_POST['is_approved']) ? "true" : "" , "defined","1","0"),
+                       GetSQLValueString(isset($_POST['deleted']) ? "true" : "", "defined","1","0"),
                        GetSQLValueString($_POST['id_user_category'], "int"),
                        GetSQLValueString($_POST['id_user'], "int"));
 
   mysql_select_db($database_pravo, $pravo);
   $Result1 = mysql_query($updateSQL, $pravo) or die(mysql_error());
+}
+
+if(isset($_GET['mode']) && ($_GET['mode'] == "delete")){
+	$deleteSQL = sprintf("DELETE FROM `user` WHERE id_user = %s", GetSQLValueString($_GET['id'], "int"));
+	mysql_select_db($database_pravo, $pravo);
+  	$Result1 = mysql_query($deleteSQL, $pravo) or die(mysql_error());
 }
 
 $maxRows_Users = 20;
@@ -120,11 +146,11 @@ $totalRows_UserEdit = mysql_num_rows($UserEdit);
 <script src="../jquery.ui-1.5.2/ui/ui.datepicker.js" type="text/javascript"></script>
 <link href="../jquery.ui-1.5.2/themes/ui.datepicker.css" rel="stylesheet" type="text/css" />
 
-<div align="left" style="height:22px; margin-left:-5px;  margin-top:-15px; width:510px; border-bottom:1px solid #a25852; background:#f5d6d4;  padding:3px; padding-top:1px;">
+<div align="left" style="height:22px; margin-left:-5px;  width:100.5%; border-bottom:1px solid #a25852; background:#f5d6d4;  padding:3px; padding-top:1px;">
   <table cellpadding="0" cellspacing="0">
   <tr></tr>
   <tr>
-    <td><div style="width:26px; height:21px; padding-top:1.5px; float:left; text-align:center;" onmouseover="this.className='picture-button-over'" onmouseout="this.className='picture-button-out'"> <a href="document_category.php?mode=new"><img src="../images/useradd.png" border="0" title="Нов документ" /></a></div></td>
+    <td><div style="width:26px; height:21px; padding-top:1.5px; float:left; text-align:center;" onmouseover="this.className='picture-button-over'" onmouseout="this.className='picture-button-out'"> <a href="users.php?mode=new"><img src="../images/useradd.png" border="0" title="Нов документ" /></a></div></td>
     <?php if(isset($_GET['mode']) && (($_GET['mode']=="edit") || ($_GET['mode']=="new"))){ ?>
     <td><div style="width:26px; height:21px; padding-top:1.5px; float:left; text-align:center;" onmouseover="this.className='picture-button-over'" onmouseout="this.className='picture-button-out'"> <a href="#"><img src="../images/save.png" border="0" title="Зачувај документ" /></a></div></td>
     <td>
@@ -139,7 +165,7 @@ $totalRows_UserEdit = mysql_num_rows($UserEdit);
 <br />
 <?php if(isset($_GET['mode']) && (($_GET['mode']=="edit") || ($_GET['mode']=="new"))){ ?>
 <form action="<?php echo $editFormAction; ?>" method="post" name="form1" id="form1">
-  <table align="center">
+  <table width="100%" align="center">
     <tr valign="baseline">
       <td nowrap="nowrap" align="right">Име:</td>
       <td><input type="text" name="name" value="<?php if(isset($_GET['mode']) && ($_GET['mode']=="edit")) echo htmlentities($row_UserEdit['name'], ENT_COMPAT, 'UTF-8'); ?>" size="32" /></td>
@@ -150,7 +176,7 @@ $totalRows_UserEdit = mysql_num_rows($UserEdit);
     </tr>
     <tr valign="baseline">
       <td nowrap="nowrap" align="right">Корисничко име:</td>
-      <td><input type="text" disabled="disabled" name="username" value="<?php if(isset($_GET['mode']) && ($_GET['mode']=="edit")) echo htmlentities($row_UserEdit['username'], ENT_COMPAT, 'UTF-8'); ?>" size="32" /></td>
+      <td><input type="text"  name="username" value="<?php if(isset($_GET['mode']) && ($_GET['mode']=="edit")) { echo htmlentities($row_UserEdit['username'], ENT_COMPAT, 'UTF-8'); }?>" <?php if(isset($_GET['mode']) && ($_GET['mode']=="edit")) echo "disabled"; ?> size="32" /></td>
     </tr>
     <tr valign="baseline">
       <td nowrap="nowrap" align="right">Email:</td>
@@ -236,7 +262,7 @@ do {
     </tr>
     <tr valign="baseline">
       <td nowrap="nowrap" align="right">Дата на креирање:</td>
-      <td><input type="text" disabled="disabled" name="create_date" value="<?php if(isset($_GET['mode']) && ($_GET['mode']=="edit")) echo htmlentities($row_UserEdit['create_date'], ENT_COMPAT, 'UTF-8'); ?>" size="32" /></td>
+      <td><input type="text" disabled="disabled" name="create_date" id="create_date" value="<?php if(isset($_GET['mode']) && ($_GET['mode']=="edit")) echo htmlentities($row_UserEdit['create_date'], ENT_COMPAT, 'UTF-8'); ?>" size="32" /></td>
     </tr>
     <tr valign="baseline">
       <td nowrap="nowrap" align="right">Дата на последно логирање:</td>
@@ -335,7 +361,7 @@ do {
      </td>
     </tr>
 </table>
-<table border="0">
+<table width="100%" border="0">
   <tr style="background:url(../images/yellow-title-middle.png);">
     <td colspan="2">Акција</td>
     <td>Име и презиме</td>
@@ -349,7 +375,7 @@ do {
     <tr <?php if($i%2==0) echo "style='background:#fbf7e0'" ?>>
       <td width="16"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?id=<?php echo $row_Users['id_user']; ?>&mode=edit&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/pencil.png" border="0" /></a></td>
       <td width="16"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?id=<?php echo $row_Users['id_user']; ?>&mode=delete&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>" onClick="return confirm('Дали навистина сакате да го избришете документот!')"><img src="../images/cross.png" border="0" /></a></td>
-      <td width="30%"><?php echo $row_Users['name']; ?> <?php echo $row_Users['surname']; ?></td>
+      <td width="30%"><a href="/pravo.org.mk/admin/userDetails.php?id=<?php echo $row_Users['id_user']; ?>" ><?php echo $row_Users['name']; ?> <?php echo $row_Users['surname']; ?></a></td>
       <td><?php echo  date("d.m.Y H:i:s",strtotime($row_Users['last_login_date'])); ?></td>
       <td align="center">
 	   <input type="checkbox" name="forcesubscribe" value="1"  <?php if (!(strcmp(htmlentities( $row_Users['is_approved'], ENT_COMPAT, ''),1))) {echo "checked=\"checked\"";} ?>>

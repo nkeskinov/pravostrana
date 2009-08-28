@@ -92,79 +92,59 @@ transition: Fx.Transitions.sineOut
    	  </div>
       <div id="horiz-menu" class="moomenu"><!-- InstanceBeginEditable name="Menu" -->
         <ul class="nav">
-           <li><a href="../index.php">Почетна</a></li>
-          <li class="active"><a class="topdaddy" href="../documentlaws.php">Закони</a></li>
-         <li><a href="../analysis.php">Анализи</a></li>
-          <li><a href="../regulations.php">Прописи</a></li>
-          <li><a href="#">Судска Пракса</a>
+           <li><a href="/pravo.org.mk/index.php">Почетна</a></li>
+          <li class="active"><a class="topdaddy" href="/pravo.org.mk/documentlaws.php">Закони</a></li>
+         <li><a href="/pravo.org.mk/analysis.php">Анализи</a></li>
+          <li><a href="/pravo.org.mk/regulations.php">Прописи</a></li>
+          <li><a href="#">Судска пракса</a>
            <ul>
-             <li><a href="../courtpractice.php">Судска Пракса</a></li>
-             <li><a href="../europeancourt.php">Судска Пракса на Европски суд за човекови права</a></li>
+             <li><a href="/pravo.org.mk/courtpractice.php">Судска пракса</a></li>
+            <li><a href="/pravo.org.mk/europeancourt.php">Европски суд за човекови права</a></li>
            </ul>
           </li>
-          <li><a href="../news.php">Новости</a></li>
-          <li><a href="../contact.php">Контакт</a></li>
+          <li><a href="/pravo.org.mk/news.php">Новости</a></li>
+          <li><a href="/pravo.org.mk/contact.php">Контакт</a></li>
         </ul>
       <!-- InstanceEndEditable -->
         <div id="menu"></div>
-       <div id="mapMenu"><!-- InstanceBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;</td><td>Категории на документи&nbsp;</td></tr></table><!-- InstanceEndEditable --></div> 
+       <div id="mapMenu"><!-- InstanceBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;</td></tr></table><!-- InstanceEndEditable --></div> 
       </div>
 	</div>
-    
     <div class="mainBody">
    	  <div class="content">
-            <div><img src="../images/726-90.jpg" width="728" height="90" /></div>
-            <!-- InstanceBeginEditable name="Content" -->
-            <table width="100%">
-              <tr>
-                <td width="28%" valign="top"><div class="left-block1">
-                  <div class="title">
+            <div></div>
+            <table><tr><td>
+            <div class="middle-red-block">
+                <div class="title">
                     <div class="left"></div>
-                    <div class="middle">
-                      <div class="text">Администраторско Мени</div>
-                    </div>
+                    <div class="middle"><div class="text"><!-- InstanceBeginEditable name="BlockTitle" -->Наслов<!-- InstanceEndEditable --></div></div>
                     <div class="right"></div>
-                  </div>
-                  <div class="sodrzina" style="padding-top:10px;">
-                      <?php include("util/menu.php"); ?>
-                  </div>
-                </div></td>
-                <td width="72%" valign="top"><div class="right-block-bigger">
-                  <div class="title">
-                    <div class="left"></div>
-                    <div class="middle">
-                      <div class="text">Категории</div>
-                    </div>
-                    <div class="right"></div>
-                  </div>
-                  <div class="sodrzina">
-                    <p><?php include("util/document_category.php") ?></p>
-                  </div>
-                </div></td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td valign="top"></td>
-                <td valign="top"></td>
-              </tr>
-            </table>
-            <!-- InstanceEndEditable -->
-        <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
-
+                </div>
+                 <div class="sodrzina"><!-- InstanceBeginEditable name="BlockContent" -->
+                   <?php include("util/document_category.php") ?>
+                 <!-- InstanceEndEditable --></div>
+            </div>
+            </td></tr></table>
+   		 <p>&nbsp;</p>
+         <p>&nbsp;</p>
+         <p>&nbsp;</p>
+         <p>&nbsp;</p>   
       </div>
-
- 
         <div class="right">
-        <?php include("util/loginSmall.php"); ?>
-          <div><img src="../images/250-250.jpg" width="250" height="250" /></div>
+				<?php include("util/loginSmall.php"); ?>
+            <br />
+            <div class="left-block1" style="width:250px;>
+                <div class="title">
+                    <div class="left"></div>
+                    <div class="middle"><div class="text">Администраторско Мени</div></div>
+                    <div class="right"></div>
+                </div>
+                <div class="sodrzina" style="padding-top:10px;">
+                    <?php include("util/menu.php"); ?>
+                </div>
+            </div>
           </div>
 
-    </div>
     
 	<div class="footer">Copyright &copy; 2008 Сите права задржани</div>	
 </div>
