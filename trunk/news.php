@@ -3,6 +3,7 @@ session_start();
 ?>
 <?php require_once("Connections/pravo.php"); ?>
 <?php include("util/misc.php"); ?>
+<?php include("util/banner.php"); ?>
 <?php 
 $id_post_category=2; //ID for news
 $discussionName="Вести"; //The name of the Discusion
@@ -167,7 +168,7 @@ transition: Fx.Transitions.sineOut
     
     <div class="mainBody">
    	  <div class="content">
-            <div><img src="images/726-90.jpg" width="728" height="90" /></div>
+            <div><?php getBanner($database_pravo, $pravo, 1); ?></div>
             <!-- InstanceBeginEditable name="Content" -->
             <table width="100%">
               <tr>
@@ -217,7 +218,12 @@ transition: Fx.Transitions.sineOut
         <?php include("util/login_block.php"); ?>
           <div style="width:250px; margin-top:5px; margin-bottom:5px;"><!-- InstanceBeginEditable name="SearchRegion" --><!-- InstanceEndEditable --></div>
          &nbsp;
-          <div><img src="images/250-250.jpg" width="250" height="250" />
+          <div>
+            <div><?php getBanner($database_pravo, $pravo, 3); ?></div>
+          	<br />
+          	<div><?php getBanner($database_pravo, $pravo, 4); ?></div>
+          	<br />
+          	<div><?php getBanner($database_pravo, $pravo, 5); ?></div>          
           </div>
           </div>
 

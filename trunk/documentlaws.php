@@ -4,6 +4,7 @@ session_start();
 ?>
 <?php require_once("Connections/pravo.php"); ?>
 <?php include("util/misc.php"); ?>
+<?php include("util/banner.php"); ?>
 <?php 
 $id_doc_type_Documents = LAWS;
 $ip_address=$_SERVER['REMOTE_ADDR'];
@@ -174,7 +175,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
     
     <div class="mainBody">
    	  <div class="content">
-            <div><img src="images/726-90.jpg" width="728" height="90" /></div>
+            <div><?php getBanner($database_pravo, $pravo, 1); ?></div>
             <!-- InstanceBeginEditable name="Content" -->
             <table width="100%">
               <tr>
@@ -226,7 +227,12 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 		  <a href="http://www.adobe.com/go/EN_US-H-GET-READER" target="_blank"><img src="images/get_adobe_reader.png" border="0"/></a>
 		  <!-- InstanceEndEditable --></div>
          &nbsp;
-          <div><img src="images/250-250.jpg" width="250" height="250" />
+          <div>
+            <div><?php getBanner($database_pravo, $pravo, 3); ?></div>
+          	<br />
+          	<div><?php getBanner($database_pravo, $pravo, 4); ?></div>
+          	<br />
+          	<div><?php getBanner($database_pravo, $pravo, 5); ?></div>          
           </div>
           </div>
 

@@ -33,7 +33,7 @@
                         <td><div align="center" class="down"><a href="resetPassword.php">Заборави лозинка?</a> | <a href="register.php?new">Регистрирај се!</a></div></td>
                       </tr>
                       <tr>
-                        <td>&nbsp;</td>
+                        <td></td>
                       </tr>
                     </table>
                     </form>

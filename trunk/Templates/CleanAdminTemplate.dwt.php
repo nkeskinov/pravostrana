@@ -3,6 +3,24 @@ session_start();
 ?>
 <?php require_once("../Connections/pravo.php"); ?>
 <?php include("../util/misc.php"); ?>
+<?php
+
+$MM_authorizedUsers = "admin";
+$MM_donotCheckaccess = "false";
+
+$MM_restrictGoTo = "../login.php";
+if (!((isset($_SESSION['MM_Username'])) && (isAuthorized("",$MM_authorizedUsers, $_SESSION['MM_Username'], $_SESSION['MM_UserGroup'])))) {   
+  $MM_qsChar = "?";
+  $MM_referrer = $_SERVER['PHP_SELF'];
+  if (strpos($MM_restrictGoTo, "?")) $MM_qsChar = "&";
+  if (isset($_SERVER['QUERY_STRING']) && strlen($_SERVER['QUERY_STRING']) > 0) 
+  $MM_referrer .= "?" . $_SERVER['QUERY_STRING'];
+  $MM_restrictGoTo = $MM_restrictGoTo. $MM_qsChar . "accesscheck=" . urlencode($MM_referrer);
+  header("Location: ". $MM_restrictGoTo); 
+  exit;
+}
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -93,61 +111,43 @@ transition: Fx.Transitions.sineOut
        <div id="mapMenu"><!-- TemplateBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;</td></tr></table><!-- TemplateEndEditable --></div> 
       </div>
 	</div>
-    
     <div class="mainBody">
    	  <div class="content">
-            <div><img src="../images/726-90.jpg" width="728" height="90" /></div>
-            <!-- TemplateBeginEditable name="Content" -->
-            <table width="100%">
-              <tr>
-                <td width="28%" valign="top"><div class="left-block1">
-                  <div class="title">
+            <div></div>
+            <table><tr><td>
+            <div class="middle-red-block">
+                <div class="title">
                     <div class="left"></div>
-                    <div class="middle">
-                      <div class="text">Администраторско Мени</div>
-                    </div>
+                    <div class="middle"><div class="text"><!-- TemplateBeginEditable name="BlockTitle" -->Наслов<!-- TemplateEndEditable --></div></div>
                     <div class="right"></div>
-                  </div>
-                  <div class="sodrzina" style="padding-top:10px;">
-                    <?php include("util/menu.php"); ?>
-                  </div>
-                </div></td>
-                <td width="72%" valign="top"><div class="right-block-bigger">
-                  <div class="title">
-                    <div class="left"></div>
-                    <div class="middle">
-                      <div class="text">Наслов</div>
-                    </div>
-                    <div class="right"></div>
-                  </div>
-                  <div class="sodrzina">
-                    <p>Текст </p>
-                  </div>
-                </div></td>
-              </tr>
-              <tr>
-                <td>&nbsp;</td>
-                <td></td>
-              </tr>
-              <tr>
-                <td valign="top"></td>
-                <td valign="top"></td>
-              </tr>
-            </table>
-            <!-- TemplateEndEditable -->
-        <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
-
+                </div>
+                 <div class="sodrzina"><!-- TemplateBeginEditable name="BlockContent" -->
+                   <p>Текст </p>
+                   <p>Текст</p>
+                   <p>&nbsp;</p>
+                 <!-- TemplateEndEditable --></div>
+            </div>
+            </td></tr></table>
+   		 <p>&nbsp;</p>
+         <p>&nbsp;</p>
+         <p>&nbsp;</p>
+         <p>&nbsp;</p>   
       </div>
-
- 
         <div class="right">
-        <?php include("util/loginSmall.php"); ?>
-          <div><img src="../images/250-250.jpg" width="250" height="250" /></div>
+				<?php include("util/loginSmall.php"); ?>
+            <br />
+            <div class="left-block1" style="width:250px;>
+                <div class="title">
+                    <div class="left"></div>
+                    <div class="middle"><div class="text">Администраторско Мени</div></div>
+                    <div class="right"></div>
+                </div>
+                <div class="sodrzina" style="padding-top:10px;">
+                    <?php include("util/menu.php"); ?>
+                </div>
+            </div>
           </div>
 
-    </div>
     
 	<div class="footer">Copyright &copy; 2008 Сите права задржани</div>	
 </div>
