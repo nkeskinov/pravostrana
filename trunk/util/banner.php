@@ -9,7 +9,11 @@ function getBanner($database_pravo, $pravo, $position){
 	$totalRows_Banner = mysql_num_rows($Recordset_Banner);
 	//echo $row_Banner['mimetype'];
 	if($row_Banner['mimetype'] == "image/jpeg" || $row_Banner['mimetype'] == "image/gif" || $row_Banner['mimetype'] == "image/png") {
-		echo '<img src="'.$row_Banner['path'].'"/>';
+		if($row_Banner['url']!=NULL){
+			echo '<a href="'.$row_Banner['url'].'"><img src="'.$row_Banner['path'].'" border="0"/></a>';
+		}else{
+			echo '<img src="'.$row_Banner['path'].'"/>';
+		}
 	}
 	elseif($row_Banner['mimetype'] == "application/x-shockwave-flash"  ) { ?>		
 		<object id="FlashID" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000">

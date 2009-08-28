@@ -11,4 +11,8 @@
       <td style="border-bottom:1px dotted #CCC;">&raquo; <a href="document_type.php">Типови на документи</a>	
       </td>
   </tr>
+  <tr onmouseover="this.className='on'" onmouseout="this.className='off'">
+      <td style="border-bottom:1px dotted #CCC;">&raquo; <a href="banner.php">Банери</a>	
+      </td>
+  </tr>
 </table>

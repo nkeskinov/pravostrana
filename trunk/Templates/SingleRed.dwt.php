@@ -4,6 +4,7 @@ session_start();
 } ?>
 <?php require_once("Connections/pravo.php"); ?>
 <?php include("util/misc.php"); ?>
+<?php include("util/banner.php"); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -68,6 +69,7 @@ transition: Fx.Transitions.sineOut
 	<div class="header">
    	  <div class="header-top">
    	    <div id="logoText"><img src="../images/banner.png" /></div>
+        <div id="bannerDiv1"><?php getBanner($database_pravo, $pravo, 2); ?></div>
    	  </div>
       <div id="horiz-menu" class="moomenu"><!-- TemplateBeginEditable name="Menu" -->
           <ul class="nav">
@@ -92,7 +94,7 @@ transition: Fx.Transitions.sineOut
     
     <div class="mainBody">
    	  <div class="content">
-            <div><img src="../images/726-90.jpg" width="728" height="90" /></div>
+            <div><?php getBanner($database_pravo, $pravo, 1); ?></div>
             <table><tr><td>
             <div class="middle-red-block">
                 <div class="title">
@@ -111,8 +113,13 @@ transition: Fx.Transitions.sineOut
       </div>
         <div class="right">
             <?php include("../util/login_block.php"); ?>
-               <div><img src="../images/250-250.jpg" width="250" height="250" /></div>
-          </div>
+               <br />
+              <div><?php getBanner($database_pravo, $pravo, 3); ?></div>
+              <br />
+              <div><?php getBanner($database_pravo, $pravo, 4); ?></div>
+              <br />
+              <div><?php getBanner($database_pravo, $pravo, 5); ?></div>
+              </div>
 
     </div>
     <div class="above-footer"></div>

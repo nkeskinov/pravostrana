@@ -22,12 +22,21 @@ $Banner = mysql_query($query_Banner, $pravo) or die(mysql_error());
 $row_Banner = mysql_fetch_assoc($Banner);
 $totalRows_Banner = mysql_num_rows($Banner);
 
+mysql_select_db($database_pravo, $pravo);
+$query_Banner_All = "SELECT * FROM banner";
+$Banner_All = mysql_query($query_Banner_All, $pravo) or die(mysql_error());
+$row_Banner_All = mysql_fetch_assoc($Banner_All);
+$totalRows_Banner_All = mysql_num_rows($Banner_All);
+
+
+
 ?>
+
 <div align="left" style="height:22px; margin-left:-5px;  width:100.5%; border-bottom:1px solid #a25852; background:#f5d6d4;  padding:3px; padding-top:1px;">
   <table cellpadding="0" cellspacing="0">
   <tr></tr>
   <tr>
-    <td><div style="width:26px; height:21px; padding-top:1.5px; float:left; text-align:center;" onmouseover="this.className='picture-button-over'" onmouseout="this.className='picture-button-out'"> <a href="documentlaws.php"><img src="../images/new.png" border="0" title="Нов банер" /></a></div></td>
+    <td><div style="width:26px; height:21px; padding-top:1.5px; float:left; text-align:center;" onmouseover="this.className='picture-button-over'" onmouseout="this.className='picture-button-out'"> <a href="banner.php?mode=new"><img src="../images/new.png" border="0" title="Нов банер" /></a></div></td>
     <td>
     <div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
         <a href="documentlaws.php?id=<?php echo $row_Banner['id_banner']; ?>&mode=delete" onClick="return confirm('Дали навистина сакате да го избришете документот!')"><img src="../images/delete.png" border="0" title="Бриши"  /></a></div>
@@ -56,6 +65,14 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 	
 	$created_by = isset($_SESSION['MM_ID']) ? $_SESSION['MM_ID'] : 0 ;
 	
+	$checkSQL=sprintf("SELECT * FROM banner WHERE position = %s AND visible = 1",GetSQLValueString($_POST['position'], "int"));
+	$Check = mysql_query($checkSQL, $pravo) or die(mysql_error());
+	if(mysql_num_rows($Check)>0){
+		$id_banner = mysql_result($Check,0,'id_banner');
+		$updateVisible = sprintf("UPDATE banner SET visible=0 WHERE id_banner=%s",GetSQLValueString($id_banner, "int"));	
+		$UpdateResult = mysql_query($updateVisible, $pravo) or die(mysql_error());
+	}
+	
   $insertSQL = sprintf("INSERT INTO banner (title, alt, id_organization, id_user, `path`, `position`, type, visible, mimetype, filesize, extension, url) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                        GetSQLValueString($_POST['title'], "text"),
                        GetSQLValueString($_POST['alt'], "text"),
@@ -73,27 +90,49 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
   mysql_select_db($database_pravo, $pravo);
   $Result1 = mysql_query($insertSQL, $pravo) or die(mysql_error());
   if($Result1){
-		_show_message_color('Банерот е успешно додаден!','GREEN');    
+		_show_message_color('Банерот е успешно додаден!','GREEN');  
+		if(isset($_GET['url']))
+			$MM_redirectLoginSuccess=$_GET['url'];
+		else
+			$MM_redirectLoginSuccess=$_SERVER['PHP_SELF'];	
+		echo "<script>document.location.href='".$MM_redirectLoginSuccess."'</script>";
+		echo "<script>'Content-type: application/octet-stream'</script>";
   }
 }
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 	$directory = "banners";
-	
-	$filetype = $_SESSION['filetype'];
-	$filename = $_SESSION['filename'];
-	$filesize = $_SESSION['filesize'];
-	$ext =  substr(strrpos($filetype,"/"),3);
-	$old = "../download/tmp/".$filename;
-	$new = "../images/".$directory."/".$filename;
-	$path = "images/".$directory."/".$filename;
-	if(!file_exists($new)){
-		rename($old,$new); //move the file from the tmp folder
-		$message = " Банерот".$new." e закачен!";
-		_show_message_color($message,'YELLOW');  	
+	if(isset($_GET['change']) && $_GET['change']=="true"){
+		$filetype = $_SESSION['filetype'];
+		$filename = $_SESSION['filename'];
+		$filesize = $_SESSION['filesize'];
+		$ext =  substr(strrpos($filetype,"/"),3);
+		$old = "../download/tmp/".$filename;
+		$new = "../images/".$directory."/".$filename;
+		$path = "images/".$directory."/".$filename;
+		if(!file_exists($new)){
+			rename($old,$new); //move the file from the tmp folder
+			$message = " Банерот".$new." e закачен!";
+			_show_message_color($message,'YELLOW');  	
+		}
+	}else{
+		$path = $_POST['path'];	
+		$filetype = $_POST['mimetype'];
+		$filesize = $_POST['filesize'];
+		$ext = $_POST['extension'];
 	}
-	
 	$created_by = isset($_SESSION['MM_ID']) ? $_SESSION['MM_ID'] : 0 ;
+	
+
+	mysql_select_db($database_pravo, $pravo);
+	
+	$checkSQL=sprintf("SELECT * FROM banner WHERE position = %s AND visible = 1",GetSQLValueString($_POST['position'], "int"));
+	$Check = mysql_query($checkSQL, $pravo) or die(mysql_error());
+	if(mysql_num_rows($Check)>0){
+		$id_banner = mysql_result($Check,0,'id_banner');
+		$updateVisible = sprintf("UPDATE banner SET visible=0 WHERE id_banner=%s",GetSQLValueString($id_banner, "int"));	
+		$UpdateResult = mysql_query($updateVisible, $pravo) or die(mysql_error());
+	}
 	
   $updateSQL = sprintf("UPDATE banner SET title=%s, alt=%s, `position`=%s, visible=%s, id_organization=%s, type=%s, id_user=%s, `path`=%s, mimetype=%s, filesize=%s, extension=%s, url=%s WHERE id_banner=%s",
                        GetSQLValueString($_POST['title'], "text"),
@@ -110,16 +149,41 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 					   GetSQLValueString($_POST['url'], "text"),
                        GetSQLValueString($_POST['id_banner'], "int"));
 
-  mysql_select_db($database_pravo, $pravo);
+  
   $Result1 = mysql_query($updateSQL, $pravo) or die(mysql_error());
   if($Result1){
 		_show_message_color('Банерот е успешно изменет!','GREEN');    
+		if(isset($_GET['url']))
+			$MM_redirectLoginSuccess=$_GET['url'];
+		else
+			$MM_redirectLoginSuccess=$_SERVER['PHP_SELF'];	
+		echo "<script>document.location.href='".$MM_redirectLoginSuccess."'</script>";
+		echo "<script>'Content-type: application/octet-stream'</script>";
   }
 }
 
+if ((isset($_GET['id'])) && ($_GET['id'] != "") && (isset($_GET['mode'])) && ($_GET['mode']=="delete")) {
+  $deleteSQL = sprintf("DELETE FROM banner WHERE id_banner=%s",
+                       GetSQLValueString($_GET['id'], "int"));
+
+  mysql_select_db($database_pravo, $pravo);
+  $Result1 = mysql_query($deleteSQL, $pravo) or die(mysql_error());
+  if($Result1){
+	_show_message_color('Банерот е успешно избришан!','GREEN');
+	if(isset($_GET['url']))
+		$MM_redirectLoginSuccess=$_GET['url'];
+	else
+		$MM_redirectLoginSuccess=$_SERVER['PHP_SELF'];	
+	echo "<script>document.location.href='".$MM_redirectLoginSuccess."'</script>";
+	echo "<script>'Content-type: application/octet-stream'</script>";
+  }
+}
+
+
 ?>
+<?php if(isset($_GET['mode']) && ($_GET['mode']=="new" || $_GET['mode']=="edit" ) || isset($_GET['id'])){ ?>
 
-
+<?php if((isset($_GET['change']) && ($_GET['change']=="true")) || (!(isset($_GET['mode'])) && ($_GET['mode']="true"))) { ?>
 <form method="post" name="form1" target="upload_iframe"
  action="<?php echo $editFormAction; ?>" enctype="multipart/form-data">
 <table width="100%" align="center" >
@@ -167,7 +231,7 @@ function jsUpload(upload_field)
 </iframe>
 <!-- For debugging purposes, it's often useful to remove
      "display: none" from style="" attribute -->
-
+<?php } ?>
 <form method="post" name="form1" action="<?php echo $editFormAction; ?>">
   <table width="100%" align="center">
     <tr valign="baseline">
@@ -194,7 +258,8 @@ function jsUpload(upload_field)
         <option value="5" <?php if (!(strcmp(5, htmlentities($row_Banner['position'], ENT_COMPAT, '')))) {echo "SELECTED";} ?>>5</option>
         <option value="6" <?php if (!(strcmp(6, htmlentities($row_Banner['position'], ENT_COMPAT, '')))) {echo "SELECTED";} ?>>6</option>
         <option value="7" <?php if (!(strcmp(7, htmlentities($row_Banner['position'], ENT_COMPAT, '')))) {echo "SELECTED";} ?>>7</option>
-      </select></td>
+      </select>
+      <span style="color:#F00"> Внимание!!! Големината на банерот да одговара според позицијата долу на сликата. Големините и позициите се најдолу во табела</span></td>
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Видлив:</td>
@@ -213,6 +278,10 @@ do {
       </select></td></tr>
     <tr valign="baseline">
       <td colspan="2" align="center" nowrap>
+      <input type="hidden" name="path" value="<?php echo $row_Banner['path']; ?>" />
+      <input type="hidden" name="mimetype" value="<?php echo $row_Banner['mimetype']; ?>" />
+      <input type="hidden" name="filesize" value="<?php echo $row_Banner['filesize']; ?>" />
+      <input type="hidden" name="extension" value="<?php echo $row_Banner['extension']; ?>" />
       <?php if($row_Banner['mimetype'] == "image/jpeg" || $row_Banner['mimetype'] == "image/gif" || $row_Banner['mimetype'] == "image/png") {
 		echo '<img src="../'.$row_Banner['path'].'"/>';
 		}
@@ -238,7 +307,7 @@ do {
               <p><a href="http://www.adobe.com/go/getflashplayer"><img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" width="112" height="33" /></a></p>
             </div>
             <!--[if !IE]>-->
-          </object>
+        </object>
           <!--<![endif]-->
         </object>
         <script type="text/javascript">
@@ -247,7 +316,7 @@ do {
         //-->
         </script>
 	<?php } ?>
-      
+      <a href="<?php echo "?".$_SERVER['QUERY_STRING']."&change=true" ?>">замени</a>
       </td>
     <tr valign="baseline">
       <td nowrap align="right">&nbsp;</td>
@@ -259,18 +328,110 @@ do {
       <input type="submit" id="upload_button" value="Зачувај" disabled>	
       <input type="hidden" name="MM_insert" value="form1" />
       <?php } ?>
+      <a href="<?php echo $_GET['url']; ?>">Откажи</a>
       </td>
     </tr>
   </table>
   <input type="hidden" name="id_banner" value="<?php echo $row_Banner['id_banner']; ?>">
 </form>
 <p>&nbsp;</p>
+<div align="center"><img src="../images/marketing.jpg" /></div>
+<table width="100%" border="0">
+  <tr>
+    <th scope="col">&nbsp;</th>
+    <th scope="col">Опис</th>
+    <th scope="col">Димензии</th>
+    <th scope="col">Максимална големина</th>
+    <th scope="col">Цена/неделно</th>
+  </tr>
+  <tr>
+    <th scope="row">Позиција 1</th>
+    <td align="center">Leaderboard</td>
+    <td align="center">728 x 90</td>
+    <td align="center">40 KB</td>
+    <td align="center">&nbsp;</td>
+  </tr>
+  <tr>
+    <th scope="row">Позиција 2</th>
+    <td align="center">Half Banner</td>
+    <td align="center">234 x 60</td>
+    <td align="center">40 KB</td>
+    <td align="center">&nbsp;</td>
+  </tr>
+  <tr>
+    <th scope="row">Позиција 3</th>
+    <td align="center">Medium Rectangle</td>
+    <td align="center">250 x 250</td>
+    <td align="center">40 KB</td>
+    <td align="center">&nbsp;</td>
+  </tr>
+  <tr>
+    <th scope="row">Позиција 4</th>
+    <td align="center">Medium Rectangle</td>
+    <td align="center">250 x 250</td>
+    <td align="center">40 KB</td>
+    <td align="center">&nbsp;</td>
+  </tr>
+  <tr>
+    <th scope="row">Позиција 5</th>
+    <td align="center">Wide Skyscraper</td>
+    <td align="center">160 x 600</td>
+    <td align="center">40 KB</td>
+    <td align="center">&nbsp;</td>
+  </tr>
+  <tr>
+    <th scope="row">Позиција 6</th>
+    <td align="center">Full Banner</td>
+    <td align="center">468 x 60</td>
+    <td align="center">40 KB</td>
+    <td align="center">&nbsp;</td>
+  </tr>
+  <tr>
+    <th scope="row">Позиција 7</th>
+    <td align="center">Full Banner</td>
+    <td align="center">468 x 60</td>
+    <td align="center">40 KB</td>
+    <td align="center">&nbsp;</td>
+  </tr>
+</table>
 <p>&nbsp;</p>
-
-
+<?php } else{ ?>
+<br />
+<table width="100%" border="0">
+  <tr style="background:url(../images/yellow-title-middle.png);">
+    <td colspan="2">Акција</td>
+    <td>Наслов</td>
+    <td>Алт</td>
+    <td>Позиција</td>
+    <td>Видлив</td>
+    <td>url</td>
+    <td>Слика</td>    
+  </tr>
+  <?php $i=0; do { ?>
+  <tr  <?php if($i%2==0) echo "style='background:#fbf7e0'" ?> valign="top">
+  <td width="16"><a href="banner.php?id=<?php echo $row_Banner_All['id_banner']; ?>&mode=edit&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/pencil.png" border="0" /></a></td>
+      <td width="16"><a href="banner.php?id=<?php echo $row_Banner_All['id_banner']; ?>&mode=delete&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>" onClick="return confirm('Дали навистина сакате да го избришете документот!')"><img src="../images/cross.png" border="0" /></a></td>
+    <td><?php echo $row_Banner_All['title']; ?></td>
+    <td><?php echo $row_Banner_All['alt']; ?></td>
+    <td><?php echo $row_Banner_All['position']; ?></td>
+    <td>
+    <input type="checkbox" disabled <?php if (!(strcmp(htmlentities($row_Banner_All['visible'], ENT_COMPAT, ''),1))) {echo "checked=\"checked\"";} ?>>
+    </td>
+    <td><?php echo $row_Banner_All['url']; ?></td>
+    <td>
+    <?php if($row_Banner_All['mimetype'] == "image/jpeg" || $row_Banner_All['mimetype'] == "image/gif" || $row_Banner_All['mimetype'] == "image/png") {
+		echo '<img src="../'.$row_Banner_All['path'].'" width="250px"/>';
+		} ?>
+    </td>
+  </tr>
+  <?php $i++; } while ($row_Banner_All = mysql_fetch_assoc($Banner_All)); ?>
+</table>
+<?php } ?>
 <?php
 mysql_free_result($Oranization);
 ?>
 <?php
 mysql_free_result($Banner);
+
+mysql_free_result($Banner_All);
 ?>

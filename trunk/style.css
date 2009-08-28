@@ -844,3 +844,11 @@ tr.off {
 .laters a:active {
 	color: #333;
 }
+#bannerDiv1 {
+	position:absolute;
+	left:745px;
+	top:12px;
+	width:234px;
+	height:60px;
+	z-index:1;
+}
