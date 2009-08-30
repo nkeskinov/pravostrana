@@ -3,6 +3,24 @@ session_start();
 ?>
 <?php require_once("../Connections/pravo.php"); ?>
 <?php include("../util/misc.php"); ?>
+<?php
+
+$MM_authorizedUsers = "admin";
+$MM_donotCheckaccess = "false";
+
+$MM_restrictGoTo = "../login.php";
+if (!((isset($_SESSION['MM_Username'])) && (isAuthorized("",$MM_authorizedUsers, $_SESSION['MM_Username'], $_SESSION['MM_UserGroup'])))) {   
+  $MM_qsChar = "?";
+  $MM_referrer = $_SERVER['PHP_SELF'];
+  if (strpos($MM_restrictGoTo, "?")) $MM_qsChar = "&";
+  if (isset($_SERVER['QUERY_STRING']) && strlen($_SERVER['QUERY_STRING']) > 0) 
+  $MM_referrer .= "?" . $_SERVER['QUERY_STRING'];
+  $MM_restrictGoTo = $MM_restrictGoTo. $MM_qsChar . "accesscheck=" . urlencode($MM_referrer);
+  header("Location: ". $MM_restrictGoTo); 
+  exit;
+}
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/CleanAdminTemplate.dwt.php" codeOutsideHTMLIsLocked="false" -->
 <head>
@@ -12,7 +30,7 @@ session_start();
 <link href="../style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="../images/favicon1.png" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>pravo.org.mk</title>
+<title>Pravo.org.mk | Корисници</title>
 <!-- InstanceEndEditable -->
 <script type="text/javascript" src="../roktools.js"></script>
 

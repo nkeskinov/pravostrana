@@ -30,7 +30,7 @@ if (!((isset($_SESSION['MM_Username'])) && (isAuthorized("",$MM_authorizedUsers,
 <link href="/pravo.org.mk/style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="/pravo.org.mk/images/favicon1.png" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>pravo.org.mk</title>
+<title>Pravo.org.mk | Документи</title>
 <!-- InstanceEndEditable -->
 <script type="text/javascript" src="/pravo.org.mk/roktools.js"></script>
 

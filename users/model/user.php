@@ -84,7 +84,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
                        GetSQLValueString($_POST['username'], "text"),
                        GetSQLValueString($_POST['password'], "text"),
                        GetSQLValueString($_POST['email'], "text"),
-					   GetSQLValueString(isset($_POST['is_approved']) ? "true" : "", "defined","1","0"));
+					   GetSQLValueString(0,"int"));
 	
   
   if( !empty($_SESSION['security_code']) && $_SESSION['security_code'] == $_POST['security_code'] ) {
@@ -97,7 +97,24 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 			$_SESSION['MM_ID'] = mysql_insert_id();
 			
 			echo '<br />';
-			_show_message_color('Вашата регистрација беше успешно завршена!','GREEN');
+			_show_message_color('Вашата регистрација беше успешно завршена! Проверете го вашиот e-mail за да ја комплетирате регистрацијата.','GREEN');
+
+			$key=hash_hmac('ripemd160', $_POST['username']."".$_POST['password'],'register');
+			$to_email=$_POST['username'];
+			$name= $_POST['name'];
+			$surname= $_POST['surname'];
+			$subject="Активација на корисничка сметка на Pravo.org.mk";
+			$Message="Почитувани, $name $surname <br /><br />";
+			$Message.="Го примивме вашето барање за регистрирање на вашата корисничка сметка на <strong>Pravo.org.mk</strong><br />";
+			$Message.="За да ја активирате вашата корисничка сметка кликнете на следниов линк или копирајте ";
+			$Message.="го истиот во адрес барот на вашиот пребарувач: <br /><br />";
+			$Message.="http://pravo.org.mk/activate.php?key=$key&email=$to_email";
+			$Message.="<br /><br />Со почит,<br />";
+			$Message.="Pravo.org.mk тимот";
+			
+			//echo $Message;
+			send_mail("Pravo.org.mk","no-reply@pravo.org.mk",$to_email,$subject,$Message);
+			
 			echo '<div align="center"><form action="index.php" method="get">
 		 <input type="submit" name="button2" id="button2" value="Во ред" />
 		 </form></div>';

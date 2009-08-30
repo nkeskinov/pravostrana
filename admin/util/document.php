@@ -488,8 +488,8 @@ plugins : "safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotio
 <form method="post" name="form1" target="upload_iframe" action="<?php echo $editFormAction; ?>" enctype="multipart/form-data">
 <table width="100%" align="center">
 <tr>
-    <td width="28%" align="right" valign="top">Избери документ:</td>
-    <td width="72%">
+    <td width="29%" align="right" valign="top">Избери документ:</td>
+    <td width="71%">
     <input type="hidden" name="fileframe" value="true">
     <input type="file" name="file" id="file" onChange="jsUpload(this)">
           <br />
