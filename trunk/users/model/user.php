@@ -70,7 +70,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 		printInsertUser($_SERVER['PHP_SELF'],$row_RecordsetUsers,$pravo);
 	}else{
 	$data_na_raganje=$_POST['godina']."-".$_POST['mesec'].".".$_POST['den'];
- $insertSQL = sprintf("INSERT INTO `user` (name, surname, sex, date_of_birth, phone, id_user_occupation, id_user_organization, address, city, country, username, password, email, is_approved) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+ $insertSQL = sprintf("INSERT INTO `user` (name, surname, sex, date_of_birth, phone, id_user_occupation, id_user_organization, address, city, country, username, password, email, is_approved, id_user_category) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
                        GetSQLValueString($_POST['name'], "text"),
                        GetSQLValueString($_POST['surname'], "text"),
                        GetSQLValueString($_POST['sex'], "int"),
@@ -84,17 +84,18 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
                        GetSQLValueString($_POST['username'], "text"),
                        GetSQLValueString($_POST['password'], "text"),
                        GetSQLValueString($_POST['email'], "text"),
-					   GetSQLValueString(0,"int"));
+					   GetSQLValueString(0,"int"),
+					   GetSQLValueString(1,"int"));
 	
   
   if( !empty($_SESSION['security_code']) && $_SESSION['security_code'] == $_POST['security_code'] ) {
 		// Insert you code for processing the form here, e.g emailing the submission, entering it into a database. 
 		$Result1 = mysql_query($insertSQL, $pravo) or die(mysql_error());
 		if($Result1){
-			$_SESSION['MM_Username'] = $_POST['username'];
-			$_SESSION['MM_UserGroup'] = 'user';	
-			$_SESSION['MM_Name'] = $_POST['name']." ".$_POST['surname'];
-			$_SESSION['MM_ID'] = mysql_insert_id();
+			//$_SESSION['MM_Username'] = $_POST['username'];
+			//$_SESSION['MM_UserGroup'] = 'user';	
+			//$_SESSION['MM_Name'] = $_POST['name']." ".$_POST['surname'];
+			//$_SESSION['MM_ID'] = mysql_insert_id();
 			
 			echo '<br />';
 			_show_message_color('Вашата регистрација беше успешно завршена! Проверете го вашиот e-mail за да ја комплетирате регистрацијата.','GREEN');
