@@ -149,7 +149,7 @@ function getSubDocuments($id_document, $pravo, $database_pravo,$gid){
       <?php }?>
       </td>
       <td width="91%">&nbsp;<?php echo $row_SubDocuments['title']; ?><br>
-      <span style="color:#666; font-size:10px">&nbsp;&nbsp;<?php echo date("d.m.Y", $timestamp); ?>&nbsp;|</span><span style="color:#666; font-size:10px"> Сл. весник/година:</span> <span style="font-size:10px;"><?php echo $row_SubDocuments['ordinal']; ?>/<?php echo date("Y",strtotime($row_SubDocuments['date'])); ?></span></td>
+      <span style="color:#666; font-size:10px">&nbsp;&nbsp;<?php echo date("d.m.Y", $timestamp); ?>&nbsp; <?php //|</span><span style="color:#666; font-size:10px"> Сл. весник/година:</span> <span style="font-size:10px;"><?php echo $row_SubDocuments['ordinal']."/".date("Y",strtotime($row_SubDocuments['date'])); ?></span></td>
       
       <td width="5%" align="right"><a href="documentDetail.php?id=<?php echo $id_document; ?>&gid=<?php echo $gid; ?>&page=<?php echo $page; ?>" title="Преземи го документот"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
     </tr>
@@ -222,10 +222,10 @@ function getNumDownload($id_document, $pravo, $database_pravo){
     	<td width="31%">Закони <?php echo ($startRow_Documents + 1) ?> до <?php echo min( $startRow_Documents + $maxRows_Documents, $totalRows_Documents) ?> од <?php echo $totalRows_Documents ?>
         </td>
         <td align="right">
-        <div style="float:right">
+        <div style="float:right; width:100%; text-align:right; vertical-align:bottom;">
         	<div style="float:left">
             <form method="post" action="<?php printf("%s?%s", $currentPage,$_SERVER['QUERY_STRING']); ?>">
-            <table><tr><td>
+            <table width="100%"><tr><td>
             <?php if(isset($_POST['desc']) ){?>
             <input type="image" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image1','','images/sort-up.png',1)"src="images/sort-down.png" name="Image1" width="12" height="12" border="0" id="Image1" title="Сортирај во растечки редослед"/>
             
@@ -302,10 +302,13 @@ function getNumDownload($id_document, $pravo, $database_pravo){
 </table>
 <table border="0" width="100%" cellspacing="0">
   <?php do { 
-  	$timestamp = strtotime($row_Documents['published_date']); 
+  	if($row_Documents['published_date']!=NULL)
+	  	$timestamp = strtotime($row_Documents['published_date']); 
+	else
+		$timestamp = strtotime($row_Documents['into_force_date']); 
   ?>
     <tr>
-      <td width="100%" style="border-bottom:1px solid #a25852; background:#fae9e8; padding-left:5px;"><strong><a href="documentDetail.php?id=<?php echo $row_Documents['id_document']; ?>&gid=<?php echo $row_Documents['id_doc_group']; ?>&page=<?php echo $page; ?>" title="Видете ги деталите за законот" ><span style="font-variant:small-caps; font-weight:bolder; font-size:15px; "><?php echo $row_Documents['title']; ?></span></a></strong><br> <span style="color:#666; font-size:11px">&nbsp;<?php echo date("d.m.Y", $timestamp); ?></span> |<span style="color:#666; font-size:11px"> Сл. весник/година:</span> <span style="font-size:11px; font-weight:bold;"><?php echo $row_Documents['ordinal']; ?></span>/<span style="font-size:11px; font-weight:bold;"><?php echo date("Y",strtotime($row_Documents['date'])); ?></span></td>
+      <td width="100%" style="border-bottom:1px solid #a25852; background:#fae9e8; padding-left:5px;"><strong><a href="documentDetail.php?id=<?php echo $row_Documents['id_document']; ?>&gid=<?php echo $row_Documents['id_doc_group']; ?>&page=<?php echo $page; ?>" title="Видете ги деталите за законот" ><span style="font-variant:small-caps; font-weight:bolder; font-size:15px; "><?php echo $row_Documents['title']; ?></span></a></strong><br> <span style="color:#666; font-size:11px">&nbsp;<?php echo date("d.m.Y", $timestamp); ?></span> <?php if($page == "documentlaws.php") { echo '|<span style="color:#666; font-size:11px"> Сл. весник/година:</span> <span style="font-size:11px; font-weight:bold;">'.$row_Documents["ordinal"].' </span>/<span style="font-size:11px; font-weight:bold;"> '.date("Y",strtotime($row_Documents["date"])); } ?></span></td>
       <td width="5%" align="right" style="border-bottom:1px solid #a25852; background:#fae9e8;;"><a href="documentDetail.php?id=<?php echo $row_Documents['id_document']; ?>&gid=<?php echo $row_Documents['id_doc_group']; ?>&page=<?php echo $page; ?>" title="Преземи го документот"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
     </tr>
     <tr>

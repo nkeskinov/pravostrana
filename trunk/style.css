@@ -162,7 +162,7 @@ h4 {
 }
 .mainBody .login{
 	
-	background:url(images/login-block.png);
+	background:url(images/login-block.png) no-repeat;
 }
 .mainBody .login a:link {
 	color: #FFF;

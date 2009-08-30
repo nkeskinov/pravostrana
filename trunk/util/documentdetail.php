@@ -77,7 +77,7 @@ function getSubDocuments($id_document, $pravo, $database_pravo){
       <?php }?>
       </td>
       <td width="61%" valign="top">&nbsp;<?php echo $row_SubDocuments['title']; ?><br>
-      <span style="color:#666; font-size:11px">&nbsp;&nbsp;<?php echo date("d.m.Y", $timestamp); ?>&nbsp;|</span></span><span style="color:#666; font-size:10px"> Сл. весник/година:</span> <span style="font-size:10px;"><?php echo $row_SubDocuments['ordinal']; ?>/<?php echo date("Y",strtotime($row_SubDocuments['date'])); ?></span></td>
+      <span style="color:#666; font-size:11px">&nbsp;&nbsp;<?php echo date("d.m.Y", $timestamp); ?>&nbsp;<?php //|</span></span><span style="color:#666; font-size:10px"> Сл. весник/година:</span> <span style="font-size:10px;"><?php echo $row_SubDocuments['ordinal']."/".date("Y",strtotime($row_SubDocuments['date'])); ?></span></td>
       <td width="15%" align="right" valign="top">
        <div style="padding:3px;">
       <?php if(isset($_SESSION['MM_UserGroup'])) {
@@ -157,8 +157,8 @@ function getNumDownload($id_document, $pravo, $database_pravo){
     </td>
   </tr>
   <tr>
-    <td width="30%">Дата на публикување:</td>
-    <td width="50%"><?php if(isset($row_DetailRS1['published_date'])) echo date("d.m.Y",strtotime($row_DetailRS1['published_date'])); ?></td>
+    <td width="36%">Дата на публикување:</td>
+    <td width="44%"><?php if(isset($row_DetailRS1['published_date'])) echo date("d.m.Y",strtotime($row_DetailRS1['published_date'])); ?></td>
     <td width="20%" rowspan="4" align="right"><a href="download.php?id=<?php echo $row_DetailRS1['id_document']; ?>"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a><br><span style="font-size:10px; color:#999;"><?php getNumDownload($row_DetailRS1['id_document'], $pravo, $database_pravo); ?> пати спуштено</span></td>
   </tr>
   <tr>
@@ -166,16 +166,20 @@ function getNumDownload($id_document, $pravo, $database_pravo){
     <td><?php echo date("d.m.Y",strtotime($row_DetailRS1['uploaded_date'])); ?></td>
   </tr>
   <tr>
+    <td>Дата на стапување во сила:</td>
+    <td><?php echo date("d.m.Y",strtotime($row_DetailRS1['into_force_date'])); ?></td>
+  </tr>
+  <tr>
     <td>Сл. весник/година:</td>
     <td><?php echo $row_DetailRS1['ordinal']; ?>/<?php echo date("Y",strtotime($row_DetailRS1['date'])); ?></td>
   </tr>
   <tr>
     <td>Категорија:</td>
-    <td><?php do{ echo $row_DocGroup['name']." &raquo; "; }while ($row_DocGroup = mysql_fetch_assoc($DocGroup)); ?></td>
+    <td colspan="2"><?php do{ echo $row_DocGroup['name']." &raquo; "; }while ($row_DocGroup = mysql_fetch_assoc($DocGroup)); ?></td>
   </tr>
   <tr>
     <td>Забелешка:</td>
-    <td><?php echo $row_DetailRS1['description']; ?></td>
+    <td colspan="2"><?php echo $row_DetailRS1['description']; ?></td>
   <tr>
     <td colspan="3"><?php getSubDocuments($row_DetailRS1['id_document'], $pravo, $database_pravo); ?></td>
   </tr>

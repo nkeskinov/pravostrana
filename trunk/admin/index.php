@@ -30,7 +30,7 @@ if (!((isset($_SESSION['MM_Username'])) && (isAuthorized("",$MM_authorizedUsers,
 <link href="/pravo.org.mk/style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="/pravo.org.mk/images/favicon1.png" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>Pravo.org.mk | Типови на документи</title>
+<title>Pravo.org.mk | Администраторски панел</title>
 <!-- InstanceEndEditable -->
 <script type="text/javascript" src="/pravo.org.mk/roktools.js"></script>
 
@@ -118,11 +118,13 @@ transition: Fx.Transitions.sineOut
             <div class="middle-red-block">
                 <div class="title">
                     <div class="left"></div>
-                    <div class="middle"><div class="text"><!-- InstanceBeginEditable name="BlockTitle" -->Типови на документи<!-- InstanceEndEditable --></div></div>
+                    <div class="middle">
+                      <div class="text"><!-- InstanceBeginEditable name="BlockTitle" -->Администраторски панел<!-- InstanceEndEditable --></div></div>
                     <div class="right"></div>
                 </div>
-                 <div class="sodrzina"><!-- InstanceBeginEditable name="BlockContent" -->
-                   <?php include("util/document_type.php") ?>
+                 <div class="sodrzina"><!-- InstanceBeginEditable name="BlockContent" -->Кликнете на линковите од десно за извржување на соодветнте акции.
+                     <p>&nbsp;</p>
+                   <p>&nbsp;</p>
                  <!-- InstanceEndEditable --></div>
             </div>
             </td></tr></table>
