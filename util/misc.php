@@ -128,6 +128,7 @@ if (!function_exists("send_mail")) {
 	
 		# SEND THE EMAIL 
 		ini_set("sendmail_from",$_from_email);  // the INI lines are to force the From Address to be used ! 
+		$_subject = '=?UTF-8?B?'.base64_encode($_subject).'?=';
 		$res = mail($_to, $_subject, $_message, $headers); 
 		ini_restore("sendmail_from");
 		return $res;

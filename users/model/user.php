@@ -105,10 +105,10 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 			$name= $_POST['name'];
 			$surname= $_POST['surname'];
 			$subject="Активација на корисничка сметка на Pravo.org.mk";
-			$Message="Почитувани, $name $surname <br /><br />";
+			$Message="Почитуван/а $name $surname, <br /><br />";
 			$Message.="Го примивме вашето барање за регистрирање на вашата корисничка сметка на <strong>Pravo.org.mk</strong><br />";
 			$Message.="За да ја активирате вашата корисничка сметка кликнете на следниов линк или копирајте ";
-			$Message.="го истиот во адрес барот на вашиот пребарувач: <br /><br />";
+			$Message.="го истиот во полето за интернет адреса на вашиот прелистувач: <br /><br />";
 			$Message.="http://pravo.org.mk/activate.php?key=$key&email=$to_email";
 			$Message.="<br /><br />Со почит,<br />";
 			$Message.="Pravo.org.mk тимот";
@@ -681,7 +681,7 @@ do {
     <tr valign="baseline">
       <td nowrap align="right">Повтори Лозинка:</td>
       <td colspan="2"><span id="spryconfirm1">
-        <input type="password" name="password2" id="password2" value="" size="32" />
+        <input type="password" name="password2" id="password2" value="" size="30" />
       <span class="confirmRequiredMsg">Лозинката е задолжителна.</span><span class="confirmInvalidMsg">Лозинките не се совпаѓаат.</span></span></td>
     </tr>
     <?php } ?>
