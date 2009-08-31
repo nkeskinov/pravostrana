@@ -150,6 +150,11 @@ h4 {
 	font-weight:normal;
 	font-size:12px;	
 }
+#mapMenu td{
+	color: #FFF;
+	font-weight:normal;
+	font-size:12px;
+}
 .mainBody{
 	margin-top:25px;
 	min-height:250px;
