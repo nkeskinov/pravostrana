@@ -33,9 +33,14 @@ trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_p
 <!-- InstanceBeginEditable name="doctitle" -->
 <title>Pravo.org.mk | Регистрација</title>
 <!-- InstanceEndEditable -->
+<link href="YUI/2.6.0/build/fonts/fonts-min.css" rel="stylesheet" type="text/css" />
+<link href="YUI/2.6.0/build/container/assets/skins/sam/container.css" rel="stylesheet" type="text/css" />
+<script src="YUI/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
+<script src="YUI/2.6.0/build/container/container-min.js" type="text/javascript"></script>
+
 <script type="text/javascript" src="roktools.js"></script>
 
-
+<script type="text/javascript" src="javaScripts/cirillic_converter.js"></script>
 <script type="text/javascript" src="mootools.js"></script>
 
 <script type="text/javascript" src="rokmoomenu.js"></script>
@@ -71,11 +76,6 @@ transition: Fx.Transitions.sineOut
 
 </script>
 
-<style type="text/css">
-<!--
-
--->
-</style>
 <!-- InstanceBeginEditable name="head" -->
 <!-- InstanceEndEditable -->
 </head>

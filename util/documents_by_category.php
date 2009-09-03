@@ -3,7 +3,10 @@
 $id_group=-1;
 if(isset($_GET['gid']))
 	$id_group=$_GET['gid'];
-
+if(isset($_GET['tid']))
+	$id_type=$_GET['tid'];
+else
+	$id_type=0;
 $maxRows_Documents2 = 30;
 $pageNum_Documents2 = 0;
 if (isset($_GET['pageNum_Documents'])) {
@@ -12,7 +15,7 @@ if (isset($_GET['pageNum_Documents'])) {
 $startRow_Documents2 = $pageNum_Documents2 * $maxRows_Documents2;
 
 mysql_select_db($database_pravo, $pravo);
-$query_Documents2 = sprintf("SELECT id_document, id_doc_group, title, published_date FROM `document` WHERE id_doc_group=%s and id_superdoc is null",GetSQLValueString($id_group,"int"));
+$query_Documents2 = sprintf("SELECT id_document, id_doc_group, title, published_date FROM `document` WHERE id_doc_group=%s and id_doc_type=%s and id_superdoc is null",GetSQLValueString($id_group,"int"),GetSQLValueString($id_type,"int"));
 $query_limit_Documents2 = sprintf("%s LIMIT %d, %d", $query_Documents2, $startRow_Documents2, $maxRows_Documents2);
 $Documents2 = mysql_query($query_limit_Documents2, $pravo) or die(mysql_error());
 $row_Documents2 = mysql_fetch_assoc($Documents2);
@@ -52,7 +55,7 @@ $totalPages_Documents2 = ceil($totalRows_Documents2/$maxRows_Documents2)-1;
   ?>
     <tr onmouseover="this.className='on'" onmouseout="this.className='off'">
       <td style="border-bottom:1px dotted #CCC;">
-	  &raquo; <a href="?id=<?php echo $row_Documents2['id_document']; ?>&gid=<?php echo $row_Documents2['id_doc_group']; ?>&page=<?php echo $_GET['page']; ?>" title="<?php echo $row_Documents2['title']; ?>"><?php  if($n<10) echo $title; else echo $title." ..."; ?></a>
+	  &raquo; <a href="?id=<?php echo $row_Documents2['id_document']; ?>&gid=<?php echo $row_Documents2['id_doc_group']; ?>&tid=<?php echo $id_type; ?>&page=<?php echo $_GET['page']; ?>" title="<?php echo $row_Documents2['title']; ?>"><?php  if($n<10) echo $title; else echo $title." ..."; ?></a>
      
 	  </td>
     </tr>

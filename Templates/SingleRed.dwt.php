@@ -14,11 +14,16 @@ session_start();
 <link href="../style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="../images/favicon1.png" />
 <!-- TemplateBeginEditable name="doctitle" -->
-<title>pravo.org.mk</title>
+<title>Pravo.org.mk</title>
 <!-- TemplateEndEditable -->
+<link href="YUI/2.6.0/build/fonts/fonts-min.css" rel="stylesheet" type="text/css" />
+<link href="YUI/2.6.0/build/container/assets/skins/sam/container.css" rel="stylesheet" type="text/css" />
+<script src="YUI/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
+<script src="YUI/2.6.0/build/container/container-min.js" type="text/javascript"></script>
+
 <script type="text/javascript" src="../roktools.js"></script>
 
-
+<script type="text/javascript" src="../javaScripts/cirillic_converter.js"></script>
 <script type="text/javascript" src="../mootools.js"></script>
 
 <script type="text/javascript" src="../rokmoomenu.js"></script>
@@ -54,11 +59,6 @@ transition: Fx.Transitions.sineOut
 
 </script>
 
-<style type="text/css">
-<!--
-
--->
-</style>
 <!-- TemplateBeginEditable name="head" -->
 <!-- TemplateEndEditable -->
 </head>
@@ -112,7 +112,7 @@ transition: Fx.Transitions.sineOut
    		 <p>&nbsp;</p>   
       </div>
         <div class="right">
-            <?php include("../util/login_block.php"); ?>
+            <?php include("util/login_block.php"); ?>
                <br />
               <div><?php getBanner($database_pravo, $pravo, 3); ?></div>
               <br />
