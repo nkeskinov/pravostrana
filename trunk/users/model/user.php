@@ -684,6 +684,25 @@ do {
         <input type="password" name="password2" id="password2" value="" size="30" />
       <span class="confirmRequiredMsg">Лозинката е задолжителна.</span><span class="confirmInvalidMsg">Лозинките не се совпаѓаат.</span></span></td>
     </tr>
+    <?php }else{ ?>
+    <tr valign="baseline">
+      	<td nowrap align="right"></td>
+        <td colspan="2"><a href="?change=password">Смени лозинка</a></td>
+    </tr>	
+    <?php if(isset($_GET['change']) && $_GET['change']=="password"){ ?>
+    <tr valign="baseline">
+      	<td nowrap align="right">Стара лозинка</td>
+        <td colspan="2"><input type="password" name="password-old" id="password-old" value="" size="30" /></td>
+    </tr>
+    <tr valign="baseline">
+      	<td nowrap align="right">Нова лозинка</td>
+        <td colspan="2"><input type="password" name="password-new1" id="password-new1" value="" size="30" /></td>
+    </tr>
+    <tr valign="baseline">
+      	<td nowrap align="right">Повтори лозинка</td>
+        <td colspan="2"><input type="password" name="password-new2" id="password-new1" value="" size="30" /></td>
+    </tr>
+    <?php } ?>
     <?php } ?>
     <tr valign="baseline">
       <td colspan="3" align="right" nowrap style="border-bottom:1px dotted #CCC;">&nbsp;</td>

@@ -10,18 +10,23 @@ session_start();
 <head>
 <!--templateinfo codeoutsidehtmlislocked="true" -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="/pravo.org.mk/rokmoomenu.css" rel="stylesheet" type="text/css" />
-<link href="/pravo.org.mk/style.css" rel="stylesheet" type="text/css" />
-<link rel="shortcut icon" href="/pravo.org.mk/images/favicon1.png" />
+<link href="rokmoomenu.css" rel="stylesheet" type="text/css" />
+<link href="style.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="images/favicon1.png" />
 <!-- InstanceBeginEditable name="doctitle" -->
 <title>Pravo.org.mk | Активација на корисничка сметка</title>
 <!-- InstanceEndEditable -->
-<script type="text/javascript" src="/pravo.org.mk/roktools.js"></script>
+<link href="YUI/2.6.0/build/fonts/fonts-min.css" rel="stylesheet" type="text/css" />
+<link href="YUI/2.6.0/build/container/assets/skins/sam/container.css" rel="stylesheet" type="text/css" />
+<script src="YUI/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
+<script src="YUI/2.6.0/build/container/container-min.js" type="text/javascript"></script>
 
+<script type="text/javascript" src="roktools.js"></script>
 
-<script type="text/javascript" src="/pravo.org.mk/mootools.js"></script>
+<script type="text/javascript" src="javaScripts/cirillic_converter.js"></script>
+<script type="text/javascript" src="mootools.js"></script>
 
-<script type="text/javascript" src="/pravo.org.mk/rokmoomenu.js"></script>
+<script type="text/javascript" src="rokmoomenu.js"></script>
 <script type="text/javascript">
 
 window.addEvent('domready', function() {
@@ -54,11 +59,6 @@ transition: Fx.Transitions.sineOut
 
 </script>
 
-<style type="text/css">
-<!--
-
--->
-</style>
 <!-- InstanceBeginEditable name="head" -->
 <!-- InstanceEndEditable -->
 </head>
@@ -68,7 +68,7 @@ transition: Fx.Transitions.sineOut
 <div id="wrapper">
 	<div class="header">
    	  <div class="header-top">
-   	    <div id="logoText"><img src="/pravo.org.mk/images/banner.png" /></div>
+   	    <div id="logoText"><img src="images/banner.png" /></div>
         <div id="bannerDiv1"><?php getBanner($database_pravo, $pravo, 2); ?></div>
    	  </div>
       <div id="horiz-menu" class="moomenu"><!-- InstanceBeginEditable name="Menu" -->
