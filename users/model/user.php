@@ -28,10 +28,25 @@ if(isset($_SESSION['MM_ID']) && strpos($_SERVER['PHP_SELF'],'profile.php') != fa
 }
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
-  $data_na_raganje=$_POST['godina']."-".$_POST['mesec'].".".$_POST['den'];
-  $updateSQL = sprintf("UPDATE `user` SET username=%s, name=%s, surname=%s, id_user_occupation=%s, email=%s, id_user_organization=%s, date_of_birth=%s, sex=%s, address=%s, city=%s, country=%s, phone=%s WHERE id_user=%s",
+	mysql_select_db($database_pravo, $pravo);
+	$password = mysql_result($RecordsetUsers,0,'password');
+	if(isset($_POST['changepass'])){
+		if($password == $_POST['password-old']){
+			$updateSQL1 = sprintf("UPDATE `user` SET password=%s WHERE id_user=%s",
+								  GetSQLValueString($_POST['password-new1'], "text"),
+								  GetSQLValueString($_SESSION['MM_ID'], "int"));
+			$Result3 = mysql_query($updateSQL1, $pravo) or die(mysql_error());	
+			
+		}else{
+			echo '<br />';
+	 		_show_message_color('Лозинките не се софпаќаат!','RED');		
+		}
+		
+	}
+ 
+ 	$data_na_raganje=$_POST['godina']."-".$_POST['mesec'].".".$_POST['den'];
+ 	$updateSQL = sprintf("UPDATE `user` SET username=%s, name=%s, surname=%s, id_user_occupation=%s, email=%s, id_user_organization=%s, date_of_birth=%s, sex=%s, address=%s, city=%s, country=%s, phone=%s WHERE id_user=%s",
                        GetSQLValueString($_POST['username'], "text"),
-
                        GetSQLValueString($_POST['name'], "text"),
                        GetSQLValueString($_POST['surname'], "text"),
                        GetSQLValueString($_POST['occupation'], "int"),
@@ -45,13 +60,10 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
                        GetSQLValueString($_POST['phone'], "text"),
                        GetSQLValueString($_SESSION['MM_ID'], "int"));
 
-  mysql_select_db($database_pravo, $pravo);
   $Result2 = mysql_query($updateSQL, $pravo) or die(mysql_error());
   if($Result2){
 			echo '<br />';
-			_show_message_color('Вашите податоци се успешно изменети!','GREEN');
-
-			
+			_show_message_color('Вашите податоци се успешно изменети!','GREEN');		
   }else{
 	  echo '<br />';
 	 _show_message_color('Настана грешка при измена на податоците!','RED');		
@@ -684,11 +696,7 @@ do {
         <input type="password" name="password2" id="password2" value="" size="30" />
       <span class="confirmRequiredMsg">Лозинката е задолжителна.</span><span class="confirmInvalidMsg">Лозинките не се совпаѓаат.</span></span></td>
     </tr>
-    <?php }else{ ?>
-    <tr valign="baseline">
-      	<td nowrap align="right"></td>
-        <td colspan="2"><a href="?change=password">Смени лозинка</a></td>
-    </tr>	
+    <?php }else{ ?>	
     <?php if(isset($_GET['change']) && $_GET['change']=="password"){ ?>
     <tr valign="baseline">
       	<td nowrap align="right">Стара лозинка</td>
@@ -700,10 +708,16 @@ do {
     </tr>
     <tr valign="baseline">
       	<td nowrap align="right">Повтори лозинка</td>
-        <td colspan="2"><input type="password" name="password-new2" id="password-new1" value="" size="30" /></td>
+        <td colspan="2"><input type="password" name="password-new2" id="password-new1" value="" size="30" />
+        <input type="hidden" name="changepass" value="true" />
+        </td>
     </tr>
-    <?php } ?>
-    <?php } ?>
+    <?php }else{ ?>
+    <tr valign="baseline">
+      	<td nowrap align="right"></td>
+        <td colspan="2"><a href="?change=password">Смени лозинка</a></td>
+    </tr>
+    <?php }} ?>
     <tr valign="baseline">
       <td colspan="3" align="right" nowrap style="border-bottom:1px dotted #CCC;">&nbsp;</td>
     </tr>
