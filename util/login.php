@@ -31,8 +31,8 @@ if (isset($_POST['username_login'])) {
 	$loginStrSurname  = mysql_result($LoginRS,0,'surname');
 	$id_user = mysql_result($LoginRS,0,'id_user');
 	
-	$Group_query = sprintf("select uc.name from user u, user_category uc \n"
-    . "where u.id_user_category = uc.id_user_category\n"
+	$Group_query = sprintf("select uc.name from user u, user_category uc "
+    . "where u.id_user_category = uc.id_user_category "
     . "and u.id_user = %s ",$id_user);
 	
 	$loginResult = mysql_query($Group_query, $pravo) or die(mysql_error());
