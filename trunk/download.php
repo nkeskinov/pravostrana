@@ -20,7 +20,7 @@ if (!((isset($_SESSION['MM_Username'])) && (isAuthorized("",$MM_authorizedUsers,
   if (isset($_SERVER['HTTP_REFERER'])) {
   	$http_referrer = $_SERVER['HTTP_REFERER'];
   }
-  //trgni go pravo.org.mk od accesscheck stringot
+  //remove 'pravo.org.mk' from the accesscheck string
   $http_referrer_array = explode('/', $http_referrer);
   $http_referrer_array_count = count($http_referrer_array);
   if ($http_referrer_array_count > 1) {
