@@ -84,8 +84,10 @@ h4 {
 #wrapper {
 	position:relative;
 	width:980px;
-	margin: 0 auto; 
-	
+	margin: 0 auto;
+}
+.wr1{
+	text-align:center;
 }
 .header{
 	
@@ -168,6 +170,7 @@ h4 {
 .mainBody .login{
 	
 	background:url(images/login-block.png) no-repeat;
+	width:250px;
 }
 .mainBody .login a:link {
 	color: #FFF;
@@ -294,11 +297,51 @@ h4 {
 	float:left;
 }
 .mainBody .left-block1 .sodrzina{
-	/*border:thin solid #f5e6a2;*/
+	/*border:1px solid #f5e6a2;*/
 	border-top:none;
 	margin-top:-10px;
 	padding-top:5px;
 }
+
+.mainBody .left-red-block1{
+	float:left;
+	width:100%;
+	display:block;
+}
+.mainBody .left-red-block1 .title{
+	display: block; 
+	overflow:hidden; 
+	clear:both;
+}
+.mainBody .left-red-block1 .middle{
+	background:url(images/red-title-middle1.png);
+	height:30px;
+	width:94%;
+	float:left;
+}
+.mainBody .left-red-block1 .middle .text{
+	color:#fcf9ea;
+	font-weight:bold;
+	padding-left:10px;
+	padding-top:5px;
+}
+.mainBody .left-red-block1 .left{
+	background:url(images/red-title-left1.png);
+	height:30px;
+	width:2.5%; 
+	float:left; 
+}
+.mainBody .left-red-block1 .right{
+	background:url(images/red-title-right1.png);
+	height:30px;
+	width:2.5%;
+	float:left;
+}
+.mainBody .left-red-block1 .sodrzina{
+	margin-top:-5px;
+	padding:5px;
+}
+
 
 .mainBody .left-red-block{
 	float:left;
@@ -335,7 +378,7 @@ h4 {
 	float:left;
 }
 .mainBody .left-red-block .sodrzina{
-	border:thin solid #71312d;
+	border:1px solid #71312d;
 	border-right:none;
 	border-top:none;
 	margin-top:-5px;
@@ -343,49 +386,12 @@ h4 {
 }
 
 
-.mainBody .left-red-block1{
-	float:left;
-	width:100%;
-	display:block;
-}
-.mainBody .left-red-block1 .title{
-	display: block; 
-	overflow:hidden; 
-	clear:both;
-}
-.mainBody .left-red-block1 .middle{
-	background:url(images/red-title-middle1.png);
-	height:30px;
-	width:95%;
-	float:left;
-}
-.mainBody .left-red-block1 .middle .text{
-	color:#fcf9ea;
-	font-weight:bold;
-	padding-left:10px;
-	padding-top:5px;
-}
-.mainBody .left-red-block1 .left{
-	background:url(images/red-title-left1.png);
-	height:30px;
-	width:2.5%; 
-	float:left; 
-}
-.mainBody .left-red-block1 .right{
-	background:url(images/red-title-right1.png);
-	height:30px;
-	width:2.5%;
-	float:left;
-}
-.mainBody .left-red-block1 .sodrzina{
-	margin-top:-5px;
-	padding:5px;
-}
 
 .mainBody .right-block{
 	float:right;
-	width:468px;
+	width:463px;
 	margin:0;
+	margin-left:-3px;
 	display:block;
 }
 .mainBody .right-block .title{
@@ -396,7 +402,7 @@ h4 {
 .mainBody .right-block .middle{
 	background:url(images/red-title-middle.png);
 	height:30px;
-	width:454px;
+	width:451px;
 	float:left;
 }
 .mainBody .right-block .middle .text{
@@ -408,17 +414,17 @@ h4 {
 .mainBody .right-block .left{
 	background:url(images/red-title-left.png) no-repeat;
 	height:30px;
-	width:7px;
+	width:6px;
 	float:left;
 }
 .mainBody .right-block .right{
 	background:url(images/red-title-right.png) no-repeat;
 	height:30px;
-	width:7px;
+	width:6px;
 	float:left;
 }
 .mainBody .right-block .sodrzina{
-	border:thin solid #71312d;
+	border:1px solid #71312d;
 
 	border-top:none;
 	margin-top:-5px;
@@ -462,18 +468,20 @@ h4 {
 	float:left;
 }
 .mainBody .right-block-bigger .sodrzina{
-	border:thin solid #71312d;
-
+	border:1px solid #71312d;
+	
 	border-top:none;
 	margin-top:-5px;
-
 	padding:5px;
+	padding-left:0;
+	padding-right:0;
+	padding-bottom:0;
 }
 
 
 .mainBody .right-yellow-block{
 	float:right;
-	width:468px;
+	width:463px;
 	display:block;
 }
 .mainBody .right-yellow-block .title{
@@ -484,7 +492,7 @@ h4 {
 .mainBody .right-yellow-block .middle{
 	background:url(images/yellow-title-middle.png);
 	height:30px;
-	width:454px;
+	width:451px;
 	float:left;
 }
 .mainBody .right-yellow-block .middle .text{
@@ -496,13 +504,13 @@ h4 {
 .mainBody .right-yellow-block .left{
 	background:url(images/yellow-title-left.png);
 	height:30px;
-	width:7px;
+	width:6px;
 	float:left;
 }
 .mainBody .right-yellow-block .right{
 	background:url(images/yellow-title-right.png);
 	height:30px;
-	width:7px;
+	width:6px;
 	float:left;
 }
 .mainBody .right-yellow-block .sodrzina{
@@ -550,7 +558,7 @@ h4 {
 	float:left;
 }
 .mainBody .middle-block .sodrzina{
-	border:thin solid #f5e6a2;
+	border:1px solid #f5e6a2;
 	border-right:none;
 	border-top:none;
 	margin-top:-5px;
@@ -592,7 +600,7 @@ h4 {
 	float:left;
 }
 .mainBody .middle-red-block .sodrzina{
-	border:thin solid #71312d;
+	border:1px solid #71312d;
 	
 	border-top:none;
 	margin-top:-5px;
@@ -637,7 +645,7 @@ h4 {
 	float:left;
 }
 .mainBody .middle-red-block-small .sodrzina{
-	border:thin solid #71312d;;
+	border:1px solid #71312d;;
 	
 	border-top:none;
 	margin-top:-5px;

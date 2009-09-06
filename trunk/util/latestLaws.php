@@ -24,7 +24,7 @@ $totalPages_latestLawsRecordset = ceil($totalRows_latestLawsRecordset/$maxRows_l
 
 <link href="../style.css" rel="stylesheet" type="text/css">
 
-<table width="100%" border="0" cellpadding="5" cellspacing="0">
+<table width="97%" border="0" cellpadding="5" cellspacing="0">
 
     <?php
 	do { 

@@ -96,7 +96,7 @@ function popUpWindow(URLStr, left, top, width, height)
 
 
 <form action="documentlaws.php" method="get" enctype="application/x-www-form-urlencoded">
-<table width="100%" border="0" height="250">
+<table width="95%" border="0" height="250">
 <tr>
     <td colspan="2" align="left"><div align="right" style="font-size:11px;"><a href="JavaScript:popUpWindow('help.php?id=1','','',450,'330');">совети за пребарување</a></div>
     <strong>Пребарувај по почетна буква на законот</strong>
