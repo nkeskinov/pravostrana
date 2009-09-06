@@ -56,7 +56,7 @@ transition: Fx.Transitions.sineOut
 
 <body>
 
-<div id="wrapper">
+<div id="wrapper" class="wr1">
 	<div class="header">
    	  <div class="header-top">
    	    <div id="logoText"><img src="../images/banner.png" /></div>
@@ -85,7 +85,7 @@ transition: Fx.Transitions.sineOut
     
     <div class="mainBody">
    	  <div class="content">
-            <div><img src="../images/726-90.jpg" width="728" height="90" /></div>
+            <div><img src="../images/726-90.jpg" width="726" height="90" /></div>
             <div class="left-block">
                 <div class="title">
                     <div class="left"></div>
@@ -124,8 +124,6 @@ transition: Fx.Transitions.sineOut
          <p>&nbsp;</p>
 
       </div>
-
- 
         <div class="right">
             <div class="login">
               <div class="title">Најавување</div>

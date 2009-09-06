@@ -16,7 +16,7 @@ $totalRows_CourtCategory = mysql_num_rows($CourtCategory);
 ?>
 
 <form action="courtpractice.php" method="get" name="practice">
-<table width="100%" border="0" cellspacing="2" cellpadding="0">
+<table width="96%" border="0" cellspacing="2" cellpadding="0">
  <tr>
     <td>&nbsp;</td>
     <td align="right">

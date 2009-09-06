@@ -1,10 +1,10 @@
 <?php include("util/login.php"); ?>
 <?php if((!isset( $_SESSION['MM_Username'] )) or (!isset($_SESSION['MM_UserGroup']))){  ?>
-<div class="login">
+<div class="login" style="width:247px;">
               <div class="title" style="text-align:left; padding-left:10px;">Најавување</div>
                 <div class="forms">
                 <form ACTION="<?php echo $loginFormAction; ?>" METHOD="POST" name="form1">
-                  <table width="100%" border="0" cellspacing="0">
+                  <table width="98%" border="0" cellspacing="0">
               		  <tr>
                         <td>Корисничко име:</td>
                       </tr>
@@ -40,11 +40,11 @@
 	</div>
 </div>
 <?php }elseif((isset( $_SESSION['MM_Username'] )) and  (isset($_SESSION['MM_UserGroup']))){ ?>
-	<div class="login" style="border-bottom:1px solid #f5e6a2; height:87px;">
+	<div class="login" style="border-bottom:1px solid #f5e6a2; width:250px; height:87px;">
               <div class="title" style="text-align:left; padding-left:10px;">Добредојде</div>
                 <div class="forms" >
                 
-                  <table width="100%" border="0" cellspacing="0">
+                  <table width="98%" border="0" cellspacing="0">
               		<tr>
                         <td colspan="2" align="left" style=" padding-left:5px;"><a href="profile.php" title="Промени ги твоите лични податоци" alt="Промени ги твоите лични податоци"><strong><?php if(isset($_SESSION['MM_Name'])) echo $_SESSION['MM_Name']; ?></strong></a>&nbsp;<span style="color:#FFF">[</span><a href="logout.php?doLogout=true">Одјави се</a><span style="color:#FFF">]</span></td>
                     </tr>
