@@ -240,7 +240,7 @@ $totalRows_Recordset3 = mysql_num_rows($Recordset3);
       <span class="selectRequiredMsg">Ве молиме изберете пол.</span></span></td>
     </tr>
     <tr valign="baseline">
-      <td nowrap align="right">Дата на раѓање:</td>
+      <td nowrap align="right">Датум на раѓање:</td>
       <td colspan="2"><select name="den">
       	<?php 
 		$actualUserDay = '';

@@ -175,7 +175,7 @@ $queryString_DownloadedDocuments = sprintf("&totalRows_DownloadedDocuments=%d%s"
       <td><strong><?php echo htmlentities($row_User['email'], ENT_COMPAT, 'UTF-8'); ?></strong></td>
     </tr>
     <tr valign="baseline">
-      <td nowrap="nowrap" align="right"> Дата на раѓање:</td>
+      <td nowrap="nowrap" align="right"> Датум на раѓање:</td>
       <td><?php echo "<strong>".date("d.m.Y", strtotime(htmlentities($row_User['date_of_birth'], ENT_COMPAT, 'UTF-8')))."</strong>"; ?>
       </td>
     </tr>
@@ -248,15 +248,15 @@ do {
       </td>
     </tr>
     <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Дата на креирање:</td>
+      <td nowrap="nowrap" align="right">Датум на креирање:</td>
       <td><strong><?php echo htmlentities($row_User['create_date'], ENT_COMPAT, 'UTF-8'); ?></strong></td>
     </tr>
     <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Дата на последно логирање:</td>
+      <td nowrap="nowrap" align="right">Датум на последно логирање:</td>
       <td><strong><?php echo htmlentities($row_User['last_login_date'], ENT_COMPAT, 'UTF-8'); ?></strong></td>
     </tr>
     <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Дата на последно<br />
+      <td nowrap="nowrap" align="right">Датум на последно<br />
       менување лозинка:</td>
       <td><strong><?php echo htmlentities($row_User['last_password_changed_date'], ENT_COMPAT, 'UTF-8'); ?></strong></td>
     </tr>
@@ -356,7 +356,7 @@ do {
 <table width="100%" border="0">
   <tr style="border-bottom:1px solid #f5e6a2; background:#edd59b">
     <td width="57%">Документ</td>
-    <td width="27%">Дата на симнување</td>
+    <td width="27%">Датум на симнување</td>
     <td width="17%">Број на симнување</td>
   </tr>
   <?php $i=0; do { ?>

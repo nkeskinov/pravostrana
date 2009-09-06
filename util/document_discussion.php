@@ -16,7 +16,7 @@ if(isset($_SESSION['MM_Name'])){
 
 
 mysql_select_db($database_pravo, $pravo);
-$query_Post = sprintf("SELECT post.id_post,`user`.name, `user`.surname, post.date_created, post.content, post.subject, post.date_modified FROM discussion, post, post_category, `user` WHERE discussion.id_discussion=post.id_discussion   AND post_category.id_post_category=discussion.id_post_category AND post.id_user=`user`.id_user  AND post_category.id_post_category=1 AND discussion.id_document=%s ORDER BY date_created DESC",GetSQLValueString($id_document, "-1"));
+$query_Post = sprintf("SELECT post.id_post,`user`.name, `user`.surname, post.created_date, post.content, post.subject, post.modified_date FROM discussion, post, post_category, `user` WHERE discussion.id_discussion=post.id_discussion   AND post_category.id_post_category=discussion.id_post_category AND post.id_user=`user`.id_user  AND post_category.id_post_category=1 AND discussion.id_document=%s ORDER BY created_date DESC",GetSQLValueString($id_document, "-1"));
 $query_limit_Post = sprintf("%s LIMIT %d, %d", $query_Post, $startRow_Post, $maxRows_Post);
 $Post = mysql_query($query_limit_Post, $pravo) or die(mysql_error());
 $row_Post = mysql_fetch_assoc($Post);
@@ -93,11 +93,12 @@ if ((isset($_POST["Comment_insert"])) && ($_POST["Comment_insert"] == "insert"))
   	$Result1 = mysql_query($insertSQL, $pravo) or die(mysql_error());
 	
 	$id_discussion=	mysql_insert_id();
-	$insertPostSQL=sprintf("INSERT INTO post(id_user,content,id_discussion,format) VALUES(%s,%s,%s,%s)",
+	$insertPostSQL=sprintf("INSERT INTO post(id_user,content,id_discussion,format,created_date) VALUES(%s,%s,%s,%s,%s)",
 						GetSQLValueString($_SESSION['MM_ID'], "int"),
 						GetSQLValueString($_POST['content'], "text"),
 						GetSQLValueString($id_discussion, "int"),
-						GetSQLValueString("text", "text"));
+						GetSQLValueString("text", "text"),
+						GetSQLValueString(date('Y-m-d H:i'), "date"));
 	$Result2 = mysql_query($insertPostSQL, $pravo) or die(mysql_error());	
 	if($Result2){
 		$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
@@ -111,11 +112,12 @@ if ((isset($_POST["Comment_insert"])) && ($_POST["Comment_insert"] == "insert"))
 		mysql_query('commit');
 		
   }else{
-	$insertPostSQL=sprintf("INSERT INTO post(id_user,content,id_discussion,format) VALUES(%s,%s,%s,%s)",
+	$insertPostSQL=sprintf("INSERT INTO post(id_user,content,id_discussion,format,created_date) VALUES(%s,%s,%s,%s,%s)",
 						GetSQLValueString($_SESSION['MM_ID'], "int"),
 						GetSQLValueString($_POST['content'], "text"),
 						GetSQLValueString($id_discussion, "int"),
-						GetSQLValueString("text", "text"));
+						GetSQLValueString("text", "text"),
+						GetSQLValueString(date('Y-m-d H:i'), "date"));
 	$Result2 = mysql_query($insertPostSQL, $pravo) or die(mysql_error());
 	if($Result2){
 		$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
@@ -177,7 +179,7 @@ function MM_swapImage() { //v3.0
 <table width="80%" border="0" >
 	<tr>
 	  <td style="padding:10px; border-bottom:1px solid #f5e6a2; background:#fbf7e0;">
-	    <textarea name="content" id="content" class="highlight expand demoTextarea" cols="50" rows="4" style="border:1px solid #f5e6a2;"><?php if(isset($row_Post1['content'])){ echo $row_Post1['content']; echo '<i><span style="font-size:10px; color:#666;">'.$edit_message.''.date("d.m.Y H:i",strtotime($row_Post1['date_created'])).'</span></i>';}?></textarea>
+	    <textarea name="content" id="content" class="highlight expand demoTextarea" cols="50" rows="4" style="border:1px solid #f5e6a2;"><?php if(isset($row_Post1['content'])){ echo $row_Post1['content']; echo '<i><span style="font-size:10px; color:#666;">'.$edit_message.''.date("d.m.Y H:i",strtotime($row_Post1['created_date'])).'</span></i>';}?></textarea>
         <br />       
       <div align="right"><?php if(!isset($_POST['EditPost'])){ ?>
       <input name="Submit" type="submit" style="background-color:#993300; color:#FFFFFF" value="Коментирај" />
@@ -201,13 +203,13 @@ function MM_swapImage() { //v3.0
   	if($num_of_posts){ ?><tr>
       <td width="92%" style=" padding:5px;background:#fbf7e0;">
 	  	<span style="color:#C63"><?php echo $row_Post['name']; ?><?php echo $row_Post['surname']; ?></span>
-      	<span style="font-size:10px; color:#666;"> на<?php  echo date("d.m.Y H:i",strtotime($row_Post['date_created'])); ?></span>
+      	<span style="font-size:10px; color:#666;"> на<?php  echo date("d.m.Y H:i",strtotime($row_Post['created_date'])); ?></span>
       </td>
       <td width="8%" align="right" style="padding:5px;background:#fbf7e0;"><?php if(isset($_SESSION['MM_UserGroup'])) {
 		if($_SESSION['MM_UserGroup'] =="admin"){ 
 		?><form method="post" name="form_post" action="<?php echo $editFormAction; ?>">
      <div style="vertical-align:middle; width:15px; height:15px; float:left;"><input type="image" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Edit1<?php echo $row_Post['id_post']; ?>','','images/edit-small.png',1)"src="images/edit-small1.png" name="EditPost" border="0" id="Edit1<?php echo $row_Post['id_post']; ?>" value="<?php echo $row_Post['id_post']; ?>" title="Измени"/></div>
-      <div style="vertical-align:middle; width:15px; height:15px; float:left;"><input type="image" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image1<?php echo $row_Post['id_post']; ?>','','images/delete-small.png',1)" src="images/delete-small1.png" name="DeletePost" border="0" id="Image1<?php echo $row_Post['id_post']; ?>" value="<?php echo $row_Post['id_post']; ?>" title="Бриши" onClick="return confirm('Дали навистина сакате да го избришете документот!')"/></div>
+      <div style="vertical-align:middle; width:15px; height:15px; float:left;"><input type="image" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image1<?php echo $row_Post['id_post']; ?>','','images/delete-small.png',1)" src="images/delete-small1.png" name="DeletePost" border="0" id="Image1<?php echo $row_Post['id_post']; ?>" value="<?php echo $row_Post['id_post']; ?>" title="Бриши" onClick="return confirm('Дали навистина сакате да го избришете документот?')"/></div>
       </form><?php } } ?></td>
      </tr>
      <tr>

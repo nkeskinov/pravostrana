@@ -12,7 +12,7 @@ $id_document=$colname_DetailRS1;
 
 
 mysql_select_db($database_pravo, $pravo);
-$query_Post = sprintf("SELECT post.id_post, post.date_created, post.content, post.subject, post.date_modified, post.priority, post.archive FROM discussion, post, post_category WHERE discussion.id_discussion=post.id_discussion   AND post_category.id_post_category=discussion.id_post_category  AND post_category.id_post_category=%s",GetSQLValueString($id_post_category, "int"));
+$query_Post = sprintf("SELECT post.id_post, post.created_date, post.content, post.subject, post.modified_date, post.priority, post.archive FROM discussion, post, post_category WHERE discussion.id_discussion=post.id_discussion   AND post_category.id_post_category=discussion.id_post_category  AND post_category.id_post_category=%s",GetSQLValueString($id_post_category, "int"));
 
 if(!isset($_SESSION['MM_UserGroup']) && ($_SESSION['MM_UserGroup']!="admin")) {
 	$query_Post=sprintf("%s AND archive!=1",$query_Post);
@@ -236,13 +236,14 @@ if ((isset($_POST["Comment_insert"])) && ($_POST["Comment_insert"] == "insert"))
   	$Result1 = mysql_query($insertSQL, $pravo) or die(mysql_error());
 	
 	$id_discussion=	mysql_insert_id();
-	$insertPostSQL=sprintf("INSERT INTO post(id_user, subject, content, id_discussion, format, priority, archive) VALUES(%s,%s,%s,%s,%s,%s,0)",
+	$insertPostSQL=sprintf("INSERT INTO post(id_user, subject, content, id_discussion, format, priority, created_date, archive) VALUES(%s,%s,%s,%s,%s,%s,%s,0)",
 						GetSQLValueString($_SESSION['MM_ID'], "int"),
 						GetSQLValueString($_POST['subject'], "text"),
 						GetSQLValueString($_POST['content'], "text"),
 						GetSQLValueString($id_discussion, "int"),
 						GetSQLValueString("text", "text"),
-						GetSQLValueString($priority, "int"));
+						GetSQLValueString($priority, "int"),
+						GetSQLValueString(date('Y-m-d H:i'), "date"));
 	$Result2 = mysql_query($insertPostSQL, $pravo) or die(mysql_error());	
 	if($Result2){
 		$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
@@ -256,13 +257,14 @@ if ((isset($_POST["Comment_insert"])) && ($_POST["Comment_insert"] == "insert"))
 		mysql_query('commit',$pravo);
 		
   }else{
-	$insertPostSQL=sprintf("INSERT INTO post(id_user, subject, content, id_discussion, format, priority) VALUES(%s,%s, %s,%s,%s,%s)",
+	$insertPostSQL=sprintf("INSERT INTO post(id_user, subject, content, id_discussion, format, priority, created_date) VALUES(%s,%s,%s,%s,%s,%s,%s)",
 						GetSQLValueString($_SESSION['MM_ID'], "int"),
 						GetSQLValueString($_POST['subject'], "text"),						
 						GetSQLValueString($_POST['content'], "text"),
 						GetSQLValueString($id_discussion, "int"),
 						GetSQLValueString("text", "text"),
-						GetSQLValueString($priority+1, "int"));
+						GetSQLValueString($priority+1, "int"),
+						GetSQLValueString(date('Y-m-d H:i'), "date"));
 	$Result2 = mysql_query($insertPostSQL, $pravo) or die(mysql_error());
 	if($Result2){
 		$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
@@ -395,7 +397,7 @@ function MM_swapImage() { //v3.0
         <a name="<?php echo $row_Post['id_post']; ?>"></a>
 	  	<span style="color:#C63; font-size:14px;"><strong><?php echo $row_Post['subject']; ?></strong></span>
       	<br /><span style="font-size:10px; color:#666;"> на
-		<?php  echo date("d.m.Y H:i",strtotime($row_Post['date_created'])); ?> </span>
+		<?php  echo date("d.m.Y H:i",strtotime($row_Post['created_date'])); ?> </span>
       </td>
         <td width="18%" align="right" valign="top" style="padding:5px;background:#fbf7e0; border-bottom:1px solid #f5e6a2;">
 	<form method="post" name="form_post" action="<?php echo $editFormAction; ?>">
@@ -412,7 +414,7 @@ function MM_swapImage() { //v3.0
     
      <div style="vertical-align:middle; width:15px; height:15px; float:left;"><input type="image" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Edit1<?php echo $row_Post['id_post']; ?>','','images/edit-small.png',1)"src="images/edit-small1.png" name="EditPost" border="0" id="Edit1<?php echo $row_Post['id_post']; ?>" value="<?php echo $row_Post['id_post']; ?>" title="Измени"/></div>
       
-      <div style="vertical-align:middle; width:15px; height:15px; float:left;"><input type="image" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image1<?php echo $row_Post['id_post']; ?>','','images/delete-small.png',1)" src="images/delete-small1.png" name="DeletePost" border="0" id="Image1<?php echo $row_Post['id_post']; ?>" value="<?php echo $row_Post['id_post']; ?>" title="Бриши" onClick="return confirm('Дали навистина сакате да го избришете документот!')"/></div>
+      <div style="vertical-align:middle; width:15px; height:15px; float:left;"><input type="image" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image1<?php echo $row_Post['id_post']; ?>','','images/delete-small.png',1)" src="images/delete-small1.png" name="DeletePost" border="0" id="Image1<?php echo $row_Post['id_post']; ?>" value="<?php echo $row_Post['id_post']; ?>" title="Бриши" onClick="return confirm('Дали навистина сакате да го избришете документот?')"/></div>
       </form>
        </td>
       <?php } } ?>

@@ -144,7 +144,7 @@ $totalPages_RecordsetDocGroupSuper = ceil($totalRows_RecordsetDocGroupSuper/$max
       <?php }?>
       </td>
        <td><a href="document_category.php?id=<?php echo $row_RecordsetDocCategorySub ['id_doc_group']; ?>&mode=edit&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/pencil.png" border="0" /></a></td>
-      <td><a href="document_category.php?id=<?php echo $row_RecordsetDocCategorySub ['id_doc_group']; ?>&mode=delete&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>" onClick="return confirm('Дали навистина сакате да го избришете документот!')"><img src="../images/cross.png" border="0" /></a></td>
+      <td><a href="document_category.php?id=<?php echo $row_RecordsetDocCategorySub ['id_doc_group']; ?>&mode=delete&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>" onClick="return confirm('Дали навистина сакате да го избришете документот?')"><img src="../images/cross.png" border="0" /></a></td>
       <td><?php echo $row_RecordsetDocCategorySub ['name']; ?></td>
       <td><?php echo $row_RecordsetDocCategorySub ['dtname']; ?></td>
       <td align="center">
@@ -171,7 +171,7 @@ $totalPages_RecordsetDocGroupSuper = ceil($totalRows_RecordsetDocGroupSuper/$max
     <td><div style="width:26px; height:21px; padding-top:1.5px; float:left; text-align:center;" onmouseover="this.className='picture-button-over'" onmouseout="this.className='picture-button-out'"> <a href="#"><img src="../images/save.png" border="0" title="Зачувај документ" /></a></div></td>
     <td>
     <div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
-        <a href="document_category.php?id=<?php echo $row_RecordsetDocCategoryEdit['id_doc_group']; ?>&mode=delete" onClick="return confirm('Дали навистина сакате да го избришете документот!')"><img src="../images/delete.png" border="0" title="Бриши"  /></a></div>
+        <a href="document_category.php?id=<?php echo $row_RecordsetDocCategoryEdit['id_doc_group']; ?>&mode=delete" onClick="return confirm('Дали навистина сакате да го избришете документот?')"><img src="../images/delete.png" border="0" title="Бриши"  /></a></div>
     </td>
     <?php } ?>
     <td><div style="width:26px; height:21px; padding-top:1.5px; text-align:center;" onmouseover="this.className='picture-button-over'" onmouseout="this.className='picture-button-out'"> <a href="#"><img src="../images/print.png" border="0" title="Печати страна" /></a></div></td>
@@ -317,7 +317,7 @@ do {
   <?php do { ?>
    <tr <?php if($i%2==0) echo "style='background:#fbf7e0'" ?>>
        <td><a href="document_category.php?id=<?php echo $row_RecordsetDocGroupSuper['id_doc_group']; ?>&mode=edit&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/pencil.png" border="0" /></a></td>
-      <td><a href="document_category.php?id=<?php echo $row_RecordsetDocGroupSuper['id_doc_group']; ?>&mode=delete&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>" onClick="return confirm('Дали навистина сакате да го избришете документот!')"><img src="../images/cross.png" border="0" /></a></td>
+      <td><a href="document_category.php?id=<?php echo $row_RecordsetDocGroupSuper['id_doc_group']; ?>&mode=delete&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>" onClick="return confirm('Дали навистина сакате да го избришете документот?')"><img src="../images/cross.png" border="0" /></a></td>
       <td><?php echo $row_RecordsetDocGroupSuper['name']; ?></td>
       <td><?php echo $row_RecordsetDocGroupSuper['dtname']; ?></td>
       <td align="center">

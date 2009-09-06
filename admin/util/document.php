@@ -115,7 +115,7 @@ $totalRows_DocumentTypes = mysql_num_rows($DocumentTypes);
     <td><div style="width:26px; height:21px; padding-top:1.5px; float:left; text-align:center;" onmouseover="this.className='picture-button-over'" onmouseout="this.className='picture-button-out'"> <a href="#"><img src="../images/save.png" border="0" title="Зачувај документ" /></a></div></td>
     <td>
     <div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
-        <a href="documentlaws.php?id=<?php echo $row_Recordset1['id_document']; ?>&id_doc_type=<?php echo $row_Recordset1['id_doc_type']; ?>&id_doc_meta=<?php echo $row_Recordset1['id_doc_meta']; ?>&delete=true" onClick="return confirm('Дали навистина сакате да го избришете документот!')"><img src="../images/delete.png" border="0" title="Бриши"  /></a></div>
+        <a href="documentlaws.php?id=<?php echo $row_Recordset1['id_document']; ?>&id_doc_type=<?php echo $row_Recordset1['id_doc_type']; ?>&id_doc_meta=<?php echo $row_Recordset1['id_doc_meta']; ?>&delete=true" onClick="return confirm('Дали навистина сакате да го избришете документот?')"><img src="../images/delete.png" border="0" title="Бриши"  /></a></div>
     </td>
     <td><div style="width:26px; height:21px; padding-top:1.5px; text-align:center;" onmouseover="this.className='picture-button-over'" onmouseout="this.className='picture-button-out'"> <a href="#"><img src="../images/print.png" border="0" title="Печати страна" /></a></div></td>
   </tr>
@@ -176,7 +176,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 		//echo $id_group;
 		
 		$published_date = date("Y-m-d", strtotime($_POST['published_date']));
-		$insertSQL = sprintf("INSERT INTO `document` (id_doc_type, filename, title, id_doc_group, `description`, extension, filesize, mimetype, forcesubscribe, published_date, created_by,id_doc_meta) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+		$insertSQL = sprintf("INSERT INTO `document` (id_doc_type, filename, title, id_doc_group, `description`, extension, filesize, mimetype, forcesubscribe, published_date, created_by, id_doc_meta, uploaded_date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
 						   GetSQLValueString($_POST['id_doc_type'], "int"),
 						   GetSQLValueString($filename, "text"),
 						   GetSQLValueString($_POST['title'], "text"),
@@ -188,7 +188,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 						   GetSQLValueString(isset($_POST['forcesubscribe']) ? "true" : "", "defined","1","0"),
 						   GetSQLValueString($published_date , "date"),
 						   GetSQLValueString($created_by, "int"),
-						   GetSQLValueString(mysql_insert_id(),"int"));
+						   GetSQLValueString(mysql_insert_id(),"int"),
+						   GetSQLValueString(date('Y-m-d H:i'), "date"));
 	
 	  
 	  $Result1 = mysql_query($insertSQL, $pravo) or die(mysql_error());
@@ -545,7 +546,7 @@ function jsUpload(upload_field)
       </td>
     </tr>
     <tr valign="baseline">
-      <td nowrap align="right">Дата на публикување:</td>
+      <td nowrap align="right">Датум на публикување:</td>
       <td>       
 
         <input type="text" size="20" name="published_date"  value="<?php if($row_Recordset1['published_date']!=NULL) echo date("d.m.Y", strtotime(htmlentities($row_Recordset1['published_date'], ENT_COMPAT, ''))); ?>" id="jQueryUICalendar1"/>

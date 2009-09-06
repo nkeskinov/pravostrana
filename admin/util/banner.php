@@ -39,7 +39,7 @@ $totalRows_Banner_All = mysql_num_rows($Banner_All);
     <td><div style="width:26px; height:21px; padding-top:1.5px; float:left; text-align:center;" onmouseover="this.className='picture-button-over'" onmouseout="this.className='picture-button-out'"> <a href="banner.php?mode=new"><img src="../images/new.png" border="0" title="Нов банер" /></a></div></td>
     <td>
     <div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
-        <a href="documentlaws.php?id=<?php echo $row_Banner['id_banner']; ?>&mode=delete" onClick="return confirm('Дали навистина сакате да го избришете документот!')"><img src="../images/delete.png" border="0" title="Бриши"  /></a></div>
+        <a href="documentlaws.php?id=<?php echo $row_Banner['id_banner']; ?>&mode=delete" onClick="return confirm('Дали навистина сакате да го избришете документот?')"><img src="../images/delete.png" border="0" title="Бриши"  /></a></div>
     </td>
     <td><div style="width:26px; height:21px; padding-top:1.5px; text-align:center;" onmouseover="this.className='picture-button-over'" onmouseout="this.className='picture-button-out'"> <a href="#"><img src="../images/print.png" border="0" title="Печати страна" /></a></div></td>
   </tr>
@@ -410,7 +410,7 @@ do {
   <?php $i=0; do { ?>
   <tr  <?php if($i%2==0) echo "style='background:#fbf7e0'" ?> valign="top">
   <td width="16"><a href="banner.php?id=<?php echo $row_Banner_All['id_banner']; ?>&mode=edit&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/pencil.png" border="0" /></a></td>
-      <td width="16"><a href="banner.php?id=<?php echo $row_Banner_All['id_banner']; ?>&mode=delete&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>" onClick="return confirm('Дали навистина сакате да го избришете документот!')"><img src="../images/cross.png" border="0" /></a></td>
+      <td width="16"><a href="banner.php?id=<?php echo $row_Banner_All['id_banner']; ?>&mode=delete&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>" onClick="return confirm('Дали навистина сакате да го избришете документот?')"><img src="../images/cross.png" border="0" /></a></td>
     <td><?php echo $row_Banner_All['title']; ?></td>
     <td><?php echo $row_Banner_All['alt']; ?></td>
     <td><?php echo $row_Banner_All['position']; ?></td>
