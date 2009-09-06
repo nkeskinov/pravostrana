@@ -117,7 +117,7 @@ function getDocumentCategory($id_document_group, $pravo, $database_pravo){
 	mysql_select_db($database_pravo, $pravo);
 	$id_doc_type_Documents = "1";
 	$query_GroupDocuments = sprintf("SELECT * FROM doc_group WHERE
-									id_doc_group = %s", 
+									id_doc_group = %s ORDER BY id_doc_group ASC", 
 							GetSQLValueString($id_document_group, "int"));
 	$GroupDocuments = mysql_query($query_GroupDocuments, $pravo) or die(mysql_error());
 	//$row_GroupDocuments = mysql_fetch_assoc($GroupDocuments);

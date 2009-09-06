@@ -6,7 +6,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 
 
 mysql_select_db($database_pravo, $pravo);
-$query_Recordset1 = "SELECT * FROM doc_group";
+$query_Recordset1 = "SELECT * FROM doc_group ORDER BY id_doc_group ASC";
 $Recordset1 = mysql_query($query_Recordset1, $pravo) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysql_num_rows($Recordset1);

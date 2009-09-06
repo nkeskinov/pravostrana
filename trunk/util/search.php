@@ -38,7 +38,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 
 
 /*mysql_select_db($database_pravo, $pravo);
-$query_Recordset1 = "SELECT id_doc_group, dg.name name FROM doc_group dg, doc_type dt WHERE dg.id_doc_type=dt.id_doc_type AND id_supergroup is NULL";
+$query_Recordset1 = "SELECT id_doc_group, dg.name name FROM doc_group dg, doc_type dt WHERE dg.id_doc_type=dt.id_doc_type AND id_supergroup is NULL ORDER BY dg.id_doc_group ASC";
 $Recordset1 = mysql_query($query_Recordset1, $pravo) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysql_num_rows($Recordset1);

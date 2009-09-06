@@ -78,7 +78,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 	$totalRows2 = mysql_num_rows($username);
  	if($totalRows2>0){
 		echo '<br />';
-		_show_message_color("Корисничкото име ".$_POST['username']." веќе постои! Внесете ново корисничко име за успешно да се логирате!","RED");
+		_show_message_color("Корисничкото име (e-mail адресата) ".$_POST['username']." веќе постои!<br/>Внесете ново корисничко име за успешно да се регистрирате.<br/>Доколку имате пристап до e-mail адресата пробајте да ја повратите на <a href='resetPassword.php'><u>овој линк</u></a>.","RED");
 		printInsertUser($_SERVER['PHP_SELF'],$row_RecordsetUsers,$pravo);
 	}else{
 	$data_na_raganje=$_POST['godina']."-".$_POST['mesec'].".".$_POST['den'];
@@ -110,7 +110,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 			//$_SESSION['MM_ID'] = mysql_insert_id();
 			
 			echo '<br />';
-			_show_message_color('Вашата регистрација беше успешно завршена! Проверете го вашиот e-mail за да ја комплетирате регистрацијата.','GREEN');
+			_show_message_color('Вашата регистрација беше успешно завршена!<br />Проверете го вашиот e-mail за да ја комплетирате регистрацијата. Имајте во предвид дека треба да помине извесно време за да стаса пораката до вашето e-mail сандаче.','GREEN');
 
 			$key=hash_hmac('ripemd160', $_POST['username']."".$_POST['password'],'register');
 			$to_email=$_POST['username'];
@@ -119,9 +119,9 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 			$subject="Активација на корисничка сметка на Pravo.org.mk";
 			$Message="Почитуван/а $name $surname, <br /><br />";
 			$Message.="Го примивме вашето барање за регистрирање на вашата корисничка сметка на <strong>Pravo.org.mk</strong><br />";
-			$Message.="За да ја активирате вашата корисничка сметка кликнете на следниов линк или копирајте ";
+			$Message.="За да ја активирате вашата корисничка сметка кликнете на следниот линк или копирајте ";
 			$Message.="го истиот во полето за интернет адреса на вашиот прелистувач: <br /><br />";
-			$Message.="http://pravo.org.mk/activate.php?key=$key&email=$to_email";
+			$Message.="<a href='http://pravo.org.mk/activate.php?key=$key&email=$to_email'>http://pravo.org.mk/activate.php?key=$key&email=$to_email</a>";
 			$Message.="<br /><br />Со почит,<br />";
 			$Message.="Pravo.org.mk тимот";
 			
@@ -670,10 +670,10 @@ do {
       <td colspan="3" align="right" nowrap style="border-bottom:1px dotted #CCC;">&nbsp;</td>
     </tr>
     <tr valign="baseline">
-      <td colspan="3"><h4>2. Вашето корисничко име и лозинка</h4></td>
+      <td colspan="3"><h4>2. Вашето корисничко име (e-mail) и лозинка</h4></td>
     </tr>
     <tr valign="baseline">
-      <td nowrap align="right">Корисничко име - E-mail:</td>
+      <td nowrap align="right">Корисничко име (e-mail):</td>
       <td colspan="2"><span id="sprytextfield3">
         <input type="text" name="username" value="<?php
 				if(isset($_POST['username'])) 

@@ -44,7 +44,7 @@ $row_RecordsetDocType = mysql_fetch_assoc($RecordsetDocType);
 $totalRows_RecordsetDocType = mysql_num_rows($RecordsetDocType);
 
 mysql_select_db($database_pravo, $pravo);
-$query_RecordsetDocGroup = "SELECT * FROM doc_group";
+$query_RecordsetDocGroup = "SELECT * FROM doc_group ORDER BY id_doc_group";
 $RecordsetDocGroup = mysql_query($query_RecordsetDocGroup, $pravo) or die(mysql_error());
 $row_RecordsetDocGroup = mysql_fetch_assoc($RecordsetDocGroup);
 $totalRows_RecordsetDocGroup = mysql_num_rows($RecordsetDocGroup);
@@ -110,7 +110,7 @@ if (isset($_GET['pageNum_RecordsetDocGroupSuper'])) {
 $startRow_RecordsetDocGroupSuper = $pageNum_RecordsetDocGroupSuper * $maxRows_RecordsetDocGroupSuper;
 
 mysql_select_db($database_pravo, $pravo);
-$query_RecordsetDocGroupSuper = "SELECT dg.id_doc_group, dg.name name, dg.forcesubscribe, dt.name dtname FROM doc_group dg, doc_type dt WHERE dg.id_doc_type=dt.id_doc_type AND id_supergroup is NULL";
+$query_RecordsetDocGroupSuper = "SELECT dg.id_doc_group, dg.name name, dg.forcesubscribe, dt.name dtname FROM doc_group dg, doc_type dt WHERE dg.id_doc_type=dt.id_doc_type AND id_supergroup is NULL ORDER BY dg.id_doc_group ASC";
 $query_limit_RecordsetDocGroupSuper = sprintf("%s LIMIT %d, %d", $query_RecordsetDocGroupSuper, $startRow_RecordsetDocGroupSuper, $maxRows_RecordsetDocGroupSuper);
 $RecordsetDocGroupSuper = mysql_query($query_RecordsetDocGroupSuper, $pravo) or die(mysql_error());
 $row_RecordsetDocGroupSuper = mysql_fetch_assoc($RecordsetDocGroupSuper);
@@ -126,7 +126,7 @@ $totalPages_RecordsetDocGroupSuper = ceil($totalRows_RecordsetDocGroupSuper/$max
 ?>
 <?php function subCategory($id_category, $database_pravo, $pravo){
 	mysql_select_db($database_pravo, $pravo);
-	$query_RecordsetDocCategorySub = sprintf("SELECT dg.id_doc_group, dg.name name, dg.forcesubscribe, dt.name dtname FROM doc_group dg, doc_type dt WHERE dg.id_doc_type=dt.id_doc_type AND id_supergroup = %s", GetSQLValueString($id_category, "int"));
+	$query_RecordsetDocCategorySub = sprintf("SELECT dg.id_doc_group, dg.name name, dg.forcesubscribe, dt.name dtname FROM doc_group dg, doc_type dt WHERE dg.id_doc_type=dt.id_doc_type AND id_supergroup = %s ORDER BY dg.id_doc_group ASC", GetSQLValueString($id_category, "int"));
 	$RecordsetDocCategorySub = mysql_query($query_RecordsetDocCategorySub, $pravo) or die(mysql_error());
 	$row_RecordsetDocCategorySub = mysql_fetch_assoc($RecordsetDocCategorySub);
 	$totalRows_RecordsetDocCategorySub = mysql_num_rows($RecordsetDocCategorySub);

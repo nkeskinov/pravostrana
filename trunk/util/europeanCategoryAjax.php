@@ -17,13 +17,13 @@
 	 if ($data=='category1') { 
 	 	echo "<select name='category1' style='width:320px;' onChange=\"dochange1('subcategory1', this.value)\">\n";
         echo "<option value='0'>Изберете категорија</option>\n";
-		$query = sprintf("SELECT id_doc_group, dg.name name FROM doc_group dg, doc_type dt WHERE dg.id_doc_type=dt.id_doc_type AND dt.id_doc_type=%s AND id_supergroup is NULL",GetSQLValueString($type, "int"));
+		$query = sprintf("SELECT id_doc_group, dg.name name FROM doc_group dg, doc_type dt WHERE dg.id_doc_type=dt.id_doc_type AND dt.id_doc_type=%s AND id_supergroup is NULL ORDER BY dg.id_doc_group ASC",GetSQLValueString($type, "int"));
         $result=mysql_query($query, $pravo) or die(mysql_error());
         while(list($id, $name)=mysql_fetch_array($result)){
                echo "<option value=\"$id\" >$name</option> \n" ;
         }	
 	 }else if ($data=='subcategory1') {
-		 $query1 = sprintf("SELECT id_doc_group, dg.name name FROM doc_group dg, doc_type dt WHERE dg.id_doc_type=dt.id_doc_type AND dt.id_doc_type=%s AND id_supergroup = %s", GetSQLValueString($type, "int"), GetSQLValueString($val, "int"));
+		 $query1 = sprintf("SELECT id_doc_group, dg.name name FROM doc_group dg, doc_type dt WHERE dg.id_doc_type=dt.id_doc_type AND dt.id_doc_type=%s AND id_supergroup = %s ORDER BY dg.id_doc_group ASC", GetSQLValueString($type, "int"), GetSQLValueString($val, "int"));
 	   	$result = mysql_query($query1, $pravo) or die(mysql_error());     
 		echo "<select name='subcategory1' ";
 		if(mysql_num_rows($result)<=0) echo "disabled='disabled'";
@@ -33,7 +33,7 @@
                echo "<option value=\"$id\" >$name</option> \n" ;
         }
 	 } else if ($data=='subsubcategory1') {
-		 	$query2 = sprintf("SELECT id_doc_group, dg.name name FROM doc_group dg, doc_type dt WHERE dg.id_doc_type=dt.id_doc_type AND dt.id_doc_type=%s AND id_supergroup = %s", GetSQLValueString($type, "int"), GetSQLValueString($val, "int"));
+		 	$query2 = sprintf("SELECT id_doc_group, dg.name name FROM doc_group dg, doc_type dt WHERE dg.id_doc_type=dt.id_doc_type AND dt.id_doc_type=%s AND id_supergroup = %s ORDER BY dg.id_doc_group ASC", GetSQLValueString($type, "int"), GetSQLValueString($val, "int"));
 	   	$result = mysql_query($query2, $pravo) or die(mysql_error());
 		echo "<select name='subsubcategory1' ";
 		if(mysql_num_rows($result)<=0) echo "disabled='disabled'";

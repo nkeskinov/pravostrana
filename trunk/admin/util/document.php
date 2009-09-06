@@ -96,7 +96,7 @@ $row_RecordsetKeyword = mysql_fetch_assoc($RecordsetKeyword);
 $totalRows_RecordsetKeyword = mysql_num_rows($RecordsetKeyword);
 
 
-$query_DocumentGroups = "SELECT * FROM doc_group";
+$query_DocumentGroups = "SELECT * FROM doc_group ORDER BY id_doc_group";
 $DocumentGroups = mysql_query($query_DocumentGroups, $pravo) or die(mysql_error());
 $row_DocumentGroups = mysql_fetch_assoc($DocumentGroups);
 $totalRows_DocumentGroups = mysql_num_rows($DocumentGroups);
@@ -553,7 +553,7 @@ function jsUpload(upload_field)
       </td>
     </tr>
     <tr valign="baseline">
-      <td nowrap align="right">Датум на публикување:</td>
+      <td nowrap align="right">Датум на објавување:</td>
       <td>       
 
         <input type="text" size="20" name="published_date"  value="<?php if($row_Recordset1['published_date']!=NULL) echo date("d.m.Y", strtotime(htmlentities($row_Recordset1['published_date'], ENT_COMPAT, ''))); ?>" id="jQueryUICalendar1"/>
