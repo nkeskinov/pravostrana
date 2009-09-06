@@ -41,7 +41,7 @@
   <div style="padding-left:20px">
   <table border="0" cellpadding="3" cellspacing="2">
     <tr>
-      <td colspan="2">Внесете ја вашата емаил адреса и лозинката ќе ви биде испратена</td>
+      <td colspan="2">Внесете ја вашата e-mail адреса и лозинката ќе ви биде испратена</td>
       </tr>
     <tr>
       <td align="right">E-mai:</td>

@@ -7,7 +7,7 @@ $row_Court = mysql_fetch_assoc($Court);
 $totalRows_Court = mysql_num_rows($Court);
 
 mysql_select_db($database_pravo, $pravo);
-$query_CourtCategory = "SELECT * FROM doc_group  where id_doc_type=4";
+$query_CourtCategory = "SELECT * FROM doc_group  where id_doc_type=4 ORDER BY id_doc_group ASC";
 $CourtCategory = mysql_query($query_CourtCategory, $pravo) or die(mysql_error());
 $row_CourtCategory = mysql_fetch_assoc($CourtCategory);
 $totalRows_CourtCategory = mysql_num_rows($CourtCategory);

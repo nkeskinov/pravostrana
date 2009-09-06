@@ -728,12 +728,12 @@ var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2");
 var spryselect1 = new Spry.Widget.ValidationSelect("spryselect1");
 var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "email");
 var sprypassword1 = new Spry.Widget.ValidationPassword("sprypassword1");
-var sprypassword2 = new Spry.Widget.ValidationPassword("sprypassword2");
+//var sprypassword2 = new Spry.Widget.ValidationPassword("sprypassword2");
 var sprycheckbox1 = new Spry.Widget.ValidationCheckbox("sprycheckbox1");
 var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4", "email");
 var spryselect2 = new Spry.Widget.ValidationSelect("spryselect2");
 var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5");
-var sprytextfield6 = new Spry.Widget.ValidationTextField("sprytextfield6");
+//var sprytextfield6 = new Spry.Widget.ValidationTextField("sprytextfield6");
 var spryconfirm1 = new Spry.Widget.ValidationConfirm("spryconfirm1", "password", {validateOn:["change"]});
 var sprytextfield7 = new Spry.Widget.ValidationTextField("sprytextfield7");
 //-->
