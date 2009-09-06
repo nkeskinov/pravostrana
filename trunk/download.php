@@ -61,7 +61,7 @@ if ($totalRows_recordset_document == 1) {
 	$file_size = filesize($path);
 	
 	if ($fp = fopen ($path, "r")) {
-		if (!mysql_query(sprintf("INSERT INTO download (id_document, id_user, downloaded_date) VALUES (%s, %s, '%s')", $row_recordset_document['id_document'], $_SESSION['MM_ID'], date('Y-m-d H:i'))) || !mysql_query(sprintf("UPDATE document SET no_downloads = no_downloads + 1 WHERE id_document = %s", $row_recordset_document['id_document'])))
+		if (!mysql_query(sprintf("INSERT INTO download (id_document, id_user, downloaded_date) VALUES (%s, %s, %s)", GetSQLValueString($row_recordset_document['id_document'], "int"), GetSQLValueString($_SESSION['MM_ID'], "int"), GetSQLValueString(date('Y-m-d H:i'), "date"))) || !mysql_query(sprintf("UPDATE document SET no_downloads = no_downloads + 1 WHERE id_document = %s", $row_recordset_document['id_document'])))
 			die('Problem so registracijata na simnuvanjeto: ' . mysql_error());
 		
 		ob_start();

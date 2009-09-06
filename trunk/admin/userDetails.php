@@ -26,19 +26,19 @@ if (!((isset($_SESSION['MM_Username'])) && (isAuthorized("",$MM_authorizedUsers,
 <head>
 <!--templateinfo codeoutsidehtmlislocked="true" -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="/pravo.org.mk/rokmoomenu.css" rel="stylesheet" type="text/css" />
-<link href="/pravo.org.mk/style.css" rel="stylesheet" type="text/css" />
-<link rel="shortcut icon" href="/pravo.org.mk/images/favicon1.png" />
+<link href="../rokmoomenu.css" rel="stylesheet" type="text/css" />
+<link href="../style.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="../images/favicon1.png" />
 <!-- InstanceBeginEditable name="doctitle" -->
 <title>Pravo.org.mk | Детали за корисникот</title>
 <!-- InstanceEndEditable -->
-<script type="text/javascript" src="/pravo.org.mk/roktools.js"></script>
+<script type="text/javascript" src="../roktools.js"></script>
 
 
-<script type="text/javascript" src="/pravo.org.mk/mootools.js"></script>
-<script type="text/javascript" src="/pravo.org.mk/javaScripts/cirillic_converter.js"></script>
+<script type="text/javascript" src="../mootools.js"></script>
+<script type="text/javascript" src="../javaScripts/cirillic_converter.js"></script>
 
-<script type="text/javascript" src="/pravo.org.mk/rokmoomenu.js"></script>
+<script type="text/javascript" src="../rokmoomenu.js"></script>
 <!-- calendar stylesheet -->
 
 
@@ -89,7 +89,7 @@ transition: Fx.Transitions.sineOut
 <div id="wrapper">
 	<div class="header">
    	  <div class="header-top">
-   	    <div id="logoText"><img src="/pravo.org.mk/images/banner.png" /></div>
+   	    <div id="logoText"><img src="../images/banner.png" /></div>
    	  </div>
       <div id="horiz-menu" class="moomenu"><!-- InstanceBeginEditable name="Menu" -->
         <ul class="nav">
@@ -147,7 +147,8 @@ transition: Fx.Transitions.sineOut
           </div>
 
     
-	<div class="footer">Copyright &copy; 2008 Сите права задржани</div>	
+	<div class="footer">Copyright &copy; 2009 Сите права задржани</div>	
+    <div style="margin-top:-30px; color:#999; float:left; width:100%;">Pravo.org.mk не презема одговорност за евентуалните грешки во текстот на законите <div style="float:right;"><a href="http://camost.org" target="_blank"><img src="images/most.jpg" border="0"/></a></div></div>
 </div>
 
 </body>

@@ -227,7 +227,8 @@ transition: Fx.Transitions.sineOut
 
     </div>
     
-	<div class="footer">Copyright &copy; 2008 Сите права задржани</div>	
+	<div class="footer">Copyright &copy; 2009 Сите права задржани</div>	
+    <div style="margin-top:-30px; color:#999; float:left; width:100%;">Pravo.org.mk не презема одговорност за евентуалните грешки во текстот на законите <div style="float:right;"><a href="http://camost.org" target="_blank"><img src="images/most.jpg" border="0"/></a></div></div>
 </div>
 
 </body>

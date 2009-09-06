@@ -44,7 +44,9 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
                        GetSQLValueString($_POST['id_doc_type'], "int"),
                        GetSQLValueString($_POST['filename'], "text"),
                        GetSQLValueString($_POST['title'], "text"),
-                       GetSQLValueString($_POST['uploaded_date'], "date"),
+                       //GetSQLValueString($_POST['uploaded_date'], "date"),
+					   //current date (GoDaddy "now" date is a different timezone)
+					   GetSQLValueString(date('Y-m-d H:i'), "date"),
                        GetSQLValueString($_POST['id_doc_meta'], "int"),
                        GetSQLValueString($_POST['id_doc_group'], "int"),
                        GetSQLValueString($_POST['description'], "text"),

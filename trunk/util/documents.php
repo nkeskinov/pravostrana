@@ -236,7 +236,7 @@ function getNumDownload($id_document, $pravo, $database_pravo){
               <select name="sort" id="sort" onchange="this.form.submit();">
                 <option>сортирај</option>
                 <option value="title" <?php if(isset($_POST['sort']) && !(strcmp($_POST['sort'],"title" ))) {echo "SELECTED";} ?>>наслов</option>
-                <option value="uploaded_date" <?php if(isset($_POST['sort']) && !(strcmp($_POST['sort'],"uploaded_date" ))) {echo "SELECTED";} ?>>дата</option>
+                <option value="uploaded_date" <?php if(isset($_POST['sort']) && !(strcmp($_POST['sort'],"uploaded_date" ))) {echo "SELECTED";} ?>>датум</option>
                 <option value="ordinal" <?php if(isset($_POST['sort']) && !(strcmp($_POST['sort'],"ordinal" ))) {echo "SELECTED";} ?>>сл. весник</option>
                 <option value="date" <?php if(isset($_POST['sort']) && !(strcmp($_POST['sort'],"date" ))) {echo "SELECTED";} ?>>сл. в. година</option>
               </select>

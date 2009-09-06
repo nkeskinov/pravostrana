@@ -29,7 +29,7 @@ trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_p
 <link href="style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="images/favicon1.png" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>Pravo.org.mk | Детален опис на документот</title>
+<title>Pravo.org.mk | Детален опис на документ</title>
 <!-- InstanceEndEditable -->
 <link href="YUI/2.6.0/build/fonts/fonts-min.css" rel="stylesheet" type="text/css" />
 <link href="YUI/2.6.0/build/container/assets/skins/sam/container.css" rel="stylesheet" type="text/css" />
@@ -158,9 +158,9 @@ transition: Fx.Transitions.sineOut
         <div id="menu"></div>
         <div id="mapMenu">
        <!-- InstanceBeginEditable name="SiteMap" -->
-       <table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;&nbsp;&nbsp;</td><td>
-	   <?php if($_GET['page']=="documentlaws.php") echo '<a href="documentlaws.php">Закони</a>&nbsp; &raquo;&nbsp;'; if($_GET['page']=="analysis.php") echo '<a href="analysis.php">Анализи</a>&nbsp; &raquo;&nbsp;';  if($_GET['page']=="regulations.php") echo '<a href="regulations.php">Прописи</a>&nbsp; &raquo;&nbsp;'; if($_GET['page']=="courtpractice.php") echo '<a href="courtpractice.php">Судска Пракса</a>&nbsp; &raquo;&nbsp;';  if($_GET['page']=="europeancourt.php") echo '<a href="europeancourt.php">Судска Пракса на Европски суд</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;&nbsp;';?>
-       </td><td> Детален опис на документот</td></tr></table> 
+       <table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;&nbsp;</td><td>
+	   <?php if($_GET['page']=="documentlaws.php") echo '<a href="documentlaws.php">Закони</a>'; if($_GET['page']=="analysis.php") echo '<a href="analysis.php">Анализи</a>';  if($_GET['page']=="regulations.php") echo '<a href="regulations.php">Прописи</a>'; if($_GET['page']=="courtpractice.php") echo '<a href="courtpractice.php">Судска Пракса</a>';  if($_GET['page']=="europeancourt.php") echo '<a href="europeancourt.php">Судска Пракса на Европски суд</a>';?>
+       &nbsp;&nbsp;&nbsp;&raquo;&nbsp;</td><td> Детален опис на документ</td></tr></table> 
       <!-- InstanceEndEditable -->
        </div>
       </div>
@@ -188,7 +188,7 @@ transition: Fx.Transitions.sineOut
                   <div class="title">
                     <div class="left"></div>
                     <div class="middle">
-                      <div class="text">Детален опис на документот</div>
+                      <div class="text">Детален опис на документ</div>
                     </div>
                     <div class="right"></div>
                   </div>
@@ -229,7 +229,8 @@ transition: Fx.Transitions.sineOut
 
     </div>
     
-	<div class="footer">Copyright &copy; 2008 Сите права задржани</div>	
+	<div class="footer">Copyright &copy; 2009 Сите права задржани</div>	
+    <div style="margin-top:-30px; color:#999; float:left; width:100%;">Pravo.org.mk не презема одговорност за евентуалните грешки во текстот на законите <div style="float:right;"><a href="http://camost.org" target="_blank"><img src="images/most.jpg" border="0"/></a></div></div>
 </div>
 
 </body>

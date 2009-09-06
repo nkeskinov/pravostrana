@@ -11,7 +11,7 @@ $startRow_Post = $pageNum_Post * $maxRows_Post;
 
 
 mysql_select_db($database_pravo, $pravo);
-$query_Post = sprintf("SELECT post.id_post, post.date_created, post.content, post.subject, post.date_modified, post.priority, post.archive FROM discussion, post, post_category WHERE discussion.id_discussion=post.id_discussion   AND post_category.id_post_category=discussion.id_post_category  AND post_category.id_post_category=%s",GetSQLValueString($id_post_category, "int"));
+$query_Post = sprintf("SELECT post.id_post, post.created_date, post.content, post.subject, post.modified_date, post.priority, post.archive FROM discussion, post, post_category WHERE discussion.id_discussion=post.id_discussion   AND post_category.id_post_category=discussion.id_post_category  AND post_category.id_post_category=%s",GetSQLValueString($id_post_category, "int"));
 
 if(!isset($_SESSION['MM_UserGroup']) || ($_SESSION['MM_UserGroup']!="admin")) {
 	$query_Post=sprintf("%s AND archive!=1",$query_Post);
@@ -235,13 +235,14 @@ if ((isset($_POST["Comment_insert"])) && ($_POST["Comment_insert"] == "insert"))
   	$Result1 = mysql_query($insertSQL, $pravo) or die(mysql_error());
 	
 	$id_discussion=	mysql_insert_id();
-	$insertPostSQL=sprintf("INSERT INTO post(id_user, subject, content, id_discussion, format, priority, archive) VALUES(%s,%s,%s,%s,%s,%s,0)",
+	$insertPostSQL=sprintf("INSERT INTO post(id_user, subject, content, id_discussion, format, priority, created_date, archive) VALUES(%s,%s,%s,%s,%s,%s,%s,0)",
 						GetSQLValueString($_SESSION['MM_ID'], "int"),
 						GetSQLValueString($_POST['subject'], "text"),
 						GetSQLValueString($_POST['content'], "text"),
 						GetSQLValueString($id_discussion, "int"),
 						GetSQLValueString("text", "text"),
-						GetSQLValueString($priority, "int"));
+						GetSQLValueString($priority, "int"),
+						GetSQLValueString(date('Y-m-d H:i'), "date"));
 	$Result2 = mysql_query($insertPostSQL, $pravo) or die(mysql_error());	
 	if($Result2){
 		$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
@@ -255,13 +256,14 @@ if ((isset($_POST["Comment_insert"])) && ($_POST["Comment_insert"] == "insert"))
 		mysql_query('commit',$pravo);
 		
   }else{
-	$insertPostSQL=sprintf("INSERT INTO post(id_user, subject, content, id_discussion, format, priority) VALUES(%s,%s, %s,%s,%s,%s)",
+	$insertPostSQL=sprintf("INSERT INTO post(id_user, subject, content, id_discussion, format, priority, created_date) VALUES(%s,%s, %s,%s,%s,%s,%s)",
 						GetSQLValueString($_SESSION['MM_ID'], "int"),
 						GetSQLValueString($_POST['subject'], "text"),						
 						GetSQLValueString($_POST['content'], "text"),
 						GetSQLValueString($id_discussion, "int"),
 						GetSQLValueString("text", "text"),
-						GetSQLValueString($priority+1, "int"));
+						GetSQLValueString($priority+1, "int"),
+						GetSQLValueString(date('Y-m-d H:i'), "date"));
 	$Result2 = mysql_query($insertPostSQL, $pravo) or die(mysql_error());
 	if($Result2){
 		$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
@@ -295,6 +297,8 @@ plugins : "safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotio
 		theme_advanced_toolbar_align : "left",
 		theme_advanced_statusbar_location : "bottom",
 		theme_advanced_resizing : true,
+		
+		content_css : "style.css",
 
 		// Drop lists for link/image/media/template dialogs
 		//template_external_list_url : "js/template_list.js",
@@ -342,12 +346,12 @@ function MM_swapImage() { //v3.0
 	<tr>
 	  <td align="right">Наслов:</td>
 	  <td><label>
-	    <input name="subject" type="text" id="subject" size="62" value="<?php if(isset($row_Post1['subject'])){ echo $row_Post1['subject']; }?>"  onkeyup="this.form.subject.value=toCyr(this.form.subject.value)">
+	    <input name="subject" type="text" id="subject" size="62" value="<?php if(isset($row_Post1['subject'])){ echo $row_Post1['subject']; }?>" >
 	    </label></td>
 	  </tr>
 	<tr>
 	  <td align="right" valign="top">Содржина:</td>
-	  <td><textarea name="content" id="content"  class="mceEditor"  wrap='VIRTUAL'  cols="63" rows="4" style="border:1px solid #f5e6a2;"  onkeyup="this.form.content.value=toCyr(this.form.content.value)"><?php if(isset($row_Post1['content'])){ echo $row_Post1['content']; }?>
+	  <td><textarea name="content" id="content"  class="mceEditor"  wrap='VIRTUAL'  cols="63" rows="4" style="border:1px solid #f5e6a2;"><?php if(isset($row_Post1['content'])){ echo $row_Post1['content']; }?>
 	  </textarea></td>
     </tr>
 	<tr>
@@ -393,7 +397,7 @@ function MM_swapImage() { //v3.0
         
 	  	<span style="color:#C63; font-size:14px;"><strong><?php echo $row_Post['subject']; ?></strong></span>
       	<br /><span style="font-size:10px; color:#666;"> на
-		<?php  echo date("d.m.Y H:i",strtotime($row_Post['date_created'])); ?> </span>
+		<?php  echo date("d.m.Y H:i",strtotime($row_Post['created_date'])); ?> </span>
         
       </td>
       <?php } ?>
@@ -416,7 +420,7 @@ function MM_swapImage() { //v3.0
     
      <div style="vertical-align:middle; width:15px; height:15px; float:left;"><input type="image" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Edit1<?php echo $row_Post['id_post']; ?>','','images/edit-small.png',1)"src="images/edit-small1.png" name="EditPost" border="0" id="Edit1<?php echo $row_Post['id_post']; ?>" value="<?php echo $row_Post['id_post']; ?>" title="Измени"/></div>
       
-      <div style="vertical-align:middle; width:15px; height:15px; float:left;"><input type="image" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image1<?php echo $row_Post['id_post']; ?>','','images/delete-small.png',1)" src="images/delete-small1.png" name="DeletePost" border="0" id="Image1<?php echo $row_Post['id_post']; ?>" value="<?php echo $row_Post['id_post']; ?>" title="Бриши" onClick="return confirm('Дали навистина сакате да го избришете документот!')"/></div>
+      <div style="vertical-align:middle; width:15px; height:15px; float:left;"><input type="image" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image1<?php echo $row_Post['id_post']; ?>','','images/delete-small.png',1)" src="images/delete-small1.png" name="DeletePost" border="0" id="Image1<?php echo $row_Post['id_post']; ?>" value="<?php echo $row_Post['id_post']; ?>" title="Бриши" onClick="return confirm('Дали навистина сакате да го избришете документот?')"/></div>
       </form>
        </td>
       <?php } } ?>
@@ -462,16 +466,16 @@ function MM_swapImage() { //v3.0
 							echo $i+1;
 							echo "]</b>";
 						}elseif($i<=$h){ ?>
-								<a href="<?php printf("%s?pageNum_Post=%d%s", $currentPage, $i, $queryString_Post); ?>"><?php echo '<u>'; echo $i+1; echo '</u>';?></a>
+								<a href="<?php printf("%s?pageNum_Post=%d%s", isset($currentPage) ? $currentPage : '', $i, isset($queryString_Post) ? $queryString_Post : ''); ?>"><?php echo '<u>'; echo $i+1; echo '</u>';?></a>
 						
 						<?php }
 					}
 				?>
                 <?php if ($pageNum_Post < $totalPages_Post && ($h-$l)>=7) { // Show if not last page ?>...
-                  <a href="<?php printf("%s?pageNum_Post=%d%s", $currentPage, $totalPages_Post, $queryString_Post); ?>"><?php echo '<u>'; echo $totalPages_Post+1; echo '</u>';?></a>
+                  <a href="<?php printf("%s?pageNum_Post=%d%s", isset($currentPage) ? $currentPage : '', $totalPages_Post, isset($queryString_Post) ? $queryString_Post : ''); ?>"><?php echo '<u>'; echo $totalPages_Post+1; echo '</u>';?></a>
                   <?php } // Show if not last page ?></td>
               <td ><?php if ($pageNum_Post < $totalPages_Post) { // Show if not last page ?>
-                  <a href="<?php printf("%s?pageNum_Post=%d%s", $currentPage, min($totalPages_Post, $pageNum_Post + 1), $queryString_Post); ?>"><img src="images/pNext.png" border="0"/></a>
+                  <a href="<?php printf("%s?pageNum_Post=%d%s", isset($currentPage) ? $currentPage : '', min($totalPages_Post, $pageNum_Post + 1), isset($queryString_Post) ? $queryString_Post : ''); ?>"><img src="images/pNext.png" border="0"/></a>
                   <?php }else{ ?>
 					  <img src="images/pNextDisabled.png" border="0"/>
 				 <?php }// Show if not last page ?></td>

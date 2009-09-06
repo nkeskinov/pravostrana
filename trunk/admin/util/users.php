@@ -155,7 +155,7 @@ $totalRows_UserEdit = mysql_num_rows($UserEdit);
     <td><div style="width:26px; height:21px; padding-top:1.5px; float:left; text-align:center;" onmouseover="this.className='picture-button-over'" onmouseout="this.className='picture-button-out'"> <a href="#"><img src="../images/save.png" border="0" title="Зачувај документ" /></a></div></td>
     <td>
     <div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
-        <a href="document_category.php?id=<?php echo $row_RecordsetDocCategoryEdit['id_doc_group']; ?>&mode=delete" onClick="return confirm('Дали навистина сакате да го избришете документот!')"><img src="../images/delete.png" border="0" title="Бриши"  /></a></div>
+        <a href="document_category.php?id=<?php echo $row_RecordsetDocCategoryEdit['id_doc_group']; ?>&mode=delete" onClick="return confirm('Дали навистина сакате да го избришете документот?')"><img src="../images/delete.png" border="0" title="Бриши"  /></a></div>
     </td>
     <?php } ?>
     <td><div style="width:26px; height:21px; padding-top:1.5px; text-align:center;" onmouseover="this.className='picture-button-over'" onmouseout="this.className='picture-button-out'"> <a href="#"><img src="../images/print.png" border="0" title="Печати страна" /></a></div></td>
@@ -183,7 +183,7 @@ $totalRows_UserEdit = mysql_num_rows($UserEdit);
       <td><input type="text" name="email" value="<?php if(isset($_GET['mode']) && ($_GET['mode']=="edit")) echo htmlentities($row_UserEdit['email'], ENT_COMPAT, 'UTF-8'); ?>" size="32" /></td>
     </tr>
     <tr valign="baseline">
-      <td nowrap="nowrap" align="right"> Дата на раѓање:</td>
+      <td nowrap="nowrap" align="right"> Датум на раѓање:</td>
       <td><input type="text" name="date_of_birth" value="<?php if(isset($_GET['mode']) && ($_GET['mode']=="edit")) echo date("d.m.Y", strtotime(htmlentities($row_UserEdit['date_of_birth'], ENT_COMPAT, 'UTF-8'))); ?>" size="32" id="jQueryUICalendar1" />
       <script type="text/javascript">
 		// BeginWebWidget jQuery_UI_Calendar: jQueryUICalendar1
@@ -261,15 +261,15 @@ do {
       </td>
     </tr>
     <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Дата на креирање:</td>
+      <td nowrap="nowrap" align="right">Датум на креирање:</td>
       <td><input type="text" disabled="disabled" name="create_date" id="create_date" value="<?php if(isset($_GET['mode']) && ($_GET['mode']=="edit")) echo htmlentities($row_UserEdit['create_date'], ENT_COMPAT, 'UTF-8'); ?>" size="32" /></td>
     </tr>
     <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Дата на последно логирање:</td>
+      <td nowrap="nowrap" align="right">Датум на последно логирање:</td>
       <td><input type="text" disabled="disabled" name="last_login_date" value="<?php if(isset($_GET['mode']) && ($_GET['mode']=="edit")) echo htmlentities($row_UserEdit['last_login_date'], ENT_COMPAT, 'UTF-8'); ?>" size="32" /></td>
     </tr>
     <tr valign="baseline">
-      <td nowrap="nowrap" align="right">Дата на последно<br />
+      <td nowrap="nowrap" align="right">Датум на последно<br />
       менување лозинка:</td>
       <td><input type="text" disabled="disabled" name="last_password_changed_date" value="<?php if(isset($_GET['mode']) && ($_GET['mode']=="edit")) echo htmlentities($row_UserEdit['last_password_changed_date'], ENT_COMPAT, 'UTF-8'); ?>" size="32" /></td>
     </tr>
@@ -374,7 +374,7 @@ do {
   <?php $i=0; do { ?>
     <tr <?php if($i%2==0) echo "style='background:#fbf7e0'" ?>>
       <td width="16"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?id=<?php echo $row_Users['id_user']; ?>&mode=edit&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/pencil.png" border="0" /></a></td>
-      <td width="16"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?id=<?php echo $row_Users['id_user']; ?>&mode=delete&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>" onClick="return confirm('Дали навистина сакате да го избришете документот!')"><img src="../images/cross.png" border="0" /></a></td>
+      <td width="16"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?id=<?php echo $row_Users['id_user']; ?>&mode=delete&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>" onClick="return confirm('Дали навистина сакате да го избришете документот?')"><img src="../images/cross.png" border="0" /></a></td>
       <td width="30%"><a href="/pravo.org.mk/admin/userDetails.php?id=<?php echo $row_Users['id_user']; ?>" ><?php echo $row_Users['name']; ?> <?php echo $row_Users['surname']; ?></a></td>
       <td><?php echo  date("d.m.Y H:i:s",strtotime($row_Users['last_login_date'])); ?></td>
       <td align="center">

@@ -32,7 +32,7 @@ trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_p
 <link href="style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="images/favicon1.png" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>pravo.org.mk</title>
+<title>Pravo.org.mk | Контакт</title>
 <!-- InstanceEndEditable -->
 <link href="YUI/2.6.0/build/fonts/fonts-min.css" rel="stylesheet" type="text/css" />
 <link href="YUI/2.6.0/build/container/assets/skins/sam/container.css" rel="stylesheet" type="text/css" />
@@ -144,10 +144,10 @@ transition: Fx.Transitions.sineOut
    	  </div>
       <div id="horiz-menu" class="moomenu"><!-- InstanceBeginEditable name="Menu" -->
         <ul class="nav">
-          <li class="active"><a href="index.php">Почетна</a></li>
+          <li><a href="index.php">Почетна</a></li>
           <li><a class="topdaddy" href="documentlaws.php">Закони</a></li>
           <li><a href="analysis.php">Анализи</a></li>
-          <li><a href="policies.php">Прописи</a></li>
+          <li><a href="regulations.php">Прописи</a></li>
           <li><a href="#">Судска Пракса</a>
            <ul>
             <li><a href="courtpractice.php">Судска Пракса</a></li>
@@ -155,7 +155,7 @@ transition: Fx.Transitions.sineOut
            </ul>
           </li>
           <li><a href="news.php">Новости</a></li>
-          <li><a href="contact.php">Контакт</a></li>
+          <li class="active"><a href="contact.php">Контакт</a></li>
         </ul>
       <!-- InstanceEndEditable -->
         <div id="menu"></div>
@@ -228,7 +228,8 @@ transition: Fx.Transitions.sineOut
 
     </div>
     
-	<div class="footer">Copyright &copy; 2008 Сите права задржани</div>	
+	<div class="footer">Copyright &copy; 2009 Сите права задржани</div>	
+    <div style="margin-top:-30px; color:#999; float:left; width:100%;">Pravo.org.mk не презема одговорност за евентуалните грешки во текстот на законите <div style="float:right;"><a href="http://camost.org" target="_blank"><img src="images/most.jpg" border="0"/></a></div></div>
 </div>
 
 </body>

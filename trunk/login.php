@@ -21,7 +21,7 @@ session_start();
 <link href="style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="images/favicon1.png" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>pravo.org.mk | Логирање</title>
+<title>Pravo.org.mk | Логирање</title>
 <!-- InstanceEndEditable -->
 <script type="text/javascript" src="roktools.js"></script>
 
@@ -83,7 +83,7 @@ transition: Fx.Transitions.sineOut
          <ul class="nav"><li class="active"><a href="index.php">Почетна</a></li>
           <li><a class="topdaddy" href="documentlaws.php">Закони</a></li>
           <li><a href="analysis.php">Анализи</a></li>
-          <li><a href="policies.php">Прописи</a></li>
+          <li><a href="regulations.php">Прописи</a></li>
           <li><a href="#">Судска пракса</a>
            <ul>
              <li><a href="courtpractice.php">Судска пракса</a></li>
@@ -95,7 +95,7 @@ transition: Fx.Transitions.sineOut
         </ul>
 
       	<div id="menu"></div>
-       <div id="mapMenu"><!-- InstanceBeginEditable name="siteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a></td>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;<td>Логирање&nbsp;</td></tr></table><!-- InstanceEndEditable --></div> 
+       <div id="mapMenu"><!-- InstanceBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a></td>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;<td>Логирање&nbsp;</td></tr></table><!-- InstanceEndEditable --></div> 
       </div>
 	</div>
     
@@ -161,7 +161,8 @@ transition: Fx.Transitions.sineOut
 
     </div>
     <div class="above-footer"></div>
-	<div class="footer">Copyright &copy; 2008 Сите права задржани</div>	
+	<div class="footer">Copyright &copy; 2009 Сите права задржани</div>	
+    <div style="margin-top:-30px; color:#999; float:left; width:100%;">Pravo.org.mk не презема одговорност за евентуалните грешки во текстот на законите <div style="float:right;"><a href="http://camost.org" target="_blank"><img src="images/most.jpg" border="0"/></a></div></div>
 </div>
 
 </body>

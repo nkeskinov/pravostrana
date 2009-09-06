@@ -160,7 +160,7 @@ $('.password').pstrength();
       <span class="selectRequiredMsg">Ве молиме изберете пол.</span></span></td>
     </tr>
     <tr valign="baseline">
-      <td nowrap align="right">Дата на раѓање:</td>
+      <td nowrap align="right">Датум на раѓање:</td>
       <td><select name="den">
       	<option value="">ден</option>
         <option value="1">1</option>
