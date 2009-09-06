@@ -372,7 +372,7 @@ function MM_swapImage() { //v3.0
 </table>
 </div>
 <?php } else { ?>
-	<div align="left" style="height:22px;width:506px; margin-left:-3px; margin-top:2px;  border-bottom:1px solid #a25852; background:#f5d6d4;  padding:3px; padding-top:1px;">
+	<div align="left" style="height:22px;width:100.05%; margin-left:-3px; margin-top:2px;  border-bottom:1px solid #a25852; background:#f5d6d4;  padding:3px; padding-top:1px;">
     <input type="image" src="images/new.png" />
     <input type="hidden" name="new" />
     </div>

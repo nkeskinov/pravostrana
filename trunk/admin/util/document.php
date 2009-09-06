@@ -149,25 +149,33 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 		_show_message_color($message,'YELLOW');  	
 	}
 	//echo $_POST['keywords'];
-	
+	$published_date = date("Y-m-d", strtotime($_POST['published_date']));
 	
 	$created_by = isset($_SESSION['MM_ID']) ? $_SESSION['MM_ID'] : 0 ;
 	/* Inserts the meta data for the document sl. vesnik and year */
-	$year = date("Y",strtotime($_POST['year']));
+	
+	$checkMeta = sprintf("SELECT * FROM doc_meta where ordinal = %s",GetSQLValueString($_POST['ordinal'], "int"));
+	$Result5 = mysql_query($checkMeta, $pravo) or die(mysql_error());
+	if(mysql_num_rows($Result5)>0){
+		$id_doc_meta =mysql_result($Result5,0,'id_doc_meta');
+	}else{
 	$insertSQL = sprintf("INSERT INTO doc_meta (id_doc_type, ordinal, `date`) VALUES (%s, %s, %s)",
                        GetSQLValueString($_POST['id_doc_type'], "int"),
                        GetSQLValueString($_POST['ordinal'], "int"),
-                       GetSQLValueString($year, "date"));
+                       GetSQLValueString($published_date, "date"));
 	 
   	$Result1 = mysql_query($insertSQL, $pravo) or die(mysql_error());
 	
 	 if($Result1){
+		 $id_doc_meta = mysql_insert_id();
+	 	}
+	}
 		/* Insert new document*/
-		if(isset($_POST['subsubcategory'])){
+		if(isset($_POST['subsubcategory']) && $_POST['subsubcategory']!=0){
 			$id_group=$_POST['subsubcategory'];
-		}elseif(isset($_POST['subcategory'])){
+		}elseif(isset($_POST['subcategory']) && $_POST['subcategory']!=0){
 			$id_group=$_POST['subcategory'];
-		}elseif(isset($_POST['category']))
+		}elseif(isset($_POST['category']) && $_POST['category']!=0)
 			$id_group=$_POST['category'];
 		
 		//echo $_POST['subsubcategory']."<br>";
@@ -175,7 +183,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 		//echo $_POST['category']."<br>";		
 		//echo $id_group;
 		
-		$published_date = date("Y-m-d", strtotime($_POST['published_date']));
+
 		$insertSQL = sprintf("INSERT INTO `document` (id_doc_type, filename, title, id_doc_group, `description`, extension, filesize, mimetype, forcesubscribe, published_date, created_by, id_doc_meta, uploaded_date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
 						   GetSQLValueString($_POST['id_doc_type'], "int"),
 						   GetSQLValueString($filename, "text"),
@@ -188,7 +196,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 						   GetSQLValueString(isset($_POST['forcesubscribe']) ? "true" : "", "defined","1","0"),
 						   GetSQLValueString($published_date , "date"),
 						   GetSQLValueString($created_by, "int"),
-						   GetSQLValueString(mysql_insert_id(),"int"),
+						   GetSQLValueString($id_doc_meta,"int"),
 						   GetSQLValueString(date('Y-m-d H:i'), "date"));
 	
 	  
@@ -231,16 +239,14 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 	
 					$updateSQL = sprintf("UPDATE `document` SET id_superdoc=%s where id_document = %s",GetSQLValueString($_GET['superdocument'],"int"),GetSQLValueString(mysql_insert_id(),"int"));
 					$Result2 = mysql_query($updateSQL, $pravo) or die(mysql_error());
-					$redirect = "../documentDetail.php?id=".$_GET['superdocument'];
+					$redirect = "../documentDetail.php?id=".$_GET['superdocument']."&page=documentlaws.php";
 			
 			}else{
-				$redirect = "../documentDetail.php?id=".$id_doc;
+				$redirect = "../documentDetail.php?id=".$id_doc."&page=documentlaws.php";
 			}
 			header("Location: " .$redirect );
 			$success=true;
-	  }else{
-			$success=false;
-	  }
+	  
 	 }else{
 			$success=false;
 	}	
@@ -306,17 +312,17 @@ if ((isset($_POST["MM_update"]))) {
 	}
 	$created_by = isset($_SESSION['MM_ID']) ? $_SESSION['MM_ID'] : 0 ;
 	
-	if(isset($_POST['subsubcategory'])){
-		$id_group=$_POST['subsubcategory'];
-	}elseif(isset($_POST['subcategory'])){
-		$id_group=$_POST['subcategory'];
-	}elseif(isset($_POST['category']))
-		$id_group=$_POST['category'];
+	if(isset($_POST['subsubcategory']) && $_POST['subsubcategory']!=0){
+			$id_group=$_POST['subsubcategory'];
+		}elseif(isset($_POST['subcategory']) && $_POST['subcategory']!=0){
+			$id_group=$_POST['subcategory'];
+		}elseif(isset($_POST['category']) && $_POST['category']!=0)
+			$id_group=$_POST['category'];
 	
-	echo $_POST['subsubcategory']."<br>";
-	echo $_POST['subcategory']."<br>";
-	echo $_POST['category']."<br>";		
-	echo $id_group."<br>";
+//	echo $_POST['subsubcategory']."<br>";
+	//echo $_POST['subcategory']."<br>";
+	//echo $_POST['category']."<br>";		
+	//echo $id_group."<br>";
 	
   $updateSQL = sprintf("UPDATE `document` SET title=%s, published_date=%s, `description`=%s, id_doc_type=%s, id_doc_group=%s, filename=%s, forcesubscribe=%s WHERE id_document=%s",
                        GetSQLValueString($_POST['title'], "text"),
@@ -421,27 +427,28 @@ if ((isset($_GET['id'])) && ($_GET['id'] != "") && (isset($_GET['delete']))) {
 		$DocType_old = mysql_query($DocTypeQuery_old, $pravo) or die(mysql_error());
 		$directory_old = mysql_result($DocType_old,0,'directory');
 		
-		$file_to_unlink = "../download/".$directory_old."/".$file;
 		
-		if(file_exists($file_to_unlink)){
-			unlink($file_to_unlink);
-			$message = "Документот ".$file_to_unlink." e избришан!";
-			_show_message_color($message,'YELLOW');  	
-		}
    mysql_query("BEGIN", $pravo);
   $deleteSQL = sprintf("DELETE FROM `document` WHERE id_document=%s",
                        GetSQLValueString($_GET['id'], "int"));
 	
   $Result1 = mysql_query($deleteSQL, $pravo) or die(mysql_error());
   
-  $delete2SQL = sprintf("DELETE FROM `doc_meta` WHERE id_doc_meta=%s",
-                       GetSQLValueString($_GET['id_doc_meta'], "int"));
-			 $Result2 = mysql_query($delete2SQL, $pravo) or die(mysql_error());
+ // $delete2SQL = sprintf("DELETE FROM `doc_meta` WHERE id_doc_meta=%s",
+   //                    GetSQLValueString($_GET['id_doc_meta'], "int"));
+//			 $Result2 = mysql_query($delete2SQL, $pravo) or die(mysql_error());
 			 
  	$deleteIDDocument=sprintf("DELETE FROM document_has_keyword WHERE id_document=%s",GetSQLValueString($_GET['id'], "int"));
 	$ResultIDDocument1=mysql_query($deleteIDDocument,$pravo);
-  if($Result1 && $Result2){
+  if($Result1){
 				_show_message_color('Документот е успешно избришан!','GREEN');  
+				$file_to_unlink = "../download/".$directory_old."/".$file;
+		
+		if(file_exists($file_to_unlink)){
+			unlink($file_to_unlink);
+			$message = "Документот ".$file_to_unlink." e избришан!";
+			_show_message_color($message,'YELLOW');  	
+		}
 				unset($_GET['id']);
 				unset($_GET['delete']);
   }else{
@@ -510,7 +517,7 @@ function jsUpload(upload_field)
     // everything down to line
     // upload_field.form.submit();
 
-    var re_text = /\.gif|\.jpg|\.swf|\.pdf|\.png/i;
+    var re_text = /\.gif|\.jpg|\.swf|\.pdf|\.doc|\.txt|\.png/i;
     var filename = upload_field.value;
 
     /* Checking file type */
@@ -561,10 +568,10 @@ jQuery("#jQueryUICalendar1").datepicker({ dateFormat: 'dd.mm.yy',  altField: '#a
         </td>
     </tr>
     <tr valign="baseline">
-      <td nowrap align="right" valign="top">Сл. весник/година:</td>
+      <td nowrap align="right" valign="top">Сл. весник:</td>
       <td>
         <input name="ordinal" type="text" id="ordinal" size="3" value="<?php if(isset($_GET['id'])) echo htmlentities($row_Recordset1['ordinal'], ENT_COMPAT, 'UTF-8');?>" />
-      /<input name="year" type="text" id="year" size="5"  value="<?php if(isset($_GET['id'])) echo htmlentities($row_Recordset1['date'], ENT_COMPAT, 'UTF-8');?>" /><input type="hidden" name="id_doc_meta" value="<?php if(isset($_GET['id'])) echo htmlentities($row_Recordset1['id_doc_meta'], ENT_COMPAT, 'UTF-8');?>" />
+      <input type="hidden" name="id_doc_meta" value="<?php if(isset($_GET['id'])) echo htmlentities($row_Recordset1['id_doc_meta'], ENT_COMPAT, 'UTF-8');?>" />
       </td>
     </tr>
     <tr valign="baseline">

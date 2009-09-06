@@ -206,28 +206,28 @@ transition: Fx.Transitions.sineOut
               </tr>
             </table>
             <!-- InstanceEndEditable -->
-        <p>&nbsp;</p>
-            <p>&nbsp;</p>
-            <p>&nbsp;</p>
-
+        	<p>&nbsp;</p>
+        	<p>&nbsp;</p>
+       		<p>&nbsp;</p>
+            
       </div>
 
  
         <div class="right">
         <?php include("util/login_block.php"); ?>
           <div style="width:250px; margin-top:5px; margin-bottom:5px;"><!-- InstanceBeginEditable name="SearchRegion" --><?php include("util/search_reduced.php"); ?><!-- InstanceEndEditable --></div>
-         &nbsp;
           <div>
             <div><?php getBanner($database_pravo, $pravo, 3); ?></div>
           	<br />
           	<div><?php getBanner($database_pravo, $pravo, 4); ?></div>
           	<br />
-          	<div><?php getBanner($database_pravo, $pravo, 5); ?></div>          
+          	<div><?php getBanner($database_pravo, $pravo, 5); ?></div>
           </div>
-          </div>
-
+          <br /><br /><br /><br />
+        </div>
+		
     </div>
-    
+    <br /><br />
 	<div class="footer">Copyright &copy; 2009 Сите права задржани</div>	
     <div style="margin-top:-30px; color:#999; float:left; width:100%;">Pravo.org.mk не презема одговорност за евентуалните грешки во текстот на законите <div style="float:right;"><a href="http://camost.org" target="_blank"><img src="images/most.jpg" border="0"/></a></div></div>
 </div>

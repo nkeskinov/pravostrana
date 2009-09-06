@@ -157,9 +157,9 @@ function getNumDownload($id_document, $pravo, $database_pravo){
     </td>
   </tr>
   <tr>
-    <td width="36%">Датум на објавување:</td>
-    <td width="44%"><?php if(isset($row_DetailRS1['published_date'])) echo date("d.m.Y",strtotime($row_DetailRS1['published_date'])); ?></td>
-    <td width="20%" rowspan="4" align="right"><a href="download.php?id=<?php echo $row_DetailRS1['id_document']; ?>"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a><br><span style="font-size:10px; color:#999;"><?php getNumDownload($row_DetailRS1['id_document'], $pravo, $database_pravo); ?> пати спуштено</span></td>
+    <td width="38%">Датум на објавување:</td>
+    <td width="42%"><?php if(isset($row_DetailRS1['published_date'])) echo date("d.m.Y",strtotime($row_DetailRS1['published_date'])); ?></td>
+    <td width="20%" <?php if ($row_DetailRS1['id_doc_type'] == '1') echo 'rowspan="4"'; else echo 'rowspan="2"'; ?> align="right"><a href="download.php?id=<?php echo $row_DetailRS1['id_document']; ?>"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a><br><span style="font-size:10px; color:#999;"><?php getNumDownload($row_DetailRS1['id_document'], $pravo, $database_pravo); ?> пати спуштено</span></td>
   </tr>
   <tr>
     <td>Датум на закачување:</td>
@@ -168,15 +168,15 @@ function getNumDownload($id_document, $pravo, $database_pravo){
   <?php if ($row_DetailRS1['id_doc_type'] == '1') { ?>
   <tr>
     <td>Датум на стапување во сила:</td>
-    <td><?php if(isset($row_DetailRS1['into_force_date'])) echo date("d.m.Y",strtotime($row_DetailRS1['into_force_date'])); ?></td>
+    <td><?php if(isset($row_DetailRS1['into_force_date'])) echo date("d.m.Y",strtotime($row_DetailRS1['into_force_date'])); ?>&nbsp;</td>
   </tr>
   <tr>
     <td>Сл. весник/година:</td>
-    <td><?php if(isset($row_DetailRS1['ordinal'])) echo $row_DetailRS1['ordinal']; ?>/<?php echo date("Y",strtotime($row_DetailRS1['date'])); ?></td>
+    <td><?php if(isset($row_DetailRS1['ordinal'])) echo $row_DetailRS1['ordinal']; ?>/<?php echo date("Y",strtotime($row_DetailRS1['date'])); ?>&nbsp;</td>
   </tr>
   <tr>
   <?php } ?>
-    <td>Категорија:</td>
+    <td valign="top">Категорија:</td>
     <td colspan="2"><?php do{ echo $row_DocGroup['name']." &raquo; "; }while ($row_DocGroup = mysql_fetch_assoc($DocGroup)); ?></td>
   </tr>
   <tr>
