@@ -1,4 +1,4 @@
-<?php include("util/login.php"); ?>
+<?php include("../util/login.php"); ?>
 <?php if((!isset( $_SESSION['MM_Username'] )) or (!isset($_SESSION['MM_UserGroup']))){  ?>
 <div class="login" style="width:250px;">
               <div class="title" style="text-align:left; padding-left:10px;">Најавување</div>
@@ -30,7 +30,7 @@
                         </td>
                       </tr>
                       <tr>
-                        <td><div align="center" class="down"><a href="resetPassword.php">Заборави лозинка?</a> | <a href="register.php?new">Регистрирај се!</a></div></td>
+                        <td><div align="center" class="down"><a href="../resetPassword.php">Заборави лозинка?</a> | <a href="../register.php?new">Регистрирај се!</a></div></td>
                       </tr>
                       <tr>
                         <td></td>
@@ -46,7 +46,7 @@
                 
                   <table width="98%" border="0" cellspacing="0">
               		<tr>
-                        <td colspan="2" align="left" style=" padding-left:5px;"><a href="profile.php" title="Промени ги твоите лични податоци" alt="Промени ги твоите лични податоци"><strong><?php if(isset($_SESSION['MM_Name'])) echo $_SESSION['MM_Name']; ?></strong></a>&nbsp;<span style="color:#FFF">[</span><a href="logout.php?doLogout=true">Одјави се</a><span style="color:#FFF">]</span></td>
+                        <td colspan="2" align="left" style=" padding-left:5px;"><a href="profile.php" title="Промени ги твоите лични податоци" alt="Промени ги твоите лични податоци"><strong><?php if(isset($_SESSION['MM_Name'])) echo $_SESSION['MM_Name']; ?></strong></a>&nbsp;<span style="color:#FFF">[</span><a href="../logout.php?doLogout=true">Одјави се</a><span style="color:#FFF">]</span></td>
                     </tr>
                       <tr>
                         <td></td>

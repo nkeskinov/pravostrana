@@ -139,7 +139,7 @@ transition: Fx.Transitions.sineOut
 <div id="wrapper">
 	<div class="header">
    	  <div class="header-top">
-   	    <div id="logoText"><img src="images/banner.png" /></div>
+   	    <div id="bannerDiv1"><?php getBanner($database_pravo, $pravo, 2); ?></div>    
    	  </div>
       <div id="horiz-menu" class="moomenu"><!-- InstanceBeginEditable name="Menu" -->
         <ul class="nav">
@@ -157,7 +157,6 @@ transition: Fx.Transitions.sineOut
           <li><a href="contact.php">Контакт</a></li>
         </ul>
       <!-- InstanceEndEditable -->
-        <div id="menu"></div>
         <div id="mapMenu">
        <!-- InstanceBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;</td><td>Анализи&nbsp;</td></tr></table><!-- InstanceEndEditable -->
        </div>
@@ -165,12 +164,22 @@ transition: Fx.Transitions.sineOut
 	</div>
     
     <div class="mainBody">
-   	  <div class="content">
-            <div><?php getBanner($database_pravo, $pravo, 1); ?></div>
             <!-- InstanceBeginEditable name="Content" -->
-            <table width="100%">
+            <table width="100%" cellpadding="0">
+             <tr>
+                <td colspan="2"><div><?php getBanner($database_pravo, $pravo, 1); ?></div></td>
+                <td rowspan="4" valign="top">
+                <?php include("util/login_block.php"); ?>
+                      <?php include("util/search_reduced.php"); ?>
+                      <div><?php getBanner($database_pravo, $pravo, 3); ?></div>
+                      <br />
+                      <div><?php getBanner($database_pravo, $pravo, 4); ?></div>
+                      <br />
+                      <div><?php getBanner($database_pravo, $pravo, 5); ?></div>
+                </td>
+              </tr>
               <tr>
-                <td width="28%" valign="top"><div class="left-block">
+                <td valign="top" width="200"><div class="left-block">
                   <div class="title">
                     <div class="left"></div>
                     <div class="middle">
@@ -182,7 +191,7 @@ transition: Fx.Transitions.sineOut
                     <p><?php include("util/doc_category.php"); ?>&nbsp;</p>
                   </div>
                 </div></td>
-                <td width="72%" valign="top"><div class="right-block-bigger">
+                <td valign="top" width="468" style="padding-right:1px;"><div class="right-block-bigger">
                   <div class="title">
                     <div class="left"></div>
                     <div class="middle">
@@ -191,7 +200,7 @@ transition: Fx.Transitions.sineOut
                     <div class="right"></div>
                   </div>
                   <div class="sodrzina" style="border-left:none; border-right:none; margin:0; padding:0;">
-					<p><?php include("util/documents.php"); ?>&nbsp;</p>
+                    <p><?php include("util/documents.php"); ?>&nbsp;</p>
                   </div>
                 </div></td>
               </tr>
@@ -205,28 +214,7 @@ transition: Fx.Transitions.sineOut
               </tr>
             </table>
             <!-- InstanceEndEditable -->
-        	<p>&nbsp;</p>
-        	<p>&nbsp;</p>
-       		<p>&nbsp;</p>
-            
-      </div>
-
- 
-        <div class="right">
-        <?php include("util/login_block.php"); ?>
-          <div style="width:250px; margin-top:5px; margin-bottom:5px;"><!-- InstanceBeginEditable name="SearchRegion" --><?php include("util/search_reduced.php"); ?><!-- InstanceEndEditable --></div>
-          <div>
-            <div><?php getBanner($database_pravo, $pravo, 3); ?></div>
-          	<br />
-          	<div><?php getBanner($database_pravo, $pravo, 4); ?></div>
-          	<br />
-          	<div><?php getBanner($database_pravo, $pravo, 5); ?></div>
-          </div>
-          <br /><br /><br /><br />
-        </div>
-		
     </div>
-    <br /><br />
 	<div class="footer">Copyright &copy; 2009 Сите права задржани</div>	
     <div style="margin-top:-30px; color:#999; float:left; width:100%;">Pravo.org.mk не презема одговорност за евентуалните грешки во текстот на законите <div style="float:right;"><a href="http://camost.org" target="_blank"><img src="images/most.jpg" border="0"/></a></div></div>
 </div>

@@ -338,11 +338,11 @@ function MM_swapImage() { //v3.0
 //-->
 </script>
 <?php if(isset($_SESSION['MM_UserGroup']) && $_SESSION['MM_UserGroup']="admin" ) { ?>
-<div >
+<div style="width:100%;">
 <form method="post" name="form_comment" action="<?php echo $editFormAction; ?>">
 <?php if(isset($_POST['new']) || isset($_POST['EditPost'])){ ?>
-<div style="padding:10px; border-bottom:1px solid #f5e6a2; background:#fbf7e0; width:96%;">
-<table width="100%" border="0" >
+<div style="padding:10px; border-bottom:1px solid #f5e6a2; background:#fbf7e0; width:97%;">
+<table width="98%" border="0" >
 	<tr>
 	  <td align="right">Наслов:</td>
 	  <td><label>
@@ -351,7 +351,7 @@ function MM_swapImage() { //v3.0
 	  </tr>
 	<tr>
 	  <td align="right" valign="top">Содржина:</td>
-	  <td><textarea name="content" id="content"  class="mceEditor"  wrap='VIRTUAL'  cols="63" rows="4" style="border:1px solid #f5e6a2;"><?php if(isset($row_Post1['content'])){ echo $row_Post1['content']; }?>
+	  <td><textarea name="content" id="content"  class="mceEditor"  wrap='VIRTUAL'  cols="80" rows="7" style="border:1px solid #f5e6a2;"><?php if(isset($row_Post1['content'])){ echo $row_Post1['content']; }?>
 	  </textarea></td>
     </tr>
 	<tr>
@@ -364,6 +364,7 @@ function MM_swapImage() { //v3.0
 	    <input type="hidden" name="document_id" value="<?php echo $row_Post1['id_post']; ?>" />
 	    <input type="hidden" name="Comment_edit" id="Comment_edit" value="edit" />
 	    <?php } ?>
+         | <a href="news.php">Откажи</a>
 	    </div></td>
 	  </tr>
 	<tr>
@@ -372,7 +373,7 @@ function MM_swapImage() { //v3.0
 </table>
 </div>
 <?php } else { ?>
-	<div align="left" style="height:22px;width:100.05%; margin-left:-3px; margin-top:2px;  border-bottom:1px solid #a25852; background:#f5d6d4;  padding:3px; padding-top:1px;">
+	<div align="left" style="height:22px;width:99.1%;  border-bottom:1px solid #a25852; background:#f5d6d4;  padding:3px; padding-top:1px;">
     <input type="image" src="images/new.png" />
     <input type="hidden" name="new" />
     </div>
@@ -380,9 +381,8 @@ function MM_swapImage() { //v3.0
 </form>
 
 </div> 
-<br />
 <?php } ?>
-<div>
+<div style="width:99.9%;">
 <table border="0" width="100%" cellspacing="0" cellpadding="0">
   
   <?php 

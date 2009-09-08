@@ -40,56 +40,30 @@ if (!((isset($_SESSION['MM_Username'])) && (isAuthorized("",$MM_authorizedUsers,
 
 <script type="text/javascript" src="../rokmoomenu.js"></script>
 <!-- calendar stylesheet -->
-
-
- 
 <script type="text/javascript">
-
 window.addEvent('domready', function() {
-
 new rokmoomenu($E('ul.nav'), {
-
 bgiframe: false,
-
 delay: 500,
-
 animate: {
-
 props: ['opacity', 'width', 'height'],
-
 opts: {
-
 duration:400,
-
 fps: 100,
-
 transition: Fx.Transitions.sineOut
-
 }
-
 }
-
 });
-
 });
-
 </script>
-
-<style type="text/css">
-<!--
-
--->
-</style>
 <!-- TemplateBeginEditable name="head" -->
 <!-- TemplateEndEditable -->
 </head>
-
 <body>
-
 <div id="wrapper">
 	<div class="header">
    	  <div class="header-top">
-   	    <div id="logoText"><img src="../images/banner.png" /></div>
+   	    <div id="bannerDiv1"></div>    
    	  </div>
       <div id="horiz-menu" class="moomenu"><!-- TemplateBeginEditable name="Menu" -->
         <ul class="nav">
@@ -107,46 +81,35 @@ transition: Fx.Transitions.sineOut
           <li><a href="../contact.php">Контакт</a></li>
         </ul>
       <!-- TemplateEndEditable -->
-        <div id="menu"></div>
        <div id="mapMenu"><!-- TemplateBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;</td></tr></table><!-- TemplateEndEditable --></div> 
       </div>
 	</div>
     <div class="mainBody">
-   	  <div class="content">
-            <div></div>
-            <table><tr><td>
+   	 <table width="100%">
+             <tr>
+                <td valign="top"></td>
+                <td rowspan="2" valign="top" width="250">
+                <?php include("../admin/util/login_block.php"); ?>
+                      <br />
+                      <div style="text-align:left;"><?php include("../admin/util/menu.php"); ?></div>
+                </td>
+              </tr>
+            <tr><td valign="top">
             <div class="middle-red-block">
                 <div class="title">
                     <div class="left"></div>
                     <div class="middle"><div class="text"><!-- TemplateBeginEditable name="BlockTitle" -->Наслов<!-- TemplateEndEditable --></div></div>
                     <div class="right"></div>
                 </div>
-                 <div class="sodrzina"><!-- TemplateBeginEditable name="BlockContent" -->
+                 <div class="sodrzina" style="" ><!-- TemplateBeginEditable name="BlockContent" -->
                    <p>Текст </p>
                    <p>Текст</p>
                    <p>&nbsp;</p>
                  <!-- TemplateEndEditable --></div>
             </div>
             </td></tr></table>
-   		 <p>&nbsp;</p>
-         <p>&nbsp;</p>
-         <p>&nbsp;</p>
-         <p>&nbsp;</p>   
-      </div>
-        <div class="right">
-				<?php include("util/loginSmall.php"); ?>
-            <br />
-            <div class="left-block1" style="width:250px;>
-                <div class="title">
-                    <div class="left"></div>
-                    <div class="middle"><div class="text">Администраторско Мени</div></div>
-                    <div class="right"></div>
-                </div>
-                <div class="sodrzina" style="padding-top:10px;">
-                    <?php include("util/menu.php"); ?>
-                </div>
-            </div>
-          </div>
+     
+     </div>
 
     
 	<div class="footer">Copyright &copy; 2009 Сите права задржани</div>	

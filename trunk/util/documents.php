@@ -206,7 +206,7 @@ function getNumDownload($id_document, $pravo, $database_pravo){
 	}
 }
 ?>
-   <div align="left" style="height:22px; margin-top:-15px; width:512px;border-bottom:1px solid #a25852; background:#f5d6d4;  padding:3px; padding-top:1px;">
+   <div align="left" style="height:22px; margin-top:-15px; width:512px; border-bottom:1px solid #a25852; background:#f5d6d4;  padding:3px; padding-top:1px;">
    <?php if(isset($_SESSION['MM_UserGroup'])) {
 		if($_SESSION['MM_UserGroup'] =="admin"){ ?>
    <div style="width:26px; height:21px; padding-top:1.5px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">

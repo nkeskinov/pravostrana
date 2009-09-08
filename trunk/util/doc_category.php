@@ -49,7 +49,7 @@ $tmp_number=0;
     </tr>
     <?php } while ($row_Recordset1 = mysql_fetch_assoc($Recordset1)); ?>
 </table><?php */?>
-<div id="yuitree1">
+<div id="yuitree1" style="width:186px;">
   <ul>
  <?php do { ?>
  <li><a href="?id_doc_group=<?php echo $row_Recordset1['id_doc_group']; ?>"><?php echo $row_Recordset1['name']; ?></a> 

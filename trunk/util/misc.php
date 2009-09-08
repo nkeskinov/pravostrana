@@ -184,6 +184,5 @@ function trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page
 	$ResultPageVisit = mysql_query($Query1, $pravo) or die(mysql_error());
 	if($ResultPageVisit)
 		$success=true;
-	
 }
 ?>
