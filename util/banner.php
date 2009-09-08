@@ -49,5 +49,3 @@ function getBanner($database_pravo, $pravo, $position){
 	
 }
 ?>
-
-<p>&nbsp;</p>

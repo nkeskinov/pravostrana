@@ -170,10 +170,10 @@ function popUpWindow(URLStr, left, top, width, height)
         </td>
   	</tr>
     <tr>
-         <td align='left'>Под-податегорија: </td>
+         <td align='left'>Под-подкатегорија: </td>
          <td>
             <font id="subsubcategory"><select style='width:320px;' disabled name="subsubcategory">
-            <option value='0'>Изберете под-подакатегорија</option>
+            <option value='0'>Изберете под-подкатегорија</option>
             </select></font>
 		</td>
   	</tr>

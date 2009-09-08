@@ -84,7 +84,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 }
 
 if(isset($_GET['mode']) && ($_GET['mode'] == "delete")){
-	$deleteSQL = sprintf("DELETE FROM `user` WHERE id_user = %s", GetSQLValueString($_GET['id'], "int"));
+	$deleteSQL = sprintf("UPDATE `user` SET deleted=1 WHERE id_user = %s", GetSQLValueString($_GET['id'], "int"));
 	mysql_select_db($database_pravo, $pravo);
   	$Result1 = mysql_query($deleteSQL, $pravo) or die(mysql_error());
 }
@@ -146,7 +146,7 @@ $totalRows_UserEdit = mysql_num_rows($UserEdit);
 <script src="../jquery.ui-1.5.2/ui/ui.datepicker.js" type="text/javascript"></script>
 <link href="../jquery.ui-1.5.2/themes/ui.datepicker.css" rel="stylesheet" type="text/css" />
 
-<div align="left" style="height:22px; margin-left:-5px;  width:100.5%; border-bottom:1px solid #a25852; background:#f5d6d4;  padding:3px; padding-top:1px;">
+<div align="left" style="height:22px; width:99%; border-bottom:1px solid #a25852; background:#f5d6d4;  padding:3px; padding-top:1px;">
   <table cellpadding="0" cellspacing="0">
   <tr></tr>
   <tr>
@@ -372,15 +372,15 @@ do {
     <td>Посети</td>
   </tr>
   <?php $i=0; do { ?>
-    <tr <?php if($i%2==0) echo "style='background:#fbf7e0'" ?>>
+    <tr <?php if($i%2==0) echo "style='background:#fbf7e0'"; if($row_Users['deleted']==1) echo "style='color:#999'"; ?>>
       <td width="16"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?id=<?php echo $row_Users['id_user']; ?>&mode=edit&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/pencil.png" border="0" /></a></td>
       <td width="16"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?id=<?php echo $row_Users['id_user']; ?>&mode=delete&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>" onClick="return confirm('Дали навистина сакате да го избришете документот?')"><img src="../images/cross.png" border="0" /></a></td>
       <td width="30%"><a href="/pravo.org.mk/admin/userDetails.php?id=<?php echo $row_Users['id_user']; ?>" ><?php echo $row_Users['name']; ?> <?php echo $row_Users['surname']; ?></a></td>
       <td><?php echo  date("d.m.Y H:i:s",strtotime($row_Users['last_login_date'])); ?></td>
       <td align="center">
-	   <input type="checkbox" name="forcesubscribe" value="1"  <?php if (!(strcmp(htmlentities( $row_Users['is_approved'], ENT_COMPAT, ''),1))) {echo "checked=\"checked\"";} ?>>
+	   <input type="checkbox" disabled="disabled" name="forcesubscribe" value="1"  <?php if (!(strcmp(htmlentities( $row_Users['is_approved'], ENT_COMPAT, ''),1))) {echo "checked=\"checked\"";} ?>>
 	 </td>
-      <td align="center"> <input type="checkbox" name="forcesubscribe" value="1"  <?php if (!(strcmp(htmlentities( $row_Users['deleted'], ENT_COMPAT, ''),1))) {echo "checked=\"checked\"";} ?>></td>
+      <td align="center"> <input type="checkbox" disabled="disabled" name="forcesubscribe" value="1"  <?php if (!(strcmp(htmlentities( $row_Users['deleted'], ENT_COMPAT, ''),1))) {echo "checked=\"checked\"";} ?>></td>
       <td><?php echo $row_Users['downloads']; ?></td>
       <td><?php echo $row_Users['visits']; ?></td>
     </tr>

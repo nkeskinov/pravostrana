@@ -39,7 +39,7 @@ $totalPages_Documents2 = ceil($totalRows_Documents2/$maxRows_Documents2)-1;
 <script src="../YUI/2.6.0/build/container/container-min.js" type="text/javascript"></script>
 
 
-<table border="0" cellspacing="0" cellpadding="0">
+<table border="0" cellspacing="0" cellpadding="0" width="197">
   <?php do { 
   	$title_exp=explode(" ",$row_Documents2['title']);
 	$title_arr=array();
@@ -61,8 +61,5 @@ $totalPages_Documents2 = ceil($totalRows_Documents2/$maxRows_Documents2)-1;
     </tr>
     <?php } while ($row_Documents2 = mysql_fetch_assoc($Documents2)); ?>
 </table>
-
-
-
 <?php mysql_free_result($Documents2); ?>
 

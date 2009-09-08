@@ -33,7 +33,7 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 ?>
 <div style="margin-top:3px;">
-<table width="98%" cellspacing="0" cellpadding="5" height="250">
+<table width="248" cellspacing="0" cellpadding="5" height="250">
 <?php do {
 	$content1=$row_Post['content'];
 	$subject1=$row_Post['subject'];

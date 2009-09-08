@@ -50,7 +50,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
                        GetSQLValueString($_POST['name'], "text"),
                        GetSQLValueString($_POST['surname'], "text"),
                        GetSQLValueString($_POST['occupation'], "int"),
-                       GetSQLValueString($_POST['email'], "text"),
+                       GetSQLValueString($_POST['username'], "text"),
                        GetSQLValueString($_POST['organization'], "int"),
                        GetSQLValueString($data_na_raganje, "date"),
                        GetSQLValueString($_POST['sex'], "int"),
@@ -95,7 +95,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
                        GetSQLValueString($_POST['country'], "text"),
                        GetSQLValueString($_POST['username'], "text"),
                        GetSQLValueString($_POST['password'], "text"),
-                       GetSQLValueString($_POST['email'], "text"),
+                       GetSQLValueString($_POST['username'], "text"),
 					   GetSQLValueString(0,"int"),
 					   GetSQLValueString(1,"int"));
 	
@@ -721,26 +721,9 @@ do {
     <tr valign="baseline">
       <td colspan="3" align="right" nowrap style="border-bottom:1px dotted #CCC;">&nbsp;</td>
     </tr>
-    <tr valign="baseline">
-      <td colspan="3"><h4>3. Во случај да ги заборавите корисничкото име и лозинката...</h4></td>
-    </tr>
-    <tr valign="baseline">
-      <td nowrap align="right">Алтернативна E-mail:</td>
-      <td colspan="2"><span id="sprytextfield4">
-      <input type="text" name="email" value="<?php if(isset($_POST['email']))
-	  						echo $_POST['email'];
-						elseif(isset($_SESSION['MM_ID'])) 
-							echo htmlentities($row_RecordsetUsers['email'], ENT_COMPAT, 'utf-8'); 
-						else echo "";?>" size="32" />
-      <span class="textfieldRequiredMsg">Алтернативната е-mail адреса е задолжителна.</span><span class="textfieldInvalidFormatMsg">Неправилен формат на email адресата.</span></span></td>
-    </tr>
     <?php if(strpos($editFormAction,'profile.php') == false) { ?>
-
     <tr valign="baseline">
-      <td colspan="3" align="right" nowrap style="border-bottom:1px dotted #CCC;">&nbsp;</td>
-    </tr>
-    <tr valign="baseline">
-      <td colspan="3"><h4>4. Уште неколку детали...</h4></td>
+      <td colspan="3"><h4>3. Уште неколку детали...</h4></td>
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Безбедносен код:</td>
@@ -805,7 +788,6 @@ do {
 		var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "email");
 		var sprypassword1 = new Spry.Widget.ValidationPassword("sprypassword1");
 		var sprycheckbox1 = new Spry.Widget.ValidationCheckbox("sprycheckbox1");
-		var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4", "email");
 		var spryconfirm1 = new Spry.Widget.ValidationConfirm("spryconfirm1", "password", {validateOn:["change"]});
 		var sprytextfield7 = new Spry.Widget.ValidationTextField("sprytextfield7");
 	//-->
@@ -820,7 +802,6 @@ do {
 		var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "email");
 		var sprypassword1 = new Spry.Widget.ValidationPassword("sprypassword1");
 		var sprycheckbox1 = new Spry.Widget.ValidationCheckbox("sprycheckbox1");
-		var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4", "email");
 
 		var sprytextfield7 = new Spry.Widget.ValidationTextField("sprytextfield7");
 //-->
