@@ -24,7 +24,7 @@ $totalPages_latestLawsRecordset = ceil($totalRows_latestLawsRecordset/$maxRows_l
 
 <link href="../style.css" rel="stylesheet" type="text/css">
 
-<table width="97%" border="0" cellpadding="5" cellspacing="0">
+<table width="100%" border="0" cellpadding="5" cellspacing="0">
 
     <?php
 	do { 
@@ -38,7 +38,7 @@ $totalPages_latestLawsRecordset = ceil($totalRows_latestLawsRecordset/$maxRows_l
 		}
 	?>
    	<tr onmouseover="this.className='on'" onmouseout="this.className='off'">
-      	<td width="94%" valign="top" <?php if($tmp_number<$maxRows_latestLawsRecordset-1) {?>style="border-bottom:1px dotted #CCC;"<?php }?>><a href="documentDetail.php?id=<?php echo $id_document_link; ?>&page=laws.php" title="Детали за документот">
+      	<td width="94%" valign="top" <?php if($tmp_number<$maxRows_latestLawsRecordset-1) {?>style="border-bottom:1px dotted #CCC;"<?php }?>><a href="documentDetail.php?id=<?php echo $id_document_link; ?>&gid=<?php echo $row_latestLawsRecordset['id_doc_group']; ?>&tid=<?php echo $row_latestLawsRecordset['id_doc_type']; ?>&page=documentlaws.php" title="Детали за документот">
 		<?php echo $row_latestLawsRecordset['title'];
 		if ($id_superdoc != '') {
 			mysql_select_db($database_pravo, $pravo);

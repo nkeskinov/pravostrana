@@ -429,6 +429,10 @@ if ((isset($_GET['id'])) && ($_GET['id'] != "") && (isset($_GET['delete']))) {
 		
 		
    mysql_query("BEGIN", $pravo);
+   $deleteDiscussion = sprintf("DELETE FROM `discussion` WHERE id_document=%s",
+                       GetSQLValueString($_GET['id'], "int"));
+   $Result1 = mysql_query($deleteDiscussion, $pravo) or die(mysql_error());
+   
   $deleteSQL = sprintf("DELETE FROM `document` WHERE id_document=%s",
                        GetSQLValueString($_GET['id'], "int"));
 	

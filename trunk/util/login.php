@@ -20,7 +20,7 @@ if (isset($_POST['username_login'])) {
   $MM_redirecttoReferrer = false;
   mysql_select_db($database_pravo, $pravo);
   	
-  $LoginRS__query=sprintf("SELECT username, password, id_user, name, surname FROM `user` WHERE username=%s AND password=%s AND is_approved = 1 AND deleted!=1",
+  $LoginRS__query=sprintf("SELECT username, password, id_user, name, surname FROM `user` WHERE username=%s AND password=%s AND is_approved = 1 AND (deleted!=1 OR deleted is null)",
   GetSQLValueString($loginUsername, "text"), GetSQLValueString($password, "text")); 
    
   $LoginRS = mysql_query($LoginRS__query, $pravo) or die(mysql_error());
