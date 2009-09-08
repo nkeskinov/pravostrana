@@ -125,7 +125,7 @@ transition: Fx.Transitions.sineOut
     </td>
   </tr>
   <tr>
-    <td colspan="2" align="center"><?php getBanner($database_pravo, $pravo, 6); ?></td>
+    <td colspan="2" align="center"><?php getBanner($database_pravo, $pravo, 6); ?>&nbsp;</td>
   </tr>
   <tr>
     <td valign="top" width="250">
