@@ -58,8 +58,8 @@ transition: Fx.Transitions.sineOut
 <!-- InstanceBeginEditable name="head" -->
 <!-- InstanceEndEditable -->
 </head>
-<body style="margin:0 auto;">
-<div id="wrapper">
+<body>
+<div id="wrapper" align="right">
 	<div class="header">
    	  <div class="header-top">
         <div id="bannerDiv1"><?php getBanner($database_pravo, $pravo, 2); ?></div>    

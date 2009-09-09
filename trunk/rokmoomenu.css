@@ -1,13 +1,12 @@
 .nav, .nav * {
 	margin:0;
 	padding:15px;
-
+	
 }
 .nav {
 	line-height:2.0;
 	float:left;
 	margin-bottom:1.5em;
-
 }
 .nav ul {
 	background:#fff; /*IE6 needs this*/
