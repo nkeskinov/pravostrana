@@ -58,7 +58,7 @@ transition: Fx.Transitions.sineOut
 <!-- InstanceBeginEditable name="head" -->
 <!-- InstanceEndEditable -->
 </head>
-<body>
+<body style="margin:0 auto;">
 <div id="wrapper">
 	<div class="header">
    	  <div class="header-top">

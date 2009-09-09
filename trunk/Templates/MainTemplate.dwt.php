@@ -41,7 +41,7 @@ transition: Fx.Transitions.sineOut
 <!-- TemplateBeginEditable name="head" -->
 <!-- TemplateEndEditable -->
 </head>
-<body>
+<body style="margin:0 auto;">
 <div id="wrapper">
 	<div class="header">
    	  <div class="header-top">
