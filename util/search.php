@@ -95,7 +95,7 @@ function popUpWindow(URLStr, left, top, width, height)
 </script>
 
 
-<form action="documentlaws.php" method="get" enctype="application/x-www-form-urlencoded">
+<form action="documentlaws.php" method="get" enctype="application/x-www-form-urlencoded" >
 <table width="95%" border="0" height="250">
 <tr>
     <td colspan="2" align="left"><div align="right" style="font-size:11px;"><a href="JavaScript:popUpWindow('help.php?id=1','','',450,'330');">совети за пребарување</a></div>
@@ -148,8 +148,6 @@ function popUpWindow(URLStr, left, top, width, height)
     <td align="left">Број / Година: </td>
     <td><label>
       <input name="number" type="text" id="number" size="4">
-      /
-      <input name="year" type="text" id="year" size="4">
     </label></td>
   </tr>
  	<tr>
@@ -160,7 +158,7 @@ function popUpWindow(URLStr, left, top, width, height)
             <option value='0'>Изберете категорија</option> 
             </select></font>
             <br /><font id="subcategory"></font>
-            <br /><font id="subsubcategory"></font>
+            <br /><font id="subsubcategory"></font></form>
         </td>
   	</tr>
 	

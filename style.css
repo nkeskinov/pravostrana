@@ -5,18 +5,18 @@ html {
      all times so that the page does not jump
      when going from short to long pages */
   height: 100%;
+  margin:0 auto;
   margin-bottom: 1px;
   font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
 }
 body {
-	margin: 0 auto;
+	margin: 0;
 	padding: 0;
 	background:none;
 	background-repeat:repeat-x;
 	background-color: #fdfdf6;
 	font-size: 13px;
 	line-height: 125%;
- 
 }
 a:link {
 	color: #333;
@@ -82,10 +82,10 @@ h4 {
 
 
 #wrapper {
+	
 	position:relative;
 	width:980px;
 	margin: 0 auto;
-
 }
 .wr1{
 	text-align:center;
@@ -124,7 +124,7 @@ h4 {
 	color:#FFFFFF;
 	font-size:12px;
 	font-weight:normal;
-	/*text-align:left;*/
+	text-align:left;
 	padding-left:5px;
 }
 #mapMenu a{
@@ -567,7 +567,7 @@ h4 {
 
 .mainBody .middle-red-block{
 	float:left;
-	width:724px;
+	width:725px;
 	display:block;
 }
 .mainBody .middle-red-block .title{
@@ -601,7 +601,7 @@ h4 {
 }
 .mainBody .middle-red-block .sodrzina{
 	border:1px solid #71312d;
-	width:100%;
+	width:99.7%;
 	border-top:none;
 	margin-top:0px;
 	min-height:300px;
