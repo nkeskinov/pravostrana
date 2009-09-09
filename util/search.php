@@ -153,31 +153,17 @@ function popUpWindow(URLStr, left, top, width, height)
     </label></td>
   </tr>
  	<tr>
-        <td align='left'>Категорија: </td>
+        <td align='left' valign="top">Категорија: </td>
         <td>
             <form name="sel">
             <font id="category"><select style='width:320px;' name="category">
             <option value='0'>Изберете категорија</option> 
             </select></font>
+            <br /><font id="subcategory"></font>
+            <br /><font id="subsubcategory"></font>
         </td>
   	</tr>
-	<tr>
-        <td align='left'>Подкатегорија: </td>
-        <td>
-            <font id="subcategory"><select style='width:320px;' disabled name="subcategory">
-            <option value='0'>Изберете подкатегорија</option> 
-            </select></font>
-        </td>
-  	</tr>
-    <tr>
-         <td align='left'>Под-подкатегорија: </td>
-         <td>
-            <font id="subsubcategory"><select style='width:320px;' disabled name="subsubcategory">
-            <option value='0'>Изберете под-подкатегорија</option>
-            </select></font>
-		</td>
-  	</tr>
-  <tr>
+	
     <td align="left">Клучен збор: </td>
     <td><label>
       <input name="keyword" type="text" id="keyword" onkeyup="this.form.keyword.value=toCyr(this.form.keyword.value)" size="50">
@@ -191,11 +177,9 @@ function popUpWindow(URLStr, left, top, width, height)
   </tr>
   <tr>
     <td colspan="2" align="left">Базата содржи вкупно <strong><?php echo $total; ?></strong> закони донесени во периодот од <strong>1992</strong> до <strong><?php echo $to_date; ?></strong> година. </td>
-    </tr>
-  
-</table>
+   </tr>
+   </table>
 </form>
-
 <script language=Javascript>
 function Inint_AJAX() {
    try { return new ActiveXObject("Msxml2.XMLHTTP");  } catch(e) {} //IE

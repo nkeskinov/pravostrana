@@ -25,24 +25,28 @@
 	 }else if ($data=='subcategory') {
 		 $query1 = sprintf("SELECT id_doc_group, dg.name name FROM doc_group dg, doc_type dt WHERE dg.id_doc_type=dt.id_doc_type AND dt.id_doc_type=%s AND id_supergroup = %s ORDER BY dg.id_doc_group ASC", GetSQLValueString($type, "int"), GetSQLValueString($val, "int"));
 	   	$result = mysql_query($query1, $pravo) or die(mysql_error());     
+		if(mysql_num_rows($result)>0){
 		echo "<select name='subcategory' ";
-		if(mysql_num_rows($result)<=0) echo "disabled='disabled'";
+		//if(mysql_num_rows($result)<=0) echo "disabled='disabled'";
 		echo " style='width:320px;' onChange=\"dochange('subsubcategory', this.value)\">\n"; //onChange=\"dochange('tumbon', this.value)
         echo "<option value='0'>Изберете подкатегорија</option>\n";	                            
        	while(list($id, $name)=mysql_fetch_array($result)){       
                echo "<option value=\"$id\" >$name</option> \n" ;
         }
+		}
 	 } else if ($data=='subsubcategory') {
 		 	$query2 = sprintf("SELECT id_doc_group, dg.name name FROM doc_group dg, doc_type dt WHERE dg.id_doc_type=dt.id_doc_type AND dt.id_doc_type=%s AND id_supergroup = %s ORDER BY dg.id_doc_group ASC", GetSQLValueString($type, "int"), GetSQLValueString($val, "int"));
 	   	$result = mysql_query($query2, $pravo) or die(mysql_error());
+		if(mysql_num_rows($result)>0){
 		echo "<select name='subsubcategory' ";
-		if(mysql_num_rows($result)<=0) echo "disabled='disabled'";
+		//if(mysql_num_rows($result)<=0) echo "disabled='disabled'";
 		echo " style='width:320px;' \">\n"; //onChange=\"dochange('tumbon', this.value)
         echo "<option value='0'>Изберете под-подкатегорија</option>\n";
                                        
        	while(list($id, $name)=mysql_fetch_array($result)){       
                echo "<option value=\"$id\" >$name</option> \n" ;
         }
+		}
 	 }
 	 echo "</select>\n"; 
 	 
