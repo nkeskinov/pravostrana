@@ -3,7 +3,8 @@ session_start();
 ?>
 <?php require_once("Connections/pravo.php"); ?>
 <?php include("util/misc.php"); ?>
-<?php include("util/banner.php"); ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?php include("util/banner.php"); ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!--templateinfo codeoutsidehtmlislocked="true" -->
@@ -14,13 +15,15 @@ session_start();
 <!-- TemplateBeginEditable name="doctitle" -->
 <title>Pravo.org.mk</title>
 <!-- TemplateEndEditable -->
+<!-- TemplateBeginEditable name="scripts" -->
+<!-- TemplateEndEditable -->
 <link href="YUI/2.6.0/build/fonts/fonts-min.css" rel="stylesheet" type="text/css" />
 <link href="YUI/2.6.0/build/container/assets/skins/sam/container.css" rel="stylesheet" type="text/css" />
 <script src="YUI/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
 <script src="YUI/2.6.0/build/container/container-min.js" type="text/javascript"></script>
+<script type="text/javascript" src="../mootools.js"></script>
 <script type="text/javascript" src="../roktools.js"></script>
 <script type="text/javascript" src="../javaScripts/cirillic_converter.js"></script>
-<script type="text/javascript" src="../mootools.js"></script>
 <script type="text/javascript" src="../rokmoomenu.js"></script>
 <script type="text/javascript">
 window.addEvent('domready', function() {
@@ -42,8 +45,7 @@ transition: Fx.Transitions.sineOut
 <!-- TemplateEndEditable -->
 </head>
 <body>
-<table align="center"><tr><td>
-<div id="wrapper" align="right">
+<div id="wrapper">
 	<div class="header">
    	  <div class="header-top">
         <div id="bannerDiv1"><?php getBanner($database_pravo, $pravo, 2); ?></div>    
@@ -153,6 +155,6 @@ transition: Fx.Transitions.sineOut
     
     </div>
 </div>
-</td></tr></table>
+
 </body>
 </html>

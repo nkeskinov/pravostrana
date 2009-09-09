@@ -846,17 +846,17 @@ tr.off {
 }
 
 
-.laters a:link {
+.letters a:link {
 	color:#333;
 }
-.laters a:visited {
+.letters a:visited {
 	color: #333;
 }
-.laters a:hover {
+.letters a:hover {
 	color:#666;
 	text-decoration:underline;
 }
-.laters a:active {
+.letters a:active {
 	color: #333;
 }
 #bannerDiv1 {

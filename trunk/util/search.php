@@ -91,19 +91,18 @@ function popUpWindow(URLStr, left, top, width, height)
   popUpWin = open(URLStr, 'popUpWin', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,copyhistory=yes,width='+width+',height='+height+',left='+winl+', top='+wint+',screenX='+winl+',screenY='+wint+'');
 }
 
-
 </script>
 
 
 <form action="documentlaws.php" method="get" enctype="application/x-www-form-urlencoded" >
-<table width="95%" border="0" height="250">
+<table width="95%" border="0">
 <tr>
     <td colspan="2" align="left"><div align="right" style="font-size:11px;"><a href="JavaScript:popUpWindow('help.php?id=1','','',450,'330');">совети за пребарување</a></div>
     <strong>Пребарувај по почетна буква на законот</strong>
     </td>
   </tr>
 <tr>
-    <td colspan="2" align="left"><div class="laters">
+    <td colspan="2" align="left"><div class="letters">
     <?php if(in_array("А",$index_array)) echo '<a href="documentlaws.php?starts_with=а">А</a>'; else echo "<span style='color:#ccc'>А</span>"; ?>
     <?php if(in_array("Б",$index_array)) echo '<a href="documentlaws.php?starts_with=б">Б</a>'; else echo "<span style='color:#ccc'>Б</span>"; ?>
     <?php if(in_array("В",$index_array)) echo '<a href="documentlaws.php?starts_with=в">В</a>'; else echo "<span style='color:#ccc'>В</span>"; ?>
@@ -161,7 +160,7 @@ function popUpWindow(URLStr, left, top, width, height)
             <br /><font id="subsubcategory"></font></form>
         </td>
   	</tr>
-	
+	<tr>
     <td align="left">Клучен збор: </td>
     <td><label>
       <input name="keyword" type="text" id="keyword" onkeyup="this.form.keyword.value=toCyr(this.form.keyword.value)" size="50">
