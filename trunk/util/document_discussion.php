@@ -202,8 +202,8 @@ function MM_swapImage() { //v3.0
   do { 
   	if($num_of_posts){ ?><tr>
       <td width="92%" style=" padding:5px;background:#fbf7e0;">
-	  	<span style="color:#C63"><?php echo $row_Post['name']; ?><?php echo $row_Post['surname']; ?></span>
-      	<span style="font-size:10px; color:#666;"> на<?php  echo date("d.m.Y H:i",strtotime($row_Post['created_date'])); ?></span>
+	  	<span style="color:#C63"><?php echo $row_Post['name']; ?>&nbsp;<?php echo $row_Post['surname']; ?></span>
+      	<span style="font-size:10px; color:#666;"> на <?php  echo date("d.m.Y H:i",strtotime($row_Post['created_date'])); ?></span>
       </td>
       <td width="8%" align="right" style="padding:5px;background:#fbf7e0;"><?php if(isset($_SESSION['MM_UserGroup'])) {
 		if($_SESSION['MM_UserGroup'] =="admin"){ 

@@ -427,16 +427,27 @@ if ((isset($_GET['id'])) && ($_GET['id'] != "") && (isset($_GET['delete']))) {
 		$DocType_old = mysql_query($DocTypeQuery_old, $pravo) or die(mysql_error());
 		$directory_old = mysql_result($DocType_old,0,'directory');
 		
-		
-   mysql_query("BEGIN", $pravo);
-   $deleteDiscussion = sprintf("DELETE FROM `discussion` WHERE id_document=%s",
+		$DiscussionQuery=sprintf("SELECT * FROM discussion where id_document=%s",
+								 GetSQLValueString($_GET['id'],"int"));
+		$DiscussionResult = mysql_query($DiscussionQuery, $pravo) or die(mysql_error());
+		 mysql_query("BEGIN", $pravo);
+		 
+		if(mysql_num_rows($DiscussionResult)){
+			$id_discussion=mysql_result($DiscussionResult,0,'id_discussion');
+			
+			$PostDelete = sprintf("DELETE FROM post WHERE id_discussion = %s",
+								  GetSQLValueString($id_discussion,"int"));
+			$PostResult = mysql_query($PostDelete,$pravo) or die(mysql_error());
+		}
+  
+      	$deleteDiscussion = sprintf("DELETE FROM discussion WHERE id_document=%s",
                        GetSQLValueString($_GET['id'], "int"));
-   $Result1 = mysql_query($deleteDiscussion, $pravo) or die(mysql_error());
+	   $Result1 = mysql_query($deleteDiscussion, $pravo) or die(mysql_error());
    
-  $deleteSQL = sprintf("DELETE FROM `document` WHERE id_document=%s",
+	   $deleteSQL = sprintf("DELETE FROM `document` WHERE id_document=%s",
                        GetSQLValueString($_GET['id'], "int"));
 	
-  $Result1 = mysql_query($deleteSQL, $pravo) or die(mysql_error());
+  	   $Result1 = mysql_query($deleteSQL, $pravo) or die(mysql_error());
   
  // $delete2SQL = sprintf("DELETE FROM `doc_meta` WHERE id_doc_meta=%s",
    //                    GetSQLValueString($_GET['id_doc_meta'], "int"));
