@@ -42,6 +42,7 @@ transition: Fx.Transitions.sineOut
 <!-- TemplateEndEditable -->
 </head>
 <body>
+<table align="center"><tr><td>
 <div id="wrapper" align="right">
 	<div class="header">
    	  <div class="header-top">
@@ -152,6 +153,6 @@ transition: Fx.Transitions.sineOut
     
     </div>
 </div>
-
+</td></tr></table>
 </body>
 </html>
