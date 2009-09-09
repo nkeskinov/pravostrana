@@ -10,10 +10,10 @@
 	@license http://creativecommons.org/licenses/by-nc/3.0/
 **/
 
-$HOST = "http://localhost/pravo.org.mk/";
+$HOST = "http://localhost/pravo/";
 
 // absolute path to your public_html directory
-$PUBLIC_HTML_DIR = "C:/wamp/www/pravo.org.mk/";
+$PUBLIC_HTML_DIR = "D:/dev/pravo.org.mk/";
 
 // valid image extension
 $IMAGE_EXTENSIONS = array("jpg", "jpeg","png", "gif");
@@ -25,8 +25,7 @@ $IMAGE_EXTENSIONS = array("jpg", "jpeg","png", "gif");
 */
 $DIRS = array
 (
-	array('title'=>"Text images",	'dir'=>"images/text/"),
-	array('title'=>"Gallery images",'dir'=>"images/gallery/"),
+	array('title'=>"Слики за новости",	'dir'=>"pravo.org.mk/images/news/"),
 );
 /*
 	IMAGE_FORMATS - custom image formats for uploading images

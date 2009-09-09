@@ -4,7 +4,6 @@ session_start();
 } ?>
 <?php require_once("Connections/pravo.php"); ?>
 <?php require("util/misc.php"); ?>
-<?php require("util/banner.php"); ?>
 <?php 
 $ip_address=$_SERVER['REMOTE_ADDR'];
 $page=substr(strrchr($_SERVER['PHP_SELF'],"/"),1);
@@ -31,13 +30,16 @@ trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_p
 <!-- InstanceBeginEditable name="doctitle" -->
 <title>Pravo.org.mk | Почетна</title>
 <!-- InstanceEndEditable -->
+<!-- InstanceBeginEditable name="scripts" -->
+<?php require("util/banner.php"); ?>
+<!-- InstanceEndEditable -->
 <link href="YUI/2.6.0/build/fonts/fonts-min.css" rel="stylesheet" type="text/css" />
 <link href="YUI/2.6.0/build/container/assets/skins/sam/container.css" rel="stylesheet" type="text/css" />
 <script src="YUI/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
 <script src="YUI/2.6.0/build/container/container-min.js" type="text/javascript"></script>
+<script type="text/javascript" src="mootools.js"></script>
 <script type="text/javascript" src="roktools.js"></script>
 <script type="text/javascript" src="javaScripts/cirillic_converter.js"></script>
-<script type="text/javascript" src="mootools.js"></script>
 <script type="text/javascript" src="rokmoomenu.js"></script>
 <script type="text/javascript">
 window.addEvent('domready', function() {
@@ -59,8 +61,7 @@ transition: Fx.Transitions.sineOut
 <!-- InstanceEndEditable -->
 </head>
 <body>
-<table align="center"><tr><td>
-<div id="wrapper" align="right">
+<div id="wrapper">
 	<div class="header">
    	  <div class="header-top">
         <div id="bannerDiv1"><?php getBanner($database_pravo, $pravo, 2); ?></div>    
@@ -171,6 +172,6 @@ transition: Fx.Transitions.sineOut
     
     </div>
 </div>
-</td></tr></table>
+
 </body>
 <!-- InstanceEnd --></html>

@@ -4,7 +4,6 @@ session_start();
 ?>
 <?php require_once("Connections/pravo.php"); ?>
 <?php include("util/misc.php"); ?>
-<?php include("util/banner.php"); ?>
 <?php 
 $id_doc_type_Documents = LAWS;
 $ip_address=$_SERVER['REMOTE_ADDR'];
@@ -34,6 +33,7 @@ trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_p
 <!-- InstanceBeginEditable name="doctitle" -->
 <title>Pravo.org.mk | Закони</title>
 <!-- InstanceEndEditable -->
+<?php include("util/banner.php"); ?>
 <link href="YUI/2.6.0/build/fonts/fonts-min.css" rel="stylesheet" type="text/css" />
 <link href="YUI/2.6.0/build/container/assets/skins/sam/container.css" rel="stylesheet" type="text/css" />
 <script src="YUI/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>

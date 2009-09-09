@@ -3,7 +3,6 @@ session_start();
 ?>
 <?php require_once("Connections/pravo.php"); ?>
 <?php include("util/misc.php"); ?>
-<?php include("util/banner.php"); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -15,6 +14,7 @@ session_start();
 <!-- TemplateBeginEditable name="doctitle" -->
 <title>pravo.org.mk</title>
 <!-- TemplateEndEditable -->
+<?php include("util/banner.php"); ?>
 <link href="YUI/2.6.0/build/fonts/fonts-min.css" rel="stylesheet" type="text/css" />
 <link href="YUI/2.6.0/build/container/assets/skins/sam/container.css" rel="stylesheet" type="text/css" />
 <script src="YUI/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
