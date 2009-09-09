@@ -2,12 +2,12 @@
 $currentPage = $_SERVER["PHP_SELF"];
 
 $sort_order="desc";
-if(isset($_POST['desc']))
-	$sort_order="desc";
-else
+if(isset($_POST['asc']))
 	$sort_order="asc";
+//else
+//	$sort_order="asc";
 	
-$sort="published_date";
+$sort="uploaded_date";
 if(isset($_POST['sort']) && $_POST['sort']!=""){
 	$sort=$_POST['sort'];
 }
@@ -149,7 +149,7 @@ function getSubDocuments($id_document, $pravo, $database_pravo,$gid){
       <?php }?>
       </td>
       <td width="91%">&nbsp;<?php echo $row_SubDocuments['title']; ?><br>
-      <span style="color:#666; font-size:10px">&nbsp;&nbsp;<?php echo date("d.m.Y", $timestamp); ?>&nbsp; <?php //|</span><span style="color:#666; font-size:10px"> Сл. весник/година:</span> <span style="font-size:10px;"><?php echo $row_SubDocuments['ordinal']."/".date("Y",strtotime($row_SubDocuments['date'])); ?></span></td>
+      <span style="color:#666; font-size:10px">&nbsp;&nbsp;<?php echo date("d.m.Y", $timestamp); ?>&nbsp; <?php //|</span><span style="color:#666; font-size:10px"> Сл. весник / година:</span> <span style="font-size:10px;"><?php echo $row_SubDocuments['ordinal']."/".date("Y",strtotime($row_SubDocuments['date'])); ?></span></td>
       
       <td width="5%" align="right"><a href="documentDetail.php?id=<?php echo $id_document; ?>&gid=<?php echo $gid; ?>&page=<?php echo $page; ?>" title="Преземи го документот"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
     </tr>
@@ -269,17 +269,17 @@ function getNumDownload($id_document, $pravo, $database_pravo){
         	<div style="float:right">
             <form method="post" action="<?php printf("%s?%s", $currentPage,$_SERVER['QUERY_STRING']); ?>">
             <table width="100%" align="right"><tr><td>
-            <?php if(isset($_POST['desc']) ){?>
+            <?php if(isset($_POST['desc']) || isset($_POST['sort1'])){?>
             <input type="image" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image1','','images/sort-up.png',1)"src="images/sort-down.png" name="Image1" width="12" height="12" border="0" id="Image1" title="Сортирај во растечки редослед"/>
             
-            <input type="hidden" name="asc" /><?php } ?><?php if(isset($_POST['asc']) || isset($_POST['sort1'])){?>
+            <input type="hidden" name="asc" /><?php } ?><?php if(isset($_POST['asc'])){?>
              <input type="image" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image2','','images/sort-down.png',1)"src="images/sort-up.png" name="Image2" width="12" height="12" border="0" id="Image2" title="Сортирај во опаѓачки редослед"/>
             <input type="hidden" name="desc" /><?php } ?>
             </td><td>
               <select name="sort" id="sort" onchange="this.form.submit();">
                 <option>сортирај</option>
                 <option value="title" <?php if(isset($_POST['sort']) && !(strcmp($_POST['sort'],"title" ))) {echo "SELECTED";} ?>>наслов</option>
-                <option value="uploaded_date" <?php if(isset($_POST['sort']) && !(strcmp($_POST['sort'],"uploaded_date" ))) {echo "SELECTED";} ?>>датум</option>
+                <option value="published_date" <?php if(isset($_POST['sort']) && !(strcmp($_POST['sort'],"published_date" ))) {echo "SELECTED";} ?>>датум</option>
                 <?php if($page=="documentlaws.php"){ ?>
                 <option value="ordinal" <?php if(isset($_POST['sort']) && !(strcmp($_POST['sort'],"ordinal" ))) {echo "SELECTED";} ?>>сл. весник</option>
                 <option value="date" <?php if(isset($_POST['sort']) && !(strcmp($_POST['sort'],"date" ))) {echo "SELECTED";} ?>>сл. в. година</option>
