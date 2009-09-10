@@ -30,7 +30,7 @@ trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_p
 <link href="style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="images/favicon1.png" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>Pravo.org.mk | Судска Пракса</title>
+<title>Pravo.org.mk | Судска пракса</title>
 <!-- InstanceEndEditable -->
 <?php include("util/banner.php"); ?>
 <link href="YUI/2.6.0/build/fonts/fonts-min.css" rel="stylesheet" type="text/css" />
@@ -147,9 +147,9 @@ transition: Fx.Transitions.sineOut
           <li><a class="topdaddy" href="documentlaws.php">Закони</a></li>
           <li><a href="analysis.php">Анализи</a></li>
           <li><a href="regulations.php">Прописи</a></li>
-          <li  class="active"><a href="#">Судска Пракса</a>
+          <li  class="active"><a href="courtpractice.php">Судска пракса</a>
            <ul>
-            <li><a href="courtpractice.php">Судска Пракса</a></li>
+            <li><a href="courtpractice.php">Судска пракса</a></li>
             <li><a href="europeancourt.php">Европски суд за човекови права</a></li>
            </ul>
           </li>
