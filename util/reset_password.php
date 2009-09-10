@@ -20,7 +20,7 @@
 			$Message.="соодветно ви ги праќаме следниве информации: <br /><br />";
 			$Message.="Корисничко име: <strong>$username</strong><br />";
 			$Message.="Лозинка:<strong> $password</strong><br /><br />";
-			$Message.="Ве молиме не давајте ги вашето корисничко име и лозинка на никој!<br />";
+			$Message.="Ве молиме, не го делете корисничкото име и лозинката!<br />";
 			$Message.="Ви благодариме што користевте Pravo.org.mk <br /><br />";
 			$Message.="Со почит,<br />";
 			$Message.="Pravo.org.mk тимот";

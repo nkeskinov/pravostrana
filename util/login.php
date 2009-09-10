@@ -5,7 +5,9 @@
 session_start();
 } 
  */
-$loginFormAction = $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
+$selfArray = explode('/',$_SERVER['PHP_SELF']);
+$phpSelfAdaptation = $selfArray[count($selfArray)-1];
+$loginFormAction = $phpSelfAdaptation.($_SERVER['QUERY_STRING'] != '' ? "?".$_SERVER['QUERY_STRING'] : '');
 /*if (isset($_GET['accesscheck']) && isset($_SERVER['HTTP_REFERER'])) {
   $_SESSION['PrevUrl'] = $_SERVER['HTTP_REFERER'];//$_GET['accesscheck'];
 }*/
@@ -61,14 +63,16 @@ if (isset($_POST['username_login'])) {
       $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];	
     }*/
 	if($_SERVER['QUERY_STRING']!=""){
-		$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
+		$MM_redirectLoginSuccess=$phpSelfAdaptation."?".$_SERVER['QUERY_STRING'];
 		//header("Location: " . $MM_redirectLoginSuccess );
-		echo "<script>document.location.href='".$MM_redirectLoginSuccess."'</script>";
+		//echo $MM_redirectLoginSuccess;
+		echo "<script>document.location.href='../".$MM_redirectLoginSuccess."'</script>";
 		echo "<script>'Content-type: application/octet-stream'</script>";
 	} else {
-		$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
+		$MM_redirectLoginSuccess=$phpSelfAdaptation;
+		//echo $MM_redirectLoginSuccess;
 		//header("Location: " . $MM_redirectLoginSuccess );
-		echo "<script>document.location.href='".$MM_redirectLoginSuccess."'</script>";
+		echo "<script>document.location.href='../".$MM_redirectLoginSuccess."'</script>";
 		echo "<script>'Content-type: application/octet-stream'</script>";
 	}
   }
