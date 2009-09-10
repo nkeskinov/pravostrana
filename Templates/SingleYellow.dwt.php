@@ -71,7 +71,7 @@ transition: Fx.Transitions.sineOut
               <li><a href="#">Прописи</a></li>
             </ul>
           </li>
-          <li><a href="#">Судска пракса</a></li>
+          <li><a href="courtpractice.php">Судска пракса</a></li>
           <li><a href="#">Форум</a></li>
           <li><a href="#">Новости</a></li>
           <li><a href="#">Контакт</a></li>

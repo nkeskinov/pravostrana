@@ -145,9 +145,9 @@ transition: Fx.Transitions.sineOut
           <li <?php if($_GET['page']=="documentlaws.php") echo 'class="active"' ?>><a href="documentlaws.php">Закони</a></li>
           <li <?php if($_GET['page']=="analysis.php") echo 'class="active"' ?>><a href="analysis.php">Анализи</a></li>
           <li <?php if($_GET['page']=="regulations.php") echo 'class="active"' ?>><a href="regulations.php">Прописи</a></li>
-          <li <?php if($_GET['page']=="courtpractice.php" || $_GET['page']=="europeancourt.php") echo 'class="active"' ?>><a href="#">Судска Пракса</a>
+          <li <?php if($_GET['page']=="courtpractice.php" || $_GET['page']=="europeancourt.php") echo 'class="active"' ?>><a href="courtpractice.php">Судска пракса</a>
           	<ul>
-            	 <li><a href="courtpractice.php">Судска Пракса</a></li>
+            	 <li><a href="courtpractice.php">Судска пракса</a></li>
             	 <li><a href="europeancourt.php">Европски суд за човекови права</a></li>
              </ul>
           </li>
@@ -158,7 +158,7 @@ transition: Fx.Transitions.sineOut
         <div id="mapMenu">
        <!-- InstanceBeginEditable name="SiteMap" -->
        <table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;&nbsp;</td><td>
-	   <?php if($_GET['page']=="documentlaws.php") echo '<a href="documentlaws.php">Закони</a>'; if($_GET['page']=="analysis.php") echo '<a href="analysis.php">Анализи</a>';  if($_GET['page']=="regulations.php") echo '<a href="regulations.php">Прописи</a>'; if($_GET['page']=="courtpractice.php") echo '<a href="courtpractice.php">Судска Пракса</a>';  if($_GET['page']=="europeancourt.php") echo '<a href="europeancourt.php">Судска Пракса на Европски суд</a>';?>
+	   <?php if($_GET['page']=="documentlaws.php") echo '<a href="documentlaws.php">Закони</a>'; if($_GET['page']=="analysis.php") echo '<a href="analysis.php">Анализи</a>';  if($_GET['page']=="regulations.php") echo '<a href="regulations.php">Прописи</a>'; if($_GET['page']=="courtpractice.php") echo '<a href="courtpractice.php">Судска пракса</a>';  if($_GET['page']=="europeancourt.php") echo '<a href="europeancourt.php">Судска пракса на Европски суд</a>';?>
        &nbsp;&nbsp;&nbsp;&raquo;&nbsp;</td><td> Детален опис на документ</td></tr></table> 
       <!-- InstanceEndEditable -->
        </div>

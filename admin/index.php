@@ -73,7 +73,7 @@ transition: Fx.Transitions.sineOut
           <li class="active"><a class="topdaddy" href="/pravo.org.mk/documentlaws.php">Закони</a></li>
          <li><a href="/pravo.org.mk/analysis.php">Анализи</a></li>
           <li><a href="/pravo.org.mk/regulations.php">Прописи</a></li>
-          <li><a href="#">Судска пракса</a>
+          <li><a href="courtpractice.php">Судска пракса</a>
            <ul>
              <li><a href="/pravo.org.mk/courtpractice.php">Судска пракса</a></li>
             <li><a href="/pravo.org.mk/europeancourt.php">Европски суд за човекови права</a></li>

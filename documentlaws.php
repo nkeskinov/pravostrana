@@ -156,9 +156,9 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
           <li class="active"><a class="topdaddy" href="documentlaws.php">Закони</a></li>
           <li><a href="analysis.php">Анализи</a></li>
           <li><a href="regulations.php">Прописи</a></li>
-          <li><a href="#">Судска Пракса</a>
+          <li><a href="courtpractice.php">Судска пракса</a>
            <ul>
-             <li><a href="courtpractice.php">Судска Пракса</a></li>
+             <li><a href="courtpractice.php">Судска пракса</a></li>
              <li><a href="europeancourt.php">Европски суд за човекови права</a></li>
            </ul>
           </li>
