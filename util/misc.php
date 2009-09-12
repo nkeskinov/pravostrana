@@ -1,4 +1,5 @@
 <?php
+if (!function_exists("isAuthorized")) {
 // *** Restrict Access To Page: Grant or deny access to this page
 function isAuthorized($strUsers, $strGroups, $UserName, $UserGroup) { 
   // For security, start by assuming the visitor is NOT authorized. 
@@ -23,6 +24,7 @@ function isAuthorized($strUsers, $strGroups, $UserName, $UserGroup) {
     } 
   } 
   return $isValid; 
+}
 }
 if (!function_exists("_show_message_color")) {
 function _show_message_color($_message,$_color="")
@@ -135,7 +137,7 @@ if (!function_exists("send_mail")) {
 	}
 }
 
-
+if (!function_exists("trackVisit")) {
 function trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_page, $database_pravo, $pravo){
 	mysql_select_db($database_pravo, $pravo);
 	$success=false;
@@ -185,5 +187,6 @@ function trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page
 	$ResultPageVisit = mysql_query($Query1, $pravo) or die(mysql_error());
 	if($ResultPageVisit)
 		$success=true;
+}
 }
 ?>

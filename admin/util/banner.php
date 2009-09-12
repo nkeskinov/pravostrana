@@ -183,7 +183,7 @@ if ((isset($_GET['id'])) && ($_GET['id'] != "") && (isset($_GET['mode'])) && ($_
 ?>
 <?php if(isset($_GET['mode']) && ($_GET['mode']=="new" || $_GET['mode']=="edit" ) || isset($_GET['id'])){ ?>
 
-<?php if((isset($_GET['change']) && ($_GET['change']=="true")) || (!(isset($_GET['mode'])) && ($_GET['mode']="true"))) { ?>
+<?php if((isset($_GET['change']) && ($_GET['change']=="true")) || (isset($_GET['mode']) && ($_GET['mode']="new"))) { ?>
 <form method="post" name="form1" target="upload_iframe"
  action="<?php echo $editFormAction; ?>" enctype="multipart/form-data">
 <table width="100%" align="center" >

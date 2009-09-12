@@ -68,8 +68,8 @@ transition: Fx.Transitions.sineOut
    	  </div>
       <div id="horiz-menu" class="moomenu"><!-- InstanceBeginEditable name="Menu" -->
         <ul class="nav">
-           <li><a href="/pravo.org.mk/index.php">Почетна</a></li>
-          <li class="active"><a class="topdaddy" href="../documentlaws.php">Закони</a></li>
+           <li class="active"><a href="/pravo.org.mk/index.php">Почетна</a></li>
+          <li><a class="topdaddy" href="../documentlaws.php">Закони</a></li>
          <li><a href="../analysis.php">Анализи</a></li>
           <li><a href="../regulations.php">Прописи</a></li>
           <li><a href="courtpractice.php">Судска пракса</a>
@@ -92,7 +92,7 @@ transition: Fx.Transitions.sineOut
                 <td rowspan="2" valign="top" width="250">
                 <?php include("util/login_block.php"); ?>
                       <br />
-                      <div style="text-align:left;"><?php include("util/menu.php"); ?></div>
+                      <div style="text-align:left; margin:0;"><?php include("util/menu.php"); ?></div>
                 </td>
               </tr>
             <tr><td valign="top">

@@ -3,6 +3,7 @@ session_start();
 ?>
 <?php require_once("Connections/pravo.php"); ?>
 <?php include("util/misc.php"); ?>
+<?php include("util/Functions.php"); ?>
 <?php 
 $id_doc_type_Documents = "5";
 $ip_address=$_SERVER['REMOTE_ADDR'];
@@ -159,7 +160,7 @@ transition: Fx.Transitions.sineOut
         </ul>
       <!-- InstanceEndEditable -->
         <div id="mapMenu">
-       <!-- InstanceBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;</td><td>Судска пракса на Европски суд за човекови права&nbsp;</td></tr></table><!-- InstanceEndEditable -->
+       <!-- InstanceBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;&nbsp;&nbsp;</td><td><a href="europeancourt.php">Судска пракса на Европски суд за човекови права</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;&nbsp;&nbsp;<?php if(isset($_GET['id_doc_group']))getDocumentCategory1($_GET['id_doc_group'], $pravo, $database_pravo); ?></td></tr></table><!-- InstanceEndEditable -->
        </div>
       </div>
 	</div>

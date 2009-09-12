@@ -7,11 +7,15 @@
   <div class="sodrzina">
 <table border="0" cellspacing="0" cellpadding="2px" width="100%" align="left">
   <tr onmouseover="this.className='on'" onmouseout="this.className='off'">
-      <td style="border-bottom:1px dotted #CCC;">&raquo; <a href="documents.php">Документи</a>	
+      <td style="border-bottom:1px dotted #CCC;">&raquo; <a href="index.php">Статистика</a>	
       </td>
   </tr>
   <tr onmouseover="this.className='on'" onmouseout="this.className='off'">
       <td style="border-bottom:1px dotted #CCC;">&raquo; <a href="users.php">Корисници</a>	
+      </td>
+  </tr>
+  <tr onmouseover="this.className='on'" onmouseout="this.className='off'">
+      <td style="border-bottom:1px dotted #CCC;">&raquo; <a href="documents.php">Документи</a>	
       </td>
   </tr>
   <tr onmouseover="this.className='on'" onmouseout="this.className='off'">
@@ -24,6 +28,10 @@
   </tr>
   <tr onmouseover="this.className='on'" onmouseout="this.className='off'">
       <td style="border-bottom:1px dotted #CCC;">&raquo; <a href="banner.php">Банери</a>	
+      </td>
+  </tr>
+  <tr onmouseover="this.className='on'" onmouseout="this.className='off'">
+      <td style="border-bottom:1px dotted #CCC;">&raquo; <a href="sendActivation.php">Праќање на активацкиски код</a>	
       </td>
   </tr>
 </table>

@@ -95,7 +95,7 @@ transition: Fx.Transitions.sineOut
                     
               </div>
             </div></td>
-    <td valign="top" width="468" style="padding-right:4px;">
+    <td valign="top" width="468" align="left" style="padding-left:3px; padding-right:1px;">
     <div class="right-block">
                 <div class="title">
                     <div class="left"></div>

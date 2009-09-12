@@ -93,7 +93,7 @@ transition: Fx.Transitions.sineOut
                     <div class="right"></div>
                 </div>
                  <div class="sodrzina" style="margin-top:-3px"><!-- InstanceBeginEditable name="BlockContent" -->
-                 <p> <?php include("util/reset_password.php"); ?></p>
+                 <div style="padding:5px;"> <?php include("util/reset_password.php"); ?></div>
                  <!-- InstanceEndEditable --></div>
             </div>
             </td></tr></table>

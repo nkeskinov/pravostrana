@@ -19,7 +19,7 @@
 			$Message="Почитувани, $name $surname <br /><br />";
 			$Message.="Го примивме вашето барање за промена на вашата <strong>Pravo.org.mk</strong> лозинка. ";
 			$Message.="<br />За да ја промените вашата лозинка кликнете на следниот линк или копирајте го истиот во полето за интернет адреса на вашиот прелистувач: <br /><br />";
-			$Message.="<a href='http://pravo.org.mk/resetPassword.php?key=$key&email=$to_email'>http://pravo.org.mk/activate.php?key=$key&email=$to_email</a>";
+			$Message.="<a href='http://pravo.org.mk/resetPassword.php?key=$key&email=$to_email'>http://pravo.org.mk/resetPassword.php?key=$key&email=$to_email</a>";
 			$Message.="<br /><br />Ве молиме, не го делете корисничкото име и лозинката!<br />";
 			$Message.="Ви благодариме што користевте Pravo.org.mk <br /><br />";
 			$Message.="Со почит,<br />";
@@ -27,7 +27,7 @@
 			
 			//echo $Message;
 			send_mail("Pravo.org.mk","no-reply@pravo.org.mk",$to_email,$subject,$Message);
-			_show_message_color('Инструкции за промена на вашата лозинка се пратени на вашата e-mail адреса!','GREEN');
+			_show_message_color("Инструкции за промена на вашата лозинка се пратени на ".$to_email,'GREEN');
 		  }else{
 			_show_message_color('Вашата email адреса не е најдена во нашата база!','RED');    
 		  }
@@ -86,7 +86,7 @@ $('.password-new1').pstrength();
   <div style="padding-left:20px">
   <table border="0" cellpadding="3" cellspacing="2">
     <tr>
-      <td colspan="2">Внесете ја вашата e-mail адреса и лозинката ќе ви биде испратена</td>
+      <td colspan="2">Внесете ја вашата e-mail адреса и ќе ви бидат испратени инструкции за промена на лозинката </td>
       </tr>
     <tr>
       <td align="right">E-mai:</td>
@@ -107,21 +107,21 @@ $('.password-new1').pstrength();
 <?php } ?>
 <?php if(isset($_GET['key'])) { ?>
 <form name="form2" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-  <table width="500" border="0" align="center">
+  <table width="100%" border="0" align="center">
     <tr>
       <td colspan="2">Внесете нова лозинка</td>
     </tr>
     <tr>
-      <td>Нова лозинка:</td>
-      <td align="left">
+      <td width="118">Нова лозинка:</td>
+      <td width="372" align="left">
         <span id="sprypassword1">
-        <input type="text" name="password-new1" id="password-new1" />
+        <input type="password" name="password-new1" id="password-new1" />
       <span class="passwordRequiredMsg">Лозинката е задолжителна.</span></span></td>
     </tr>
     <tr>
       <td>Поветорете ја лозинката:</td>
       <td align="left"><span id="spryconfirm1">
-      <input type="text" name="password-new2" id="password-new2" />
+      <input type="password" name="password-new2" id="password-new2" />
       <span class="confirmRequiredMsg">Лозинката е задолжителна.</span><span class="confirmInvalidMsg">Лозинките не се совпаѓаат.</span></span>
       </td>
     </tr>

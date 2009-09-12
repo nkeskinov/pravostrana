@@ -26,19 +26,19 @@ if (!((isset($_SESSION['MM_Username'])) && (isAuthorized("",$MM_authorizedUsers,
 <head>
 <!--templateinfo codeoutsidehtmlislocked="true" -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="../rokmoomenu.css" rel="stylesheet" type="text/css" />
-<link href="../style.css" rel="stylesheet" type="text/css" />
-<link rel="shortcut icon" href="../images/favicon1.png" />
+<link href="/pravo.org.mk/rokmoomenu.css" rel="stylesheet" type="text/css" />
+<link href="/pravo.org.mk/style.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="/pravo.org.mk/images/favicon1.png" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>Pravo.org.mk | Документи</title>
+<title>Pravo.org.mk | Праќање на активациски код на корисник</title>
 <!-- InstanceEndEditable -->
-<script type="text/javascript" src="../roktools.js"></script>
+<script type="text/javascript" src="/pravo.org.mk/roktools.js"></script>
 
 
-<script type="text/javascript" src="../mootools.js"></script>
-<script type="text/javascript" src="../javaScripts/cirillic_converter.js"></script>
+<script type="text/javascript" src="/pravo.org.mk/mootools.js"></script>
+<script type="text/javascript" src="/pravo.org.mk/javaScripts/cirillic_converter.js"></script>
 
-<script type="text/javascript" src="../rokmoomenu.js"></script>
+<script type="text/javascript" src="/pravo.org.mk/rokmoomenu.js"></script>
 <!-- calendar stylesheet -->
 <script type="text/javascript">
 window.addEvent('domready', function() {
@@ -68,21 +68,21 @@ transition: Fx.Transitions.sineOut
    	  </div>
       <div id="horiz-menu" class="moomenu"><!-- InstanceBeginEditable name="Menu" -->
         <ul class="nav">
-           <li><a href="/pravo.org.mk/index.php">Почетна</a></li>
-          <li class="active"><a class="topdaddy" href="../documentlaws.php">Закони</a></li>
-         <li><a href="../analysis.php">Анализи</a></li>
-          <li><a href="../regulations.php">Прописи</a></li>
-          <li><a href="courtpractice.php">Судска пракса</a>
+           <li class="active"><a href="/pravo.org.mk/index.php">Почетна</a></li>
+          <li><a class="topdaddy" href="/pravo.org.mk/documentlaws.php">Закони</a></li>
+         <li><a href="/pravo.org.mk/analysis.php">Анализи</a></li>
+          <li><a href="/pravo.org.mk/regulations.php">Прописи</a></li>
+          <li><a href="/pravo.org.mk/courtpractice.php">Судска пракса</a>
            <ul>
-             <li><a href="../courtpractice.php">Судска пракса</a></li>
-            <li><a href="../europeancourt.php">Европски суд за човекови права</a></li>
+             <li><a href="/pravo.org.mk/courtpractice.php">Судска пракса</a></li>
+            <li><a href="/pravo.org.mk/europeancourt.php">Европски суд за човекови права</a></li>
            </ul>
           </li>
-          <li><a href="../news.php">Новости</a></li>
-          <li><a href="../contact.php">Контакт</a></li>
+          <li><a href="/pravo.org.mk/news.php">Новости</a></li>
+          <li><a href="/pravo.org.mk/contact.php">Контакт</a></li>
         </ul>
       <!-- InstanceEndEditable -->
-       <div id="mapMenu"><!-- InstanceBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="../index.php">Почетна</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;</td></tr></table><!-- InstanceEndEditable --></div> 
+       <div id="mapMenu"><!-- InstanceBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="/pravo.org.mk/index.php">Почетна</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;</td></tr></table><!-- InstanceEndEditable --></div> 
       </div>
 	</div>
     <div class="mainBody">
@@ -99,11 +99,12 @@ transition: Fx.Transitions.sineOut
             <div class="middle-red-block">
                 <div class="title">
                     <div class="left"></div>
-                    <div class="middle"><div class="text"><!-- InstanceBeginEditable name="BlockTitle" -->Документи<!-- InstanceEndEditable --></div></div>
+                    <div class="middle">
+                    <div class="text"><!-- InstanceBeginEditable name="BlockTitle" -->Прати активациски код на корисник<!-- InstanceEndEditable --></div></div>
                     <div class="right"></div>
                 </div>
                  <div class="sodrzina" ><!-- InstanceBeginEditable name="BlockContent" -->
-                  <?php include("util/document.php"); ?>
+                   <div style="padding:5px;"><?php include("util/sendActivation.php"); ?></div></p>
                  <!-- InstanceEndEditable --></div>
             </div>
             </td></tr></table>

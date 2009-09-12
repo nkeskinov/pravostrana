@@ -1,34 +1,4 @@
 <?php
-if (!function_exists("GetSQLValueString")) {
-function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
-{
-  if (PHP_VERSION < 6) {
-    $theValue = get_magic_quotes_gpc() ? stripslashes($theValue) : $theValue;
-  }
-
-  $theValue = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($theValue) : mysql_escape_string($theValue);
-
-  switch ($theType) {
-    case "text":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;    
-    case "long":
-    case "int":
-      $theValue = ($theValue != "") ? intval($theValue) : "NULL";
-      break;
-    case "double":
-      $theValue = ($theValue != "") ? doubleval($theValue) : "NULL";
-      break;
-    case "date":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;
-    case "defined":
-      $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
-      break;
-  }
-  return $theValue;
-}
-}
 
 $editFormAction = $_SERVER['PHP_SELF'];
 if (isset($_SERVER['QUERY_STRING'])) {
@@ -89,7 +59,7 @@ if(isset($_GET['mode']) && ($_GET['mode'] == "delete")){
   	$Result1 = mysql_query($deleteSQL, $pravo) or die(mysql_error());
 }
 
-$maxRows_Users = 20;
+$maxRows_Users = 30;
 $pageNum_Users = 0;
 if (isset($_GET['pageNum_Users'])) {
   $pageNum_Users = $_GET['pageNum_Users'];
@@ -375,7 +345,11 @@ do {
     <tr <?php if($i%2==0) echo "style='background:#fbf7e0'"; if($row_Users['deleted']==1) echo "style='color:#999'"; ?>>
       <td width="16"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?id=<?php echo $row_Users['id_user']; ?>&mode=edit&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/pencil.png" border="0" /></a></td>
       <td width="16"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?id=<?php echo $row_Users['id_user']; ?>&mode=delete&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>" onClick="return confirm('Дали навистина сакате да го избришете документот?')"><img src="../images/cross.png" border="0" /></a></td>
+<<<<<<< .mine
+      <td width="30%"><a href="userDetails.php?id=<?php echo $row_Users['id_user']; ?>" ><?php echo $row_Users['name']; ?> <?php echo $row_Users['surname']; ?></a></td>
+=======
       <td width="30%"><a href="../userDetails.php?id=<?php echo $row_Users['id_user']; ?>" ><?php echo $row_Users['name']; ?> <?php echo $row_Users['surname']; ?></a></td>
+>>>>>>> .r86
       <td><?php echo  date("d.m.Y H:i:s",strtotime($row_Users['last_login_date'])); ?></td>
       <td align="center">
 	   <input type="checkbox" disabled="disabled" name="forcesubscribe" value="1"  <?php if (!(strcmp(htmlentities( $row_Users['is_approved'], ENT_COMPAT, ''),1))) {echo "checked=\"checked\"";} ?>>
