@@ -57,7 +57,7 @@ transition: Fx.Transitions.sineOut
 });
 </script>
 <!-- InstanceBeginEditable name="head" -->
-<script src="/pravo.org.mk/Scripts/swfobject_modified.js" type="text/javascript"></script>
+<script src="../Scripts/swfobject_modified.js" type="text/javascript"></script>
 <!-- InstanceEndEditable -->
 </head>
 <body>
@@ -121,7 +121,7 @@ transition: Fx.Transitions.sineOut
                          <param name="quality" value="high">
                          <param name="wmode" value="opaque">
                          <param name="swfversion" value="9.0.45.0">
-                         <param name="expressinstall" value="/pravo.org.mk/Scripts/expressInstall.swf">
+                         <param name="expressinstall" value="../Scripts/expressInstall.swf">
                          <!-- The browser displays the following alternative content for users with Flash Player 6.0 and older. -->
                          <div>
                            <h4>Content on this page requires a newer version of Adobe Flash Player.</h4>
