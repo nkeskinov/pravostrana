@@ -32,7 +32,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 	$password = mysql_result($RecordsetUsers,0,'password');
 	if(isset($_POST['changepass'])){
 		if($password == $_POST['password-old']){
-			$updateSQL1 = sprintf("UPDATE `user` SET password=%s WHERE id_user=%s",
+			$updateSQL1 = sprintf("UPDATE `user` SET password=password(%s) WHERE id_user=%s",
 								  GetSQLValueString($_POST['password-new1'], "text"),
 								  GetSQLValueString($_SESSION['MM_ID'], "int"));
 			$Result3 = mysql_query($updateSQL1, $pravo) or die(mysql_error());	
@@ -82,7 +82,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 		printInsertUser($_SERVER['PHP_SELF'],$row_RecordsetUsers,$pravo);
 	}else{
 	$data_na_raganje=$_POST['godina']."-".$_POST['mesec'].".".$_POST['den'];
- $insertSQL = sprintf("INSERT INTO `user` (name, surname, sex, date_of_birth, phone, id_user_occupation, id_user_organization, address, city, country, username, password, email, is_approved, id_user_category) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+ $insertSQL = sprintf("INSERT INTO `user` (name, surname, sex, date_of_birth, phone, id_user_occupation, id_user_organization, address, city, country, username, password, email, is_approved, id_user_category) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, password(%s), %s, %s, %s)",
                        GetSQLValueString($_POST['name'], "text"),
                        GetSQLValueString($_POST['surname'], "text"),
                        GetSQLValueString($_POST['sex'], "int"),
@@ -112,7 +112,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 			echo '<br />';
 			_show_message_color('Вашата регистрација беше успешно завршена!<br />Проверете го вашиот e-mail за да ја комплетирате регистрацијата. Имајте во предвид дека треба да помине извесно време за да стаса пораката до вашето e-mail сандаче.','GREEN');
 
-			$key=hash_hmac('ripemd160', $_POST['username']."".$_POST['password'],'register');
+			$key=hash_hmac('ripemd160', $_POST['username'],'register');
 			$to_email=$_POST['username'];
 			$name= $_POST['name'];
 			$surname= $_POST['surname'];

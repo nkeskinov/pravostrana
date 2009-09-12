@@ -249,11 +249,11 @@ do {
     </tr>
     <tr valign="baseline">
       <td nowrap="nowrap" align="right">Датум на креирање:</td>
-      <td><strong><?php echo htmlentities($row_User['create_date'], ENT_COMPAT, 'UTF-8'); ?></strong></td>
+      <td><strong><?php echo date("d.m.Y H:i:s",strtotime(htmlentities($row_User['create_date'], ENT_COMPAT, 'UTF-8'))); ?></strong></td>
     </tr>
     <tr valign="baseline">
       <td nowrap="nowrap" align="right">Датум на последно логирање:</td>
-      <td><strong><?php echo htmlentities($row_User['last_login_date'], ENT_COMPAT, 'UTF-8'); ?></strong></td>
+      <td><strong><?php echo date("d.m.Y H:i:s",strtotime(htmlentities($row_User['last_login_date'], ENT_COMPAT, 'UTF-8'))); ?></strong></td>
     </tr>
     <tr valign="baseline">
       <td nowrap="nowrap" align="right">Датум на последно<br />
@@ -293,7 +293,7 @@ do {
             <tr>
             <td>
             <form action="util/export_excel.php" method="post">
-	            <input type="image" name="query" value="<?php echo $query_DownloadedDocuments; ?>" src="../images/excel.png" title="Експортирајте ја статистиката во excel"/>
+	            <input type="image" name="query" value="<?php echo $query_DownloadedDocuments; ?>" src="../images/excel.png" title="Експортирајте ја статистиката во excel"/> |
             </form>
             </td>
               <td ><?php if ($pageNum_DownloadedDocuments > 0  ) { // Show if not first page ?>
@@ -349,7 +349,7 @@ do {
   <table width="100%" cellpadding="0" cellspacing="0">
   <tr>
   	<td>Симнувања на документи</td>
-  	<td align="right">Корисникот има симнато <?php echo $row_DownloadCount['downloads']; ?> документи</td>
+  	<td align="right">Корисникот има симнато <?php echo $row_DownloadCount['downloads']; ?> пати</td>
   </tr>
   </table>
 </div>
@@ -376,7 +376,7 @@ do {
         	<table border="0" cellspacing="0" style="font-size:12px;">
             <tr>
             <td><form action="util/export_excel.php" method="post">
-	            <input type="image" name="query" value="<?php echo $query_VisitedPages; ?>" src="../images/excel.png"title="Експортирајте ја статистиката во excel" />
+	            <input type="image" name="query" value="<?php echo $query_VisitedPages; ?>" src="../images/excel.png"title="Експортирајте ја статистиката во excel" /> |
             </form></td>
               <td ><?php if ($pageNum_VisitedPages > 0  ) { // Show if not first page ?>
                   <a href="<?php printf("%s?pageNum_VisitedPages=%d%s", $currentPage, max(0, $pageNum_VisitedPages - 1), $queryString_VisitedPages); ?>"><img src="../images/pPrev.png" border="0"/></a>
@@ -430,8 +430,8 @@ do {
 <div align="left" style="height:22px;  border-bottom:1px solid #a25852; background:#f5d6d4;  padding:3px; padding-top:1px;">
   <table width="100%" cellpadding="0" cellspacing="0">
   <tr>
-  	<td>Симнувања на документи</td>
-  	<td align="right">Корисникот има симнато <?php echo $row_DownloadCount['downloads']; ?> документи</td>
+  	<td>Посети на страници</td>
+  	<td align="right">Корисникот има посетено <?php echo $row_DownloadCount['downloads']; ?> пати</td>
   </tr>
   </table>
 </div>

@@ -19,7 +19,7 @@
 		$id_user=mysql_result($Result,0,'id_user');
 		$username=mysql_result($Result,0,'username');
 		$password=mysql_result($Result,0,'password');
-		$key1=hash_hmac('ripemd160', $username."".$password,'register');
+		$key1=hash_hmac('ripemd160', $username,'register');
 		if(!isset($_GET['reactivate'])){
 			if($key1==$key){	
 				$UpdateSQL=sprintf("UPDATE `user` SET is_approved=1 WHERE id_user=%s",
@@ -27,7 +27,7 @@
 				$Result1 = mysql_query($UpdateSQL, $pravo) or die(mysql_error());
 				if($Result1){
 					_show_message_color('Вашата корисничка сметка е успешно активирана. 
-										Кликнете на на <u><a href="login.php">линкот</a></u> 
+										Кликнете на <u><a href="login.php">линкот</a></u> 
 										за да се логирате и да почнете да ја користите услугата.','GREEN');
 				}else{
 					_show_message_color('Настана проблем при активација на вашата корисничка сметка.

@@ -22,7 +22,7 @@ if (isset($_POST['username_login'])) {
   $MM_redirecttoReferrer = false;
   mysql_select_db($database_pravo, $pravo);
   	
-  $LoginRS__query=sprintf("SELECT username, password, id_user, name, surname FROM `user` WHERE username=%s AND password=%s AND is_approved = 1 AND (deleted!=1 OR deleted is null)",
+  $LoginRS__query=sprintf("SELECT username, password, id_user, name, surname FROM `user` WHERE username=%s AND password=password(%s) AND is_approved = 1 AND (deleted!=1 OR deleted is null)",
   GetSQLValueString($loginUsername, "text"), GetSQLValueString($password, "text")); 
    
   $LoginRS = mysql_query($LoginRS__query, $pravo) or die(mysql_error());
@@ -40,8 +40,10 @@ if (isset($_POST['username_login'])) {
 	$loginResult = mysql_query($Group_query, $pravo) or die(mysql_error());
    
 	$loginStrGroup  = mysql_result($loginResult,0,'name');
-
-	$Update_query = sprintf("UPDATE user SET last_login_date = now() where id_user = %s",GetSQLValueString($id_user, "int") );
+	$now = date("Y-m-d H:i:s");
+	$Update_query = sprintf("UPDATE user SET last_login_date = %s where id_user = %s",
+							"'".$now."'", 
+							GetSQLValueString($id_user, "int") );
 	mysql_query($Update_query, $pravo) or die(mysql_error());
 	//echo $id_user."\n";
 	//print_r( $loginStrGroup);

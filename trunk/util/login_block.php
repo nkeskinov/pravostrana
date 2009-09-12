@@ -46,11 +46,13 @@
                 
                   <table width="98%" border="0" cellspacing="0">
               		<tr>
-                        <td colspan="2" align="left" style=" padding-left:5px;"><a href="profile.php" title="Промени ги твоите лични податоци" alt="Промени ги твоите лични податоци"><strong><?php if(isset($_SESSION['MM_Name'])) echo $_SESSION['MM_Name']; ?></strong></a>&nbsp;<span style="color:#FFF">[</span><a href="logout.php?doLogout=true">Одјави се</a><span style="color:#FFF">]</span></td>
+                        <td align="left" style=" padding-left:5px;"><a href="profile.php" title="Промени ги твоите лични податоци" alt="Промени ги твоите лични податоци"><strong><?php if(isset($_SESSION['MM_Name'])) echo $_SESSION['MM_Name']; ?></strong></a>&nbsp;<span style="color:#FFF">[</span><a href="logout.php?doLogout=true">Одјави се</a><span style="color:#FFF">]</span></td>
                     </tr>
                       <tr>
-                        <td></td>
-                        <td align="right" >&nbsp;</td>
+                        <td><?php if(isset($_SESSION['MM_UserGroup']) && $_SESSION['MM_UserGroup']=="admin"){ ?>
+                        	&nbsp;<span style="color:#FFF;">&raquo;</span>&nbsp;<a href="admin/">Администраторски панел</a>
+                            <?php } ?>
+                        </td>
                       </tr>
                     </table>
                     <br />

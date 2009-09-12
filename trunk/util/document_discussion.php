@@ -51,7 +51,8 @@ if ((isset($_POST["DeletePost"])) && ($_POST["DeletePost"] != "")) {
 	 if($ResultDelete){
 			_show_message_color('Постот е успешно избришан!','GREEN');  
 			$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
-    		header("Location: " . $MM_redirectLoginSuccess );
+    		echo "<script>document.location.href='".$MM_redirectLoginSuccess."'</script>";
+			echo "<script>'Content-type: application/octet-stream'</script>";
   	}
 }
 
@@ -101,7 +102,7 @@ if ((isset($_POST["Comment_insert"])) && ($_POST["Comment_insert"] == "insert"))
 						GetSQLValueString(date('Y-m-d H:i'), "date"));
 	$Result2 = mysql_query($insertPostSQL, $pravo) or die(mysql_error());	
 	if($Result2){
-		$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
+			$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
     		//header("Location: " . $MM_redirectLoginSuccess );
 			echo "<script>document.location.href='".$MM_redirectLoginSuccess."'</script>";
 			echo "<script>'Content-type: application/octet-stream'</script>";
@@ -121,9 +122,17 @@ if ((isset($_POST["Comment_insert"])) && ($_POST["Comment_insert"] == "insert"))
 	$Result2 = mysql_query($insertPostSQL, $pravo) or die(mysql_error());
 	if($Result2){
 		$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'];
-    		header("Location: ".$MM_redirectLoginSuccess );
+    	echo "<script>document.location.href='".$MM_redirectLoginSuccess."'</script>";
+		echo "<script>'Content-type: application/octet-stream'</script>";
   	}
-  }  
+  }
+  $to_email="contact@pravo.org.mk";
+  $subject="Дискусија за ".$row_DetailRS1['title'];
+  $Message=$_SESSION['MM_Name']." на ".date('d.m.Y H:i:s')."<br /><br />";
+  $Message.=$_POST['content'];
+  $Message.="<br /><a href='http://".$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']."'>http:/".$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']."</a>";
+
+  send_mail("Pravo.org.mk","no-reply@pravo.org.mk",$to_email,$subject,$Message);
 }
 ?>
 <script type="text/javascript" src="javaScripts/tiny_mce/tiny_mce.js"></script>
@@ -209,7 +218,7 @@ function MM_swapImage() { //v3.0
 		if($_SESSION['MM_UserGroup'] =="admin"){ 
 		?><form method="post" name="form_post" action="<?php echo $editFormAction; ?>">
      <div style="vertical-align:middle; width:15px; height:15px; float:left;"><input type="image" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Edit1<?php echo $row_Post['id_post']; ?>','','images/edit-small.png',1)"src="images/edit-small1.png" name="EditPost" border="0" id="Edit1<?php echo $row_Post['id_post']; ?>" value="<?php echo $row_Post['id_post']; ?>" title="Измени"/></div>
-      <div style="vertical-align:middle; width:15px; height:15px; float:left;"><input type="image" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image1<?php echo $row_Post['id_post']; ?>','','images/delete-small.png',1)" src="images/delete-small1.png" name="DeletePost" border="0" id="Image1<?php echo $row_Post['id_post']; ?>" value="<?php echo $row_Post['id_post']; ?>" title="Бриши" onClick="return confirm('Дали навистина сакате да го избришете документот?')"/></div>
+      <div style="vertical-align:middle; width:15px; height:15px; float:left;"><input type="image" onMouseOut="MM_swapImgRestore()" onMouseOver="MM_swapImage('Image1<?php echo $row_Post['id_post']; ?>','','images/delete-small.png',1)" src="images/delete-small1.png" name="DeletePost" border="0" id="Image1<?php echo $row_Post['id_post']; ?>" value="<?php echo $row_Post['id_post']; ?>" title="Бриши" onClick="return confirm('Дали навистина сакате да ја избришете дискусијата?')"/></div>
       </form><?php } } ?></td>
      </tr>
      <tr>
