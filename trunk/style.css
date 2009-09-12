@@ -115,11 +115,12 @@ h4 {
 	z-index:1;
 }
 #mapMenu{
+	display:block;
 	position:absolute;
 	left:10px;
 	top:147px;
-	width:674px;
-	height:18px;
+	width:900px;
+	/*height:18px;*/
 	z-index:1;
 	color:#FFFFFF;
 	font-size:12px;
@@ -222,7 +223,6 @@ h4 {
 }
 
 .mainBody .left-block{
-	float:left;
 	width:100%;
 	display:block;
 }
@@ -263,7 +263,6 @@ h4 {
 }
 
 .mainBody .left-block1{
-	float:left;
 	width:100%;
 	display:block;
 }
@@ -275,7 +274,7 @@ h4 {
 .mainBody .left-block1 .middle{
 	background:url(images/yellow-title-middle1.png);
 	height:30px;
-	width:95%;
+	width:94%;
 	float:left;
 }
 .mainBody .left-block1 .middle .text{
@@ -304,7 +303,6 @@ h4 {
 }
 
 .mainBody .left-red-block1{
-	float:left;
 	width:100%;
 	display:block;
 }
@@ -388,7 +386,6 @@ h4 {
 
 
 .mainBody .right-block{
-	float:right;
 	width:467px;
 	margin:0;
 	margin-left:-3px;
@@ -476,11 +473,11 @@ h4 {
 	padding-left:0;
 	padding-right:0;
 	padding-bottom:0;
+	min-height:300px;
 }
 
 
 .mainBody .right-yellow-block{
-	float:right;
 	width:467px;
 	display:block;
 }
@@ -619,7 +616,7 @@ h4 {
 	display: block; 
 	overflow:hidden; 
 	clear:both;
-	height:20px;
+	height:30px;
 }
 .mainBody .middle-red-block-small .middle{
 	background:url(images/red-title-middle.png);

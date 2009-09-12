@@ -190,7 +190,7 @@ transition: Fx.Transitions.sineOut
                     <div class="right"></div>
                   </div>
                   <div class="sodrzina" style=" padding:0; padding-left:2px;">
-                    <p><?php include("util/documents_by_category.php"); ?></p>
+                    <div style="padding:0; padding-top:10px;"><?php include("util/documents_by_category.php"); ?></div>
                   </div>
                 </div></td>
                 <td valign="top" width="468" style="padding-right:1px;"><div class="right-block-bigger">

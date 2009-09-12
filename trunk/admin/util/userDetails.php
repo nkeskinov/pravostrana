@@ -1,36 +1,5 @@
 <?php
 
-if (!function_exists("GetSQLValueString")) {
-function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
-{
-  if (PHP_VERSION < 6) {
-    $theValue = get_magic_quotes_gpc() ? stripslashes($theValue) : $theValue;
-  }
-
-  $theValue = function_exists("mysql_real_escape_string") ? mysql_real_escape_string($theValue) : mysql_escape_string($theValue);
-
-  switch ($theType) {
-    case "text":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;    
-    case "long":
-    case "int":
-      $theValue = ($theValue != "") ? intval($theValue) : "NULL";
-      break;
-    case "double":
-      $theValue = ($theValue != "") ? doubleval($theValue) : "NULL";
-      break;
-    case "date":
-      $theValue = ($theValue != "") ? "'" . $theValue . "'" : "NULL";
-      break;
-    case "defined":
-      $theValue = ($theValue != "") ? $theDefinedValue : $theNotDefinedValue;
-      break;
-  }
-  return $theValue;
-}
-}
-
 $currentPage = $_SERVER["PHP_SELF"];
 
 $colname_User = "-1";
@@ -70,6 +39,12 @@ $query_DownloadCount = sprintf("SELECT count(*) downloads FROM download WHERE id
 $DownloadCount = mysql_query($query_DownloadCount, $pravo) or die(mysql_error());
 $row_DownloadCount = mysql_fetch_assoc($DownloadCount);
 $totalRows_DownloadCount = mysql_num_rows($DownloadCount);
+
+
+$query_VisitCount = sprintf("SELECT count(*) visits FROM visit WHERE id_user = %s", GetSQLValueString($colname_DownloadCount, "int"));
+$VisitCount = mysql_query($query_VisitCount, $pravo) or die(mysql_error());
+$row_VisitCount = mysql_fetch_assoc($VisitCount);
+$totalRows_VisitCount = mysql_num_rows($VisitCount);
 
 $maxRows_VisitedPages = 10;
 $pageNum_VisitedPages = 0;
@@ -431,7 +406,7 @@ do {
   <table width="100%" cellpadding="0" cellspacing="0">
   <tr>
   	<td>Посети на страници</td>
-  	<td align="right">Корисникот има посетено <?php echo $row_DownloadCount['downloads']; ?> пати</td>
+  	<td align="right">Корисникот има посетено <?php echo $row_VisitCount['visits']; ?> пати</td>
   </tr>
   </table>
 </div>

@@ -92,7 +92,7 @@ transition: Fx.Transitions.sineOut
                 <td rowspan="2" valign="top" width="250">
                 <?php include("../admin/util/login_block.php"); ?>
                       <br />
-                      <div style="text-align:left;"><?php include("../admin/util/menu.php"); ?></div>
+                      <div style="text-align:left; margin:0;"><?php include("../admin/util/menu.php"); ?></div>
                 </td>
               </tr>
             <tr><td valign="top">

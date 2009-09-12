@@ -151,7 +151,7 @@ function getSubDocuments($id_document, $pravo, $database_pravo,$gid){
       <td width="91%">&nbsp;<?php echo $row_SubDocuments['title']; ?><br>
       <span style="color:#666; font-size:10px">&nbsp;&nbsp;<?php echo date("d.m.Y", $timestamp); ?>&nbsp; <?php //|</span><span style="color:#666; font-size:10px"> Сл. весник / година:</span> <span style="font-size:10px;"><?php echo $row_SubDocuments['ordinal']."/".date("Y",strtotime($row_SubDocuments['date'])); ?></span></td>
       
-      <td width="5%" align="right"><a href="documentDetail.php?id=<?php echo $id_document; ?>&gid=<?php echo $gid; ?>&page=<?php echo $page; ?>" title="Преземи го документот"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
+      <td width="5%" align="right"><a href="documentDetail.php?id=<?php echo $id_document; ?>&gid=<?php echo $gid; ?>&page=<?php echo $page; ?>" title="Преземи го документот"><?php if($row_SubDocuments['mimetype']=="application/msword"){ ?><img src="images/word_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /> <?php }else{ ?><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /><?php } ?></a></td>
     </tr>
     <?php $tmp_number+=1;} while ($row_SubDocuments = mysql_fetch_assoc($SubDocuments)); ?>
 </table>
@@ -187,8 +187,16 @@ $DocGroup = mysql_query($query_DocGroup, $pravo) or die(mysql_error());
 $row_DocGroup = mysql_fetch_assoc($DocGroup);
 $row_number =  mysql_num_rows($DocGroup);
 if($row_number){
-	do{ echo $row_DocGroup['name']." &raquo; "; }while ($row_DocGroup = mysql_fetch_assoc($DocGroup));
+	$i=0;
+	do{ 
+		echo "<a href='?id_doc_group=".$row_DocGroup['id_doc_group']."'>".$row_DocGroup['name']."</a> "; 
+		if($i<$row_number-1){
+			echo "&raquo;&nbsp;";
+		}
+	$i++;
+	}while ($row_DocGroup = mysql_fetch_assoc($DocGroup));
 }
+
 }
 ?>
 <?php
@@ -219,9 +227,9 @@ function getNumDownload($id_document, $pravo, $database_pravo){
 <?php if(mysql_num_rows($Documents)!=0){ ?>
 <table border="0" width="100%" cellspacing="0">
 	<tr>
-    	<td width="37%">Закони <?php echo ($startRow_Documents + 1) ?> до <?php echo min( $startRow_Documents + $maxRows_Documents, $totalRows_Documents) ?> од <?php echo $totalRows_Documents ?>
+    	<td width="34%">Закони <?php echo ($startRow_Documents + 1) ?> до <?php echo min( $startRow_Documents + $maxRows_Documents, $totalRows_Documents) ?> од <?php echo $totalRows_Documents ?>
         </td>
-        <td width="63%" align="right" valign="bottom">
+        <td width="66%" align="right" valign="bottom">
         <div style="float:right;width:100%; text-align:right; vertical-align:bottom;">
           <div style="float:right">
             <table border="0" cellspacing="0" style="font-size:12px;">
@@ -306,7 +314,7 @@ function getNumDownload($id_document, $pravo, $database_pravo){
   ?>
     <tr>
       <td width="100%" style="border-bottom:1px solid #a25852; background:#fae9e8; padding-left:5px;"><strong><a href="documentDetail.php?id=<?php echo $row_Documents['id_document']; ?>&gid=<?php echo $row_Documents['id_doc_group']; ?>&tid=<?php echo $id_doc_type_Documents ?>&page=<?php echo $page; ?>" title="Видете ги деталите за законот" ><span style="font-variant:small-caps; font-weight:bolder; font-size:15px; "><?php echo $row_Documents['title']; ?></span></a></strong><br> <span style="color:#666; font-size:11px">&nbsp;<?php echo date("d.m.Y", $timestamp); ?></span> <?php if($page == "documentlaws.php") { echo '|<span style="color:#666; font-size:11px"> Сл. весник/година:</span> <span style="font-size:11px; font-weight:bold;">'.$row_Documents["ordinal"].' </span>/<span style="font-size:11px; font-weight:bold;"> '.date("Y",strtotime($row_Documents["date"])); }else if($page == "courtpractice.php" || $page == "europeancourt.php") { echo '|<span style="color:#666; font-size:11px"> Суд:</span> <span style="font-size:11px;">'.$row_Documents["name"].' </span>'; } ?></span></td>
-      <td width="5%" align="right" style="border-bottom:1px solid #a25852; background:#fae9e8;;"><a href="documentDetail.php?id=<?php echo $row_Documents['id_document']; ?>&gid=<?php echo $row_Documents['id_doc_group']; ?>&page=<?php echo $page; ?>" title="Преземи го документот"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
+      <td width="5%" align="right" style="border-bottom:1px solid #a25852; background:#fae9e8;;"><a href="documentDetail.php?id=<?php echo $row_Documents['id_document']; ?>&gid=<?php echo $row_Documents['id_doc_group']; ?>&page=<?php echo $page; ?>" title="Преземи го документот"><?php if($row_Documents['mimetype']=="application/msword"){ ?><img src="images/word_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /> <?php }else{ ?><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /><?php } ?></a></td>
     </tr>
     <tr>
     	<td colspan="2"><?php getSubDocuments($row_Documents['id_document'], $pravo, $database_pravo,$row_Documents['id_doc_group']); ?></td>

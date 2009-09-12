@@ -90,7 +90,7 @@ function getSubDocuments($id_document, $pravo, $database_pravo){
       </div>
       </td>
       
-      <td width="20%" align="right"><a href="download.php?id=<?php echo $row_SubDocuments['id_document']; ?> "><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /><br><span style="font-size:10px; color:#999;"><?php getNumDownload($row_SubDocuments['id_document'], $pravo, $database_pravo); ?> пати спуштено</span></a></td>
+      <td width="20%" align="right"><a href="download.php?id=<?php echo $row_SubDocuments['id_document']; ?> ">><?php if($row_SubDocuments['mimetype']=="application/msword"){ ?><img src="images/word_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /> <?php }else{ ?><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /><?php } ?><br><span style="font-size:10px; color:#999;"><?php getNumDownload($row_SubDocuments['id_document'], $pravo, $database_pravo); ?> пати спуштено</span></a></td>
     </tr>
     <?php $tmp_number+=1;} while ($row_SubDocuments = mysql_fetch_assoc($SubDocuments)); ?>
     <?php if(isset($_SESSION['MM_UserGroup'])) {
@@ -159,7 +159,7 @@ function getNumDownload($id_document, $pravo, $database_pravo){
   <tr>
     <td width="38%">Датум на објавување:</td>
     <td width="42%"><?php if(isset($row_DetailRS1['published_date'])) echo date("d.m.Y",strtotime($row_DetailRS1['published_date'])); ?></td>
-    <td width="20%" <?php if ($row_DetailRS1['id_doc_type'] == '1') echo 'rowspan="4"'; else echo 'rowspan="2"'; ?> align="right"><a href="download.php?id=<?php echo $row_DetailRS1['id_document']; ?>"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a><br><span style="font-size:10px; color:#999;"><?php getNumDownload($row_DetailRS1['id_document'], $pravo, $database_pravo); ?> пати спуштено</span></td>
+    <td width="20%" <?php if ($row_DetailRS1['id_doc_type'] == '1') echo 'rowspan="4"'; else echo 'rowspan="2"'; ?> align="right"><a href="download.php?id=<?php echo $row_DetailRS1['id_document']; ?>"><?php if($row_DetailRS1['mimetype']=="application/msword"){ ?><img src="images/word_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /> <?php }else{ ?><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /><?php } ?></a><br><span style="font-size:10px; color:#999;"><?php getNumDownload($row_DetailRS1['id_document'], $pravo, $database_pravo); ?> пати спуштено</span></td>
   </tr>
   <tr>
     <td>Датум на закачување:</td>

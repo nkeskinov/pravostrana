@@ -4,6 +4,7 @@ session_start();
 ?>
 <?php require_once("Connections/pravo.php"); ?>
 <?php include("util/misc.php"); ?>
+<?php include("util/Functions.php"); ?>
 <?php 
 $id_doc_type_Documents = LAWS;
 $ip_address=$_SERVER['REMOTE_ADDR'];
@@ -21,6 +22,7 @@ if(isset($_SESSION['MM_ID']))
 	$id_user=$_SESSION['MM_ID'];
 
 trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_page, $database_pravo, $pravo);
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/CleanTemplate.dwt.php" codeOutsideHTMLIsLocked="false" -->
@@ -167,7 +169,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
         </ul>
       <!-- InstanceEndEditable -->
         <div id="mapMenu">
-       <!-- InstanceBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;</td><td>Закони&nbsp;</td></tr></table><!-- InstanceEndEditable -->
+       <!-- InstanceBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;&nbsp;&nbsp;</td><td><a href="documentlaws.php">Закони</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;&nbsp;&nbsp;<?php if(isset($_GET['id_doc_group']))getDocumentCategory1($_GET['id_doc_group'], $pravo, $database_pravo); ?></td></tr></table><!-- InstanceEndEditable -->
        </div>
       </div>
 	</div>

@@ -69,8 +69,8 @@ transition: Fx.Transitions.sineOut
    	  </div>
       <div id="horiz-menu" class="moomenu"><!-- InstanceBeginEditable name="Menu" -->
         <ul class="nav">
-           <li><a href="../index.php">Почетна</a></li>
-          <li class="active"><a class="topdaddy" href="../documentlaws.php">Закони</a></li>
+           <li class="active"><a href="../index.php">Почетна</a></li>
+          <li><a class="topdaddy" href="../documentlaws.php">Закони</a></li>
          <li><a href="../analysis.php">Анализи</a></li>
           <li><a href="../regulations.php">Прописи</a></li>
           <li><a href="../courtpractice.php">Судска пракса</a>
@@ -93,7 +93,7 @@ transition: Fx.Transitions.sineOut
                 <td rowspan="2" valign="top" width="250">
                 <?php include("util/login_block.php"); ?>
                       <br />
-                      <div style="text-align:left;"><?php include("util/menu.php"); ?></div>
+                      <div style="text-align:left; margin:0;"><?php include("util/menu.php"); ?></div>
                 </td>
               </tr>
             <tr><td valign="top">
@@ -104,7 +104,7 @@ transition: Fx.Transitions.sineOut
                     <div class="right"></div>
                 </div>
                  <div class="sodrzina" ><!-- InstanceBeginEditable name="BlockContent" -->
-                 <p>Кликнете на линковите од десно за извржување на соодветнте акции.</p>
+                 <div style="padding:5px"><p>Кликнете на линковите од десно за извршување на соодветнте акции.</p>
                  <p>Едноставна статистика на посети на месечно ниво.</p>
                    <p>
                      <object id="FlashID" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="710" height="305">
@@ -139,6 +139,7 @@ transition: Fx.Transitions.sineOut
 swfobject.registerObject("FlashID");
 //-->
                    </script>
+                   </div>
                  <!-- InstanceEndEditable --></div>
             </div>
             </td></tr></table>
