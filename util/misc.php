@@ -155,14 +155,15 @@ function trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page
 	}
 	
 	if(!(isset($_SESSION['id_visit']))){
-		
-		$Query=sprintf("INSERT INTO visit(id_user, ip, referrer, browser, language) 
-						 VALUES(%s,%s,%s,%s,%s)",
+		$now = date("Y-m-d H:i:s");
+		$Query=sprintf("INSERT INTO visit(id_user, ip, referrer, browser, language, visited_date) 
+						 VALUES(%s,%s,%s,%s,%s, %s)",
 						GetSQLValueString($id_user, "int"),
 						GetSQLValueString($ip_address, "text"),
 						GetSQLValueString($referrer, "text"),
 						GetSQLValueString($browser, "text"),
-						GetSQLValueString($language, "text"));
+						GetSQLValueString($language, "text"),
+						"'".$now."'");
 		$Result = mysql_query($Query, $pravo) or die(mysql_error());	
 		$_SESSION['id_visit']=mysql_insert_id();
 		if($Result)

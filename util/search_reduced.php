@@ -45,7 +45,7 @@ function popUpWindow(URLStr, left, top, width, height)
   </div>
   <div class="sodrzina" style="/*background:#fbf7e0;*/">
     <form action="<?php echo $page; ?>" method="get">
-                    <table width="240" border="0" cellpadding="1" cellspacing="0" >
+                    <table width="240" border="0" cellpadding="1" cellspacing="1" >
                     <tr>
                         <td colspan="2" align="left"><div align="right" style="font-size:11px;"><a href="JavaScript:popUpWindow('help.php?id=1','','',450,'330');">совети за пребарување</a></div></td>
                       </tr>
@@ -59,14 +59,8 @@ function popUpWindow(URLStr, left, top, width, height)
                         <td><input name="name" type="text" size="33" id="idname" onkeyup="this.form.name.value=toCyr(this.form.name.value)"></td>
                       </tr>
                       <tr>
-                        <td align="left">Број&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  / &nbsp;Година: </td>
-                      </tr>
-                      <tr>
-                        <td width="55%"><label>
-                          <input name="number" type="text" id="number" size="2">
-                          /
-                          <input name="year" type="text" id="year" size="2">
-                        </label></td>
+                        <td align="left">Број:
+                        <input name="number" type="text" id="number" size="3" /></td>
                       </tr>
                       <tr>
                         <td align="left">Клучен збор: </td>
@@ -77,7 +71,7 @@ function popUpWindow(URLStr, left, top, width, height)
                         </label></td>
                       </tr>
                       <tr>
-                        <td><label>
+                        <td align="right"><label>
                           <input type="submit" name="button" id="button" value="Барај">
                         </label></td>
                       </tr>
@@ -85,7 +79,7 @@ function popUpWindow(URLStr, left, top, width, height)
                         <td colspan="2" align="right">&nbsp;</td>
                       </tr>
                     </table>
-    </form>
+</form>
 				</div>
 </div>
 <script type="text/javascript">

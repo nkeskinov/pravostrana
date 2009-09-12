@@ -93,7 +93,7 @@ function popUpWindow(URLStr, left, top, width, height)
 
 </script>
 
-
+<div style="height:300px;">
 <form action="documentlaws.php" method="get" enctype="application/x-www-form-urlencoded" >
 <table width="95%" border="0">
 <tr>
@@ -136,8 +136,8 @@ function popUpWindow(URLStr, left, top, width, height)
     </div></td>
   </tr>
   <tr>
-    <td width="24%">&nbsp;</td>
-    <td width="76%">&nbsp;</td>
+    <td width="46%">&nbsp;</td>
+    <td width="54%">&nbsp;</td>
   </tr>
   <tr>
     <td align="left">Име на законот: </td>
@@ -153,17 +153,18 @@ function popUpWindow(URLStr, left, top, width, height)
         <td align='left' valign="top">Категорија: </td>
         <td>
             <form name="sel">
-            <font id="category"><select style='width:320px;' name="category">
+            <div style="padding:2px; padding-left:0;"><font id="category"><select style='width:320px;' name="category">
             <option value='0'>Изберете категорија</option> 
-            </select></font>
-            <br /><font id="subcategory"></font>
-            <br /><font id="subsubcategory"></font></form>
+            </select></font></div>
+            <div style="padding:2px; padding-left:0;"><font id="subcategory"></font></div>
+            <div style="padding:2px; padding-left:0;"><font id="subsubcategory"></font></div>
+            </form>
         </td>
   	</tr>
 	<tr>
     <td align="left">Клучен збор: </td>
     <td><label>
-      <input name="keyword" type="text" id="keyword" onkeyup="this.form.keyword.value=toCyr(this.form.keyword.value)" size="50">
+      <input name="keyword" type="text" id="keyword" onkeyup="this.form.keyword.value=toCyr(this.form.keyword.value)" size="47">
     </label></td>
   </tr>
   <tr>
@@ -177,6 +178,7 @@ function popUpWindow(URLStr, left, top, width, height)
    </tr>
    </table>
 </form>
+</div>
 <script language=Javascript>
 function Inint_AJAX() {
    try { return new ActiveXObject("Msxml2.XMLHTTP");  } catch(e) {} //IE
