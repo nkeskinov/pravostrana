@@ -72,7 +72,7 @@ transition: Fx.Transitions.sineOut
           <li class="active"><a class="topdaddy" href="../documentlaws.php">Закони</a></li>
          <li><a href="../analysis.php">Анализи</a></li>
           <li><a href="../regulations.php">Прописи</a></li>
-          <li><a href="courtpractice.php">Судска пракса</a>
+          <li><a href="../courtpractice.php">Судска пракса</a>
            <ul>
              <li><a href="../courtpractice.php">Судска пракса</a></li>
             <li><a href="../europeancourt.php">Европски суд за човекови права</a></li>
@@ -82,7 +82,7 @@ transition: Fx.Transitions.sineOut
           <li><a href="../contact.php">Контакт</a></li>
         </ul>
       <!-- TemplateEndEditable -->
-       <div id="mapMenu"><!-- TemplateBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;</td></tr></table><!-- TemplateEndEditable --></div> 
+       <div id="mapMenu"><!-- TemplateBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="../index.php">Почетна</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;</td></tr></table><!-- TemplateEndEditable --></div> 
       </div>
 	</div>
     <div class="mainBody">
