@@ -172,7 +172,7 @@ transition: Fx.Transitions.sineOut
                 <td colspan="2"><div><?php getBanner($database_pravo, $pravo, 1); ?></div></td>
                 <td rowspan="4" valign="top">
                 <?php include("util/login_block.php"); ?>
-        			  <p><a href="http://www.adobe.com/go/EN_US-H-GET-FLASH"><img src="images/get_adobe_reader.png" border="0" /></a> </p>
+        			  <p><a href="http://www.adobe.com/go/EN_US-H-GET-READER" target="_blank"><img src="images/get_adobe_reader.png" border="0" /></a> </p>
                       <div><?php getBanner($database_pravo, $pravo, 3); ?></div>
                       <br />
                       <div><?php getBanner($database_pravo, $pravo, 4); ?></div>

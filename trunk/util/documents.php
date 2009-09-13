@@ -1,5 +1,7 @@
 <?php
-$currentPage = $_SERVER["PHP_SELF"];
+$selfArray = explode('/',$_SERVER['PHP_SELF']);
+$currentPage = $selfArray[count($selfArray)-1];
+//$currentPage = $_SERVER["PHP_SELF"];
 
 $sort_order="desc";
 if(isset($_POST['asc']))
