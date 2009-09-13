@@ -58,15 +58,17 @@ if ($totalRows_recordset_document == 1) {
 	$row_recordset_doc_type = mysql_fetch_assoc($recordset_doc_type);
 	$totalRows_recordset_doc_type = mysql_num_rows($recordset_doc_type);
 	$path .= $row_recordset_doc_type['directory'] . '/' . $row_recordset_document['filename'];
+	//$path = mb_convert_encoding($path, 'UTF-16LE', 'UTF-8');
 	$file_size = filesize($path);
-	
 	if ($fp = fopen ($path, "r")) {
-		if (!mysql_query(sprintf("INSERT INTO download (id_document, id_user, downloaded_date) VALUES (%s, %s, %s)", GetSQLValueString($row_recordset_document['id_document'], "int"), GetSQLValueString($_SESSION['MM_ID'], "int"), GetSQLValueString(date('Y-m-d H:i'), "date"))) || !mysql_query(sprintf("UPDATE document SET no_downloads = no_downloads + 1 WHERE id_document = %s", $row_recordset_document['id_document'])))
-			die('Problem so registracijata na simnuvanjeto: ' . mysql_error());
+		if ($_SESSION['MM_UserGroup'] != 'admin') {
+			if (!mysql_query(sprintf("INSERT INTO download (id_document, id_user, downloaded_date) VALUES (%s, %s, %s)", GetSQLValueString($row_recordset_document['id_document'], "int"), GetSQLValueString($_SESSION['MM_ID'], "int"), GetSQLValueString(date('Y-m-d H:i:s'), "date"))) || !mysql_query(sprintf("UPDATE document SET no_downloads = no_downloads + 1 WHERE id_document = %s", $row_recordset_document['id_document'])))
+				die('Problem so registracijata na simnuvanjeto: ' . mysql_error());
+		}
 		
 		ob_start();
 		header('Content-type: '.$row_recordset_document['mimetype']);
-		header('Content-Disposition: attachment; filename="'.$row_recordset_document['filename'].'"');
+		header('Content-Disposition: attachment; filename="'.'=?UTF-8?B?'.base64_encode($row_recordset_document['filename']).'?='.'"');
 		header('Content-length: '.$file_size);
 		ob_end_flush();
 	 
@@ -84,10 +86,10 @@ if ($totalRows_recordset_document == 1) {
 		exit;
 		exit();
 	} else {
-		die('Problem so otvoranje na patekata: ' . $path);
+		die("Problem so otvoranje na patekata: " . $path . ".\nSe izvinuvame za neprijatnosta. Problemot ke bide resen vo najbrz mozen rok.\nDokolku i ponatamu imate problemi, pisete na support@pravo.org.mk.");
 	}
 } else {
-	die('Nepoznat dokument.');
+	die("Nepoznat dokument. Se izvinuvame za neprijatnosta. Problemot ke bide resen vo najbrz mozen rok.\nDokolku i ponatamu imate problemi, pisete na support@pravo.org.mk.");
 }
 
 ?>
