@@ -199,21 +199,6 @@ if($row_number){
 
 }
 ?>
-<?php
-function getNumDownload($id_document, $pravo, $database_pravo){
-	mysql_select_db($database_pravo, $pravo);
-	$query_GroupDocuments = sprintf("SELECT count(*) as nb FROM download WHERE
-									id_document = %s", 
-							GetSQLValueString($id_document, "int"));
-	$GroupDocuments = mysql_query($query_GroupDocuments, $pravo) or die(mysql_error());
-	//$row_GroupDocuments = mysql_fetch_assoc($GroupDocuments);
-	//$tmp_number=0;
-	$row_number =  mysql_num_rows($GroupDocuments);
-	if($row_number){
-		echo mysql_result($GroupDocuments,0,'nb');
-	}
-}
-?>
    <div align="left" style="height:22px; margin-top:-15px; width:512px; border-bottom:1px solid #a25852; background:#f5d6d4;  padding:3px; padding-top:1px;">
    <?php if(isset($_SESSION['MM_UserGroup'])) {
 		if($_SESSION['MM_UserGroup'] =="admin"){ ?>
