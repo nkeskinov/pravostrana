@@ -1,6 +1,7 @@
 <?php
-
-$currentPage = $_SERVER["PHP_SELF"];
+$selfArray = explode('/',$_SERVER['PHP_SELF']);
+$currentPage = $selfArray[count($selfArray)-1];
+//$currentPage ="../".$_SERVER["PHP_SELF"];
 
 $colname_User = "-1";
 if (isset($_GET['id'])) {
@@ -337,7 +338,7 @@ do {
   <?php $i=0; do { ?>
     <tr <?php if($i%2==0) echo "style='background:#fbf7e0'" ?>>
       <td><a href="../documentDetail.php?id=<?php echo $row_DownloadedDocuments['id_document']; ?>&gid=<?php echo $row_DownloadedDocuments['id_doc_group']; ?>&page=documentlaws.php"><?php echo $row_DownloadedDocuments['title']; ?></a></td>
-      <td><?php echo date("d.m.Y H:m", strtotime(htmlentities($row_DownloadedDocuments['downloaded_date'], ENT_COMPAT, 'UTF-8'))); ?></td>
+      <td><?php echo date("d.m.Y H:i:s", strtotime(htmlentities($row_DownloadedDocuments['downloaded_date'], ENT_COMPAT, 'UTF-8'))); ?></td>
       <td><?php echo $row_DownloadedDocuments['downloads']; ?></td>
     </tr>
     <?php $i++;} while ($row_DownloadedDocuments = mysql_fetch_assoc($DownloadedDocuments)); ?>
@@ -425,7 +426,7 @@ do {
     <tr valign="top" <?php if($i%2==0) echo "style='background:#fbf7e0'" ?>>
       <td><?php echo $row_VisitedPages['page']; ?></td>
       <td><?php echo $row_VisitedPages['from_page']; ?></td>
-      <td><?php echo $row_VisitedPages['visited_date']; ?></td>
+      <td><?php echo date("d.m.Y H:i:s", strtotime($row_VisitedPages['visited_date'])); ?></td>
       <td><?php echo $row_VisitedPages['ip']; ?></td>
       <td><?php echo substr($row_VisitedPages['browser'],0,strpos($row_VisitedPages['browser'],' ')); ?></td>
       <td><?php echo substr($row_VisitedPages['language'],0,strpos($row_VisitedPages['language'],';')); ?></td>
