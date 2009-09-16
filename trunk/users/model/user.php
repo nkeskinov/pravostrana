@@ -39,7 +39,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
 			
 		}else{
 			echo '<br />';
-	 		_show_message_color('Лозинките не се софпаќаат!','RED');		
+	 		_show_message_color('Лозинките не се совпаѓаат!','RED');		
 		}
 		
 	}
@@ -110,14 +110,15 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 			//$_SESSION['MM_ID'] = mysql_insert_id();
 			
 			echo '<br />';
-			_show_message_color('Вашата регистрација беше успешно завршена!<br />Проверете го вашиот e-mail за да ја комплетирате регистрацијата. Имајте во предвид дека треба да помине извесно време за да стаса пораката до вашето e-mail сандаче.','GREEN');
+			_show_message_color('<p>Вашата регистрација беше успешно завршена!<br />Проверете го вашиот e-mail за да ја комплетирате регистрацијата. Имајте во предвид дека треба да помине извесно време за да стаса пораката до вашето e-mail сандаче.</p><p style="font-weight: bold;">Не заборавајте да го проверите вашиот Spam фолдер!</p>','GREEN');
 
 			$key=hash_hmac('ripemd160', $_POST['username'],'register');
 			$to_email=$_POST['username'];
 			$name= $_POST['name'];
 			$surname= $_POST['surname'];
+			$sex = $_POST['sex'];
 			$subject="Активација на корисничка сметка на Pravo.org.mk";
-			$Message="Почитуван/а $name $surname, <br /><br />";
+			$Message="Почитуван".($sex == '0' ? '' : 'а')." $name $surname, <br /><br />";
 			$Message.="Го примивме вашето барање за регистрирање на вашата корисничка сметка на <strong>Pravo.org.mk</strong><br />";
 			$Message.="За да ја активирате вашата корисничка сметка кликнете на следниот линк или копирајте ";
 			$Message.="го истиот во полето за интернет адреса на вашиот прелистувач: <br /><br />";
@@ -125,7 +126,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 			$Message.="<br /><br />Со почит,<br />";
 			$Message.="Pravo.org.mk тимот";
 			
-			//echo $Message;
+			echo $Message;
 			send_mail("Pravo.org.mk","no-reply@pravo.org.mk",$to_email,$subject,$Message);
 			
 			echo '<div align="center"><form action="index.php" method="get">
@@ -673,7 +674,7 @@ do {
       <td colspan="3"><h4>2. Вашето корисничко име (e-mail) и лозинка</h4></td>
     </tr>
     <tr valign="baseline">
-      <td nowrap align="right">Корисничко име (e-mail):</td>
+      <td nowrap align="right">Корисничко име (<strong>валиден</strong> e-mail):</td>
       <td colspan="2"><span id="sprytextfield3">
         <input type="text" name="username" value="<?php
 				if(isset($_POST['username'])) 

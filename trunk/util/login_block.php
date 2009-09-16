@@ -6,7 +6,7 @@
                 <form ACTION="<?php echo $loginFormAction; ?>" METHOD="POST" name="form1">
                   <table width="98%" border="0" cellspacing="0">
               		  <tr>
-                        <td>Корисничко име:</td>
+                        <td>Корисничко име (<strong>e-mail</strong>):</td>
                       </tr>
                       <tr>
                         <td><input name="username_login" type="text" id="username_login" size="33" />
