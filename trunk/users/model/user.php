@@ -126,7 +126,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 			$Message.="<br /><br />Со почит,<br />";
 			$Message.="Pravo.org.mk тимот";
 			
-			echo $Message;
+			//echo $Message;
 			send_mail("Pravo.org.mk","no-reply@pravo.org.mk",$to_email,$subject,$Message);
 			
 			echo '<div align="center"><form action="index.php" method="get">
