@@ -102,21 +102,21 @@ transition: Fx.Transitions.sineOut
     <div class="mainBody">
    	  <div class="content" style="width:100%">
             <div></div>
-            <!-- InstanceBeginEditable name="EditRegion4" --><table width="370" align="center"><tr><td width="601">
+            <!-- InstanceBeginEditable name="EditRegion4" --><table width="400" align="center"><tr><td width="601">
             <br />
             <div class="middle-red-block-small">
                 <div class="title">
                     <div class="left"></div>
-                    <div class="middle" style="width:350px;"><div class="text">Логирање</div></div>
+                    <div class="middle" style="width:380px;"><div class="text">Логирање</div></div>
                     <div class="right"></div>
                 </div>
                  <div class="sodrzina">
                   <br />
                   <?php if((!isset( $_SESSION['MM_Username'] )) or (!isset($_SESSION['MM_UserGroup']))){  ?>
                 <form action="" method="post" name="form1">
-                  <table width="337" border="0" align="center" cellspacing="0">
+                  <table width="380" border="0" align="center" cellspacing="0">
               <tr>
-                        <td width="153">Корисничко име:</td>
+                        <td width="180">Корисничко име (<strong>e-mail</strong>):</td>
                         <td width="193" ><input name="username_login" type="text" id="username_login" size="30" /></td>
                     </tr>
                       <tr>
