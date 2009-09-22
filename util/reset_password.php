@@ -17,7 +17,7 @@
 			$key=hash_hmac('ripemd160', $username,'reset');
 			
 			$subject="Вашата лозинка за Pravo.org.mk";
-			$Message="Почитуван".($sex == '0' ? '' : 'а')." $name $surname <br /><br />";
+			$Message="Почитуван".($sex == '0' ? '' : 'а')." $name $surname, <br /><br />";
 			$Message.="Го примивме вашето барање за промена на вашата <strong>Pravo.org.mk</strong> лозинка. ";
 			$Message.="<br />За да ја промените вашата лозинка кликнете на следниот линк или копирајте го истиот во полето за интернет адреса на вашиот прелистувач: <br /><br />";
 			$Message.="<a href='http://pravo.org.mk/resetPassword.php?key=$key&email=$to_email'>http://pravo.org.mk/resetPassword.php?key=$key&email=$to_email</a>";
