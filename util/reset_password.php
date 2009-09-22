@@ -2,7 +2,7 @@
 	
 	if(isset($_POST['reset']) && ($_POST['reset']=="form1")){
 		  mysql_select_db($database_pravo, $pravo);
-		 $Query=sprintf("SELECT username, password,  name, surname FROM `user` WHERE username=%s OR email=%s",
+		 $Query=sprintf("SELECT username, password,  name, surname, sex FROM `user` WHERE username=%s OR email=%s",
 		  GetSQLValueString($_POST['email'], "text"), GetSQLValueString($_POST['email'], "text")); 
 		   
 		  $Result = mysql_query($Query, $pravo) or die(mysql_error());
@@ -12,11 +12,12 @@
 			$password=mysql_result($Result,0,'password');
 			$name=mysql_result($Result,0,'name');
 			$surname=mysql_result($Result,0,'surname');
+			$sex = mysql_result($Result, 0, 'sex');
 			$to_email=$_POST['email'];
 			$key=hash_hmac('ripemd160', $username,'reset');
 			
 			$subject="Вашата лозинка за Pravo.org.mk";
-			$Message="Почитувани, $name $surname <br /><br />";
+			$Message="Почитуван".($sex == '0' ? '' : 'а')." $name $surname <br /><br />";
 			$Message.="Го примивме вашето барање за промена на вашата <strong>Pravo.org.mk</strong> лозинка. ";
 			$Message.="<br />За да ја промените вашата лозинка кликнете на следниот линк или копирајте го истиот во полето за интернет адреса на вашиот прелистувач: <br /><br />";
 			$Message.="<a href='http://pravo.org.mk/resetPassword.php?key=$key&email=$to_email'>http://pravo.org.mk/resetPassword.php?key=$key&email=$to_email</a>";
@@ -58,8 +59,7 @@
 				$Result1 = mysql_query($updateQuery, $pravo) or die(mysql_error());
 				if($Result1){
 					_show_message_color('Вашата лозинка е успешно сменета. 
-										Логирајте се со новата лозинка на следниов линк 
-										<u><a href="login.php">линкот</a></u> .','GREEN');
+										Логирајте се со новата лозинка на следниов <u><a href="login.php">линк</a></u>.','GREEN');
 				}else{
 					_show_message_color('Настана проблем при промена на вашата лозинка.
 										Обидете се уште еднаш или контактирајте не на support@pravo.org.mk','RED');	
