@@ -82,7 +82,10 @@ $('.password-new1').pstrength();
 
 </script>
 <?php if(!isset($_POST['reset']) && !(isset($_GET['key'])) && !(isset($_POST['changepass']))) {?>
-<form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<form name="form1" method="post" action="<?php 
+$selfArray = explode('/',$_SERVER['PHP_SELF']);
+echo $selfArray[count($selfArray)-1];
+?>">
   <div style="padding-left:20px">
   <table border="0" cellpadding="3" cellspacing="2">
     <tr>
@@ -106,7 +109,10 @@ $('.password-new1').pstrength();
 </form>
 <?php } ?>
 <?php if(isset($_GET['key'])) { ?>
-<form name="form2" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<form name="form2" method="post" action="<?php 
+$selfArray = explode('/',$_SERVER['PHP_SELF']);
+echo $selfArray[count($selfArray)-1]; 
+?>">
   <table width="100%" border="0" align="center">
     <tr>
       <td colspan="2">Внесете нова лозинка</td>
