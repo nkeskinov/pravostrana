@@ -337,7 +337,7 @@ function MM_swapImage() { //v3.0
 }
 //-->
 </script>
-<?php if(isset($_SESSION['MM_UserGroup']) && $_SESSION['MM_UserGroup']="admin" ) { ?>
+<?php if(isset($_SESSION['MM_UserGroup']) && $_SESSION['MM_UserGroup']=="admin" ) { ?>
 <div style="width:100%;">
 <form method="post" name="form_comment" action="<?php echo $editFormAction; ?>">
 <?php if(isset($_POST['new']) || isset($_POST['EditPost'])){ ?>
