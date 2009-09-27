@@ -130,8 +130,10 @@ transition: Fx.Transitions.sineOut
                         </div></td>
                       </tr>
                       <tr>
-                        <td colspan="2"><?php if(isset($loginFoundUser) && !$loginFoundUser) {?>
+                        <td colspan="2"><?php if(isset($loginFoundUser) && !$loginFoundUser && isset($loginUserNotActivated) && !$loginUserNotActivated) {?>
                         <div style="color:#F00;">Корисничкото име и лозинката не се совпаѓаат</div>
+                        <?php } elseif(isset($loginUserNotActivated) && $loginUserNotActivated) {?>
+                        <div style="color:#F00;">Вашата корисничка сметка не е активирана!<br />Проверете го вашиот e-mail за активациската порака.</div>
                         <?php } ?>
                         </td>
                       </tr>

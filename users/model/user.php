@@ -110,7 +110,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 			//$_SESSION['MM_ID'] = mysql_insert_id();
 			
 			echo '<br />';
-			_show_message_color('<p>Вашата регистрација беше успешно завршена!<br />Проверете го вашиот e-mail за да ја комплетирате регистрацијата. Имајте во предвид дека треба да помине извесно време за да стаса пораката до вашето e-mail сандаче.</p><p style="font-weight: bold;">Не заборавајте да го проверите вашиот Spam фолдер!</p>','GREEN');
+			_show_message_color('<p style="font-size: 150%;">Вашата регистрација беше успешно завршена!<br />Проверете го вашиот e-mail за да ја комплетирате регистрацијата. Имајте во предвид дека треба да помине извесно време за пораката да стигне до вашето e-mail сандаче.</p><p style="font-weight: bold; font-size: 150%;">Не заборавајте да го проверите вашиот Spam фолдер!</p>','YELLOW');
 
 			$key=hash_hmac('ripemd160', $_POST['username'],'register');
 			$to_email=$_POST['username'];

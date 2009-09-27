@@ -24,8 +24,10 @@
                         </div></td>
                       </tr>
                       <tr>
-                        <td><?php if(isset($loginFoundUser) && !$loginFoundUser) {?>
-                        <div style="color:#F00;">Корисничкото име и лозинката не се совпаѓаат</div>
+                        <td><?php if(isset($loginFoundUser) && !$loginFoundUser && isset($loginUserNotActivated) && !$loginUserNotActivated) {?>
+                        <div style="color:#F00;">Корисничкото име и лозинката не се совпаѓаат.</div>
+                        <?php } elseif(isset($loginUserNotActivated) && $loginUserNotActivated) {?>
+                        <div style="color:#F00;">Вашата корисничка сметка не е активирана!<br />Проверете го вашиот e-mail за активациската порака.</div>
                         <?php } ?>
                         </td>
                       </tr>
