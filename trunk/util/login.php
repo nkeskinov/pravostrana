@@ -21,11 +21,11 @@ if (isset($_POST['username_login'])) {
   $MM_redirectLoginFailed = "login.php";
   $MM_redirecttoReferrer = false;
   mysql_select_db($database_pravo, $pravo);
-  	
-  $LoginRS__query=sprintf("SELECT username, password, id_user, name, surname FROM `user` WHERE username=%s AND password=password(%s) AND is_approved = 1 AND (deleted!=1 OR deleted is null)",
+  
+  $LoginRS_query=sprintf("SELECT username, password, id_user, name, surname FROM `user` WHERE username=%s AND password=password(%s) AND is_approved = 1 AND (deleted!=1 OR deleted is null)",
   GetSQLValueString($loginUsername, "text"), GetSQLValueString($password, "text")); 
    
-  $LoginRS = mysql_query($LoginRS__query, $pravo) or die(mysql_error());
+  $LoginRS = mysql_query($LoginRS_query, $pravo) or die(mysql_error());
   $loginFoundUser = mysql_num_rows($LoginRS);
   if ($loginFoundUser) {
     
@@ -79,6 +79,11 @@ if (isset($_POST['username_login'])) {
 	}
   }
   else {
+	  $LoginRS_query=sprintf("SELECT username FROM `user` WHERE username=%s AND password=password(%s) AND is_approved = 0 AND (deleted!=1 OR deleted is null)",
+  GetSQLValueString($loginUsername, "text"), GetSQLValueString($password, "text")); 
+  $LoginRS = mysql_query($LoginRS_query, $pravo) or die(mysql_error());
+  $loginUserNotActivated = mysql_num_rows($LoginRS);
+  
    // header("Location: ". $MM_redirectLoginFailed );
    $count = $count + 1;
    //echo $count;
