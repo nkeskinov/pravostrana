@@ -8,7 +8,7 @@ if (isset($_GET['pageNum_latestLawsRecordset'])) {
 $startRow_latestLawsRecordset = $pageNum_latestLawsRecordset * $maxRows_latestLawsRecordset;
 
 mysql_select_db($database_pravo, $pravo);
-$query_latestLawsRecordset = "SELECT * FROM `document` WHERE `document`.id_doc_type = 1 ORDER BY `document`.published_date desc";
+$query_latestLawsRecordset = "SELECT id_document, id_doc_group, id_doc_type, id_superdoc, title, published_date FROM `document` WHERE `document`.id_doc_type = 1 ORDER BY `document`.published_date desc";
 $query_limit_latestLawsRecordset = sprintf("%s LIMIT %d, %d", $query_latestLawsRecordset, $startRow_latestLawsRecordset, $maxRows_latestLawsRecordset);
 $latestLawsRecordset = mysql_query($query_limit_latestLawsRecordset, $pravo) or die(mysql_error());
 $row_latestLawsRecordset = mysql_fetch_assoc($latestLawsRecordset);
@@ -42,7 +42,7 @@ $totalPages_latestLawsRecordset = ceil($totalRows_latestLawsRecordset/$maxRows_l
 		<?php echo $row_latestLawsRecordset['title'];
 		if ($id_superdoc != '') {
 			mysql_select_db($database_pravo, $pravo);
-			$query_latestLaw_superdoc = 'SELECT * FROM `document` WHERE id_doc_type = 1 AND id_document = ' . $id_superdoc;
+			$query_latestLaw_superdoc = 'SELECT id_document, title FROM `document` WHERE id_doc_type = 1 AND id_document = ' . $id_superdoc;
 			$latestLaw_superdoc = mysql_query($query_latestLaw_superdoc, $pravo) or die(mysql_error());
 			$row_latestLaw_superdoc = mysql_fetch_assoc($latestLaw_superdoc);
 			echo ' - ' . $row_latestLaw_superdoc['title'];

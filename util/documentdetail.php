@@ -129,9 +129,16 @@ function getDocumentCategory($id_document_group, $pravo, $database_pravo){
 }
 ?>
 
-<table border="0" align="center" width="100%" cellpadding="3">
+<table border="0" align="center" width="100%" cellpadding="3" cellspacing="0">
   <tr>
-    <td colspan="3" style="border-bottom:1px solid #a25852; background:#f5d6d4;"><div style="float:left; font-size:15px; font-variant:small-caps; "><strong><?php echo $row_DetailRS1['title']; ?></strong></div>
+  <?php
+  if (isset($row_DetailRS1['into_force']) && !$row_DetailRS1['into_force']) {
+	  $into_force = FALSE;
+  } else {
+	  $into_force = TRUE;
+  }
+  ?>
+    <td colspan="<?php echo $into_force ? "3" : "2" ?>" style="border-bottom:1px solid #a25852; background:#f5d6d4; padding-top:8px; padding-bottom:8px;"><div style="float:left; font-size:15px; font-variant:small-caps;"><strong><?php echo $row_DetailRS1['title']; ?></strong></div>
     <div style="float:right;"> <?php if(isset($_SESSION['MM_UserGroup'])) {
 		if($_SESSION['MM_UserGroup'] =="admin"){ ?>
        <div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
@@ -140,6 +147,10 @@ function getDocumentCategory($id_document_group, $pravo, $database_pravo){
    <a href="admin/documents.php?id=<?php echo $row_DetailRS1['id_document']; ?>&edit=true"><img src="images/edit.png" border="0" title="Измени" /> </a></div>
     <?php } }  ?></div>
     </td>
+    <?php if (!$into_force) { ?>
+    <td style="border-bottom:1px solid #a25852; background:#f5d6d4;" align="center">
+			<div style="color: red;"><strong>вон сила</strong></div></td><?php }
+	?>
   </tr>
   <tr>
     <td width="38%">Датум на објавување:</td>
