@@ -39,6 +39,7 @@ function _show_message_color($_message,$_color="")
 			case "BLACK": $bgcolor_table = "#000000"; $bgcolor_td = "#FFFFFF"; break;
 			default: $bgcolor_table = "#000000"; $bgcolor_td = "#FFFFFF"; $_image = "caution.png"; break;
 		}
+		//TODO: path dependant of user role
 		?><table bgcolor="<?php echo $bgcolor_table?>" width="100%" cellspacing="1" align="center"><tr><td bgcolor="<?php echo $bgcolor_td?>" align="center" valign="middle" ><img src="images/<?php echo $_image?>" align="absmiddle"/>&nbsp;<?php echo $_message?></div></td></tr></table><?php 
 	}
 }

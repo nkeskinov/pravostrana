@@ -154,7 +154,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 	$created_by = isset($_SESSION['MM_ID']) ? $_SESSION['MM_ID'] : 0 ;
 	/* Inserts the meta data for the document sl. vesnik and year */
 	
-	$checkMeta = sprintf("SELECT * FROM doc_meta where ordinal = %s",GetSQLValueString($_POST['ordinal'], "int"));
+	$checkMeta = sprintf("SELECT * FROM doc_meta where ordinal = %s and `date` = %s",GetSQLValueString($_POST['ordinal'], "int"),GetSQLValueString($published_date, "date"));
 	$Result5 = mysql_query($checkMeta, $pravo) or die(mysql_error());
 	if(mysql_num_rows($Result5)>0){
 		$id_doc_meta =mysql_result($Result5,0,'id_doc_meta');
@@ -182,9 +182,14 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 		//echo $_POST['subcategory']."<br>";
 		//echo $_POST['category']."<br>";		
 		//echo $id_group;
-		
+		$into_force_date = '';
+		$into_force = '';
+		if ($_POST['id_doc_type'] == '1') {
+			$into_force_date = date("Y-m-d", strtotime($_POST['into_force_date']));
+			$into_force = '1';
+		}
 
-		$insertSQL = sprintf("INSERT INTO `document` (id_doc_type, filename, title, id_doc_group, `description`, extension, filesize, mimetype, forcesubscribe, published_date, created_by, id_doc_meta, uploaded_date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+		$insertSQL = sprintf("INSERT INTO `document` (id_doc_type, filename, title, id_doc_group, `description`, extension, filesize, mimetype, forcesubscribe, published_date, created_by, id_doc_meta, uploaded_date, into_force_date, into_force) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
 						   GetSQLValueString($_POST['id_doc_type'], "int"),
 						   GetSQLValueString($filename, "text"),
 						   GetSQLValueString($_POST['title'], "text"),
@@ -197,7 +202,9 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 						   GetSQLValueString($published_date , "date"),
 						   GetSQLValueString($created_by, "int"),
 						   GetSQLValueString($id_doc_meta,"int"),
-						   GetSQLValueString(date('Y-m-d H:i'), "date"));
+						   GetSQLValueString(date('Y-m-d H:i'), "date"),
+						   GetSQLValueString($into_force_date, "date"),
+						   GetSQLValueString($into_force, "defined", '1', 'NULL'));
 	
 	  
 	  $Result1 = mysql_query($insertSQL, $pravo) or die(mysql_error());
@@ -239,12 +246,12 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 	
 					$updateSQL = sprintf("UPDATE `document` SET id_superdoc=%s where id_document = %s",GetSQLValueString($_GET['superdocument'],"int"),GetSQLValueString(mysql_insert_id(),"int"));
 					$Result2 = mysql_query($updateSQL, $pravo) or die(mysql_error());
-					$redirect = "../documentDetail.php?id=".$_GET['superdocument']."&page=documentlaws.php";
+					//$redirect = "../documentDetail.php?id=".$_GET['superdocument']."&page=documentlaws.php";
 			
-			}else{
-				$redirect = "../documentDetail.php?id=".$id_doc."&page=documentlaws.php";
-			}
-			header("Location: " .$redirect );
+			}//else{
+				//$redirect = "../documentDetail.php?id=".$id_doc."&page=documentlaws.php";
+			//}
+			//header("Location: " .$redirect );
 			$success=true;
 	  
 	 }else{
@@ -271,7 +278,7 @@ if ((isset($_POST["MM_update"]))) {
 	 $success=true;
 	 
 	if($_POST['published_date']!="")
-		$published_date = date("Y-m-d", strtotime($_POST['published_date']));
+		$published_date = date("Y-m-d", strtotime($_POST['into_force_date']));
 	else
 		$published_date="";
 	if(isset($_GET['change']) && $_GET['change']="true" ){
@@ -323,8 +330,12 @@ if ((isset($_POST["MM_update"]))) {
 	//echo $_POST['subcategory']."<br>";
 	//echo $_POST['category']."<br>";		
 	//echo $id_group."<br>";
+	$into_force_date = '';
+	if (isset($_POST['into_force_date'])) {
+		$into_force_date = $_POST['into_force_date'];
+	}
 	
-  $updateSQL = sprintf("UPDATE `document` SET title=%s, published_date=%s, `description`=%s, id_doc_type=%s, id_doc_group=%s, filename=%s, forcesubscribe=%s WHERE id_document=%s",
+  $updateSQL = sprintf("UPDATE `document` SET title=%s, published_date=%s, `description`=%s, id_doc_type=%s, id_doc_group=%s, filename=%s, forcesubscribe=%s, into_force_date=%s WHERE id_document=%s",
                        GetSQLValueString($_POST['title'], "text"),
                        GetSQLValueString($published_date, "date"),
                        GetSQLValueString($_POST['description'], "text"),
@@ -332,13 +343,14 @@ if ((isset($_POST["MM_update"]))) {
                        GetSQLValueString($id_group, "int"),
                        GetSQLValueString($filename, "text"),
                        GetSQLValueString(isset($_POST['forcesubscribe']) ? "true" : "", "defined","1","0"),
+					   GetSQLValueString($into_force_date, "date"),
 					   GetSQLValueString($_POST['id_document'], "int"));
 
   echo $updateSQL;
   $Result1 = mysql_query($updateSQL, $pravo) or die(mysql_error());
   
   /* Update the ordinal and date from the doc_meta*/
-  $year = date("Y",strtotime($_POST['year']));
+  $year = date("d.m.Y",strtotime($_POST['year']));
 	$UpdateDocMetaSQL = sprintf("UPDATE `doc_meta` SET ordinal=%s, `date`=%s WHERE `doc_meta`.`id_doc_meta`=%s",
                        GetSQLValueString($_POST['ordinal'], "int"),
                        GetSQLValueString($year, "date"),
@@ -590,6 +602,20 @@ jQuery("#jQueryUICalendar1").datepicker({ dateFormat: 'dd.mm.yy',  altField: '#a
       </td>
     </tr>
     <tr valign="baseline">
+    	<td nowrap align="right" valign="top">Стапува во сила:</td>
+        <td>
+        	<input type="text" size="20" name="into_force_date"  value="<?php if($row_Recordset1['into_force_date']!=NULL) echo date("d.m.Y", strtotime(htmlentities($row_Recordset1['into_force_date'], ENT_COMPAT, ''))); ?>" id="jQueryUICalendar2"/>
+        <script type="text/javascript">
+// BeginWebWidget jQuery_UI_Calendar: jQueryUICalendar2
+//jQuery("#jQueryUICalendar2").datepicker();
+jQuery("#jQueryUICalendar2").datepicker({ dateFormat: 'dd.mm.yy',  altField: '#actualDate' });
+
+
+// EndWebWidget jQuery_UI_Calendar: jQueryUICalendar2
+        </script>        
+        </td>
+    </tr>
+    <tr valign="baseline">
       <td nowrap align="right" valign="top">Забелешка:</td>
       <td><textarea name="description" cols="40" rows="5"><?php echo htmlentities($row_Recordset1['description'], ENT_COMPAT, 'UTF-8'); ?></textarea></td>
     </tr>
@@ -626,20 +652,20 @@ do {
         </td>
   	</tr>
 	<tr>
-        <td align='right'>Податегорија: </td>
+        <td align='right'>Подкатегорија: </td>
         <td>
             <font id=subcategory><select style='width:300px;' disabled>
-            <option value='0'>Подакатегорија</option> 
+            <option value='0'>Подкатегорија</option> 
             </select></font>
             <a href="document_category.php?mode=new&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/add.gif" border="0" /></a>
       <a href="document_category.php?id=<?php echo $subcat; ?>&mode=edit&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/pencil.png" border="0" /></a>
         </td>
   	</tr>
     <tr>
-         <td align='right'>Под-податегорија: </td>
+         <td align='right'>Под-подкатегорија: </td>
          <td>
             <font id=subsubcategory><select style='width:300px;' disabled>
-            <option value='0'>Под-подакатегорија</option>
+            <option value='0'>Под-подкатегорија</option>
             </select></font>
       <a href="document_category.php?mode=new&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/add.gif" border="0" /></a>
       <a href="document_category.php?id=<?php echo $subsubcat; ?>&mode=edit&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/pencil.png" border="0" /></a>
