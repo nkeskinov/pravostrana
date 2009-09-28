@@ -293,11 +293,7 @@ if($row_number){
 </table>
 <table border="0" width="100%" cellspacing="0">
   <?php do { 
-  	if($row_Documents['published_date']!="")
-	  	$timestamp = strtotime($row_Documents['date']); 
-	else
-		$timestamp = strtotime($row_Documents['into_force_date']); 
-//	echo $row_Documents['published_date'];
+	$timestamp = strtotime($row_Documents['published_date']);
   ?>
     <tr>
       <td width="100%" style="border-bottom:1px solid #a25852; background:#fae9e8; padding-left:5px;"><strong><a href="documentDetail.php?id=<?php echo $row_Documents['id_document']; ?>&gid=<?php echo $row_Documents['id_doc_group']; ?>&tid=<?php echo $id_doc_type_Documents ?>&page=<?php echo $page; ?>" title="Видете ги деталите за документот" ><span style="font-variant:small-caps; font-weight:bolder; font-size:15px; "><?php echo $row_Documents['title'].((isset($row_Documents['into_force']) && !$row_Documents['into_force']) ? '<span style="color: red;"> - вон сила</span>' : ""); ?></span></a></strong><br> <span style="color:#666; font-size:11px">&nbsp;<?php echo date("d.m.Y", $timestamp); ?></span> <?php if($page == "documentlaws.php") { echo '|<span style="color:#666; font-size:11px"> Сл. весник/година:</span> <span style="font-size:11px; font-weight:bold;">'.$row_Documents["ordinal"].' </span>/<span style="font-size:11px; font-weight:bold;"> '.date("Y",strtotime($row_Documents["date"])); }else if($page == "courtpractice.php" || $page == "europeancourt.php") { echo '|<span style="color:#666; font-size:11px"> Суд:</span> <span style="font-size:11px;">'.$row_Documents["name"].' </span>'; } ?></span></td>
