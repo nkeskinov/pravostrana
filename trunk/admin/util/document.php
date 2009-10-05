@@ -33,8 +33,16 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 	$_SESSION['edit']="-1";
 if(isset($_GET['id']))
 	$_SESSION['edit']="edit";
-
+	
 //echo $_SESSION['edit'];
+mysql_select_db($database_pravo, $pravo);
+
+if (isset($_GET['id_document']) && isset($_GET['id_doc_type']) && isset($_GET['into_force']) && $_GET['id_document'] != '0' && $_GET['id_doc_type'] == '1') {
+	$query_IntoForce = sprintf("UPDATE document SET into_force = %s WHERE id_document = %s AND id_doc_type = 1", GetSQLValueString($_GET['into_force'], "int"), GetSQLValueString($_GET['id_document'], "int"));
+	mysql_query($query_IntoForce, $pravo) or die(mysql_error());
+	header("Location: " . $_SERVER['HTTP_REFERER']);
+	exit;
+}
 $editFormAction = $_SERVER['PHP_SELF'];
 if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
@@ -43,7 +51,6 @@ $colname_Recordset1 = "-1";
 if (isset($_GET['id'])) {
   $colname_Recordset1 = $_GET['id'];
 }
-mysql_select_db($database_pravo, $pravo);
 $query_Recordset1 = sprintf("SELECT * FROM `document` d LEFT JOIN doc_meta dm ON (d.id_doc_meta=dm.id_doc_meta)  WHERE  id_document = %s", GetSQLValueString($colname_Recordset1, "int"));
 $Recordset1 = mysql_query($query_Recordset1, $pravo) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
