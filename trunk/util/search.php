@@ -218,12 +218,12 @@ window.onLoad=dochange('category', -1);
   var yuitooltip1 = new YAHOO.widget.Tooltip("yuitooltip1",
                                             {
                                               context:"name", 
-                                              text:"Име на законот" 
+                                              text:"Името или дел од името на законот" 
                                             });
   var yuitooltip1 = new YAHOO.widget.Tooltip("yuitooltip2",
                                             {
 											  context:"group", 
-                                              text:"Група на која припаѓа законот" 
+                                              text:"Категорија на која припаѓа законот" 
                                             });
    var yuitooltip1 = new YAHOO.widget.Tooltip("yuitooltip3",
                                             {
