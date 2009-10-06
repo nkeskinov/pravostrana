@@ -16,7 +16,7 @@ if(isset($_SESSION['MM_Name'])){
 
 
 mysql_select_db($database_pravo, $pravo);
-$query_Post = sprintf("SELECT post.id_post,`user`.name, `user`.surname, post.created_date, post.content, post.subject, post.modified_date FROM discussion, post, post_category, `user` WHERE discussion.id_discussion=post.id_discussion   AND post_category.id_post_category=discussion.id_post_category AND post.id_user=`user`.id_user  AND post_category.id_post_category=1 AND discussion.id_document=%s ORDER BY created_date DESC",GetSQLValueString($id_document, "-1"));
+$query_Post = sprintf("SELECT post.id_post,`user`.name, `user`.surname, post.created_date, post.content, post.subject, post.modified_date FROM discussion, post, post_category, `user` WHERE discussion.id_discussion=post.id_discussion   AND post_category.id_post_category=discussion.id_post_category AND post.id_user=`user`.id_user AND post.archive=0 AND post_category.id_post_category=1 AND discussion.id_document=%s ORDER BY created_date DESC",GetSQLValueString($id_document, "-1"));
 $query_limit_Post = sprintf("%s LIMIT %d, %d", $query_Post, $startRow_Post, $maxRows_Post);
 $Post = mysql_query($query_limit_Post, $pravo) or die(mysql_error());
 $row_Post = mysql_fetch_assoc($Post);
