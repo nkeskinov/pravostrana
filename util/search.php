@@ -150,7 +150,7 @@ function popUpWindow(URLStr, left, top, width, height)
     </label></td>
   </tr>
  	<tr>
-        <td align='left' valign="top">Категорија: </td>
+        <td align="left" valign="top" style="padding-top:7px;">Категорија: </td>
         <td>
             <form name="sel">
             <div style="padding:2px; padding-left:0;"><font id="category"><select style='width:320px;' name="category">
