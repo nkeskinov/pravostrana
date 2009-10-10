@@ -36,21 +36,20 @@ $totalPages_latestLawsRecordset = ceil($totalRows_latestLawsRecordset/$maxRows_l
 		} else {
 			$id_document_link = $row_latestLawsRecordset['id_document'];
 		}
-	?>
-   	<tr onmouseover="this.className='on'" onmouseout="this.className='off'">
-      	<td width="94%" valign="top" <?php if($tmp_number<$maxRows_latestLawsRecordset-1) {?>style="border-bottom:1px dotted #CCC;"<?php }?>><a href="documentDetail.php?id=<?php echo $id_document_link; ?>&gid=<?php echo $row_latestLawsRecordset['id_doc_group']; ?>&tid=<?php echo $row_latestLawsRecordset['id_doc_type']; ?>&page=documentlaws.php" title="Детали за документот">
-		<?php echo $row_latestLawsRecordset['title'];
 		if ($id_superdoc != '') {
 			mysql_select_db($database_pravo, $pravo);
-			$query_latestLaw_superdoc = 'SELECT id_document, title FROM `document` WHERE id_doc_type = 1 AND id_document = ' . $id_superdoc;
+			$query_latestLaw_superdoc = 'SELECT id_document, title, id_doc_group FROM `document` WHERE id_doc_type = 1 AND id_document = ' . $id_superdoc;
 			$latestLaw_superdoc = mysql_query($query_latestLaw_superdoc, $pravo) or die(mysql_error());
 			$row_latestLaw_superdoc = mysql_fetch_assoc($latestLaw_superdoc);
-			echo ' - ' . $row_latestLaw_superdoc['title'];
+			//echo ' - ' . $row_latestLaw_superdoc['title'];
 		}	
+	?>
+   	<tr onmouseover="this.className='on'" onmouseout="this.className='off'">
+      	<td width="94%" valign="top" <?php if($tmp_number<$maxRows_latestLawsRecordset-1) {?>style="border-bottom:1px dotted #CCC;"<?php }?>><a href="documentDetail.php?id=<?php echo $id_document_link; ?>&gid=<?php echo ($id_superdoc == '' ? $row_latestLawsRecordset['id_doc_group'] : $row_latestLaw_superdoc['id_doc_group']); ?>&tid=<?php echo $row_latestLawsRecordset['id_doc_type']; ?>&page=documentlaws.php" title="Детали за документот">
+		<?php echo $row_latestLawsRecordset['title'] . ($id_superdoc != '' ? ' - ' . $row_latestLaw_superdoc['title'] : '');
 		if(strtotime(date("d.m.Y", $timestamp)) > strtotime(date("d.m.Y",mktime(0, 0, 0, date("m"), date("d")-30, date("y"))))){
-			echo "&nbsp;<sup><span style='color:#F00;'><i>НОВ</i></span></sup>";
+			echo "<sup><span style='color:#F00; font-size:xx-small;'><b>нов</b></span></sup>";
 		}
-		
 		?>
         <br /><span style="color:#666; font-size:11px">&nbsp;<?php echo date("d.m.Y", $timestamp); ?></span>
         </a></td>
