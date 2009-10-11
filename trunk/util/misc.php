@@ -144,14 +144,14 @@ function trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page
 	$success=false;
 	
 	$QueryPage=sprintf("SELECT * from page where path = %s",GetSQLValueString($page, "text"));
-	$ResultPage = mysql_query($QueryPage, $pravo) or die(mysql_error());	
+	$ResultPage = mysql_query($QueryPage, $pravo);	
 	$id_page=-1;
 	if(mysql_num_rows($ResultPage)>0){
 		$id_page=mysql_result($ResultPage,0,'id_page');	
 	}
 	
 	$QueryFromPage=sprintf("SELECT * from page where path = %s",GetSQLValueString($from_page, "text"));
-	$ResultFromPage = mysql_query($QueryFromPage, $pravo) or die(mysql_error());	
+	$ResultFromPage = mysql_query($QueryFromPage, $pravo);	
 	$id_from_page=NULL;
 	if(mysql_num_rows($ResultFromPage)>0){
 		$id_from_page=mysql_result($ResultFromPage,0,'id_page');	
@@ -167,7 +167,7 @@ function trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page
 						GetSQLValueString($browser, "text"),
 						GetSQLValueString($language, "text"),
 						"'".$now."'");
-		$Result = mysql_query($Query, $pravo) or die(mysql_error());	
+		$Result = mysql_query($Query, $pravo);	
 		$_SESSION['id_visit']=mysql_insert_id();
 		if($Result)
 			$success=true;
@@ -175,17 +175,22 @@ function trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page
 	}
 	if(isset($_SESSION['id_visit']) && isset($_SESSION['MM_ID'])){
 		
-		$UpdateQuery=sprintf("UPDATE visit SET id_user=%s WHERE id_visit=%s",	
-							 GetSQLValueString($_SESSION['MM_ID'], "int"),
-							 GetSQLValueString($_SESSION['id_visit'], "int"));
+		if (!isset($_SESSION['logoutDone'])) {
+			$UpdateQuery=sprintf("UPDATE visit SET id_user=%s WHERE id_visit=%s",	
+								 GetSQLValueString($_SESSION['MM_ID'], "int"),
+								 GetSQLValueString($_SESSION['id_visit'], "int"));
 		
-		$Result2 = mysql_query($UpdateQuery, $pravo) or die(mysql_error());	
+			$Result2 = mysql_query($UpdateQuery, $pravo);	
+		} else {
+			$_SESSION['logoutDone'] = NULL;
+			unset($_SESSION['logoutDone']);
+		}
 	}
 	//echo "Session:".$_SESSION['id_visit']."<br>";
 	//echo "Page:".$id_page."<br>";
 	//echo "From page:".$id_from_page."<br>";
 	$Query1=sprintf("INSERT INTO page_visit(id_visit, id_page, id_from_page) VALUES(%s,%s,%s)",GetSQLValueString($_SESSION['id_visit'], "int"),GetSQLValueString($id_page, "int"), GetSQLValueString($id_from_page, "int"));
-	$ResultPageVisit = mysql_query($Query1, $pravo) or die(mysql_error());
+	$ResultPageVisit = mysql_query($Query1, $pravo);
 	if($ResultPageVisit)
 		$success=true;
 }
