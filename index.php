@@ -24,6 +24,9 @@ trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_p
 <head>
 <!--templateinfo codeoutsidehtmlislocked="true" -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="mk-mk" />
+<meta name="description" content="Сите закони на едно место. База на закони, анализи, судски пракси..." />
+<meta name="keywords" content="makedonija, pravo, zakon, zakoni, sudska praksa, analizi, MOST, zakonodavstvo, zakonodavna funkcija, македонија, право, закон, судска пракса, закони, анализи, МОСТ, законодавна функција, законодавство" />
 <link href="rokmoomenu.css" rel="stylesheet" type="text/css" />
 <link href="style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="images/favicon1.png" />
