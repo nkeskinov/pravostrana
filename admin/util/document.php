@@ -283,7 +283,7 @@ if ((isset($_POST["MM_update"]))) {
 	 $success=true;
 	 
 	if($_POST['published_date']!="")
-		$published_date = date("Y-m-d", strtotime($_POST['into_force_date']));
+		$published_date = date("Y-m-d", strtotime($_POST['published_date']));
 	else
 		$published_date="";
 	if(isset($_GET['change']) && $_GET['change']="true" ){
@@ -335,11 +335,12 @@ if ((isset($_POST["MM_update"]))) {
 	//echo $_POST['subcategory']."<br>";
 	//echo $_POST['category']."<br>";		
 	//echo $id_group."<br>";
-	$into_force_date = '';
-	if (isset($_POST['into_force_date'])) {
-		$into_force_date = $_POST['into_force_date'];
-	}
 	
+	if ($_POST['into_force_date']!="") {
+		$into_force_date =  date("Y-m-d", strtotime($_POST['into_force_date']));
+	}else
+		$into_force_date = "";
+	echo $into_force_date;
   $updateSQL = sprintf("UPDATE `document` SET title=%s, published_date=%s, `description`=%s, id_doc_type=%s, id_doc_group=%s, filename=%s, forcesubscribe=%s, into_force_date=%s WHERE id_document=%s",
                        GetSQLValueString($_POST['title'], "text"),
                        GetSQLValueString($published_date, "date"),
@@ -351,32 +352,34 @@ if ((isset($_POST["MM_update"]))) {
 					   GetSQLValueString($into_force_date, "date"),
 					   GetSQLValueString($_POST['id_document'], "int"));
 
-  echo $updateSQL;
+  //echo $updateSQL;
   $Result1 = mysql_query($updateSQL, $pravo) or die(mysql_error());
   
   /* Update the ordinal and date from the doc_meta*/
   $year = date("d.m.Y",strtotime($_POST['year']));
 	$UpdateDocMetaSQL = sprintf("UPDATE `doc_meta` SET ordinal=%s, `date`=%s WHERE `doc_meta`.`id_doc_meta`=%s",
                        GetSQLValueString($_POST['ordinal'], "int"),
-                       GetSQLValueString($year, "date"),
+                       GetSQLValueString($published_date, "date"),
                        GetSQLValueString($_POST['id_doc_meta'], "int"));
 	 
   $ResultDocMeta = mysql_query($UpdateDocMetaSQL, $pravo) or die(mysql_error());
 	
   $id_doc=$_POST['id_document'];
-  $keywords_arr=explode(",", $_POST['keywords']);
-			//print_r($keywords_arr);
+  $keywords1=str_replace(", ",",",$_POST['keywords']);
+  $keywords_arr=explode(",", $keywords1);
+  echo $keywords1;
+			print_r($keywords_arr);
 			 $deleteIDDocument=sprintf("DELETE FROM document_has_keyword WHERE id_document=%s",GetSQLValueString($id_doc, "int"));
 			 $ResultIDDocument1=mysql_query($deleteIDDocument,$pravo);
 			 
 			foreach($keywords_arr as $key){
-				//echo "key=".str_replace("\n","",str_replace("\t","",$key))."<br>";
+				echo "key=".str_replace("\n","",str_replace("\t","",$key))."<br>";
 				$key1=str_replace("\n","",str_replace("\t","",$key));
-				if(strpos($key1," ")==0){
+				/*if(strpos($key1," ")==0){
 					$key1=substr($key1,1);
 					
-				}
-				$selectSQL= sprintf("SELECT * FROM keyword WHERE val like %s",GetSQLValueString($key1, "text"));
+				}*/
+				$selectSQL= sprintf("SELECT * FROM keyword WHERE val=%s",GetSQLValueString($key1, "text"));
 				$Result = mysql_query($selectSQL,$pravo);
 				$num=mysql_num_rows($Result);
 				$id_keyword=-1;
@@ -405,15 +408,18 @@ if ((isset($_POST["MM_update"]))) {
 				//echo "<div style='margin-top:-20px; color:#66CC00;'>";
 				_show_message_color('Документот е успешно изменет!','GREEN'); 
 				$success=true;
+				$MM_redirectLoginSuccess="?".$_SERVER['QUERY_STRING'];
+				echo "<script>document.location.href='".$MM_redirectLoginSuccess."'</script>";
+				echo "<script>'Content-type: application/octet-stream'</script>";
 				//echo "</div>";
 	  }
 	 if ($success == true)
 	  {
-		  echo "COMMIT";
+		  //echo "COMMIT";
 		 $query = "COMMIT";
 		 $result_query = @mysql_query($query, $pravo);
 	  }else{
-		  echo "ROLLBACK";
+		  //echo "ROLLBACK";
 		  $query = "ROLLBACK";
 		  $result_query = @mysql_query($query, $pravo);
 	  }
