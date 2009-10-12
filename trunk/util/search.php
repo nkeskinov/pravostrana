@@ -145,9 +145,11 @@ function popUpWindow(URLStr, left, top, width, height)
   </tr>
    <tr>
     <td align="left">Број / Година: </td>
-    <td><label>
+    <td>
       <input name="number" type="text" id="number" size="4">
-    </label></td>
+      /
+      <input name="year" type="text" id="year" size="4">
+    </td>
   </tr>
  	<tr>
         <td align="left" valign="top" style="padding-top:7px;">Категорија: </td>

@@ -343,6 +343,8 @@ do {
     </tr>
     <?php $i++;} while ($row_DownloadedDocuments = mysql_fetch_assoc($DownloadedDocuments)); ?>
 </table>
+<?php }
+if(mysql_num_rows($VisitedPages)!=0){ ?>
 <br />
 <table border="0" width="100%" cellspacing="0">
 	<tr>

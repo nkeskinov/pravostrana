@@ -59,8 +59,14 @@ function popUpWindow(URLStr, left, top, width, height)
                         <td><input name="name" type="text" size="33" id="idname" onkeyup="this.form.name.value=toCyr(this.form.name.value)"></td>
                       </tr>
                       <tr>
-                        <td align="left">Број:
-                        <input name="number" type="text" id="number" size="3" /></td>
+                        <td align="left">Број / Година:</td>
+                        </tr>
+                        <tr>
+                        <td>
+                        <input name="number" type="text" id="number" size="4" />
+                        /
+				      <input name="year" type="text" id="year" size="4">
+                        </td>
                       </tr>
                       <tr>
                         <td align="left">Клучен збор: </td>

@@ -11,6 +11,12 @@ if (isset($_GET['id'])) {
   $colname_DetailRS1 = $_GET['id'];
 }
 mysql_select_db($database_pravo, $pravo);
+
+$query_RecordsetKeyword = sprintf("SELECT k.val FROM keyword k, document_has_keyword dk, document d WHERE dk.id_keyword=k.id_keyword AND dk.id_document=d.id_document AND d.id_document=%s", GetSQLValueString($colname_DetailRS1, "int"));
+$RecordsetKeyword = mysql_query($query_RecordsetKeyword, $pravo) or die(mysql_error());
+$row_RecordsetKeyword = mysql_fetch_assoc($RecordsetKeyword);
+$totalRows_RecordsetKeyword = mysql_num_rows($RecordsetKeyword);
+
 $query_DetailRS1 = sprintf("SELECT * FROM document left join doc_meta on document.id_doc_meta = doc_meta.id_doc_meta WHERE document.id_document = %s", GetSQLValueString($colname_DetailRS1, "-1"));
 $query_limit_DetailRS1 = sprintf("%s LIMIT %d, %d", $query_DetailRS1, $startRow_DetailRS1, $maxRows_DetailRS1);
 $DetailRS1 = mysql_query($query_limit_DetailRS1, $pravo) or die(mysql_error());
@@ -181,6 +187,12 @@ function getDocumentCategory($id_document_group, $pravo, $database_pravo){
   <tr>
     <td>Забелешка:</td>
     <td colspan="2"><?php echo $row_DetailRS1['description']; ?></td>
+  <tr>
+  <tr>
+    <td valign="top">Клучни зборови:</td>
+    <td colspan="2"><?php do{
+		echo "<a href='".$_GET['page']."?keyword=".$row_RecordsetKeyword['val']."'>".$row_RecordsetKeyword['val']."</a>, ";
+	}while($row_RecordsetKeyword = mysql_fetch_assoc($RecordsetKeyword)); ?></td>
   <tr>
     <td colspan="3"><?php getSubDocuments($row_DetailRS1['id_document'], $pravo, $database_pravo); ?></td>
   </tr>
