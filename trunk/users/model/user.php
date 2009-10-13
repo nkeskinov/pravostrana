@@ -162,7 +162,9 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 
 <link href="SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css">
 <link href="SpryAssets/SpryValidationCheckbox.css" rel="stylesheet" type="text/css" />
+<?php if (isset($_GET['new'])){?>
 <link href="SpryAssets/SpryValidationConfirm.css" rel="stylesheet" type="text/css" />
+<?php } ?>
 <link href="SpryAssets/SpryValidationSelect.css" rel="stylesheet" type="text/css">
 <link href="SpryAssets/SpryValidationPassword.css" rel="stylesheet" type="text/css">
 <script src="SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
@@ -789,7 +791,6 @@ do {
 		var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "email");
 		var sprypassword1 = new Spry.Widget.ValidationPassword("sprypassword1");
 		var sprycheckbox1 = new Spry.Widget.ValidationCheckbox("sprycheckbox1");
-		var spryconfirm1 = new Spry.Widget.ValidationConfirm("spryconfirm1", "password", {validateOn:["change"]});
 		var sprytextfield7 = new Spry.Widget.ValidationTextField("sprytextfield7");
 	//-->
 	</script>
@@ -814,3 +815,10 @@ do {
 //mysql_free_result($Recordset2);
 //mysql_free_result($Recordset3);
 ?>
+<?php if(isset($_GET['new'])) { ?>
+<script type="text/javascript">
+<!--
+		var spryconfirm1 = new Spry.Widget.ValidationConfirm("spryconfirm1", "password", {validateOn:["change"]});
+		//-->
+</script>
+<?php } ?>
