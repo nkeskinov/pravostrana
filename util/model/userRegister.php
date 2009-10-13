@@ -130,8 +130,9 @@ $('.password').pstrength();
 
 
 <link href="SpryAssets/SpryValidationCheckbox.css" rel="stylesheet" type="text/css" />
-<?php function printInsertUser($editFormAction){ ?>
 <link href="SpryAssets/SpryValidationConfirm.css" rel="stylesheet" type="text/css" />
+<?php function printInsertUser($editFormAction){ ?>
+
 <form method="post" name="form1" action="<?php echo $editFormAction; ?>">
   <table align="center" width="100%">
    <tr valign="baseline">
@@ -734,7 +735,7 @@ var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4", "emai
 var spryselect2 = new Spry.Widget.ValidationSelect("spryselect2");
 var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5");
 //var sprytextfield6 = new Spry.Widget.ValidationTextField("sprytextfield6");
-<?php if(!(isset($_POST["MM_insert"])){ ?>
+<?php if(!(isset($_POST["submit"])){ ?>
 var spryconfirm1 = new Spry.Widget.ValidationConfirm("spryconfirm1", "password", {validateOn:["change"]});
 <?php } ?>
 var sprytextfield7 = new Spry.Widget.ValidationTextField("sprytextfield7");
