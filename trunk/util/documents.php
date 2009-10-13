@@ -78,9 +78,11 @@ if(isset($_GET['court']) && $_GET['court']!=0){
 	$query_Documents = sprintf("%s AND doc_meta.id_doc_meta=%s ",$query_Documents,GetSQLValueString($_GET['court'], "int"));
 }
 if(isset($_GET['starts_with'])){
-	$query_Documents = sprintf("%s AND lower(idx)=%s ",$query_Documents,GetSQLValueString($_GET['starts_with'], "text"));
+	$query_Documents = sprintf("%s AND lower(idx)=%s ",$query_Documents,GetSQLValueString(lat2cyr($_GET['starts_with']), "text"));
 	//echo $query_Documents;
 }
+//echo lat2cyr($_GET['starts_with']);
+//echo html_entity_decode($_GET['starts_with'],null,'UTF-8');
 if(isset($_GET['keyword'])){
 	$keywords_arr=explode(",", $_GET['keyword']);
 //	print_r($keywords_arr);

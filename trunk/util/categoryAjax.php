@@ -28,7 +28,7 @@
 		if(mysql_num_rows($result)>0){
 		echo "<select name='subcategory' ";
 		//if(mysql_num_rows($result)<=0) echo "disabled='disabled'";
-		echo " style='width:320px;' onChange=\"dochange('subsubcategory', this.value)\">\n"; //onChange=\"dochange('tumbon', this.value)
+		echo " style='width:320px;' onChange=\"dochange('subsubcategory', this.value)\">\n";
         echo "<option value='0'>Изберете подкатегорија</option>\n";	                            
        	while(list($id, $name)=mysql_fetch_array($result)){       
                echo "<option value=\"$id\" >$name</option> \n" ;
@@ -40,7 +40,7 @@
 		if(mysql_num_rows($result)>0){
 		echo "<select name='subsubcategory' ";
 		//if(mysql_num_rows($result)<=0) echo "disabled='disabled'";
-		echo " style='width:320px;' \">\n"; //onChange=\"dochange('tumbon', this.value)
+		echo " style='width:320px;' \">\n";
         echo "<option value='0'>Изберете под-подкатегорија</option>\n";
                                        
        	while(list($id, $name)=mysql_fetch_array($result)){       
