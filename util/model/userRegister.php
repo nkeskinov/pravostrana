@@ -734,7 +734,9 @@ var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4", "emai
 var spryselect2 = new Spry.Widget.ValidationSelect("spryselect2");
 var sprytextfield5 = new Spry.Widget.ValidationTextField("sprytextfield5");
 //var sprytextfield6 = new Spry.Widget.ValidationTextField("sprytextfield6");
+<?php if(!(isset($_POST["MM_insert"])){ ?>
 var spryconfirm1 = new Spry.Widget.ValidationConfirm("spryconfirm1", "password", {validateOn:["change"]});
+<?php } ?>
 var sprytextfield7 = new Spry.Widget.ValidationTextField("sprytextfield7");
 //-->
 </script>
