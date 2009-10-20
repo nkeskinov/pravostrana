@@ -26,19 +26,15 @@ if (!((isset($_SESSION['MM_Username'])) && (isAuthorized("",$MM_authorizedUsers,
 <head>
 <!--templateinfo codeoutsidehtmlislocked="true" -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link href="/pravo.org.mk/rokmoomenu.css" rel="stylesheet" type="text/css" />
-<link href="/pravo.org.mk/style.css" rel="stylesheet" type="text/css" />
-<link rel="shortcut icon" href="/pravo.org.mk/images/favicon1.png" />
+<link href="../rokmoomenu.css" rel="stylesheet" type="text/css" />
+<link href="../style.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="../images/favicon1.png" />
 <!-- InstanceBeginEditable name="doctitle" -->
 <title>Pravo.org.mk | Праќање на активациски код на корисник</title>
 <!-- InstanceEndEditable -->
-<script type="text/javascript" src="/pravo.org.mk/roktools.js"></script>
-
-
-<script type="text/javascript" src="/pravo.org.mk/mootools.js"></script>
-<script type="text/javascript" src="/pravo.org.mk/javaScripts/cirillic_converter.js"></script>
-
-<script type="text/javascript" src="/pravo.org.mk/rokmoomenu.js"></script>
+<script type="text/javascript" src="../mootools.js"></script>
+<script type="text/javascript" src="../rokmoomenu.js"></script>
+<script type="text/javascript" src="../javaScripts/cirillic_converter.js"></script>
 <!-- calendar stylesheet -->
 <script type="text/javascript">
 window.addEvent('domready', function() {
@@ -99,8 +95,7 @@ transition: Fx.Transitions.sineOut
             <div class="middle-red-block">
                 <div class="title">
                     <div class="left"></div>
-                    <div class="middle">
-                    <div class="text"><!-- InstanceBeginEditable name="BlockTitle" -->Прати активациски код на корисник<!-- InstanceEndEditable --></div></div>
+                    <div class="middle"><div class="text"><!-- InstanceBeginEditable name="BlockTitle" -->Прати активациски код на корисник<!-- InstanceEndEditable --></div></div>
                     <div class="right"></div>
                 </div>
                  <div class="sodrzina" ><!-- InstanceBeginEditable name="BlockContent" -->

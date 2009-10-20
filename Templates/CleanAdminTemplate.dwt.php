@@ -32,13 +32,9 @@ if (!((isset($_SESSION['MM_Username'])) && (isAuthorized("",$MM_authorizedUsers,
 <!-- TemplateBeginEditable name="doctitle" -->
 <title>pravo.org.mk</title>
 <!-- TemplateEndEditable -->
-<script type="text/javascript" src="../roktools.js"></script>
-
-
 <script type="text/javascript" src="../mootools.js"></script>
-<script type="text/javascript" src="../javaScripts/cirillic_converter.js"></script>
-
 <script type="text/javascript" src="../rokmoomenu.js"></script>
+<script type="text/javascript" src="../javaScripts/cirillic_converter.js"></script>
 <!-- calendar stylesheet -->
 <script type="text/javascript">
 window.addEvent('domready', function() {

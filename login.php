@@ -23,11 +23,7 @@ session_start();
 <!-- InstanceBeginEditable name="doctitle" -->
 <title>Pravo.org.mk | Логирање</title>
 <!-- InstanceEndEditable -->
-<script type="text/javascript" src="roktools.js"></script>
-
-
 <script type="text/javascript" src="mootools.js"></script>
-
 <script type="text/javascript" src="rokmoomenu.js"></script>
 <script type="text/javascript">
 
