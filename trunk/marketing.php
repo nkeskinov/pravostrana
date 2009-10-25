@@ -13,7 +13,7 @@ session_start();
 <link href="style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="images/favicon1.png" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>pravo.org.mk</title>
+<title>Pravo.org.mk | Маркетинг</title>
 <!-- InstanceEndEditable -->
 <?php include("util/banner.php"); ?>
 <link href="YUI/2.6.0/build/fonts/fonts-min.css" rel="stylesheet" type="text/css" />
