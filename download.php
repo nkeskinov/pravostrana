@@ -68,7 +68,7 @@ if ($totalRows_recordset_document == 1) {
 		
 		ob_start();
 		header('Content-type: '.$row_recordset_document['mimetype']);
-		header('Content-Disposition: attachment; filename="'.'=?UTF-8?B?'.base64_encode($row_recordset_document['filename']).'?='.'"');
+		header('Content-Disposition: attachment; filename="'.$row_recordset_document['filename'].'"');
 		header('Content-length: '.$file_size);
 		ob_end_flush();
 	 
