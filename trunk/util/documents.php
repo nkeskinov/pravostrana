@@ -9,7 +9,7 @@ if(isset($_POST['asc']))
 //else
 //	$sort_order="asc";
 	
-$sort="uploaded_date";
+$sort="published_date";
 if(isset($_POST['sort']) && $_POST['sort']!=""){
 	$sort=$_POST['sort'];
 }
@@ -100,7 +100,7 @@ if(isset($_GET['keyword'])){
 	
 	//echo $query_Documents;
 }
-$query_limit_Documents = sprintf("%s ORDER BY %s %s LIMIT %d, %d", $query_Documents, $sort,$sort_order,$startRow_Documents, $maxRows_Documents);
+$query_limit_Documents = sprintf("%s ORDER BY document.title asc, %s %s LIMIT %d, %d", $query_Documents, $sort,$sort_order,$startRow_Documents, $maxRows_Documents);
 
 $Documents = mysql_query($query_limit_Documents, $pravo) or die(mysql_error());
 $row_Documents = mysql_fetch_assoc($Documents);
@@ -216,17 +216,17 @@ if($row_number){
 <?php if(mysql_num_rows($Documents)!=0){ ?>
 <table border="0" width="100%" cellspacing="0">
 	<tr>
-    	<td width="34%">Закони <?php echo ($startRow_Documents + 1) ?> до <?php echo min( $startRow_Documents + $maxRows_Documents, $totalRows_Documents) ?> од <?php echo $totalRows_Documents ?>
+    	<td width="34%">Документи <?php echo ($startRow_Documents + 1) ?> до <?php echo min( $startRow_Documents + $maxRows_Documents, $totalRows_Documents) ?> од <?php echo $totalRows_Documents ?>
         </td>
-        <td width="66%" align="right" valign="bottom">
-        <div style="float:right;width:100%; text-align:right; vertical-align:bottom;">
-          <div style="float:right">
-            <table border="0" cellspacing="0" style="font-size:12px;">
+        <td width="66%" align="right">
+        <div style="float:right; width:100%; text-align:right;">
+          <div style="float:right;">
+            <table border="0" cellpadding="5" cellspacing="0" style="font-size:12px;" >
               <tr>
-                <td ><?php if ($pageNum_Documents > 0  ) { // Show if not first page ?>
-                  <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, max(0, $pageNum_Documents - 1), $queryString_Documents); ?>"><img src="images/pPrev.png" border="0"/></a>
+                <td><?php if ($pageNum_Documents > 0  ) { // Show if not first page ?>
+                  <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, max(0, $pageNum_Documents - 1), $queryString_Documents); ?>"><img src="images/pPrev.png" border="0" width="19" height="19"/></a>
                   <?php }else{ // Show if not first page ?>
-                  <img src="images/pPrevDisabled.png" border="0"/>
+                  <img src="images/pPrevDisabled.png" border="0" width="19" height="19"/>
                   <?php } ?></td>
                 <td><?php $l=$pageNum_Documents-4;
 					  $h=$pageNum_Documents+4;
@@ -255,14 +255,14 @@ if($row_number){
                   <?php if ($pageNum_Documents < $totalPages_Documents && ($h-$l)>=7) { // Show if not last page ?>
                   ... <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, $totalPages_Documents, $queryString_Documents); ?>"><?php echo '<u>'; echo $totalPages_Documents+1; echo '</u>';?></a>
                   <?php } // Show if not last page ?></td>
-                <td ><?php if ($pageNum_Documents < $totalPages_Documents) { // Show if not last page ?>
-                  <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, min($totalPages_Documents, $pageNum_Documents + 1), $queryString_Documents); ?>"><img src="images/pNext.png" border="0"/></a>
+                <td><?php if ($pageNum_Documents < $totalPages_Documents) { // Show if not last page ?>
+                  <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, min($totalPages_Documents, $pageNum_Documents + 1), $queryString_Documents); ?>"><img src="images/pNext.png" border="0" width="19" height="19"/></a>
                   <?php }else{ ?>
-                  <img src="images/pNextDisabled.png" border="0"/>
+                  <img src="images/pNextDisabled.png" border="0" width="19" height="19"/>
                   <?php }// Show if not last page ?></td>
               </tr>
             </table>
-          </div>
+        </div>
         	<div style="float:right">
             <form method="post" action="<?php printf("%s?%s", $currentPage,$_SERVER['QUERY_STRING']); ?>">
             <table width="100%" align="right"><tr><td>
@@ -272,9 +272,9 @@ if($row_number){
             <input type="hidden" name="asc" /><?php } ?><?php if(isset($_POST['asc'])){?>
              <input type="image" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image2','','images/sort-down.png',1)"src="images/sort-up.png" name="Image2" width="12" height="12" border="0" id="Image2" title="Сортирај во опаѓачки редослед"/>
             <input type="hidden" name="desc" /><?php } ?>
-            </td><td>
+            </td><td style="font-size:15px;">
               <select name="sort" id="sort" onchange="this.form.submit();">
-                <option>сортирај</option>
+                <option>подреди</option>
                 <option value="title" <?php if(isset($_POST['sort']) && !(strcmp($_POST['sort'],"title" ))) {echo "SELECTED";} ?>>наслов</option>
                 <option value="published_date" <?php if(isset($_POST['sort']) && !(strcmp($_POST['sort'],"published_date" ))) {echo "SELECTED";} ?>>датум</option>
                 <?php if($page=="documentlaws.php"){ ?>
@@ -285,9 +285,7 @@ if($row_number){
               </select>
               <?php if(!isset($_POST['sort'])){ ?>
               <input type="hidden" name="sort1" />
-              <?php } ?>
-              |
-            </td></tr></table></form>
+              <?php } ?>|</td></tr></table></form>
           </div>
         </div>
      </td>
@@ -312,12 +310,12 @@ if($row_number){
 </table>
 <table border="0" width="100%" cellspacing="0">
 <tr>
-    	<td width="50%">Закони <?php echo ($startRow_Documents + 1) ?> до <?php echo min($startRow_Documents + $maxRows_Documents, $totalRows_Documents) ?> од <?php echo $totalRows_Documents ?></td>
+    	<td width="50%">Документи <?php echo ($startRow_Documents + 1) ?> до <?php echo min($startRow_Documents + $maxRows_Documents, $totalRows_Documents) ?> од <?php echo $totalRows_Documents ?></td>
     	<td width="50%" align="right">
           <table border="0" style="font-size:12px;">
             <tr>
               
-              <td ><?php if ($pageNum_Documents > 0  ) { // Show if not first page ?>
+              <td><?php if ($pageNum_Documents > 0  ) { // Show if not first page ?>
                   <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, max(0, $pageNum_Documents - 1), $queryString_Documents); ?>"><img src="images/pPrev.png" border="0"/></a>
                   <?php }else{ // Show if not first page ?> 
                   		<img src="images/pPrevDisabled.png" border="0"/>
@@ -350,7 +348,7 @@ if($row_number){
 				?>
                 <?php if ($pageNum_Documents < $totalPages_Documents && ($h-$l)>=7) { // Show if not last page ?>...
                   <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, $totalPages_Documents, $queryString_Documents); ?>"><?php echo '<u>'; echo $totalPages_Documents+1; echo '</u>';?></a>
-                  <?php } // Show if not last page ?></td>
+              <?php } // Show if not last page ?></td>
               <td ><?php if ($pageNum_Documents < $totalPages_Documents) { // Show if not last page ?>
                   <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, min($totalPages_Documents, $pageNum_Documents + 1), $queryString_Documents); ?>"><img src="images/pNext.png" border="0"/></a>
                   <?php }else{ ?>

@@ -4,7 +4,7 @@
   	<td></td>
     <td width="17%">&nbsp;</td>
     <td width="83%" align="right">
-      <span style="font-size:11px;"><a href="JavaScript:popUpWindow('help.php?id=4','','',450,'330');">совети за пребарување</a></span>
+      <a href="JavaScript:popUpWindow('help.php?id=4','','',450,'330');" class="search_advices">совети за пребарување</a>
     </td>
   </tr>
   <tr>
