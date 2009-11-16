@@ -193,8 +193,9 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 			$into_force_date = date("Y-m-d", strtotime($_POST['into_force_date']));
 			$into_force = '1';
 		}
+		$idx = isset($_POST['idx']) ? $_POST['idx'] : "";
 
-		$insertSQL = sprintf("INSERT INTO `document` (id_doc_type, filename, title, id_doc_group, `description`, extension, filesize, mimetype, forcesubscribe, published_date, created_by, id_doc_meta, uploaded_date, into_force_date, into_force) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+		$insertSQL = sprintf("INSERT INTO `document` (id_doc_type, filename, title, id_doc_group, `description`, extension, filesize, mimetype, forcesubscribe, published_date, created_by, id_doc_meta, uploaded_date, into_force_date, into_force, idx) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
 						   GetSQLValueString($_POST['id_doc_type'], "int"),
 						   GetSQLValueString($filename, "text"),
 						   GetSQLValueString($_POST['title'], "text"),
@@ -209,7 +210,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 						   GetSQLValueString($id_doc_meta,"int"),
 						   GetSQLValueString(date('Y-m-d H:i'), "date"),
 						   GetSQLValueString($into_force_date, "date"),
-						   GetSQLValueString($into_force, "defined", '1', 'NULL'));
+						   GetSQLValueString($into_force, "defined", '1', 'NULL'),
+						   GetSQLValueString($idx, "text"));
 	
 	  
 	  $Result1 = mysql_query($insertSQL, $pravo) or die(mysql_error());
@@ -633,6 +635,45 @@ jQuery("#jQueryUICalendar2").datepicker({ dateFormat: 'dd.mm.yy',  altField: '#a
     <tr valign="baseline">
       <td nowrap align="right" valign="top">Клучни зборови: <br />(Разделени со запирка)</td>
       <td><textarea name="keywords" cols="40" rows="5"><?php $i=0; do { $i++; ?><?php if(isset($_GET['id']) && !isset($_GET['delete'])) echo $row_RecordsetKeyword['val'];if($i<$totalRows_RecordsetKeyword) echo ", "; ?><?php } while ($row_RecordsetKeyword = mysql_fetch_assoc($RecordsetKeyword)); ?></textarea></td>
+    </tr>
+    <tr valign="baseline">
+    	<td nowrap="nowrap" align="right">Индекс:</td>
+        <td>
+        <select name="idx">
+        	<option></option>
+        	<option value="A">А</option>
+           	<option value="Б">Б</option>
+            <option value="В">В</option>
+            <option value="Г">Г</option>
+            <option value="Д">Д</option>
+            <option value="Ѓ">Ѓ</option>
+            <option value="Е">Е</option>
+            <option value="Ж">Ж</option>        	
+            <option value="З">З</option>
+            <option value="Ѕ">Ѕ</option>
+            <option value="И">И</option>
+           	<option value="Ј">Ј</option>
+            <option value="К">К</option>
+            <option value="Л">Л</option>
+            <option value="Љ">Љ</option>
+            <option value="М">М</option>
+            <option value="Н">Н</option>
+            <option value="Њ">Њ</option>        	
+            <option value="О">О</option>
+            <option value="П">П</option>
+            <option value="Р">Р</option>
+            <option value="С">С</option>
+            <option value="Т">Т</option>
+            <option value="Ќ">Ќ</option>
+            <option value="У">У</option>
+            <option value="Ф">Ф</option>
+            <option value="Х">Х</option>        	
+            <option value="Ц">Ц</option>
+            <option value="Ч">Ч</option>
+            <option value="Џ">Џ</option>
+            <option value="Ш">Ш</option>
+         </select>
+         </td>
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Тип на документот:</td>

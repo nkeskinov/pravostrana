@@ -20,7 +20,7 @@ $totalRows_CourtCategory = mysql_num_rows($CourtCategory);
  <tr>
     <td>&nbsp;</td>
     <td align="right">
-      <span style="font-size:11px;"><a href="JavaScript:popUpWindow('help.php?id=2','','',450,'330');">совети за пребарување</a></span>
+      <a href="JavaScript:popUpWindow('help.php?id=2','','',450,'330');" class="search_advices">совети за пребарување</a>
     </td>
   </tr>
   <tr>

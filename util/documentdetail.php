@@ -166,10 +166,11 @@ function getDocumentCategory($id_document_group, $pravo, $database_pravo){
     <td width="20%" <?php if ($row_DetailRS1['id_doc_type'] == '1') echo 'rowspan="4"'; else echo 'rowspan="2"'; ?> align="right"><a href="download.php?id=<?php echo $row_DetailRS1['id_document']; ?>"><?php if($row_DetailRS1['mimetype']=="application/msword"){ ?><img src="images/word_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /> <?php }elseif($row_DetailRS1['mimetype']=="text/plain"){ ?><img src="images/text_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /><?php }else{ ?><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /><?php } ?></a><br><span style="font-size:10px; color:#999;"><?php /*getNumDownloads($row_DetailRS1['id_document'], $pravo, $database_pravo);*/
 	echo (($row_DetailRS1['no_downloads'] == 0 ? 'Сеуште не е симнат' : ($row_DetailRS1['no_downloads'] == 1 ? 'Еднаш симнат' : $row_DetailRS1['no_downloads'].' пати симнат'))); ?></span></td>
   </tr>
-  <tr>
+<!--  <tr>
     <td>Датум на закачување:</td>
     <td><?php if(isset($row_DetailRS1['uploaded_date'])) echo date("d.m.Y",strtotime($row_DetailRS1['uploaded_date'])); ?></td>
   </tr>
+-->
   <?php if ($row_DetailRS1['id_doc_type'] == '1') { ?>
   <tr>
     <td>Датум на стапување во сила:</td>

@@ -272,25 +272,25 @@ h4 {
 	clear:both;
 }
 .mainBody .left-block1 .middle{
-	background:url(images/yellow-title-middle1.png);
+	background:url(images/red-title-middle1.png);
 	height:30px;
 	width:94%;
 	float:left;
 }
 .mainBody .left-block1 .middle .text{
-	color:#8c2800;
+	color:#fcf9ea;
 	font-weight:bold;
 	padding-left:10px;
 	padding-top:5px;
 }
 .mainBody .left-block1 .left{
-	background:url(images/yellow-title-left1.png);
+	background:url(images/red-title-left1.png);
 	height:30px;
 	width:2.5%;
 	float:left;
 }
 .mainBody .left-block1 .right{
-	background:url(images/yellow-title-right1.png);
+	background:url(images/red-title-right1.png);
 	height:30px;
 	width:2.5%;
 	float:left;
@@ -336,6 +336,7 @@ h4 {
 	float:left;
 }
 .mainBody .left-red-block1 .sodrzina{
+	/*border:1px solid #71312d;*/
 	margin-top:-5px;
 	padding:5px;
 }
@@ -487,25 +488,25 @@ h4 {
 	clear:both;
 }
 .mainBody .right-yellow-block .middle{
-	background:url(images/yellow-title-middle.png);
+	background:url(images/red-title-middle.png);
 	height:30px;
 	width:453px;
 	float:left;
 }
 .mainBody .right-yellow-block .middle .text{
-	color:#8c2800;
+	color:#fcf9ea;
 	font-weight:bold;
 	padding-left:10px;
 	padding-top:5px;
 }
 .mainBody .right-yellow-block .left{
-	background:url(images/yellow-title-left.png);
+	background:url(images/red-title-left.png);
 	height:30px;
 	width:7px;
 	float:left;
 }
 .mainBody .right-yellow-block .right{
-	background:url(images/yellow-title-right.png);
+	background:url(images/red-title-right.png);
 	height:30px;
 	width:7px;
 	float:left;
@@ -790,6 +791,12 @@ font-family : arial, sans-serif;
 }
 .pstrength-minchar {
 font-size : 10px;
+}
+
+a.search_advices {
+	font-size:11px;
+	font-weight:bold;
+	text-decoration:underline;
 }
 
 td.on {
