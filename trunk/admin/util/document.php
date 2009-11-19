@@ -116,7 +116,7 @@ $totalRows_DocumentTypes = mysql_num_rows($DocumentTypes);
   <table cellpadding="0" cellspacing="0">
   <tr></tr>
   <tr>
-    <td><div style="width:26px; height:21px; padding-top:1.5px; float:left; text-align:center;" onmouseover="this.className='picture-button-over'" onmouseout="this.className='picture-button-out'"> <a href="documentlaws.php"><img src="../images/new.png" border="0" title="Нов документ" /></a></div></td>
+    <td><div style="width:26px; height:21px; padding-top:1.5px; float:left; text-align:center;" onmouseover="this.className='picture-button-over'" onmouseout="this.className='picture-button-out'"> <a href="documents.php"><img src="../images/new.png" border="0" title="Нов документ" /></a></div></td>
     <td><div style="width:26px; height:21px; padding-top:1.5px; float:left; text-align:center;" onmouseover="this.className='picture-button-over'" onmouseout="this.className='picture-button-out'"> <a href="#"><img src="../images/save.png" border="0" title="Зачувај документ" /></a></div></td>
     <td>
     <div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
@@ -640,38 +640,38 @@ jQuery("#jQueryUICalendar2").datepicker({ dateFormat: 'dd.mm.yy',  altField: '#a
     	<td nowrap="nowrap" align="right">Индекс:</td>
         <td>
         <select name="idx">
-        	<option></option>
-        	<option value="A">А</option>
-           	<option value="Б">Б</option>
-            <option value="В">В</option>
-            <option value="Г">Г</option>
-            <option value="Д">Д</option>
-            <option value="Ѓ">Ѓ</option>
-            <option value="Е">Е</option>
-            <option value="Ж">Ж</option>        	
-            <option value="З">З</option>
-            <option value="Ѕ">Ѕ</option>
-            <option value="И">И</option>
-           	<option value="Ј">Ј</option>
-            <option value="К">К</option>
-            <option value="Л">Л</option>
-            <option value="Љ">Љ</option>
-            <option value="М">М</option>
-            <option value="Н">Н</option>
-            <option value="Њ">Њ</option>        	
-            <option value="О">О</option>
-            <option value="П">П</option>
-            <option value="Р">Р</option>
-            <option value="С">С</option>
-            <option value="Т">Т</option>
-            <option value="Ќ">Ќ</option>
-            <option value="У">У</option>
-            <option value="Ф">Ф</option>
-            <option value="Х">Х</option>        	
-            <option value="Ц">Ц</option>
-            <option value="Ч">Ч</option>
-            <option value="Џ">Џ</option>
-            <option value="Ш">Ш</option>
+        	<option<?php if (!isset($row_Recordset1['idx']) || $row_Recordset1['idx'] == '') echo ' selected="selected"'; ?>></option>
+        	<option value="A"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'A') echo ' selected="selected"'; ?>>А</option>
+           	<option value="Б"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'Б') echo ' selected="selected"'; ?>>Б</option>
+            <option value="В"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'В') echo ' selected="selected"'; ?>>В</option>
+            <option value="Г"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'Г') echo ' selected="selected"'; ?>>Г</option>
+            <option value="Д"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'Д') echo ' selected="selected"'; ?>>Д</option>
+            <option value="Ѓ"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'Ѓ') echo ' selected="selected"'; ?>>Ѓ</option>
+            <option value="Е"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'Е') echo ' selected="selected"'; ?>>Е</option>
+            <option value="Ж"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'Ж') echo ' selected="selected"'; ?>>Ж</option>        	
+            <option value="З"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'З') echo ' selected="selected"'; ?>>З</option>
+            <option value="Ѕ"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'Ѕ') echo ' selected="selected"'; ?>>Ѕ</option>
+            <option value="И"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'И') echo ' selected="selected"'; ?>>И</option>
+           	<option value="Ј"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'Ј') echo ' selected="selected"'; ?>>Ј</option>
+            <option value="К"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'К') echo ' selected="selected"'; ?>>К</option>
+            <option value="Л"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'Л') echo ' selected="selected"'; ?>>Л</option>
+            <option value="Љ"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'Љ') echo ' selected="selected"'; ?>>Љ</option>
+            <option value="М"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'М') echo ' selected="selected"'; ?>>М</option>
+            <option value="Н"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'Н') echo ' selected="selected"'; ?>>Н</option>
+            <option value="Њ"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'Њ') echo ' selected="selected"'; ?>>Њ</option>        	
+            <option value="О"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'О') echo ' selected="selected"'; ?>>О</option>
+            <option value="П"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'П') echo ' selected="selected"'; ?>>П</option>
+            <option value="Р"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'Р') echo ' selected="selected"'; ?>>Р</option>
+            <option value="С"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'С') echo ' selected="selected"'; ?>>С</option>
+            <option value="Т"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'Т') echo ' selected="selected"'; ?>>Т</option>
+            <option value="Ќ"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'Ќ') echo ' selected="selected"'; ?>>Ќ</option>
+            <option value="У"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'У') echo ' selected="selected"'; ?>>У</option>
+            <option value="Ф"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'Ф') echo ' selected="selected"'; ?>>Ф</option>
+            <option value="Х"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'Х') echo ' selected="selected"'; ?>>Х</option>        	
+            <option value="Ц"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'Ц') echo ' selected="selected"'; ?>>Ц</option>
+            <option value="Ч"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'Ч') echo ' selected="selected"'; ?>>Ч</option>
+            <option value="Џ"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'Џ') echo ' selected="selected"'; ?>>Џ</option>
+            <option value="Ш"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'Ш') echo ' selected="selected"'; ?>>Ш</option>
          </select>
          </td>
     </tr>

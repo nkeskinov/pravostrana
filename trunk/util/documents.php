@@ -4,14 +4,22 @@ $currentPage = $selfArray[count($selfArray)-1];
 //$currentPage = $_SERVER["PHP_SELF"];
 
 $sort_order="desc";
-if(isset($_POST['asc']))
+//to be replaced by a single call to $_REQUEST
+if(isset($_POST['asc']) || isset($_GET['asc'])) {
 	$sort_order="asc";
+}
 //else
 //	$sort_order="asc";
 	
 $sort="published_date";
-if(isset($_POST['sort']) && $_POST['sort']!=""){
+$default_sort = false;
+//to be replaced by a single call to $_REQUEST
+if((isset($_POST['sort']) && $_POST['sort']!="")){
 	$sort=$_POST['sort'];
+} elseif(isset($_GET['sort']) && $_GET['sort']!="") {
+	$sort=$_GET['sort'];
+} else {
+	$default_sort = true;
 }
 $maxRows_Documents = 10;
 $pageNum_Documents = 0;
@@ -100,7 +108,7 @@ if(isset($_GET['keyword'])){
 	
 	//echo $query_Documents;
 }
-$query_limit_Documents = sprintf("%s ORDER BY document.title asc, %s %s LIMIT %d, %d", $query_Documents, $sort,$sort_order,$startRow_Documents, $maxRows_Documents);
+$query_limit_Documents = sprintf("%s ORDER BY ".($default_sort ? "document.title asc, " : "")."%s %s LIMIT %d, %d", $query_Documents, $sort,$sort_order,$startRow_Documents, $maxRows_Documents);
 
 $Documents = mysql_query($query_limit_Documents, $pravo) or die(mysql_error());
 $row_Documents = mysql_fetch_assoc($Documents);
@@ -223,8 +231,12 @@ if($row_number){
           <div style="float:right;">
             <table border="0" cellpadding="5" cellspacing="0" style="font-size:12px;" >
               <tr>
-                <td><?php if ($pageNum_Documents > 0  ) { // Show if not first page ?>
-                  <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, max(0, $pageNum_Documents - 1), $queryString_Documents); ?>"><img src="images/pPrev.png" border="0" width="19" height="19"/></a>
+                <td>
+                <?php $sort_query_string = $default_sort || isset($_GET['sort']) ? '' : '&sort='.$sort;
+					  $sort_query_string .= $sort_order == 'desc' || isset($_GET['asc']) ? '' : '&asc=true';
+			    ?>
+				<?php if ($pageNum_Documents > 0  ) { // Show if not first page ?>
+                  <a href="<?php printf("%s?pageNum_Documents=%d%s".$sort_query_string, $currentPage, max(0, $pageNum_Documents - 1), $queryString_Documents); ?>"><img src="images/pPrev.png" border="0" width="19" height="19"/></a>
                   <?php }else{ // Show if not first page ?>
                   <img src="images/pPrevDisabled.png" border="0" width="19" height="19"/>
                   <?php } ?></td>
@@ -239,7 +251,7 @@ if($row_number){
 						  if($l<0)$l=0;
 					  }
 					  if ($h >7 && $l>0) { // Show if not first page ?>
-                  <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, 0, $queryString_Documents); ?>"><?php echo '<u>'; echo 1; echo '</u>';?></a>...
+                  <a href="<?php printf("%s?pageNum_Documents=%d%s".$sort_query_string, $currentPage, 0, $queryString_Documents); ?>"><?php echo '<u>'; echo 1; echo '</u>';?></a>...
                   <?php }
 					for($i=$l;$i<=$h; $i++){
 						
@@ -248,15 +260,15 @@ if($row_number){
 							echo $i+1;
 							echo "]</b>";
 						}elseif($i<=$h){ ?>
-                  <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, $i, $queryString_Documents); ?>"><?php echo '<u>'; echo $i+1; echo '</u>';?></a>
+                  <a href="<?php printf("%s?pageNum_Documents=%d%s".$sort_query_string, $currentPage, $i, $queryString_Documents); ?>"><?php echo '<u>'; echo $i+1; echo '</u>';?></a>
                   <?php }
 					}
 				?>
                   <?php if ($pageNum_Documents < $totalPages_Documents && ($h-$l)>=7) { // Show if not last page ?>
-                  ... <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, $totalPages_Documents, $queryString_Documents); ?>"><?php echo '<u>'; echo $totalPages_Documents+1; echo '</u>';?></a>
+                  ... <a href="<?php printf("%s?pageNum_Documents=%d%s".$sort_query_string, $currentPage, $totalPages_Documents, $queryString_Documents); ?>"><?php echo '<u>'; echo $totalPages_Documents+1; echo '</u>';?></a>
                   <?php } // Show if not last page ?></td>
                 <td><?php if ($pageNum_Documents < $totalPages_Documents) { // Show if not last page ?>
-                  <a href="<?php printf("%s?pageNum_Documents=%d%s", $currentPage, min($totalPages_Documents, $pageNum_Documents + 1), $queryString_Documents); ?>"><img src="images/pNext.png" border="0" width="19" height="19"/></a>
+                  <a href="<?php printf("%s?pageNum_Documents=%d%s".$sort_query_string, $currentPage, min($totalPages_Documents, $pageNum_Documents + 1), $queryString_Documents); ?>"><img src="images/pNext.png" border="0" width="19" height="19"/></a>
                   <?php }else{ ?>
                   <img src="images/pNextDisabled.png" border="0" width="19" height="19"/>
                   <?php }// Show if not last page ?></td>
