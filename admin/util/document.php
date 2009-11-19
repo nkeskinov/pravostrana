@@ -641,7 +641,7 @@ jQuery("#jQueryUICalendar2").datepicker({ dateFormat: 'dd.mm.yy',  altField: '#a
         <td>
         <select name="idx">
         	<option<?php if (!isset($row_Recordset1['idx']) || $row_Recordset1['idx'] == '') echo ' selected="selected"'; ?>></option>
-        	<option value="A"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'A') echo ' selected="selected"'; ?>>А</option>
+        	<option value="A"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'А') echo ' selected="selected"'; ?>>А</option>
            	<option value="Б"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'Б') echo ' selected="selected"'; ?>>Б</option>
             <option value="В"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'В') echo ' selected="selected"'; ?>>В</option>
             <option value="Г"<?php if (isset($row_Recordset1['idx']) && $row_Recordset1['idx'] == 'Г') echo ' selected="selected"'; ?>>Г</option>
