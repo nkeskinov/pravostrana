@@ -53,7 +53,7 @@ $totalPages_latestLawsRecordset = ceil($totalRows_latestLawsRecordset/$maxRows_l
 		?>
         <br /><span style="color:#666; font-size:11px">&nbsp;<?php echo date("d.m.Y", $timestamp); ?></span>
         </a></td>
-        <td width="5%" align="right" <?php if($tmp_number<$maxRows_latestLawsRecordset-1) {?>style="border-bottom:1px dotted #CCC;"<?php }?>><a href="documentDetail.php?id=<?php echo $id_document_link; ?>&page=laws.php" title="Преземи го документот"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
+        <td width="5%" align="right" <?php if($tmp_number<$maxRows_latestLawsRecordset-1) {?>style="border-bottom:1px dotted #CCC;"<?php }?>><a href="documentDetail.php?id=<?php echo $id_document_link; ?>&gid=<?php echo ($id_superdoc == '' ? $row_latestLawsRecordset['id_doc_group'] : $row_latestLaw_superdoc['id_doc_group']); ?>&tid=<?php echo $row_latestLawsRecordset['id_doc_type']; ?>&page=documentlaws.php" title="Преземи го документот"><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a></td>
     </tr>
       <?php $tmp_number+=1;} while ($row_latestLawsRecordset = mysql_fetch_assoc($latestLawsRecordset)); ?>
 </table>
