@@ -73,6 +73,11 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
   return $theValue;
 }
 }
+if (!function_exists("cyr_alphabet")) {
+	function cyr_alphabet() {
+		return explode(',', 'А,Б,В,Г,Д,Ѓ,Е,Ж,З,Ѕ,И,Ј,К,Л,Љ,М,Н,Њ,О,П,Р,С,Т,Ќ,У,Ф,Х,Ц,Ч,Џ,Ш');
+	}
+}
 if (!function_exists("cyr2lat")) {
 	function cyr2lat($input){
 			$cyr=array(
