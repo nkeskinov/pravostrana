@@ -140,7 +140,7 @@ $queryString_Documents = sprintf("&totalRows_Documents=%d%s", $totalRows_Documen
 
 ?>
 <?php
-function getSubDocuments($id_document, $pravo, $database_pravo,$gid){
+function getSubDocuments($id_document, $pravo, $database_pravo,$gid, $page){
 	mysql_select_db($database_pravo, $pravo);
 	$id_doc_type_Documents = "1";
 	$query_SubDocuments = sprintf("SELECT * FROM document left join doc_meta on document.id_doc_meta = doc_meta.id_doc_meta WHERE document.id_doc_type = %s and document.id_superdoc is not null and document.id_superdoc=%s ORDER BY published_date ASC", GetSQLValueString($id_doc_type_Documents, "int"),GetSQLValueString($id_document, "int"));
@@ -312,7 +312,7 @@ if($row_number){
       <td width="5%" align="right" style="border-bottom:1px solid #a25852; background:#fae9e8;;"><a href="documentDetail.php?id=<?php echo $row_Documents['id_document']; ?>&gid=<?php echo $row_Documents['id_doc_group']; ?>&page=<?php echo $page; ?>" title="Преземи го документот"><?php if($row_Documents['mimetype']=="application/msword"){ ?><img src="images/word_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /> <?php }elseif($row_Documents['mimetype']=="text/plain"){ ?><img src="images/text_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /><?php }else{ ?><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /><?php } ?></a></td>
     </tr>
     <tr>
-    	<td colspan="2"><?php getSubDocuments($row_Documents['id_document'], $pravo, $database_pravo,$row_Documents['id_doc_group']); ?></td>
+    	<td colspan="2"><?php getSubDocuments($row_Documents['id_document'], $pravo, $database_pravo,$row_Documents['id_doc_group'], $page); ?></td>
     </tr>
     <tr>
     	<td  style="border-bottom:1px solid #f5e6a2; background:#fbf7e0;" colspan="2">категорија: <?php getDocumentCategory($row_Documents['id_doc_group'], $pravo, $database_pravo); ?></td>
