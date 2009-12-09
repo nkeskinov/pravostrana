@@ -92,7 +92,7 @@ if(isset($_GET['starts_with'])){
 //echo lat2cyr($_GET['starts_with']);
 //echo html_entity_decode($_GET['starts_with'],null,'UTF-8');
 if(isset($_GET['keyword'])){
-	$keywords_arr=explode(",", $_GET['keyword']);
+	$keywords_arr=explode(",", urldecode(utf8_decode($_GET['keyword'])));
 //	print_r($keywords_arr);
 	$keyQuery=" AND ";
 	foreach($keywords_arr as $key){
