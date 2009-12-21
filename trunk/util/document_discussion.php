@@ -16,7 +16,7 @@ if(isset($_SESSION['MM_Name'])){
 
 
 mysql_select_db($database_pravo, $pravo);
-$query_Post = sprintf("SELECT post.id_post,`user`.name, `user`.surname, post.created_date, post.content, post.subject, post.modified_date FROM discussion, post, post_category, `user` WHERE discussion.id_discussion=post.id_discussion   AND post_category.id_post_category=discussion.id_post_category AND post.id_user=`user`.id_user AND post.archive=0 AND post_category.id_post_category=1 AND discussion.id_document=%s ORDER BY created_date DESC",GetSQLValueString($id_document, "-1"));
+$query_Post = sprintf("SELECT post.id_post, `user`.id_user, `user`.name, `user`.surname, post.created_date, post.content, post.subject, post.modified_date FROM discussion, post, post_category, `user` WHERE discussion.id_discussion=post.id_discussion   AND post_category.id_post_category=discussion.id_post_category AND post.id_user=`user`.id_user AND post.archive=0 AND post_category.id_post_category=1 AND discussion.id_document=%s ORDER BY created_date DESC",GetSQLValueString($id_document, "-1"));
 $query_limit_Post = sprintf("%s LIMIT %d, %d", $query_Post, $startRow_Post, $maxRows_Post);
 $Post = mysql_query($query_limit_Post, $pravo) or die(mysql_error());
 $row_Post = mysql_fetch_assoc($Post);
@@ -208,10 +208,11 @@ function MM_swapImage() { //v3.0
 <?php } ?>
 <div style=" margin-left:5px;">
 <table border="0" width="98%" cellspacing="0"><?php 
+	$isAdmin = isset($_SESSION['MM_UserGroup']) && $_SESSION['MM_UserGroup'] == "admin";
   do { 
   	if($num_of_posts){ ?><tr>
       <td width="92%" style=" padding:5px;background:#fbf7e0;">
-	  	<span style="color:#C63"><?php echo $row_Post['name']; ?>&nbsp;<?php echo $row_Post['surname']; ?></span>
+	  	<span style="color:#C63"><?php echo ($isAdmin ? '<a href="admin/userDetails.php?id='.$row_Post['id_user'].'">' : '').$row_Post['name']; ?>&nbsp;<?php echo $row_Post['surname'].($isAdmin ? '</a>' : ''); ?></span>
       	<span style="font-size:10px; color:#666;"> на <?php  echo date("d.m.Y H:i",strtotime($row_Post['created_date'])); ?></span>
       </td>
       <td width="8%" align="right" style="padding:5px;background:#fbf7e0;"><?php if(isset($_SESSION['MM_UserGroup'])) {
