@@ -36,6 +36,7 @@ $id_doc_group = isset($_GET['id_doc_group']) ? $_GET['id_doc_group'] : "";
         	<ul><?php subCategory($row_Recordset2['id_doc_group'],$id_doc_type_Documents,$database_pravo, $pravo, $selected_doc_group); ?></ul>
         </li>
 	<?php } while ($row_Recordset2 = mysql_fetch_assoc($Recordset2));
+	mysql_free_result($Recordset2);
 	return 1;
 	}}
 ?>

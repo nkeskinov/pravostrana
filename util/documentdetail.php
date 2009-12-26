@@ -180,6 +180,7 @@ function getDocumentCategory($id_document_group, $pravo, $database_pravo){
     <td>Сл. весник/година:</td>
     <td><?php if(isset($row_DetailRS1['ordinal'])) echo $row_DetailRS1['ordinal']; ?>/<?php echo date("Y",strtotime($row_DetailRS1['date'])); ?>&nbsp;</td>
   </tr>
+  <tr></tr>
   <tr>
   <?php } ?>
     <td valign="top">Категорија:</td>
@@ -192,7 +193,7 @@ function getDocumentCategory($id_document_group, $pravo, $database_pravo){
   <tr>
     <td valign="top">Клучни зборови:</td>
     <td colspan="2"><?php do{
-		echo "<a href='".$_GET['page']."?keyword=".urlencode(utf8_encode($row_RecordsetKeyword['val']))."'>".$row_RecordsetKeyword['val']."</a>, ";
+		echo "<a href='".$_GET['page']."?keyword=".urlencode($row_RecordsetKeyword['val'])."'>".$row_RecordsetKeyword['val']."</a>, ";
 	}while($row_RecordsetKeyword = mysql_fetch_assoc($RecordsetKeyword)); ?></td>
   <tr>
     <td colspan="3"><?php getSubDocuments($row_DetailRS1['id_document'], $pravo, $database_pravo); ?></td>

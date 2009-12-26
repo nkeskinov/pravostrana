@@ -31,7 +31,7 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 }
 }
 	$_SESSION['edit']="-1";
-if(isset($_GET['id']))
+if(isset($_GET['id_document']))
 	$_SESSION['edit']="edit";
 	
 //echo $_SESSION['edit'];
@@ -46,8 +46,8 @@ if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
 $colname_Recordset1 = "-1";
-if (isset($_GET['id'])) {
-  $colname_Recordset1 = $_GET['id'];
+if (isset($_GET['id_document'])) {
+  $colname_Recordset1 = $_GET['id_document'];
 }
 $query_Recordset1 = sprintf("SELECT * FROM `document` d LEFT JOIN doc_meta dm ON (d.id_doc_meta=dm.id_doc_meta)  WHERE  id_document = %s", GetSQLValueString($colname_Recordset1, "int"));
 $Recordset1 = mysql_query($query_Recordset1, $pravo) or die(mysql_error());
@@ -289,7 +289,7 @@ if ((isset($_POST["MM_update"]))) {
 	else
 		$published_date="";
 	if(isset($_GET['change']) && $_GET['change']="true" ){
-		$DocumentQuery=sprintf("SELECT * FROM document where id_document=%s",GetSQLValueString($_GET['id'],"int"));
+		$DocumentQuery=sprintf("SELECT * FROM document where id_document=%s",GetSQLValueString($_GET['id_document'],"int"));
 		$Document = mysql_query($DocumentQuery,$pravo) or die(mysql_error());
 		$id_doc_type = mysql_result($Document,0,'id_doc_type');
 		$file = mysql_result($Document, 0, 'filename');
@@ -427,7 +427,7 @@ if ((isset($_POST["MM_update"]))) {
 	  }
 }
 
-if ((isset($_GET['id'])) && ($_GET['id'] != "") && (isset($_GET['delete']))) {
+if ((isset($_GET['id_document'])) && ($_GET['id_document'] != "") && (isset($_GET['delete']))) {
 		
 		mysql_select_db($database_pravo, $pravo);
 		 $query        = "SET AUTOCOMMIT=0";
@@ -443,7 +443,7 @@ if ((isset($_GET['id'])) && ($_GET['id'] != "") && (isset($_GET['delete']))) {
 //			$id_doc_type=$_GET['id_doc_type'];
 //		}
 		$success = true;
-		$DocumentQuery=sprintf("SELECT * FROM document where id_document=%s",GetSQLValueString($_GET['id'],"int"));
+		$DocumentQuery=sprintf("SELECT * FROM document where id_document=%s",GetSQLValueString($_GET['id_document'],"int"));
 		$Document = mysql_query($DocumentQuery,$pravo) or die(mysql_error());
 		$id_doc_type = mysql_result($Document,0,'id_doc_type');
 		$file = mysql_result($Document, 0, 'filename');
@@ -453,7 +453,7 @@ if ((isset($_GET['id'])) && ($_GET['id'] != "") && (isset($_GET['delete']))) {
 		$directory_old = mysql_result($DocType_old,0,'directory');
 		
 		$DiscussionQuery=sprintf("SELECT * FROM discussion where id_document=%s",
-								 GetSQLValueString($_GET['id'],"int"));
+								 GetSQLValueString($_GET['id_document'],"int"));
 		$DiscussionResult = mysql_query($DiscussionQuery, $pravo) or die(mysql_error());
 		 mysql_query("BEGIN", $pravo);
 		 
@@ -466,11 +466,11 @@ if ((isset($_GET['id'])) && ($_GET['id'] != "") && (isset($_GET['delete']))) {
 		}
   
       	$deleteDiscussion = sprintf("DELETE FROM discussion WHERE id_document=%s",
-                       GetSQLValueString($_GET['id'], "int"));
+                       GetSQLValueString($_GET['id_document'], "int"));
 	   $Result1 = mysql_query($deleteDiscussion, $pravo) or die(mysql_error());
    
 	   $deleteSQL = sprintf("DELETE FROM `document` WHERE id_document=%s",
-                       GetSQLValueString($_GET['id'], "int"));
+                       GetSQLValueString($_GET['id_document'], "int"));
 	
   	   $Result1 = mysql_query($deleteSQL, $pravo) or die(mysql_error());
   
@@ -478,7 +478,7 @@ if ((isset($_GET['id'])) && ($_GET['id'] != "") && (isset($_GET['delete']))) {
    //                    GetSQLValueString($_GET['id_doc_meta'], "int"));
 //			 $Result2 = mysql_query($delete2SQL, $pravo) or die(mysql_error());
 			 
- 	$deleteIDDocument=sprintf("DELETE FROM document_has_keyword WHERE id_document=%s",GetSQLValueString($_GET['id'], "int"));
+ 	$deleteIDDocument=sprintf("DELETE FROM document_has_keyword WHERE id_document=%s",GetSQLValueString($_GET['id_document'], "int"));
 	$ResultIDDocument1=mysql_query($deleteIDDocument,$pravo);
   if($Result1){
 				_show_message_color('Документот е успешно избришан!','GREEN');  
@@ -489,7 +489,7 @@ if ((isset($_GET['id'])) && ($_GET['id'] != "") && (isset($_GET['delete']))) {
 			$message = "Документот ".$file_to_unlink." e избришан!";
 			_show_message_color($message,'YELLOW');  	
 		}
-				unset($_GET['id']);
+				unset($_GET['id_document']);
 				unset($_GET['delete']);
   }else{
 	  $success=false;
@@ -588,7 +588,7 @@ function jsUpload(upload_field)
   <table width="100%" align="center">
     <tr valign="baseline">
       <td nowrap align="right">Име на документот:</td>
-      <td><input type="text" name="title" id="title" value="<?php if(isset($_GET['id'])) echo htmlentities($row_Recordset1['title'], ENT_COMPAT, 'UTF-8');?>" size="53">
+      <td><input type="text" name="title" id="title" value="<?php if(isset($_GET['id_document'])) echo htmlentities($row_Recordset1['title'], ENT_COMPAT, 'UTF-8');?>" size="53">
       <input name="filename" type="hidden" id="filename" value="<?php echo htmlentities($row_Recordset1['filename'], ENT_COMPAT, ''); ?>">
       </td>
     </tr>
@@ -610,7 +610,7 @@ jQuery("#jQueryUICalendar1").datepicker({ dateFormat: 'dd.mm.yy',  altField: '#a
     <tr valign="baseline">
       <td nowrap align="right" valign="top">Сл. весник:</td>
       <td>
-        <input name="ordinal" type="text" id="ordinal" size="3" value="<?php if(isset($_GET['id'])) echo htmlentities($row_Recordset1['ordinal'], ENT_COMPAT, 'UTF-8');?>" />
+        <input name="ordinal" type="text" id="ordinal" size="3" value="<?php if(isset($_GET['id_document'])) echo htmlentities($row_Recordset1['ordinal'], ENT_COMPAT, 'UTF-8');?>" />
       <input type="hidden" name="id_doc_meta" value="<?php if(isset($_GET['id'])) echo htmlentities($row_Recordset1['id_doc_meta'], ENT_COMPAT, 'UTF-8');?>" />
       </td>
     </tr>
@@ -634,7 +634,7 @@ jQuery("#jQueryUICalendar2").datepicker({ dateFormat: 'dd.mm.yy',  altField: '#a
     </tr>
     <tr valign="baseline">
       <td nowrap align="right" valign="top">Клучни зборови: <br />(Разделени со запирка)</td>
-      <td><textarea name="keywords" cols="40" rows="5"><?php $i=0; do { $i++; ?><?php if(isset($_GET['id']) && !isset($_GET['delete'])) echo $row_RecordsetKeyword['val'];if($i<$totalRows_RecordsetKeyword) echo ", "; ?><?php } while ($row_RecordsetKeyword = mysql_fetch_assoc($RecordsetKeyword)); ?></textarea></td>
+      <td><textarea name="keywords" cols="40" rows="5"><?php $i=0; do { $i++; ?><?php if(isset($_GET['id_document']) && !isset($_GET['delete'])) echo $row_RecordsetKeyword['val'];if($i<$totalRows_RecordsetKeyword) echo ", "; ?><?php } while ($row_RecordsetKeyword = mysql_fetch_assoc($RecordsetKeyword)); ?></textarea></td>
     </tr>
     <tr valign="baseline">
     	<td nowrap="nowrap" align="right">Индекс:</td>
@@ -697,7 +697,7 @@ do {
       </td>
 	</tr>
     </form>
-    <?php if(isset($_GET['id']) && isset($_GET['edit'])) { ?>
+    <?php if(isset($_GET['id_document']) && isset($_GET['edit'])) { ?>
     <tr valign="baseline">
       <td rowspan="2" align="right" valign="top" nowrap>Документ:</td>
       <td><a href="../download.php?id=<?php echo $row_Recordset1['id_document']; ?> "><img src="../images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /></a>&nbsp;&nbsp;<a href="<?php echo "?".$_SERVER['QUERY_STRING']."&change=true" ?>">замени</a></td>
@@ -716,7 +716,7 @@ do {
     <tr valign="baseline">
       <td nowrap align="right">&nbsp;</td>
       <td>
-      <?php if(isset($_GET['id'])){ ?>
+      <?php if(isset($_GET['id_document'])){ ?>
       <input type="submit" name="MM_update" value="Измени" >
       <?php }else{ ?>
       <input type="submit" id="upload_button" value="Зачувај" disabled>	
