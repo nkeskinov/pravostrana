@@ -86,13 +86,13 @@ if(isset($_GET['court']) && $_GET['court']!=0){
 	$query_Documents = sprintf("%s AND doc_meta.id_doc_meta=%s ",$query_Documents,GetSQLValueString($_GET['court'], "int"));
 }
 if(isset($_GET['starts_with'])){
-	$query_Documents = sprintf("%s AND lower(idx)=%s ",$query_Documents,GetSQLValueString(lat2cyr($_GET['starts_with']), "text"));
+	$query_Documents = sprintf("%s AND lower(idx)=%s ",$query_Documents,GetSQLValueString($_GET['starts_with'], "text"));
 	//echo $query_Documents;
 }
 //echo lat2cyr($_GET['starts_with']);
 //echo html_entity_decode($_GET['starts_with'],null,'UTF-8');
 if(isset($_GET['keyword'])){
-	$keywords_arr=explode(",", urldecode(utf8_decode($_GET['keyword'])));
+	$keywords_arr=explode(",", urldecode($_GET['keyword']));
 //	print_r($keywords_arr);
 	$keyQuery=" AND ";
 	foreach($keywords_arr as $key){
@@ -118,6 +118,7 @@ if (isset($_GET['totalRows_Documents'])) {
 } else {
   $all_Documents = mysql_query($query_Documents);
   $totalRows_Documents = mysql_num_rows($all_Documents);
+  	mysql_free_result($all_Documents);
 }
 $totalPages_Documents = ceil($totalRows_Documents/$maxRows_Documents)-1;
 
@@ -167,7 +168,8 @@ function getSubDocuments($id_document, $pravo, $database_pravo,$gid, $page){
     </tr>
     <?php $tmp_number+=1;} while ($row_SubDocuments = mysql_fetch_assoc($SubDocuments)); ?>
 </table>
-<?php	} ?>
+<?php	}
+	mysql_free_result($SubDocuments); ?>
 <?php	}?>
 <?php
 function getDocumentCategory($id_document_group, $pravo, $database_pravo){
@@ -208,7 +210,7 @@ if($row_number){
 	$i++;
 	}while ($row_DocGroup = mysql_fetch_assoc($DocGroup));
 }
-
+mysql_free_result($DocGroup);
 }
 ?>
    <div align="left" style="height:22px; margin-top:-15px; width:512px; border-bottom:1px solid #a25852; background:#f5d6d4;  padding:3px; padding-top:1px;">
@@ -286,12 +288,12 @@ if($row_number){
             <input type="hidden" name="desc" /><?php } ?>
             </td><td style="font-size:15px;">
               <select name="sort" id="sort" onchange="this.form.submit();">
-                <option>подреди</option>
-                <option value="title" <?php if(isset($_POST['sort']) && !(strcmp($_POST['sort'],"title" ))) {echo "SELECTED";} ?>>наслов</option>
-                <option value="published_date" <?php if(isset($_POST['sort']) && !(strcmp($_POST['sort'],"published_date" ))) {echo "SELECTED";} ?>>датум</option>
+                <option value="">подреди</option>
+                <option value="title" <?php if(!$default_sort && !strcmp($sort,"title")) {echo 'selected="selected"';} ?>>наслов</option>
+                <option value="published_date" <?php if(!$default_sort && !strcmp($sort,"published_date")) {echo 'selected="selected"';} ?>>датум</option>
                 <?php if($page=="documentlaws.php"){ ?>
-                <option value="ordinal" <?php if(isset($_POST['sort']) && !(strcmp($_POST['sort'],"ordinal" ))) {echo "SELECTED";} ?>>сл. весник</option>
-                <option value="date" <?php if(isset($_POST['sort']) && !(strcmp($_POST['sort'],"date" ))) {echo "SELECTED";} ?>>сл. в. година</option>
+                <option value="ordinal" <?php if(!$default_sort && !strcmp($sort,"ordinal")) {echo 'selected="selected"';} ?>>сл. весник</option>
+                <option value="date" <?php if(!$default_sort && !strcmp($sort,"date")) {echo 'selected="selected"';} ?>>сл. в. година</option>
                 <?php } ?>
               </select>
               </select>

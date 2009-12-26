@@ -74,37 +74,19 @@ function popUpWindow(URLStr, left, top, width, height)
   </tr>
 <tr>
     <td colspan="2" align="left"><div class="letters">
-    <?php if(in_array("А",$index_array)) echo '<a href="documentlaws.php?starts_with=a">А</a>'; else echo "<span style='color:#ccc'>А</span>"; ?>
-    <?php if(in_array("Б",$index_array)) echo '<a href="documentlaws.php?starts_with=b">Б</a>'; else echo "<span style='color:#ccc'>Б</span>"; ?>
-    <?php if(in_array("В",$index_array)) echo '<a href="documentlaws.php?starts_with=v">В</a>'; else echo "<span style='color:#ccc'>В</span>"; ?>
-    <?php if(in_array("Г",$index_array)) echo '<a href="documentlaws.php?starts_with=g">Г</a>'; else echo "<span style='color:#ccc'>Г</span>"; ?>
-    <?php if(in_array("Д",$index_array)) echo '<a href="documentlaws.php?starts_with=d">Д</a>'; else echo "<span style='color:#ccc'>д</span>"; ?>
-    <?php if(in_array("Ѓ",$index_array)) echo '<a href="documentlaws.php?starts_with=gj">Ѓ</a>'; else echo "<span style='color:#ccc'>Ѓ</span>"; ?>
-    <?php if(in_array("Е",$index_array)) echo '<a href="documentlaws.php?starts_with=e">Е</a>'; else echo "<span style='color:#ccc'>Е</span>"; ?>
-    <?php if(in_array("Ж",$index_array)) echo '<a href="documentlaws.php?starts_with=zh">Ж</a>'; else echo "<span style='color:#ccc'>ж</span>"; ?>
-    <?php if(in_array("З",$index_array)) echo '<a href="documentlaws.php?starts_with=z">З</a>'; else echo "<span style='color:#ccc'>З</span>"; ?> 
-    <?php if(in_array("Ѕ",$index_array)) echo '<a href="documentlaws.php?starts_with=dz">Ѕ</a>'; else echo "<span style='color:#ccc'>Ѕ</span>"; ?>
-    <?php if(in_array("И",$index_array)) echo '<a href="documentlaws.php?starts_with=i">И</a>'; else echo "<span style='color:#ccc'>И</span>"; ?> 
-    <?php  if(in_array("Ј",$index_array)) echo '<a href="documentlaws.php?starts_with=j">Ј</a>'; else echo "<span style='color:#ccc'>Ј</span>"; ?>
-    <?php if(in_array("К",$index_array)) echo '<a href="documentlaws.php?starts_with=k">К</a>'; else echo "<span style='color:#ccc'>К</span>"; ?>
-    <?php if(in_array("Л",$index_array)) echo '<a href="documentlaws.php?starts_with=l">Л</a>'; else echo "<span style='color:#ccc'>Л</span>"; ?>
-    <?php if(in_array("Љ",$index_array)) echo '<a href="documentlaws.php?starts_with=lj">Љ</a>'; else echo "<span style='color:#ccc'>Љ</span>"; ?>
-    <?php if(in_array("М",$index_array)) echo '<a href="documentlaws.php?starts_with=m">М</a>'; else echo "<span style='color:#ccc'>М</span>"; ?>
-	<?php if(in_array("Н",$index_array)) echo '<a href="documentlaws.php?starts_with=n">Н</a>'; else echo "<span style='color:#ccc'>Н</span>"; ?>
-    <?php if(in_array("Њ",$index_array)) echo '<a href="documentlaws.php?starts_with=nj">Њ</a>'; else echo "<span style='color:#ccc'>Њ</span>"; ?>
-    <?php if(in_array("О",$index_array)) echo '<a href="documentlaws.php?starts_with=o">О</a>'; else echo "<span style='color:#ccc'>О</span>"; ?>
-    <?php if(in_array("П",$index_array)) echo '<a href="documentlaws.php?starts_with=p">П</a>'; else echo "<span style='color:#ccc'>П</span>"; ?>
-    <?php if(in_array("Р",$index_array)) echo '<a href="documentlaws.php?starts_with=r">Р</a>'; else echo "<span style='color:#ccc'>Р</span>"; ?>
-    <?php if(in_array("С",$index_array)) echo '<a href="documentlaws.php?starts_with=s">С</a>'; else echo "<span style='color:#ccc'>С</span>"; ?>
-    <?php if(in_array("Т",$index_array)) echo '<a href="documentlaws.php?starts_with=t">Т</a>'; else echo "<span style='color:#ccc'>Т</span>"; ?>
-    <?php if(in_array("Ќ",$index_array)) echo '<a href="documentlaws.php?starts_with=kj">Ќ</a>'; else echo "<span style='color:#ccc'>Ќ</span>"; ?>
-   <?php if(in_array("У",$index_array)) echo '<a href="documentlaws.php?starts_with=u">У</a>'; else echo "<span style='color:#ccc'>У</span>"; ?>
-    <?php if(in_array("Ф",$index_array)) echo '<a href="documentlaws.php?starts_with=f">Ф</a>'; else echo "<span style='color:#ccc'>Ф</span>"; ?>
-    <?php if(in_array("Х",$index_array)) echo '<a href="documentlaws.php?starts_with=h">Х</a>'; else echo "<span style='color:#ccc'>Х</span>"; ?>
-    <?php if(in_array("Ц",$index_array)) echo '<a href="documentlaws.php?starts_with=c">Ц</a>'; else echo "<span style='color:#ccc'>Ц</span>"; ?>
-    <?php if(in_array("Ч",$index_array)) echo '<a href="documentlaws.php?starts_with=ch">Ч</a>'; else echo "<span style='color:#ccc'>Ч</span>"; ?>
-    <?php if(in_array("Џ",$index_array)) echo '<a href="documentlaws.php?starts_with=dch">Џ</a>'; else echo "<span style='color:#ccc'>Џ</span>"; ?>
-    <?php if(in_array("Ш",$index_array)) echo '<a href="documentlaws.php?starts_with=sh">Ш</a>'; else echo "<span style='color:#ccc'>Ш</span>"; ?>
+    <?php 
+	$cyr_alphabet = cyr_alphabet();
+	for ($i=0;$i<count($cyr_alphabet);$i++) {
+		if(in_array($cyr_alphabet[$i], $index_array)) {
+			echo '<a href="documentlaws.php?starts_with='.urlencode($cyr_alphabet[$i]).'">'.$cyr_alphabet[$i].'</a>';
+		} else {
+			echo '<span style="color:#ccc">'.$cyr_alphabet[$i].'</span>';
+		}
+		if ($i < count($cyr_alphabet) - 1) {
+			echo '&nbsp;';
+		}
+	}
+	?>
     </div></td>
   </tr>
   <tr>
