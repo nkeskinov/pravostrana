@@ -11,6 +11,8 @@ $MM_donotCheckaccess = "true";
 
 $MM_restrictGoTo = "login.php";
 if (!((isset($_SESSION['MM_Username'])) && (isAuthorized("",$MM_authorizedUsers, $_SESSION['MM_Username'], $_SESSION['MM_UserGroup'])))) {   
+  if (isset($_GET['id'])) 
+  	$_SESSION['download_id']=$_GET['id'];
   $MM_qsChar = "?";
   $MM_referrer = $_SERVER['PHP_SELF'];
   if (strpos($MM_restrictGoTo, "?")) $MM_qsChar = "&";

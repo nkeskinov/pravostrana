@@ -131,9 +131,10 @@ if (!function_exists("send_mail")) {
 		
 		# Boundry for marking the split & Multitype Headers 
 		$headers .= 'MIME-Version: 1.0'.$eol; 
-		$headers .= "Content-Type: text/html; charset=UTF-8".$eol; 
+		$headers .= "Content-Type:multipart/mixed; boundary=\"PHP-mixed-{$sep}\" charset=UTF-8".$eol; 
 		$headers .= "Content-Transfer-Encoding: 8bit".$eol; 	
 	
+	     
 		# SEND THE EMAIL 
 		ini_set("sendmail_from",$_from_email);  // the INI lines are to force the From Address to be used ! 
 		$_subject = '=?UTF-8?B?'.base64_encode($_subject).'?=';

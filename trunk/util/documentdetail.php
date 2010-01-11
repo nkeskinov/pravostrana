@@ -6,11 +6,25 @@ if (isset($_GET['pageNum_DetailRS1'])) {
 }
 $startRow_DetailRS1 = $pageNum_DetailRS1 * $maxRows_DetailRS1;
 
+
 $colname_DetailRS1 = "-1";
 if (isset($_GET['id'])) {
   $colname_DetailRS1 = $_GET['id'];
 }
 mysql_select_db($database_pravo, $pravo);
+
+if(isset($_GET['subscribe']) && $_GET['subscribe']==1){
+		$insertSQL = sprintf("INSERT INTO subscription_by_doc (id_user, id_document) VALUES (%s, %s)",
+                       	GetSQLValueString($_SESSION['MM_ID'], "int"),
+					 	GetSQLValueString($colname_DetailRS1, "int"));
+		$Result1 = mysql_query($insertSQL, $pravo) or die(mysql_error());
+		if($Result1){
+			$MM_redirectLoginSuccess="?".substr($_SERVER['QUERY_STRING'],0,strpos($_SERVER['QUERY_STRING'],"&subscribe=1"));
+    		//header("Location: " . $MM_redirectLoginSuccess );
+			echo "<script>document.location.href='".$MM_redirectLoginSuccess."'</script>";
+			echo "<script>'Content-type: application/octet-stream'</script>";
+		}
+}
 
 $query_RecordsetKeyword = sprintf("SELECT k.val FROM keyword k, document_has_keyword dk, document d WHERE dk.id_keyword=k.id_keyword AND dk.id_document=d.id_document AND d.id_document=%s", GetSQLValueString($colname_DetailRS1, "int"));
 $RecordsetKeyword = mysql_query($query_RecordsetKeyword, $pravo) or die(mysql_error());
@@ -67,6 +81,7 @@ function getSubDocuments($id_document, $pravo, $database_pravo){
 	$row_SubDocuments = mysql_fetch_assoc($SubDocuments);
 	$tmp_number=0;
 ?>
+
 <?php if(mysql_num_rows($SubDocuments)!=0){ ?>
 <table border="0" width="100%" cellspacing="0" cellpadding="0">
 	<tr>
@@ -91,7 +106,7 @@ function getSubDocuments($id_document, $pravo, $database_pravo){
          <div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
          <a href="admin/documents.php?id_document=<?php echo $row_SubDocuments['id_document']; ?>&id_doc_type=<?php echo $row_SubDocuments['id_doc_type']; ?>&id_doc_meta=<?php echo $row_SubDocuments['id_doc_meta']; ?>&delete=true" onClick="return confirm('Дали навистина сакате да го избришете документот?')"><img src="images/delete.png" border="0" title="Бриши" /></a></div><div style="float:left;">
          <div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
-      <a href="admin/documents.php?id=<?php echo $row_SubDocuments['id_document']; ?>&edit=true&superdocument=<?php echo $id_document; ?>" title="Измени"><img src="images/edit.png" border="0"  /></a
+      <a href="admin/documents.php?id_document=<?php echo $row_SubDocuments['id_document']; ?>&edit=true&superdocument=<?php echo $id_document; ?>" title="Измени"><img src="images/edit.png" border="0"  /></a
       ></div></div><?php } }  ?>
       </div>
       </td>
@@ -145,14 +160,18 @@ function getDocumentCategory($id_document_group, $pravo, $database_pravo){
   }
   ?>
     <td colspan="<?php echo $into_force ? "3" : "2" ?>" style="border-bottom:1px solid #a25852; background:#f5d6d4; padding-top:8px; padding-bottom:8px;"><div style="float:left; font-size:15px; font-variant:small-caps;"><strong><?php echo $row_DetailRS1['title']; ?></strong></div>
-    <div style="float:right;"> <?php if(isset($_SESSION['MM_UserGroup'])) {
-		if($_SESSION['MM_UserGroup'] =="admin"){ ?>
+    <div style="float:right;"> 
+	<?php if(isset($_SESSION['MM_UserGroup'])) { ?>
+		
+		<?php if($_SESSION['MM_UserGroup'] =="admin"){ ?>
+		<div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
+        <a href="?<?php echo $_SERVER['QUERY_STRING']; ?>&subscribe=1"><img src="images/subscribe.png" border="0" title="Претплатете се кон овој закон за да добивате информации по email"  /></a></div>
         <?php if($row_DetailRS1['id_doc_type'] == '1') { ?><div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
          <a href="admin/documents.php?id_document=<?php echo $row_DetailRS1['id_document']; ?>&id_doc_type=<?php echo $row_DetailRS1['id_doc_type']; ?>&id_doc_meta=<?php echo $row_DetailRS1['id_doc_meta']; ?>&into_force=<?php echo $row_DetailRS1['into_force'] == '0' ? '1' : '0'; ?>" onClick="return confirm('<?php echo 'Стави во'.($row_DetailRS1['into_force'] == '0' ? '' : 'н').' сила?'; ?>')"><img src="images/into_force.png" border="0" title="Промена на статус" /></a></div><?php } ?>
          <div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
-        <a href="admin/documents.php?id=<?php echo $row_DetailRS1['id_document']; ?>&id_doc_type=<?php echo $row_DetailRS1['id_doc_type']; ?>&id_doc_meta=<?php echo $row_DetailRS1['id_doc_meta']; ?>&delete=true" onClick="return confirm('Дали навистина сакате да го избришете документот?')"><img src="images/delete.png" border="0" title="Бриши"  /></a></div>
+        <a href="admin/documents.php?id_document=<?php echo $row_DetailRS1['id_document']; ?>&id_doc_type=<?php echo $row_DetailRS1['id_doc_type']; ?>&id_doc_meta=<?php echo $row_DetailRS1['id_doc_meta']; ?>&delete=true" onClick="return confirm('Дали навистина сакате да го избришете документот?')"><img src="images/delete.png" border="0" title="Бриши"  /></a></div>
         <div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
-   <a href="admin/documents.php?id=<?php echo $row_DetailRS1['id_document']; ?>&edit=true"><img src="images/edit.png" border="0" title="Измени" /> </a></div>
+   <a href="admin/documents.php?id_document=<?php echo $row_DetailRS1['id_document']; ?>&edit=true"><img src="images/edit.png" border="0" title="Измени" /> </a></div>
     <?php } }  ?></div>
     </td>
     <?php if (!$into_force) { ?>
@@ -205,5 +224,13 @@ function getDocumentCategory($id_document_group, $pravo, $database_pravo){
 </div>
 <?php include("document_discussion.php"); ?>
 <?php
+if(isset($_SESSION['download_id'])){
+	//echo $_SESSION['download_id'];
+	
+	echo "<script>document.location.href='download.php?id=".$_SESSION['download_id']."'</script>";
+	echo "<script>'Content-type: application/octet-stream'</script>";	
+	
+	unset($_SESSION['download_id']);
+}
 mysql_free_result($DetailRS1);
 ?>
