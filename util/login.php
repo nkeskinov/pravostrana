@@ -28,7 +28,7 @@ if (isset($_POST['username_login'])) {
   $LoginRS = mysql_query($LoginRS_query, $pravo) or die(mysql_error());
   $loginFoundUser = mysql_num_rows($LoginRS);
   if ($loginFoundUser) {
-    
+	
 	$loginStrName = mysql_result($LoginRS,0,'name');
 	$loginStrSurname  = mysql_result($LoginRS,0,'surname');
 	$id_user = mysql_result($LoginRS,0,'id_user');

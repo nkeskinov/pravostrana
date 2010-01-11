@@ -5,6 +5,9 @@ if (isset($_SERVER['QUERY_STRING'])) {
   $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
 }
 
+$selfArray = explode('/',$_SERVER['PHP_SELF']);
+$currentPage = $selfArray[count($selfArray)-1];
+
 if((isset($_POST['MM_insert'])) && ($_POST['MM_insert']=="form1")){
 	$birth_date = date("Y-m-d", strtotime($_POST['date_of_birth']));
   $insertSQL = sprintf("INSERT INTO `user`(name, surname, username, email, date_of_birth, sex, address, city, country, phone, id_user_occupation, id_user_organization, is_locked_out, is_approved, deleted, id_user_category) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
@@ -70,7 +73,40 @@ mysql_select_db($database_pravo, $pravo);
 $query_Users = "SELECT  u.id_user, u.name, u.surname, u.email, u.is_approved, u.deleted, u.last_login_date,
 (select count( d.id_user ) from download d where d.id_user=u.id_user group by u.id_user) as downloads,
 (select count( v.id_user ) from visit v where v.id_user=u.id_user group by u.id_user) as visits
-FROM user u";
+FROM user u WHERE u.id_user>0";
+
+if(isset($_GET['name']) && $_GET['name']!=""){
+	$query_Users = sprintf("%s AND lower(name) LIKE %s ",$query_Users,GetSQLValueString($_GET['name']."%", "text"));
+}
+
+if(isset($_GET['surname']) && $_GET['surname']!=""){
+	$query_Users = sprintf("%s AND lower(surname) LIKE %s ",$query_Users,GetSQLValueString($_GET['surname']."%", "text"));
+}
+
+if(isset($_GET['email']) && $_GET['email']!=""){
+	$query_Users = sprintf("%s AND lower(email) LIKE %s ",$query_Users,GetSQLValueString($_GET['email']."%", "text"));
+}
+
+if(isset($_GET['sex']) && $_GET['sex']!="-1"){
+	$query_Users = sprintf("%s AND sex = %s ",$query_Users,GetSQLValueString($_GET['sex'], "int"));
+}
+
+if(isset($_GET['address']) && $_GET['address']!=""){
+	$query_Users = sprintf("%s AND lower(address) LIKE %s ",$query_Users,GetSQLValueString("%".$_GET['address']."%", "text"));
+}
+
+if(isset($_GET['city']) && $_GET['city']!=""){
+	$query_Users = sprintf("%s AND lower(city) LIKE %s ",$query_Users,GetSQLValueString($_GET['city']."%", "text"));
+}
+
+if(isset($_GET['id_user_occupation']) && $_GET['id_user_occupation']!=0){
+	$query_Users = sprintf("%s AND id_user_occupation = %s ",$query_Users,GetSQLValueString($_GET['id_user_occupation'], "int"));
+}
+
+if(isset($_GET['id_user_organization']) && $_GET['id_user_organization']!=0){
+	$query_Users = sprintf("%s AND id_user_organization = %s ",$query_Users,GetSQLValueString($_GET['id_user_organization'], "int"));
+}
+
 $query_limit_Users = sprintf("%s LIMIT %d, %d", $query_Users, $startRow_Users, $maxRows_Users);
 $Users = mysql_query($query_limit_Users, $pravo) or die(mysql_error());
 $row_Users = mysql_fetch_assoc($Users);
@@ -82,6 +118,22 @@ if (isset($_GET['totalRows_Users'])) {
   $totalRows_Users = mysql_num_rows($all_Users);
 }
 $totalPages_Users = ceil($totalRows_Users/$maxRows_Users)-1;
+
+$queryString_Users = "";
+if (!empty($_SERVER['QUERY_STRING'])) {
+  $params = explode("&", $_SERVER['QUERY_STRING']);
+  $newParams = array();
+  foreach ($params as $param) {
+    if (stristr($param, "pageNum_Users") == false && 
+        stristr($param, "totalRows_Users") == false) {
+      array_push($newParams, $param);
+    }
+  }
+  if (count($newParams) != 0) {
+    $queryString_Users = "&" . htmlentities(implode("&", $newParams));
+  }
+}
+$queryString_Users = sprintf("&totalRows_Documents=%d%s", $totalRows_Users, $queryString_Users);
 
 mysql_select_db($database_pravo, $pravo);
 $query_Organization = "SELECT * FROM user_organization";
@@ -273,8 +325,61 @@ do {
   <input type="hidden" name="id_user" value="<?php echo $row_UserEdit['id_user']; ?>" />
 </form>
 <?php }else{ ?>
-<table border="0" width="100%" cellspacing="0">
+<form action="<?php echo $editFormAction; ?>" method="get" name="form2" id="form2">
+<table border="0" width="99%" cellpadding="0" style="background: #fbf7e0; border:1px solid #f5e6a2;" align="center">
 	<tr>
+    	<td colspan="4" style="background:#edd59b; font-weight:bold;">Пребарување на корисници</td>
+   	</tr>
+	<tr>
+	  <td width="17%" align="right">Име:</td>
+	  <td width="20%"><input name="name" type="text" size="30" value="<?php echo isset($_GET['name']) ? $_GET['name'] : ''?>" /></td>
+	  <td width="12%" align="right">Презиме:</td>
+	  <td width="51%"><input name="surname" type="text" size="30" value="<?php echo isset($_GET['surname']) ? $_GET['surname'] : ''?>" /></td>
+  </tr>
+	<tr>
+	  <td align="right">Email:</td>
+	  <td><input name="email" type="text" size="30"  value="<?php echo isset($_GET['email']) ? $_GET['email'] : ''?>" /></td>
+	  <td align="right">Пол:</td>
+	  <td><select name="sex">
+	     <option value="-1"></option>
+        <option value="1" <?php  if(isset($_POST['sex'])){ if (!(strcmp(1, htmlentities($_POST['sex'], ENT_COMPAT, '')))) {echo "SELECTED";}} ?>>
+        Женски</option>
+        <option value="0" <?php if(isset($_POST['sex'])){ if (!(strcmp(0, htmlentities($_POST['sex'], ENT_COMPAT, '')))) {echo "SELECTED";}} ?>>
+        Машки</option>
+      </select></td>
+  </tr>
+  <tr>
+	  <td width="17%" align="right">Адреса:</td>
+	  <td width="20%"><input name="address" type="text" size="30" value="<?php echo isset($_GET['address']) ? $_GET['address'] : ''?>" /></td>
+	  <td width="12%" align="right">Град:</td>
+	  <td width="51%"><input name="city" type="text" size="30" value="<?php echo isset($_GET['city']) ? $_GET['city'] : ''?>" /></td>
+  </tr>
+	<tr>
+	  <td align="right">Занимање:</td>
+	  <td><select name="id_user_occupation">
+      	<option value="0" selected="selected"></option>
+        <?php do {  ?>
+        <option value="<?php echo $row_Occupation['id_user_occupation']?>" <?php  if(isset($_GET['id_user_occupation'])){ if (!(strcmp($row_Occupation['id_user_occupation'], htmlentities($_GET['id_user_occupation'], ENT_COMPAT, 'UTF-8')))) {echo "SELECTED";} } ?>><?php echo $row_Occupation['name']?>
+        </option><?php } while ($row_Occupation = mysql_fetch_assoc($Occupation));?>
+      </select></td>
+	  <td align="right">Организација:</td>
+	  <td><select name="id_user_organization">
+      <option value="0" selected="selected"></option>
+        <?php do {  ?><option value="<?php echo $row_Organization['id_user_organization']?>" <?php if(isset($_GET['id_user_organization'])){ if (!(strcmp($row_Organization['id_user_organization'], htmlentities($_GET['id_user_organization'], ENT_COMPAT, 'UTF-8')))) {echo "SELECTED";}} ?>><?php echo $row_Organization['name']?></option>
+<?php } while ($row_Organization = mysql_fetch_assoc($Organization));?></select></td>
+  </tr>
+	<tr>
+	  <td align="right">&nbsp;</td>
+	  <td>&nbsp;</td>
+	  <td align="right">&nbsp;</td>
+	  <td align="right">
+	    <input type="submit" name="search" id="search" value="Барај" />
+      </td>
+  </tr>
+</table>
+</form>
+<table border="0" width="100%" cellspacing="0">
+<tr>
     	<td width="31%">Корисници <?php echo ($startRow_Users + 1) ?> до <?php echo min( $startRow_Users + $maxRows_Users, $totalRows_Users) ?> од <?php echo $totalRows_Users ?>
         </td>
         <td align="right">
@@ -345,11 +450,7 @@ do {
     <tr <?php if($i%2==0) echo "style='background:#fbf7e0'"; if($row_Users['deleted']==1) echo "style='color:#999'"; ?>>
       <td width="16"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?id=<?php echo $row_Users['id_user']; ?>&mode=edit&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/pencil.png" border="0" /></a></td>
       <td width="16"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?id=<?php echo $row_Users['id_user']; ?>&mode=delete&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>" onClick="return confirm('Дали навистина сакате да го избришете документот?')"><img src="../images/cross.png" border="0" /></a></td>
-<<<<<<< .mine
       <td width="30%"><a href="userDetails.php?id=<?php echo $row_Users['id_user']; ?>" ><?php echo $row_Users['name']; ?> <?php echo $row_Users['surname']; ?></a></td>
-=======
-      <td width="30%"><a href="../userDetails.php?id=<?php echo $row_Users['id_user']; ?>" ><?php echo $row_Users['name']; ?> <?php echo $row_Users['surname']; ?></a></td>
->>>>>>> .r86
       <td><?php echo  date("d.m.Y H:i:s",strtotime($row_Users['last_login_date'])); ?></td>
       <td align="center">
 	   <input type="checkbox" disabled="disabled" name="forcesubscribe" value="1"  <?php if (!(strcmp(htmlentities( $row_Users['is_approved'], ENT_COMPAT, ''),1))) {echo "checked=\"checked\"";} ?>>
