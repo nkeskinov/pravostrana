@@ -127,7 +127,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 			$Message.="Pravo.org.mk тимот";
 			
 			//echo $Message;
-			send_mail("Pravo.org.mk","no-reply@pravo.org.mk",$to_email,$subject,$Message);
+			send_mail("Pravo.org.mk","no-reply@pravo.org.mk","$name $surname <$to_email>",$subject,$Message);
 			
 			echo '<div align="center"><form action="index.php" method="get">
 		 <input type="submit" name="button2" id="button2" value="Во ред" />
@@ -171,8 +171,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 <script src="SpryAssets/SpryValidationSelect.js" type="text/javascript"></script>
 <script src="SpryAssets/SpryValidationPassword.js" type="text/javascript"></script>
 <script type="text/javascript" src="javaScripts/jquery.js"></script> 
-<script type="text/javascript" src="javaScripts/jquery.pstrength-min.1.2.js">
-</script>
+<script type="text/javascript" src="javaScripts/jquery.pstrength-min.1.2.js"></script>
+<script type="text/javascript" src="javaScripts/popUpWindow.js"></script>
 <script src="SpryAssets/SpryValidationCheckbox.js" type="text/javascript"></script>
 <script src="SpryAssets/SpryValidationConfirm.js" type="text/javascript"></script>
 <script type="text/javascript">
@@ -750,7 +750,7 @@ do {
         <span id="sprycheckbox1">
         
         <input name="is_approved" type="checkbox" value="" <?php if(isset($_POST['is_approved'])) if (!(strcmp(htmlentities($_POST['is_approved'], ENT_COMPAT, 'utf-8'),""))) {echo "checked=\"checked\"";} ?>  />
-      Ги прочитав и се согласувам со <a href="#" >pravo.org.mk Услови на услугата</a> и <a href="#">Политика за приватност</a>. <span class="checkboxRequiredMsg">Мора да се согласите со полисата.</span></span></td>
+      Ги прочитав и се согласувам со <a href="JavaScript:popUpWindow('help.php?id=5','','',600,520);" class="terms">Условите на услугата</a> и <a href="JavaScript:popUpWindow('help.php?id=6','','',600,350);" class="terms">Полисата за приватност</a> на „Право“. <span class="checkboxRequiredMsg">Мора да се согласите со полисата.</span></span></td>
     </tr>
     <tr valign="baseline">
       <td nowrap="nowrap" align="right">&nbsp;</td>
