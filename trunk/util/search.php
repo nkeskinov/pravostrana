@@ -41,29 +41,7 @@ do{
 //print_r($index_array);
 
 ?>
-
-<script language="JavaScript">
-var popUpWin=0;
-function popUpWindow(URLStr, left, top, width, height)
-{
-  if(popUpWin)
-  {
-    if(!popUpWin.closed) popUpWin.close();
-  }
-  var wint=0;
-  var winl=0;
-  if(screen.width){
-	  winl=(screen.width-width)/2;
-	  wint=(screen.height-height)/2;
-  }
-  if (winl < 0) winl = 0;
-  if (wint < 0) wint = 0;
-  
-  popUpWin = open(URLStr, 'popUpWin', 'toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=no,resizable=no,copyhistory=yes,width='+width+',height='+height+',left='+winl+', top='+wint+',screenX='+winl+',screenY='+wint+'');
-}
-
-</script>
-
+<script type="text/javascript" src="javaScripts/popUpWindow.js"></script>
 <div style="height:300px;">
 <form action="documentlaws.php" method="get" enctype="application/x-www-form-urlencoded" >
 <table width="95%" border="0">
