@@ -1,6 +1,6 @@
 <?php
 
-function newslatterByDocument($id_document, $subject, $message1, $url, $pravo, $database_pravo){
+function newsletterByDocument($id_document, $subject, $message1, $url, $pravo, $database_pravo){
 	mysql_select_db($database_pravo, $pravo);
 	
 	$Query_document=sprintf("SELECT * FROM document 
@@ -34,7 +34,7 @@ function newslatterByDocument($id_document, $subject, $message1, $url, $pravo, $
 		
 }
 
-function weeklyNewslatter($pravo, $database_pravo){
+function weeklyNewsletter($pravo, $database_pravo){
 	date_default_timezone_set('Europe/Skopje');
 	
 	$Query_document=sprintf("SELECT *
@@ -54,8 +54,8 @@ function weeklyNewslatter($pravo, $database_pravo){
 			<table border='0' width='100%' cellspacing='0'>";
   		 do { 
 			$timestamp = strtotime($row_Documents['published_date']);
-    	$body =."<tr>
-      			<td width='100%' style='border-bottom:1px solid #a25852; background:#fae9e8; padding-left:5px;'>	<strong><a href='http://pravo.org.mk/documentDetail.php?id=".$row_Documents['id_document']."&gid=".$row_Documents['id_doc_group']."&tid=".$id_doc_type_Documents".&page=".$page." title='Видете ги деталите за документот'><span style='font-variant:small-caps; font-weight:bolder; font-size:15px; '>".$row_Documents['title'].((isset($row_Documents['into_force']) && !$row_Documents['into_force']) ? '<span style="color: red;"> - вон сила</span>' : "")."</span></a></strong><br> <span style='color:#666; font-size:11px'>&nbsp;".date($page == "courtpractice.php" || $page == "europeancourt.php" ? "Y" : "d.m.Y", $timestamp)."</span>";
+    	$body .= "<tr>
+      			<td width='100%' style='border-bottom:1px solid #a25852; background:#fae9e8; padding-left:5px;'>	<strong><a href='http://pravo.org.mk/documentDetail.php?id=".$row_Documents['id_document']."&gid=".$row_Documents['id_doc_group']."&tid=".$id_doc_type_Documents."&page=".$page." title='Видете ги деталите за документот'><span style='font-variant:small-caps; font-weight:bolder; font-size:15px; '>".$row_Documents['title'].((isset($row_Documents['into_force']) && !$row_Documents['into_force']) ? '<span style="color: red;"> - вон сила</span>' : "")."</span></a></strong><br> <span style='color:#666; font-size:11px'>&nbsp;".date($page == "courtpractice.php" || $page == "europeancourt.php" ? "Y" : "d.m.Y", $timestamp)."</span>";
 				if($page == "documentlaws.php") { $body.="|<span style='color:#666; font-size:11px'> Сл. весник/година:</span> <span style='font-size:11px; font-weight:bold;'>".$row_Documents["ordinal"]." </span>/<span style='font-size:11px; font-weight:bold;'> ".date("Y",strtotime($row_Documents["date"])); 
 				}else if($page == "courtpractice.php" || $page == "europeancourt.php") { 
 				$body.="|<span style='color:#666; font-size:11px'> Суд:</span> <span style='font-size:11px;'>".$row_Documents["name"].' </span>'; 
@@ -73,10 +73,10 @@ function weeklyNewslatter($pravo, $database_pravo){
     </tr>
     <tr>
     	<td  style='border-bottom:1px solid #f5e6a2; background:#fbf7e0;' colspan='2'>категорија: ";
-		getDocumentCategory($row_Documents['id_doc_group'], $pravo, $database_pravo)
-		$body.="</td>
+		getDocumentCategory($row_Documents['id_doc_group'], $pravo, $database_pravo);
+		$body.='</td>
     </tr>
-    <tr><td colspan="2">&nbsp;</td></tr>";
+    <tr><td colspan="2">&nbsp;</td></tr>';
     } while ($row_Documents = mysql_fetch_assoc($Documents)); 
 $body.="</table>
 		</body>
