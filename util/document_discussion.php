@@ -132,7 +132,7 @@ if ((isset($_POST["Comment_insert"])) && ($_POST["Comment_insert"] == "insert"))
   $Message.=$_POST['content'];
   $Message.="<br /><a href='http://".$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']."'>http:/".$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']."</a>";
 
-  newslatterByDocument( $row_DetailRS1['id_document'], $subject, $Message, $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'], $pravo, $database_pravo);
+  newsletterByDocument( $row_DetailRS1['id_document'], $subject, $Message, $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'], $pravo, $database_pravo);
   send_mail("Pravo.org.mk","no-reply@pravo.org.mk",$to_email,$subject,$Message);
 }
 ?>

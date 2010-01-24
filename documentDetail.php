@@ -1,7 +1,7 @@
 <?php session_start(); ?>
 <?php require_once("Connections/pravo.php"); ?>
 <?php include("util/misc.php"); ?>
-<?php include("util/newslatter.php"); ?>
+<?php include("util/newsletter.php"); ?>
 <?php 
 $ip_address=$_SERVER['REMOTE_ADDR'];
 $page=substr(strrchr($_SERVER['PHP_SELF'],"/"),1);
