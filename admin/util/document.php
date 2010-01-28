@@ -222,14 +222,11 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 			
 			foreach($keywords_arr as $key){
 				//echo "key=".str_replace("\n","",str_replace("\t","",$key))."<br>";
-				$key1=str_replace("\n","",str_replace("\t","",$key));
-				if(strpos($key1," ")==0){
-					$key1=substr($key1,1);
-					
-				}
-				$selectSQL= sprintf("SELECT * FROM keyword WHERE val like %s",GetSQLValueString($key1, "text"));
+				$key1=trim(str_replace("\n","",str_replace("\t","",$key)));
+				$selectSQL= sprintf("SELECT * FROM keyword WHERE val=%s",GetSQLValueString($key1, "text"));
 				$Result = mysql_query($selectSQL,$pravo);
 				$num=mysql_num_rows($Result);
+				$id_keyword=-1;
 				if($num!=0){
 					$word=mysql_result($Result,0,'val');
 					$id_keyword=mysql_result($Result,0,'id_keyword');
@@ -367,20 +364,16 @@ if ((isset($_POST["MM_update"]))) {
   $ResultDocMeta = mysql_query($UpdateDocMetaSQL, $pravo) or die(mysql_error());
 	
   $id_doc=$_POST['id_document'];
-  $keywords1=str_replace(", ",",",$_POST['keywords']);
+  //$keywords1=str_replace(", ",",",$_POST['keywords']);
   $keywords_arr=explode(",", $keywords1);
-  echo $keywords1;
-			print_r($keywords_arr);
+  //echo $keywords1;
+			//print_r($keywords_arr);
 			 $deleteIDDocument=sprintf("DELETE FROM document_has_keyword WHERE id_document=%s",GetSQLValueString($id_doc, "int"));
 			 $ResultIDDocument1=mysql_query($deleteIDDocument,$pravo);
 			 
 			foreach($keywords_arr as $key){
-				echo "key=".str_replace("\n","",str_replace("\t","",$key))."<br>";
-				$key1=str_replace("\n","",str_replace("\t","",$key));
-				/*if(strpos($key1," ")==0){
-					$key1=substr($key1,1);
-					
-				}*/
+				//echo "key=".str_replace("\n","",str_replace("\t","",$key))."<br>";
+				$key1=trim(str_replace("\n","",str_replace("\t","",$key)));
 				$selectSQL= sprintf("SELECT * FROM keyword WHERE val=%s",GetSQLValueString($key1, "text"));
 				$Result = mysql_query($selectSQL,$pravo);
 				$num=mysql_num_rows($Result);
