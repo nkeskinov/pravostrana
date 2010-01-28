@@ -64,11 +64,11 @@ transition: Fx.Transitions.sineOut
    	  </div>
       <div id="horiz-menu" class="moomenu"><!-- InstanceBeginEditable name="Menu" -->
         <ul class="nav">
-           <li><a href="/pravo.org.mk/index.php">Почетна</a></li>
+           <li><a href="../index.php">Почетна</a></li>
           <li class="active"><a class="topdaddy" href="../documentlaws.php">Закони</a></li>
          <li><a href="../analysis.php">Анализи</a></li>
           <li><a href="../regulations.php">Прописи</a></li>
-          <li><a href="courtpractice.php">Судска пракса</a>
+          <li><a href="../courtpractice.php">Судска пракса</a>
            <ul>
              <li><a href="../courtpractice.php">Судска пракса</a></li>
             <li><a href="../europeancourt.php">Европски суд за човекови права</a></li>
