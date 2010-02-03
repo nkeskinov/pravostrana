@@ -750,7 +750,7 @@ do {
         <span id="sprycheckbox1">
         
         <input name="is_approved" type="checkbox" value="" <?php if(isset($_POST['is_approved'])) if (!(strcmp(htmlentities($_POST['is_approved'], ENT_COMPAT, 'utf-8'),""))) {echo "checked=\"checked\"";} ?>  />
-      Ги прочитав и се согласувам со <a href="JavaScript:popUpWindow('help.php?id=5','','',600,520);" class="terms">Условите на услугата</a> и <a href="JavaScript:popUpWindow('help.php?id=6','','',600,350);" class="terms">Полисата за приватност</a> на „Право“. <span class="checkboxRequiredMsg">Мора да се согласите со полисата.</span></span></td>
+      Ги прочитав и се согласувам со <a href="JavaScript:popUpWindow('help.php?id=5','','',600,520);" class="terms">Условите за користење на услугата</a> и <a href="JavaScript:popUpWindow('help.php?id=6','','',600,350);" class="terms">Полисата за приватност</a> на „Право“. <span class="checkboxRequiredMsg">Мора да се согласите со полисата.</span></span></td>
     </tr>
     <tr valign="baseline">
       <td nowrap="nowrap" align="right">&nbsp;</td>
