@@ -109,7 +109,7 @@ transition: Fx.Transitions.sineOut
                        <param name="wmode" value="opaque">
                        <param name="swfversion" value="9.0.45.0">
                        <!-- This param tag prompts users with Flash Player 6.0 r65 and higher to download the latest version of Flash Player. Delete it if you don’t want users to see the prompt. -->
-                       <param name="expressinstall" value="/pravo.org.mk/Scripts/expressInstall.swf">
+                       <param name="expressinstall" value="../Scripts/expressInstall.swf">
                        <!-- Next object tag is for non-IE browsers. So hide it from IE using IECC. -->
                        <!--[if !IE]>-->
                        <object type="application/x-shockwave-flash" data="charts1.swf" width="710" height="305">
