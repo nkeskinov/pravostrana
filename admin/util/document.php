@@ -365,7 +365,7 @@ if ((isset($_POST["MM_update"]))) {
 	
   $id_doc=$_POST['id_document'];
   //$keywords1=str_replace(", ",",",$_POST['keywords']);
-  $keywords_arr=explode(",", $keywords1);
+  $keywords_arr=explode(",", $_POST['keywords']);
   //echo $keywords1;
 			//print_r($keywords_arr);
 			 $deleteIDDocument=sprintf("DELETE FROM document_has_keyword WHERE id_document=%s",GetSQLValueString($id_doc, "int"));
