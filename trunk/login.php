@@ -11,6 +11,7 @@ session_start();
 	} elseif(isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'],'login.php') === FALSE) { 
 		$_SESSION['referrer'] = $_SERVER['HTTP_REFERER'];
 	}
+	if((!isset( $_SESSION['MM_Username'] )) or (!isset($_SESSION['MM_UserGroup']))) {
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/SingleRed_clean.dwt.php" codeOutsideHTMLIsLocked="false" -->
@@ -108,7 +109,6 @@ transition: Fx.Transitions.sineOut
                 </div>
                  <div class="sodrzina">
                   <br />
-                  <?php if((!isset( $_SESSION['MM_Username'] )) or (!isset($_SESSION['MM_UserGroup']))){  ?>
                 <form action="" method="post" name="form1">
                   <table width="380" border="0" align="center" cellspacing="0">
               <tr>
