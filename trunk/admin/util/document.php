@@ -195,7 +195,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 		}
 		$idx = isset($_POST['idx']) ? $_POST['idx'] : "";
 
-		$insertSQL = sprintf("INSERT INTO `document` (id_doc_type, filename, title, id_doc_group, `description`, extension, filesize, mimetype, forcesubscribe, published_date, created_by, id_doc_meta, uploaded_date, into_force_date, into_force, idx) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+		$insertSQL = sprintf("INSERT INTO `document` (id_doc_type, filename, title, id_doc_group, `description`, extension, filesize, mimetype, forcesubscribe, published_date, created_by, id_doc_meta, uploaded_date, into_force_date, into_force, idx, show_on_home) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
 						   GetSQLValueString($_POST['id_doc_type'], "int"),
 						   GetSQLValueString($filename, "text"),
 						   GetSQLValueString($_POST['title'], "text"),
@@ -211,7 +211,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 						   GetSQLValueString(date('Y-m-d H:i'), "date"),
 						   GetSQLValueString($into_force_date, "date"),
 						   GetSQLValueString($into_force, "defined", '1', 'NULL'),
-						   GetSQLValueString($idx, "text"));
+						   GetSQLValueString($idx, "text"),
+						   GetSQLValueString(isset($_POST['show_on_home']) ? "true" : "", "defined", "1", "0"));
 	
 	  
 	  $Result1 = mysql_query($insertSQL, $pravo) or die(mysql_error());
@@ -340,7 +341,7 @@ if ((isset($_POST["MM_update"]))) {
 	}else
 		$into_force_date = "";
 	echo $into_force_date;
-  $updateSQL = sprintf("UPDATE `document` SET title=%s, published_date=%s, `description`=%s, id_doc_type=%s, id_doc_group=%s, filename=%s, forcesubscribe=%s, into_force_date=%s WHERE id_document=%s",
+  $updateSQL = sprintf("UPDATE `document` SET title=%s, published_date=%s, `description`=%s, id_doc_type=%s, id_doc_group=%s, filename=%s, forcesubscribe=%s, into_force_date=%s, show_on_home=%s WHERE id_document=%s",
                        GetSQLValueString($_POST['title'], "text"),
                        GetSQLValueString($published_date, "date"),
                        GetSQLValueString($_POST['description'], "text"),
@@ -349,6 +350,7 @@ if ((isset($_POST["MM_update"]))) {
                        GetSQLValueString($filename, "text"),
                        GetSQLValueString(isset($_POST['forcesubscribe']) ? "true" : "", "defined","1","0"),
 					   GetSQLValueString($into_force_date, "date"),
+					   GetSQLValueString(isset($_POST['show_on_home']) ? "true" : "", "defined", "1", "0"),
 					   GetSQLValueString($_POST['id_document'], "int"));
 
   //echo $updateSQL;
@@ -704,6 +706,12 @@ do {
       <td nowrap align="right">Форсирај претплата:</td>
       <td>
       <input type="checkbox" name="forcesubscribe" value=""  <?php if (!(strcmp(htmlentities($row_Recordset1['forcesubscribe'], ENT_COMPAT, 'utf-8'),"1"))) {echo "checked=\"checked\"";} ?> />
+      </td>
+    </tr>
+    <tr valign="baseline">
+      <td nowrap align="right">Прикажи на почетна:</td>
+      <td>
+      <input type="checkbox" name="show_on_home" value=""  <?php if ($row_Recordset1 == NULL || !(strcmp(htmlentities($row_Recordset1['show_on_home'], ENT_COMPAT, 'utf-8'),"1"))) {echo "checked=\"checked\"";} ?> />
       </td>
     </tr>
     <tr valign="baseline">
