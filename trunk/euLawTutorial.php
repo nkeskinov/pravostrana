@@ -23,6 +23,7 @@ $discussionName="Европски суд туторијал"; //The name of the 
 <script src="YUI/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
 <script src="YUI/2.6.0/build/container/container-min.js" type="text/javascript"></script>
 <script type="text/javascript" src="javaScripts/cirillic_converter.js"></script>
+<script type="text/javascript" src="javaScripts/popUpWindow.js"></script>
 <script type="text/javascript" src="mootools.js"></script>
 <script type="text/javascript" src="rokmoomenu.js"></script>
 <script type="text/javascript">
@@ -100,8 +101,8 @@ transition: Fx.Transitions.sineOut
             </td></tr></table>
     </div>
     <br />
-	<div class="footer">Copyright &copy; 2009 Сите права задржани</div>	
-    <div style="margin-top:-30px; color:#999; float:left; width:100%;">Pravo.org.mk не презема одговорност за евентуалните грешки во текстот на законите <div style="float:right;"><a href="http://camost.org" target="_blank"><img src="images/most.jpg" border="0"/></a></div></div>
+	<div class="footer">&copy; 2010 Сите права задржани<div style="float:right;"><a href="JavaScript:popUpWindow('help.php?id=5','','',600,520);" style="color:#FFFFFF;">Услови за користење</a> | <a href="JavaScript:popUpWindow('help.php?id=6','','',600,350);" style="color:#FFFFFF;">Политика за приватност</a></div></div>	
+    <div style="margin-top:-30px; color:#999; float:left; width:100%;">Pravo.org.mk не презема одговорност за евентуалните грешки во текстот на законите.<div style="float:right;"><a href="http://camost.org" target="_blank"><img src="images/most.jpg" border="0"/></a></div></div>
 </div>
 </td></tr></table>
 </body>

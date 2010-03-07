@@ -14,7 +14,7 @@
 			$Message.="Pravo.org.mk тимот";
 			
 			//echo $Message;
-			send_mail("Pravo.org.mk","no-reply@pravo.org.mk",$to_email,$subject,$Message);
+			send_mail("Pravo.org.mk","no-reply@pravo.org.mk","$name $surname <$to_email>",$subject,$Message);
 			
 			_show_message_color('Регистрацискиот код беше успешно пратен!','GREEN');
 	}
