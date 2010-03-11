@@ -130,9 +130,9 @@ if ((isset($_POST["Comment_insert"])) && ($_POST["Comment_insert"] == "insert"))
   $subject="Дискусија за ".$row_DetailRS1['title'];
   $Message=$_SESSION['MM_Name']." на ".date('d.m.Y H:i:s')."<br /><br />";
   $Message.=$_POST['content'];
-  $Message.="<br /><a href='http://".$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']."'>http:/".$MM_redirectLoginSuccess=$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']."</a>";
+  $Message.="<br /><a href='http://pravo.org.mk".$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']."'>http://pravo.org.mk".$_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']."</a>";
 
-  newsletterByDocument( $row_DetailRS1['id_document'], $subject, $Message, $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'], $pravo, $database_pravo);
+  //newsletterByDocument( $row_DetailRS1['id_document'], $subject, $Message, $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING'], $pravo, $database_pravo);
   send_mail("Pravo.org.mk","no-reply@pravo.org.mk",$to_email,$subject,$Message);
 }
 ?>
