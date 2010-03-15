@@ -5,7 +5,7 @@ $currentPage = $selfArray[count($selfArray)-1];
 
 $sort_order="desc";
 //to be replaced by a single call to $_REQUEST
-if(isset($_POST['asc']) || isset($_GET['asc'])) {
+if(isset($_REQUEST['asc'])) {
 	$sort_order="asc";
 }
 //else
@@ -14,10 +14,8 @@ if(isset($_POST['asc']) || isset($_GET['asc'])) {
 $sort="published_date";
 $default_sort = false;
 //to be replaced by a single call to $_REQUEST
-if((isset($_POST['sort']) && $_POST['sort']!="")){
-	$sort=$_POST['sort'];
-} elseif(isset($_GET['sort']) && $_GET['sort']!="") {
-	$sort=$_GET['sort'];
+if(isset($_REQUEST['sort']) && strcmp($_REQUEST['sort'], "")) {
+	$sort=$_REQUEST['sort'];
 } else {
 	$default_sort = true;
 }
@@ -49,7 +47,7 @@ if(isset($_GET['subcategory1']) && $_GET['subcategory1']!=0){
 if(isset($_GET['id_doc_group']))
 	$id_doc_group=$_GET['id_doc_group'];
 //echo $id_doc_group;
-$query_Documents = sprintf("SELECT DISTINCT document. * , doc_meta. *
+$query_Documents = sprintf("SELECT DISTINCT document. * ,document.published_date as published_date2, doc_meta. *
 							FROM document
 							LEFT JOIN doc_meta ON document.id_doc_meta = doc_meta.id_doc_meta
 							LEFT JOIN document_has_keyword dhk ON document.id_document = dhk.id_document
@@ -226,16 +224,42 @@ mysql_free_result($DocGroup);
 <?php if(mysql_num_rows($Documents)!=0){ ?>
 <table border="0" width="100%" cellspacing="0">
 	<tr>
-    	<td width="34%">Документи <?php echo ($startRow_Documents + 1) ?> до <?php echo min( $startRow_Documents + $maxRows_Documents, $totalRows_Documents) ?> од <?php echo $totalRows_Documents ?>
+    	<td width="45%" style="padding-bottom:5px; vertical-align:bottom;">Документи <?php echo ($startRow_Documents + 1) ?> до <?php echo min( $startRow_Documents + $maxRows_Documents, $totalRows_Documents) ?> од <?php echo $totalRows_Documents ?>
         </td>
-        <td width="66%" align="right">
+        <td width="55%" align="right">
         <div style="float:right; width:100%; text-align:right;">
+        <div style="float:right">
+            <form method="post" action="<?php printf("%s?%s", $currentPage,$_SERVER['QUERY_STRING']); ?>">
+            <table width="100%" align="right"><tr><td>
+            <?php if(!$default_sort) { ?>
+            <?php if(!strcmp($sort_order, "desc")){?>
+            <input type="image" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image1','','images/sort-up.png',1)" src="images/sort-down.png" name="asc" value="true" width="12" height="12" border="0" id="Image1" title="Подреди во растечки редослед"/><?php } ?><?php if(!strcmp($sort_order, "asc")){?>
+             <input type="image" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image2','','images/sort-down.png',1)" src="images/sort-up.png" name="desc" value="true" width="12" height="12" border="0" id="Image2" title="Подреди во опаѓачки редослед"/><?php } ?>
+             <?php } ?>
+            </td><td style="font-size:15px;">
+              <select name="sort" id="sort" onchange="this.form.submit();">
+                <option value="">подреди</option>
+                <option value="title" <?php if(!$default_sort && !strcmp($sort,"title")) {echo 'selected="selected"';} ?>>наслов</option>
+                <option value="published_date" <?php if(!$default_sort && !strcmp($sort,"published_date")) {echo 'selected="selected"';} ?>>датум на објавување</option>
+                <?php if(!strcmp($page, "documentlaws.php")){ ?>
+                <option value="published_date2" <?php if(!$default_sort && !strcmp($sort,"published_date2")) {echo 'selected="selected"';} ?>>сл. весник/година</option>
+                <?php } ?>
+              </select></td></tr></table></form>
+          </div>
           <div style="float:right;">
             <table border="0" cellpadding="5" cellspacing="0" style="font-size:12px;" >
               <tr>
                 <td>
-                <?php $sort_query_string = $default_sort || isset($_GET['sort']) ? '' : '&sort='.$sort;
-					  $sort_query_string .= $sort_order == 'desc' || isset($_GET['asc']) ? '' : '&asc=true';
+                <?php //TODO!!! Fix the POST/GET discrepancy
+					  if (isset($_GET['sort']) && isset($_POST['sort'])) {
+					  	$queryString_Documents = str_replace('sort='.$_GET['sort'], 'sort='.$_POST['sort'], $queryString_Documents); 									
+					  }
+				      $sort_query_string = $default_sort || isset($_GET['sort']) ? '' : '&sort='.$sort;
+					  if (isset($_GET['asc']) && isset($_POST['desc'])) {
+						$queryString_Documents = str_replace('&asc=true', '', $queryString_Documents);
+						$queryString_Documents = str_replace('asc=true', '', $queryString_Documents);
+					  }
+					  $sort_query_string .= !strcmp($sort_order, 'desc') || isset($_GET['asc']) ? '' : '&asc=true';
 			    ?>
 				<?php if ($pageNum_Documents > 0  ) { // Show if not first page ?>
                   <a href="<?php printf("%s?pageNum_Documents=%d%s".$sort_query_string, $currentPage, max(0, $pageNum_Documents - 1), $queryString_Documents); ?>"><img src="images/pPrev.png" border="0" width="19" height="19"/></a>
@@ -277,30 +301,6 @@ mysql_free_result($DocGroup);
               </tr>
             </table>
         </div>
-        	<div style="float:right">
-            <form method="post" action="<?php printf("%s?%s", $currentPage,$_SERVER['QUERY_STRING']); ?>">
-            <table width="100%" align="right"><tr><td>
-            <?php if(isset($_POST['desc']) || isset($_POST['sort1'])){?>
-            <input type="image" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image1','','images/sort-up.png',1)"src="images/sort-down.png" name="Image1" width="12" height="12" border="0" id="Image1" title="Сортирај во растечки редослед"/>
-            
-            <input type="hidden" name="asc" /><?php } ?><?php if(isset($_POST['asc'])){?>
-             <input type="image" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('Image2','','images/sort-down.png',1)"src="images/sort-up.png" name="Image2" width="12" height="12" border="0" id="Image2" title="Сортирај во опаѓачки редослед"/>
-            <input type="hidden" name="desc" /><?php } ?>
-            </td><td style="font-size:15px;">
-              <select name="sort" id="sort" onchange="this.form.submit();">
-                <option value="">подреди</option>
-                <option value="title" <?php if(!$default_sort && !strcmp($sort,"title")) {echo 'selected="selected"';} ?>>наслов</option>
-                <option value="published_date" <?php if(!$default_sort && !strcmp($sort,"published_date")) {echo 'selected="selected"';} ?>>датум</option>
-                <?php if($page=="documentlaws.php"){ ?>
-                <option value="ordinal" <?php if(!$default_sort && !strcmp($sort,"ordinal")) {echo 'selected="selected"';} ?>>сл. весник</option>
-                <option value="date" <?php if(!$default_sort && !strcmp($sort,"date")) {echo 'selected="selected"';} ?>>сл. в. година</option>
-                <?php } ?>
-              </select>
-              </select>
-              <?php if(!isset($_POST['sort'])){ ?>
-              <input type="hidden" name="sort1" />
-              <?php } ?>|</td></tr></table></form>
-          </div>
         </div>
      </td>
     </tr>
