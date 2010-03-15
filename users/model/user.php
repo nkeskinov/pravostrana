@@ -28,15 +28,24 @@ if(isset($_SESSION['MM_ID']) && strpos($_SERVER['PHP_SELF'],'profile.php') != fa
 }
 
 if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
+	$password_changed = TRUE;
 	mysql_select_db($database_pravo, $pravo);
 	$password = mysql_result($RecordsetUsers,0,'password');
 	if(isset($_POST['changepass'])){
-		if($password == $_POST['password-old']){
-			$updateSQL1 = sprintf("UPDATE `user` SET password=password(%s) WHERE id_user=%s",
+		$password_changed = FALSE;
+		$checkOldSQL = sprintf("SELECT password(%s) AS password_old", 
+								GetSQLValueString($_POST['password-old'], "text"));
+		$Result_checkOldSQL = mysql_query($checkOldSQL, $pravo) or die(mysql_error());
+		$row_Result_checkOldSQL = mysql_fetch_assoc($Result_checkOldSQL);
+		if(!strcmp($password,$row_Result_checkOldSQL['password_old'])){
+			$updateSQL1 = sprintf("UPDATE `user` SET password=password(%s), last_password_changed_date=%s WHERE id_user=%s",
 								  GetSQLValueString($_POST['password-new1'], "text"),
+								  GetSQLValueString(date('Y-m-d H:i:s'), "date"),
 								  GetSQLValueString($_SESSION['MM_ID'], "int"));
 			$Result3 = mysql_query($updateSQL1, $pravo) or die(mysql_error());	
-			
+			if($Result3) {
+				$password_changed = TRUE;
+			}
 		}else{
 			echo '<br />';
 	 		_show_message_color('Лозинките не се совпаѓаат!','RED');		
@@ -61,7 +70,7 @@ if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "form1")) {
                        GetSQLValueString($_SESSION['MM_ID'], "int"));
 
   $Result2 = mysql_query($updateSQL, $pravo) or die(mysql_error());
-  if($Result2){
+  if($password_changed && $Result2){
 			echo '<br />';
 			_show_message_color('Вашите податоци се успешно изменети!','GREEN');		
   }else{
@@ -710,8 +719,8 @@ do {
         <td colspan="2"><input type="password" name="password-new1" id="password-new1" value="" size="30" /></td>
     </tr>
     <tr valign="baseline">
-      	<td nowrap align="right">Повтори лозинка</td>
-        <td colspan="2"><input type="password" name="password-new2" id="password-new1" value="" size="30" />
+      	<td nowrap align="right">Повтори нова лозинка</td>
+        <td colspan="2"><input type="password" name="password-new2" id="password-new2" value="" size="30" />
         <input type="hidden" name="changepass" value="true" />
         </td>
     </tr>
@@ -750,7 +759,7 @@ do {
         <span id="sprycheckbox1">
         
         <input name="is_approved" type="checkbox" value="" <?php if(isset($_POST['is_approved'])) if (!(strcmp(htmlentities($_POST['is_approved'], ENT_COMPAT, 'utf-8'),""))) {echo "checked=\"checked\"";} ?>  />
-      Ги прочитав и се согласувам со <a href="JavaScript:popUpWindow('help.php?id=5','','',600,520);" class="terms">Условите за користење на услугата</a> и <a href="JavaScript:popUpWindow('help.php?id=6','','',600,350);" class="terms">Полисата за приватност</a> на „Право“. <span class="checkboxRequiredMsg">Мора да се согласите со полисата.</span></span></td>
+      Ги прочитав и се согласувам со <a href="JavaScript:popUpWindow('help.php?id=5','','',600,520);" class="terms">Условите за користење на услугата</a> и <a href="JavaScript:popUpWindow('help.php?id=6','','',600,350);" class="terms">Политиката за приватност</a> на „Право“. <span class="checkboxRequiredMsg">Мора да се согласите со условите и политиката.</span></span></td>
     </tr>
     <tr valign="baseline">
       <td nowrap="nowrap" align="right">&nbsp;</td>
