@@ -27,6 +27,12 @@ trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_p
 <html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/CleanTemplate.dwt.php" codeOutsideHTMLIsLocked="false" -->
 <head>
 <!--templateinfo codeoutsidehtmlislocked="true" -->
+<!-- InstanceBeginEditable name="meta_description" -->
+<meta name="description" content="Судска пракса на Европски суд за човекови права" />
+<!-- InstanceEndEditable -->
+<!-- InstanceBeginEditable name="keywords" -->
+<meta name="keywords" content="судска пракса, европски суд, човекови права, суд, судија, порота, случај, адвокат" />
+<!-- InstanceEndEditable -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="rokmoomenu.css" rel="stylesheet" type="text/css" />
 <link href="style.css" rel="stylesheet" type="text/css" />
@@ -148,7 +154,7 @@ transition: Fx.Transitions.sineOut
             </table>
             <!-- InstanceEndEditable -->
     </div>
-	<div class="footer">&copy; 2010 Сите права задржани<div style="float:right;"><a href="JavaScript:popUpWindow('help.php?id=5','','',600,520);" style="color:#FFFFFF;">Услови за користење</a> | <a href="JavaScript:popUpWindow('help.php?id=6','','',600,350);" style="color:#FFFFFF;">Политика за приватност</a></div></div>	
+	<div class="footer"><span style="float:left;">&copy; 2010 Сите права задржани</span><span style="float:right;"><a href="JavaScript:popUpWindow('help.php?id=5','','',600,520);" style="color:#FFFFFF;">Услови за користење</a> | <a href="JavaScript:popUpWindow('help.php?id=6','','',600,350);" style="color:#FFFFFF;">Политика за приватност</a></span></div>	
     <div style="margin-top:-30px; color:#999; float:left; width:100%;">Pravo.org.mk не презема одговорност за евентуалните грешки во текстот на законите.<div style="float:right;"><a href="http://camost.org" target="_blank"><img src="images/most.jpg" border="0"/></a></div></div>
 </div>
 </td></tr></table>

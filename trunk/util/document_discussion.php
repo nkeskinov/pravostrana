@@ -7,8 +7,6 @@ if (isset($_GET['pageNum_Post'])) {
 }
 $startRow_Post = $pageNum_Post * $maxRows_Post;
 
-$id_document=$colname_DetailRS1;
-
 if(isset($_SESSION['MM_Name'])){
 	$editBy=$_SESSION['MM_Name'];
 	$edit_message="---<br />Изменето од: ".$editBy."<br />Оригинално внесен на: ";
@@ -75,7 +73,7 @@ if ((isset($_POST["Comment_insert"])) && ($_POST["Comment_insert"] == "insert"))
    mysql_select_db($database_pravo, $pravo);
    $discussionName=$row_DetailRS1['title'];
    
-  $discussionSQL=sprintf("SELECT * from discussion where id_document=%s",GetSQLValueString($colname_DetailRS1, "-1"));
+  $discussionSQL=sprintf("SELECT * from discussion where id_document=%s",GetSQLValueString($id_document, "-1"));
   $discussionResult = mysql_query($discussionSQL, $pravo) or die(mysql_error());
   $discussionFound = mysql_num_rows($discussionResult);
   $id_discussion=-1;

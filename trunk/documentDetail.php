@@ -16,6 +16,44 @@ $language=$_SERVER['HTTP_ACCEPT_LANGUAGE'];
 $id_user=1;
 if(isset($_SESSION['MM_ID']))
 	$id_user=$_SESSION['MM_ID'];
+if(isset($_GET['id'])) {
+	$id_document = $_GET['id'];
+}
+mysql_select_db($database_pravo, $pravo);
+
+//document details
+$query_DetailRS1 = sprintf("SELECT document.title, document.description, document.id_document, document.id_doc_group, document.id_doc_type,  document.id_doc_meta, document.into_force, document.published_date, document.uploaded_date, document.into_force_date, document.mimetype, document.no_downloads, doc_meta.ordinal, doc_meta.`date`, page.path FROM document, doc_meta, doc_type, page WHERE document.id_doc_meta = doc_meta.id_doc_meta AND doc_type.id_doc_type = document.id_doc_type AND doc_type.id_page = page.id_page AND document.id_document = %s", GetSQLValueString($id_document, "-1"));
+$DetailRS1 = mysql_query($query_DetailRS1, $pravo) or die(mysql_error());
+$row_DetailRS1 = mysql_fetch_assoc($DetailRS1);
+
+$id_group = $row_DetailRS1['id_doc_group'];
+$id_type = $row_DetailRS1['id_doc_type'];
+$id_meta = $row_DetailRS1['id_doc_meta'];
+$page = $row_DetailRS1['path'];
+$document_title = $row_DetailRS1['title'];
+$document_description = $row_DetailRS1['description'];
+$published_date = $row_DetailRS1['published_date'];
+$uploaded_date = $row_DetailRS1['uploaded_date'];
+$into_force_date = $row_DetailRS1['into_force_date'];
+$rs_into_force = $row_DetailRS1['into_force'];
+$mime_type = $row_DetailRS1['mimetype'];
+$no_downloads = $row_DetailRS1['no_downloads'];
+$meta_ordinal = $row_DetailRS1['ordinal'];
+$meta_date = $row_DetailRS1['date'];
+
+mysql_free_result($DetailRS1);
+
+//keywords
+$query_RecordsetKeyword = sprintf("SELECT k.val FROM keyword k, document_has_keyword dk, document d WHERE dk.id_keyword=k.id_keyword AND dk.id_document=d.id_document AND d.id_document=%s", GetSQLValueString($id_document, "int"));
+$RecordsetKeyword = mysql_query($query_RecordsetKeyword, $pravo) or die(mysql_error());
+
+$keywords = array();
+$keywords_size = 0;
+while($row_RecordsetKeyword = mysql_fetch_assoc($RecordsetKeyword)) {
+	$keywords[$keywords_size++] = $row_RecordsetKeyword['val'];
+}
+
+mysql_free_result($RecordsetKeyword);
 
 trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_page, $database_pravo, $pravo);
 ?>
@@ -24,12 +62,18 @@ trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_p
 <html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/CleanTemplate.dwt.php" codeOutsideHTMLIsLocked="false" -->
 <head>
 <!--templateinfo codeoutsidehtmlislocked="true" -->
+<!-- InstanceBeginEditable name="meta_description" -->
+<meta name="description" content="<?php echo $document_title; ?>" />
+<!-- InstanceEndEditable -->
+<!-- InstanceBeginEditable name="keywords" -->
+<meta name="keywords" content="<?php echo implode($keywords, ','); ?>" />
+<!-- InstanceEndEditable -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="rokmoomenu.css" rel="stylesheet" type="text/css" />
 <link href="style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="images/favicon1.png" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>Pravo.org.mk | Детален опис на документ</title>
+<title>Pravo.org.mk | <?php echo $document_title; ?></title>
 <!-- InstanceEndEditable -->
 <!-- InstanceBeginEditable name="scripts" -->
 <?php require("util/banner.php"); ?>
@@ -74,10 +118,10 @@ transition: Fx.Transitions.sineOut
       <div id="horiz-menu" ><!-- InstanceBeginEditable name="Menu" -->
         <ul class="nav">
           <li><a href="index.php">Почетна</a></li>
-          <li <?php if($_GET['page']=="documentlaws.php") echo 'class="active"' ?>><a href="documentlaws.php">Закони</a></li>
-          <li <?php if($_GET['page']=="analysis.php") echo 'class="active"' ?>><a href="analysis.php">Анализи</a></li>
-          <li <?php if($_GET['page']=="regulations.php") echo 'class="active"' ?>><a href="regulations.php">Прописи</a></li>
-          <li <?php if($_GET['page']=="courtpractice.php" || $_GET['page']=="europeancourt.php") echo 'class="active"' ?>><a href="courtpractice.php">Судска пракса</a>
+          <li <?php if($page=="documentlaws.php") echo 'class="active"' ?>><a href="documentlaws.php">Закони</a></li>
+          <li <?php if($page=="analysis.php") echo 'class="active"' ?>><a href="analysis.php">Анализи</a></li>
+          <li <?php if($page=="regulations.php") echo 'class="active"' ?>><a href="regulations.php">Прописи</a></li>
+          <li <?php if($page=="courtpractice.php" || $page=="europeancourt.php") echo 'class="active"' ?>><a href="courtpractice.php">Судска пракса</a>
           	<ul>
             	 <li><a href="courtpractice.php">Судска пракса</a></li>
             	 <li><a href="europeancourt.php">Европски суд за човекови права</a></li>
@@ -90,8 +134,8 @@ transition: Fx.Transitions.sineOut
         <div id="mapMenu">
        <!-- InstanceBeginEditable name="SiteMap" -->
        <table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;&nbsp;</td><td>
-	   <?php if($_GET['page']=="documentlaws.php") echo '<a href="documentlaws.php">Закони</a>'; if($_GET['page']=="analysis.php") echo '<a href="analysis.php">Анализи</a>';  if($_GET['page']=="regulations.php") echo '<a href="regulations.php">Прописи</a>'; if($_GET['page']=="courtpractice.php") echo '<a href="courtpractice.php">Судска пракса</a>';  if($_GET['page']=="europeancourt.php") echo '<a href="europeancourt.php">Судска пракса на Европски суд</a>';?>
-       &nbsp;&nbsp;&nbsp;&raquo;&nbsp;</td><td> Детален опис на документ</td></tr></table> 
+	   <?php if($page=="documentlaws.php") echo '<a href="documentlaws.php">Закони</a>'; if($page=="analysis.php") echo '<a href="analysis.php">Анализи</a>';  if($page=="regulations.php") echo '<a href="regulations.php">Прописи</a>'; if($page=="courtpractice.php") echo '<a href="courtpractice.php">Судска пракса</a>';  if($page=="europeancourt.php") echo '<a href="europeancourt.php">Судска пракса на Европски суд</a>';?>
+       &nbsp;&nbsp;&nbsp;&raquo;&nbsp;</td><td> <?php echo $document_title; ?></td></tr></table> 
       <!-- InstanceEndEditable -->
        </div>
       </div>
@@ -149,7 +193,7 @@ transition: Fx.Transitions.sineOut
             </table>
             <!-- InstanceEndEditable -->
     </div>
-	<div class="footer">&copy; 2010 Сите права задржани<div style="float:right;"><a href="JavaScript:popUpWindow('help.php?id=5','','',600,520);" style="color:#FFFFFF;">Услови за користење</a> | <a href="JavaScript:popUpWindow('help.php?id=6','','',600,350);" style="color:#FFFFFF;">Политика за приватност</a></div></div>	
+	<div class="footer"><span style="float:left;">&copy; 2010 Сите права задржани</span><span style="float:right;"><a href="JavaScript:popUpWindow('help.php?id=5','','',600,520);" style="color:#FFFFFF;">Услови за користење</a> | <a href="JavaScript:popUpWindow('help.php?id=6','','',600,350);" style="color:#FFFFFF;">Политика за приватност</a></span></div>	
     <div style="margin-top:-30px; color:#999; float:left; width:100%;">Pravo.org.mk не презема одговорност за евентуалните грешки во текстот на законите.<div style="float:right;"><a href="http://camost.org" target="_blank"><img src="images/most.jpg" border="0"/></a></div></div>
 </div>
 </td></tr></table>

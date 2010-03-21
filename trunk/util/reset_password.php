@@ -27,7 +27,7 @@
 			$Message.="Pravo.org.mk тимот";
 			
 			//echo $Message;
-			send_mail("Pravo.org.mk","no-reply@pravo.org.mk",$to_email,$subject,$Message);
+			send_mail("Pravo.org.mk","no-reply@pravo.org.mk","$name $surname <$to_email>",$subject,$Message);
 			_show_message_color("Инструкции за промена на вашата лозинка се пратени на ".$to_email,'GREEN');
 		  }else{
 			_show_message_color('Вашата email адреса не е најдена во нашата база!','RED');    

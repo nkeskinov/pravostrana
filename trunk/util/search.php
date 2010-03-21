@@ -68,15 +68,15 @@ do{
     </div></td>
   </tr>
   <tr>
-    <td width="46%">&nbsp;</td>
-    <td width="54%">&nbsp;</td>
+    <td width="100px">&nbsp;</td>
+    <td>&nbsp;</td>
   </tr>
   <tr>
-    <td align="left">Име на законот: </td>
+    <td align="left" style="white-space: nowrap;">Име на законот: </td>
     <td><input name="name" id="name" type="text" size="35" onkeyup="this.form.name.value=toCyr(this.form.name.value)"></td>
   </tr>
    <tr>
-    <td align="left">Број / Година: </td>
+    <td align="left" style="white-space: nowrap;">Број / Година: </td>
     <td>
       <input name="number" type="text" id="number" size="4">
       /
@@ -84,7 +84,7 @@ do{
     </td>
   </tr>
  	<tr>
-        <td align="left" valign="top" style="padding-top:7px;">Категорија: </td>
+        <td align="left" valign="top" style="padding-top:7px; white-space: nowrap;">Категорија: </td>
         <td>
             
             <div style="padding:2px; padding-left:0;">
@@ -97,7 +97,7 @@ do{
         </td>
   	</tr>
 	<tr>
-    <td align="left">Клучен збор: </td>
+    <td align="left" style="white-space: nowrap;">Клучен збор: </td>
     <td><label>
       <input name="keyword" type="text" id="keyword" onkeyup="this.form.keyword.value=toCyr(this.form.keyword.value)" size="47">
     </label></td>
