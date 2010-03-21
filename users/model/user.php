@@ -212,7 +212,7 @@ $totalRows_Recordset3 = mysql_num_rows($Recordset3);
       <td colspan="3"><h4>1. Основни податоци</h4></td>
     </tr>
     <tr valign="baseline">
-      <td width="192" align="right" nowrap>Име:</td>
+      <td nowrap width="235" align="right">Име:</td>
       <td colspan="2"><span id="sprytextfield1">
         <input type="text" name="name" value="<?php 	
 					if(isset($_POST['name'])) 

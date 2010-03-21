@@ -93,36 +93,38 @@ transition: Fx.Transitions.sineOut
         </ul>
 
       	<div id="menu"></div>
-       <div id="mapMenu"><!-- InstanceBeginEditable name="SiteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a></td>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;<td>Логирање&nbsp;</td></tr></table><!-- InstanceEndEditable --></div> 
+        <div id="mapMenu">
+       <table cellpadding="0" cellspacing="0"><tr><!-- InstanceBeginEditable name="SiteMap" --><td><a href="index.php">Почетна</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;</td><td>Логирање&nbsp;</td><!-- InstanceEndEditable --></tr></table>
+         </div>
       </div>
 	</div>
     
     <div class="mainBody">
    	  <div class="content" style="width:100%">
             <div></div>
-            <!-- InstanceBeginEditable name="EditRegion4" --><table width="400" align="center"><tr><td width="601">
+            <!-- InstanceBeginEditable name="EditRegion4" --><table width="440" align="center"><tr><td width="640">
             <br />
             <div class="middle-red-block-small">
                 <div class="title">
                     <div class="left"></div>
-                    <div class="middle" style="width:380px;"><div class="text">Логирање</div></div>
+                    <div class="middle" style="width:420px;"><div class="text">Логирање</div></div>
                     <div class="right"></div>
                 </div>
                  <div class="sodrzina">
                   <br />
                 <form action="" method="post" name="form1">
-                  <table width="380" border="0" align="center" cellspacing="0">
+                  <table width="420" border="0" align="center" cellspacing="0">
               <tr>
-                        <td width="180">Корисничко име (<strong>e-mail</strong>):</td>
-                        <td width="193" ><input name="username_login" type="text" id="username_login" size="30" /></td>
+                        <td width="180" align="right">Корисничко име (<strong>e-mail</strong>):</td>
+                        <td><input name="username_login" type="text" id="username_login" style="width: 190px;"/></td>
                     </tr>
                       <tr>
-                        <td>Лозинка:</td>
-                        <td><input name="password_login" type="password" id="password_login" size="30" /></td>
+                        <td align="right">Лозинка:</td>
+                        <td><input name="password_login" type="password" id="password_login" style="width: 190px;"/></td>
                       </tr>
                       <tr>
-                        <td>&nbsp;</td>
-                        <td><div align="right" style="padding-top:5px;">
+                      <td width="180">&nbsp;</td>
+                        <td><div align="left" style="padding-top:5px;">
                           <input type="submit" name="button" id="button" value="Логирај ме!" style="background-color:#993300; color:#FFFFFF" />
                         </div></td>
                       </tr>
@@ -160,7 +162,7 @@ transition: Fx.Transitions.sineOut
 
     </div>
     <div class="above-footer"></div>
-	<div class="footer">&copy; 2010 Сите права задржани<div style="float:right;"><a href="JavaScript:popUpWindow('help.php?id=5','','',600,520);" style="color:#FFFFFF;">Услови за користење</a> | <a href="JavaScript:popUpWindow('help.php?id=6','','',600,350);" style="color:#FFFFFF;">Политика за приватност</a></div></div>	
+	<div class="footer"><span style="float:left;">&copy; 2010 Сите права задржани</span><span style="float:right;"><a href="JavaScript:popUpWindow('help.php?id=5','','',600,520);" style="color:#FFFFFF;">Услови за користење</a> | <a href="JavaScript:popUpWindow('help.php?id=6','','',600,350);" style="color:#FFFFFF;">Политика за приватност</a></span></div>	
     <div style="margin-top:-30px; color:#999; float:left; width:100%;">Pravo.org.mk не презема одговорност за евентуалните грешки во текстот на законите.<div style="float:right;"><a href="http://camost.org" target="_blank"><img src="images/most.jpg" border="0"/></a></div></div>
 </div>
 

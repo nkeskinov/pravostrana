@@ -54,7 +54,7 @@ if (isset($_POST['username_login'])) {
 	$_SESSION['MM_Name'] = $loginStrName." ".$loginStrSurname;
 	$_SESSION['MM_ID'] = $id_user;
 	
-	/* if($_SERVER['PHP_SELF']=='/pravo.org.mk/register.php'){
+	/* if($_SERVER['PHP_SELF']=='register.php'){
 		$tmp = isset($_SESSION['MM_ID']) ? $_SESSION['MM_ID'] : 0; 
 		$_SESSION['MM_ID_TMP'] = $tmp;
 		unset($_SESSION['MM_ID']);
