@@ -66,7 +66,7 @@ trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_p
 <meta name="description" content="<?php echo $document_title; ?>" />
 <!-- InstanceEndEditable -->
 <!-- InstanceBeginEditable name="keywords" -->
-<meta name="keywords" content="<?php echo implode($keywords, ','); ?>" />
+<meta name="keywords" content="<?php echo $document_title.','.implode($keywords, ','); ?>" />
 <!-- InstanceEndEditable -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="rokmoomenu.css" rel="stylesheet" type="text/css" />
