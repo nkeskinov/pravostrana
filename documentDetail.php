@@ -22,7 +22,7 @@ if(isset($_GET['id'])) {
 mysql_select_db($database_pravo, $pravo);
 
 //document details
-$query_DetailRS1 = sprintf("SELECT document.title, document.description, document.id_document, document.id_doc_group, document.id_doc_type,  document.id_doc_meta, document.into_force, document.published_date, document.uploaded_date, document.into_force_date, document.mimetype, document.no_downloads, doc_meta.ordinal, doc_meta.`date`, page.path FROM document, doc_meta, doc_type, page WHERE document.id_doc_meta = doc_meta.id_doc_meta AND doc_type.id_doc_type = document.id_doc_type AND doc_type.id_page = page.id_page AND document.id_document = %s", GetSQLValueString($id_document, "-1"));
+$query_DetailRS1 = sprintf("select document_detail.*, doc_meta.ordinal, doc_meta.`date` FROM (SELECT document.title, document.description, document.id_document, document.id_doc_group, document.id_doc_type,  document.id_doc_meta, document.into_force, document.published_date, document.uploaded_date, document.into_force_date, document.mimetype, document.no_downloads, page.path FROM document, doc_type, page WHERE document.id_document = %s AND doc_type.id_doc_type = document.id_doc_type AND doc_type.id_page = page.id_page) document_detail LEFT JOIN doc_meta ON document_detail.id_doc_meta = doc_meta.id_doc_meta", GetSQLValueString($id_document, "-1"));
 $DetailRS1 = mysql_query($query_DetailRS1, $pravo) or die(mysql_error());
 $row_DetailRS1 = mysql_fetch_assoc($DetailRS1);
 
