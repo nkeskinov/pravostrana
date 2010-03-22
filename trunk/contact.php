@@ -85,7 +85,7 @@ transition: Fx.Transitions.sineOut
           <li class="active"><a href="contact.php">Контакт</a></li>
         </ul>
       <!-- InstanceEndEditable -->
-       <div id="mapMenu"><!-- InstanceBeginEditable name="siteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;</td></tr></table><!-- InstanceEndEditable --></div> 
+       <div id="mapMenu"><!-- InstanceBeginEditable name="siteMap" --><table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;</td><td>Контакт</td></tr></table><!-- InstanceEndEditable --></div> 
       </div>
 	</div>
     
