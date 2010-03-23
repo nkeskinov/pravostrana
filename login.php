@@ -1,7 +1,13 @@
 <?php 
 if (!isset($_SESSION)) {
 session_start();
-} ?>
+} 
+if (isset($_SESSION['download_id'])) {
+	$_SESSION['download_id_request'] = $_SESSION['download_id'];
+	$_SESSION['download_id'] = NULL;
+	unset($_SESSION['download_id']);
+}
+?>
 <?php require_once("Connections/pravo.php"); ?>
 <?php include("util/misc.php"); ?>
 <?php include("util/login.php"); ?>
@@ -145,13 +151,19 @@ transition: Fx.Transitions.sineOut
                     </table>
                     </form>
 	<?php } else { 
-		if(isset($_SESSION['referrer'])) {
-			header("Location: ".$_SESSION['referrer']); 
+		if (isset($_SESSION['download_id_request'])) {
+			$_SESSION['download_id'] = $_SESSION['download_id_request'];
+			$_SESSION['download_id_request'] = NULL;
+			unset($_SESSION['download_id_request']);
+		}
+		if (isset($_SESSION['referrer'])) {
+			$referrer = $_SESSION['referrer'];
 			$_SESSION['referrer'] = NULL;
 			unset($_SESSION['referrer']);
-		}
-		else 
+			header("Location: ".$referrer); 
+		} else { 
 			header("Location: index.php"); 
+		}
 		
 	} ?>
 

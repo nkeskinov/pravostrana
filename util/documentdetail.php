@@ -42,7 +42,8 @@ $query_DocGroup=sprintf("SELECT id_doc_group, name
 						",GetSQLValueString($id_group,"int"),GetSQLValueString($id_group,"int"),GetSQLValueString($id_group,"int"));
 						
 $DocGroup = mysql_query($query_DocGroup, $pravo) or die(mysql_error());
-$row_DocGroup = mysql_fetch_assoc($DocGroup);
+//$row_DocGroup = mysql_fetch_assoc($DocGroup);
+$numRows_DocGroup = mysql_num_rows($DocGroup);
 //print_r($row_DocGroup);
 
 ?>
@@ -176,7 +177,12 @@ function getDocumentCategory($id_document_group, $pravo, $database_pravo){
   <tr>
   <?php } ?>
     <td valign="top">Категорија:</td>
-    <td colspan="2"><?php do{ echo $row_DocGroup['name']." &raquo; "; }while ($row_DocGroup = mysql_fetch_assoc($DocGroup)); ?></td>
+    <td colspan="2"><?php 
+	for ($i = 0; $i < $numRows_DocGroup; $i++) {
+		$row_DocGroup = mysql_fetch_assoc($DocGroup);
+		echo "<a href='".$page."?id_doc_group=".$row_DocGroup['id_doc_group']."'>".$row_DocGroup['name']."</a>".($i < $numRows_DocGroup - 1 ? " &raquo; " : ""); 
+	}
+	?></td>
   </tr>
   <tr>
     <td>Забелешка:</td>
@@ -184,8 +190,8 @@ function getDocumentCategory($id_document_group, $pravo, $database_pravo){
   <tr>
   <tr>
     <td valign="top">Клучни зборови:</td>
-    <td colspan="2"><?php for ($i = 0; $i < $keywords_size; $i++) {
-		echo "<a href='".$page."?keyword=".urlencode($keywords[$i])."'>".$keywords[$i]."</a>, ";
+    <td colspan="2"><?php foreach ($keywords as $keyword) {
+		echo "<a href='".$page."?keyword=".urlencode($keyword)."'>".$keyword."</a>, ";
 	} ?></td>
   <tr>
     <td colspan="3"><?php getSubDocuments($id_document, $id_type, $pravo, $database_pravo); ?></td>
@@ -198,11 +204,11 @@ function getDocumentCategory($id_document_group, $pravo, $database_pravo){
 <?php include("document_discussion.php"); ?>
 <?php
 if(isset($_SESSION['download_id'])){
-	//echo $_SESSION['download_id'];
-	
-	echo "<script>document.location.href='download.php?id=".$_SESSION['download_id']."'</script>";
+	$document_id_for_download = $_SESSION['download_id'];
+	$_SESSION['download_id'] = NULL;
+	unset($_SESSION['download_id']);
+	echo "<script>document.location.href='download.php?id=".$document_id_for_download."'</script>";
 	echo "<script>'Content-type: application/octet-stream'</script>";	
 	
-	unset($_SESSION['download_id']);
 }
 ?>
