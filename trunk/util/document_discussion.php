@@ -222,7 +222,7 @@ function MM_swapImage() { //v3.0
       </form><?php } } ?></td>
      </tr>
      <tr>
-      <td colspan="2" style="padding:5px; padding-top:0px; background:#fbf7e0;"><?php echo $row_Post['content'];?></td>
+      <td colspan="2" style="padding:5px; padding-top:0px; background:#fbf7e0;"><div style="width:468px; overflow:auto;"><?php echo $row_Post['content'];?></div></td>
     </tr>
     <tr><td height="3" colspan="2" style="font-size:6px;"></td></tr><?php }} while ($row_Post = mysql_fetch_assoc($Post)); ?>
 </table>
