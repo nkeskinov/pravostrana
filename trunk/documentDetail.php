@@ -1,4 +1,8 @@
-<?php session_start(); ?>
+<?php 
+if (!isset($_SESSION)) {
+	session_start();
+}  
+?>
 <?php require_once("Connections/pravo.php"); ?>
 <?php include("util/misc.php"); ?>
 <?php //include("util/newsletter.php"); ?>
@@ -14,18 +18,26 @@ if (isset($_SERVER['HTTP_REFERER'])) {
 $browser=$_SERVER['HTTP_USER_AGENT'];
 $language=$_SERVER['HTTP_ACCEPT_LANGUAGE'];
 $id_user=1;
-if(isset($_SESSION['MM_ID']))
+if (isset($_SESSION['MM_ID']))
 	$id_user=$_SESSION['MM_ID'];
-if(isset($_GET['id'])) {
+if (isset($_GET['id'])) {
 	$id_document = $_GET['id'];
+} else {
+	header('Location: index.php');
 }
 mysql_select_db($database_pravo, $pravo);
 
 //document details
-$query_DetailRS1 = sprintf("select document_detail.*, doc_meta.ordinal, doc_meta.`date` FROM (SELECT document.title, document.description, document.id_document, document.id_doc_group, document.id_doc_type,  document.id_doc_meta, document.into_force, document.published_date, document.uploaded_date, document.into_force_date, document.mimetype, document.no_downloads, page.path FROM document, doc_type, page WHERE document.id_document = %s AND doc_type.id_doc_type = document.id_doc_type AND doc_type.id_page = page.id_page) document_detail LEFT JOIN doc_meta ON document_detail.id_doc_meta = doc_meta.id_doc_meta", GetSQLValueString($id_document, "-1"));
+$query_DetailRS1 = sprintf("select document_detail.*, doc_meta.ordinal, doc_meta.`date` FROM (SELECT document.title, document.description, document.id_document, document.id_superdoc, document.id_doc_group, document.id_doc_type,  document.id_doc_meta, document.into_force, document.published_date, document.uploaded_date, document.into_force_date, document.mimetype, document.no_downloads, page.path FROM document, doc_type, page WHERE document.id_document = %s AND doc_type.id_doc_type = document.id_doc_type AND doc_type.id_page = page.id_page) document_detail LEFT JOIN doc_meta ON document_detail.id_doc_meta = doc_meta.id_doc_meta", GetSQLValueString($id_document, "-1"));
 $DetailRS1 = mysql_query($query_DetailRS1, $pravo) or die(mysql_error());
+if (mysql_num_rows($DetailRS1) != 1) {
+	header('Location: index.php');
+}
 $row_DetailRS1 = mysql_fetch_assoc($DetailRS1);
 
+if ($row_DetailRS1['id_superdoc'] != NULL) {
+	header('Location: documentDetail.php?id='.$row_DetailRS1['id_superdoc']);
+}
 $id_group = $row_DetailRS1['id_doc_group'];
 $id_type = $row_DetailRS1['id_doc_type'];
 $id_meta = $row_DetailRS1['id_doc_meta'];
