@@ -190,9 +190,13 @@ function getDocumentCategory($id_document_group, $pravo, $database_pravo){
   <tr>
   <tr>
     <td valign="top">Клучни зборови:</td>
-    <td colspan="2"><?php foreach ($keywords as $keyword) {
-		echo "<a href='".$page."?keyword=".urlencode($keyword)."'>".$keyword."</a>, ";
-	} ?></td>
+    <td colspan="2"><?php 
+	$keywords_count = count($keywords);
+	for ($i = 0; $i < $keywords_count; $i++) {
+		echo "<a href='".$page."?keyword=".urlencode($keywords[$i])."'>".$keywords[$i]."</a>".($i == $keywords_count - 1 ? "" : ", ");
+	}
+	
+	?></td>
   <tr>
     <td colspan="3"><?php getSubDocuments($id_document, $id_type, $pravo, $database_pravo); ?></td>
   </tr>
