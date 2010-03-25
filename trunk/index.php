@@ -152,7 +152,7 @@ transition: Fx.Transitions.sineOut
     <div class="right-yellow-block">
                 <div class="title">
                     <div class="left"></div>
-                    <div class="middle"><div class="text"><!-- InstanceBeginEditable name="rightTitle2" -->Последни закони<!-- InstanceEndEditable --></div></div>
+                    <div class="middle"><div class="text"><!-- InstanceBeginEditable name="rightTitle2" -->Последни документи<!-- InstanceEndEditable --></div></div>
                     <div class="right"></div>
                 </div>
                  <div class="sodrzina"><!-- InstanceBeginEditable name="rightContent2" -->

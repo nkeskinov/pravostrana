@@ -43,6 +43,22 @@ $id_type = $row_DetailRS1['id_doc_type'];
 $id_meta = $row_DetailRS1['id_doc_meta'];
 $page = $row_DetailRS1['path'];
 $document_title = $row_DetailRS1['title'];
+if (strlen($document_title) > 70) {
+	$document_title_words = explode(' ', $document_title);
+	$document_title_short = '';
+	$counter = 0;
+	$i = 0;
+	while ($counter <= 70) {
+		$document_title_short .= $document_title_words[$i].' ';
+		$counter += strlen($document_title_words[$i++]) + 1;
+	}
+	if (!ctype_alpha(substr($document_title_short, $counter - 1))) {
+		$document_title_short = substr($document_title_short, 0, $counter - 1);
+	}
+	$document_title_short = substr($document_title_short, 0, strlen($document_title_short) - 1) . '...';
+} else {
+	$document_title_short = $document_title;
+}
 $document_description = $row_DetailRS1['description'];
 $published_date = $row_DetailRS1['published_date'];
 $uploaded_date = $row_DetailRS1['uploaded_date'];
@@ -85,7 +101,7 @@ trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_p
 <link href="style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="images/favicon1.png" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>Pravo.org.mk | <?php echo $document_title; ?></title>
+<title>Pravo.org.mk | <?php echo $document_title_short; ?></title>
 <!-- InstanceEndEditable -->
 <!-- InstanceBeginEditable name="scripts" -->
 <?php require("util/banner.php"); ?>
@@ -147,7 +163,7 @@ transition: Fx.Transitions.sineOut
        <!-- InstanceBeginEditable name="SiteMap" -->
        <table cellpadding="0" cellspacing="0"><tr><td><a href="index.php">Почетна</a>&nbsp;&nbsp;&nbsp;&raquo;&nbsp;&nbsp;</td><td>
 	   <?php if($page=="documentlaws.php") echo '<a href="documentlaws.php">Закони</a>'; if($page=="analysis.php") echo '<a href="analysis.php">Анализи</a>';  if($page=="regulations.php") echo '<a href="regulations.php">Прописи</a>'; if($page=="courtpractice.php") echo '<a href="courtpractice.php">Судска пракса</a>';  if($page=="europeancourt.php") echo '<a href="europeancourt.php">Судска пракса на Европски суд</a>';?>
-       &nbsp;&nbsp;&nbsp;&raquo;&nbsp;</td><td> <?php echo $document_title; ?></td></tr></table> 
+       &nbsp;&nbsp;&nbsp;&raquo;&nbsp;</td><td> <?php echo $document_title_short; ?></td></tr></table> 
       <!-- InstanceEndEditable -->
        </div>
       </div>
