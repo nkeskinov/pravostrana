@@ -8,7 +8,7 @@ if (isset($_GET['pageNum_latestLawsRecordset'])) {
 $startRow_latestLawsRecordset = $pageNum_latestLawsRecordset * $maxRows_latestLawsRecordset;
 
 mysql_select_db($database_pravo, $pravo);
-$query_latestLawsRecordset = "SELECT id_document, id_superdoc, title, published_date FROM `document` WHERE `document`.id_doc_type = 1 and `document`.show_on_home = 1 ORDER BY `document`.uploaded_date desc";
+$query_latestLawsRecordset = "SELECT id_document, id_superdoc, title, published_date FROM `document` WHERE `document`.show_on_home = 1 ORDER BY `document`.uploaded_date desc";
 $query_limit_latestLawsRecordset = sprintf("%s LIMIT %d, %d", $query_latestLawsRecordset, $startRow_latestLawsRecordset, $maxRows_latestLawsRecordset);
 $latestLawsRecordset = mysql_query($query_limit_latestLawsRecordset, $pravo) or die(mysql_error());
 $row_latestLawsRecordset = mysql_fetch_assoc($latestLawsRecordset);
