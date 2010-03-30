@@ -357,6 +357,7 @@ if ((isset($_POST["MM_update"]))) {
   $Result1 = mysql_query($updateSQL, $pravo) or die(mysql_error());
   
   /* Update the ordinal and date from the doc_meta*/
+  //TODO undefined index greska
   $year = date("d.m.Y",strtotime($_POST['year']));
 	$UpdateDocMetaSQL = sprintf("UPDATE `doc_meta` SET ordinal=%s, `date`=%s WHERE `doc_meta`.`id_doc_meta`=%s",
                        GetSQLValueString($_POST['ordinal'], "int"),
