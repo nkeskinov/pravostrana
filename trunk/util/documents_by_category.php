@@ -31,7 +31,7 @@ $totalPages_Documents2 = ceil($totalRows_Documents2/$maxRows_Documents2)-1;
 <script src="../YUI/2.6.0/build/container/container-min.js" type="text/javascript"></script>
 
 
-<table border="0" cellspacing="0" cellpadding="0" width="197">
+<table border="0" cellspacing="0" cellpadding="0" width="196">
   <?php do { 
   	$title_exp=explode(" ",$row_Documents2['title']);
 	$title_arr=array();
@@ -46,7 +46,7 @@ $totalPages_Documents2 = ceil($totalRows_Documents2/$maxRows_Documents2)-1;
 		
   ?>
     <tr onmouseover="this.className='on'" onmouseout="this.className='off'">
-      <td style="border-bottom:1px dotted #CCC;">
+      <td style="border-bottom:1px dotted #CCC; margin:0; padding:0;">
 	  &raquo; <a href="?id=<?php echo $row_Documents2['id_document']; ?>" title="<?php echo $row_Documents2['title']; ?>"><?php  if($n<10) echo $title; else echo $title." ..."; ?></a>
      
 	  </td>

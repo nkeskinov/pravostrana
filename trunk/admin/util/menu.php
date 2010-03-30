@@ -31,7 +31,7 @@
       </td>
   </tr>
   <tr onmouseover="this.className='on'" onmouseout="this.className='off'">
-      <td style="border-bottom:1px dotted #CCC;">&raquo; <a href="sendActivation.php">Праќање на активацкиски код</a>	
+      <td style="border-bottom:1px dotted #CCC;">&raquo; <a href="sendActivation.php">Праќање на активациски код</a>	
       </td>
   </tr>
 </table>

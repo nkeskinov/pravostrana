@@ -43,19 +43,19 @@ $id_type = $row_DetailRS1['id_doc_type'];
 $id_meta = $row_DetailRS1['id_doc_meta'];
 $page = $row_DetailRS1['path'];
 $document_title = $row_DetailRS1['title'];
-if (strlen($document_title) > 70) {
+if (mb_strlen($document_title) > 70) {
 	$document_title_words = explode(' ', $document_title);
 	$document_title_short = '';
 	$counter = 0;
 	$i = 0;
 	while ($counter <= 70) {
 		$document_title_short .= $document_title_words[$i].' ';
-		$counter += strlen($document_title_words[$i++]) + 1;
+		$counter += mb_strlen($document_title_words[$i++]) + 1;
 	}
-	if (!ctype_alpha(substr($document_title_short, $counter - 1))) {
-		$document_title_short = substr($document_title_short, 0, $counter - 1);
+	if (!ctype_alpha(mb_substr($document_title_short, $counter - 1))) {
+		$document_title_short = mb_substr($document_title_short, 0, $counter - 1);
 	}
-	$document_title_short = substr($document_title_short, 0, strlen($document_title_short) - 1) . '...';
+	$document_title_short = sprintf('%s...', mb_substr($document_title_short, 0, mb_strlen($document_title_short) - 1));
 } else {
 	$document_title_short = $document_title;
 }
@@ -101,7 +101,7 @@ trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_p
 <link href="style.css" rel="stylesheet" type="text/css" />
 <link rel="shortcut icon" href="images/favicon1.png" />
 <!-- InstanceBeginEditable name="doctitle" -->
-<title>Pravo.org.mk | <?php echo $document_title_short; ?></title>
+<title>Pravo.org.mk | <?php echo $document_title; ?></title>
 <!-- InstanceEndEditable -->
 <!-- InstanceBeginEditable name="scripts" -->
 <?php require("util/banner.php"); ?>
@@ -185,7 +185,7 @@ transition: Fx.Transitions.sineOut
                 </td>
               </tr>
               <tr>
-                <td valign="top" width="200"><div class="left-block">
+                <td valign="top" style="width:200px; padding-right:5px;"><div class="left-block">
                   <div class="title">
                     <div class="left"></div>
                     <div class="middle">
@@ -193,7 +193,7 @@ transition: Fx.Transitions.sineOut
                     </div>
                     <div class="right"></div>
                   </div>
-                  <div class="sodrzina" style=" padding:0; padding-left:2px;">
+                  <div class="sodrzina" style="padding-left:2px; padding-right: 2px;">
                     <div style="padding:0; padding-top:10px;"><?php include("util/documents_by_category.php"); ?></div>
                   </div>
                 </div></td>
@@ -225,5 +225,17 @@ transition: Fx.Transitions.sineOut
     <div style="margin-top:-30px; color:#999; float:left; width:100%;">Pravo.org.mk не презема одговорност за евентуалните грешки во текстот на законите.<div style="float:right;"><a href="http://camost.org" target="_blank"><img src="images/most.jpg" border="0"/></a></div></div>
 </div>
 </td></tr></table>
+<!-- Piwik -->
+<script type="text/javascript">
+var pkBaseURL = (("https:" == document.location.protocol) ? "https://pravo.org.mk/piwik/" : "http://pravo.org.mk/piwik/");
+document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
+</script><script type="text/javascript">
+try {
+var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
+piwikTracker.trackPageView();
+piwikTracker.enableLinkTracking();
+} catch( err ) {}
+</script><noscript><p><img src="http://pravo.org.mk/piwik/piwik.php?idsite=1" style="border:0" alt=""/></p></noscript>
+<!-- End Piwik Tag -->
 </body>
 <!-- InstanceEnd --></html>
