@@ -4,7 +4,6 @@ $currentPage = $selfArray[count($selfArray)-1];
 //$currentPage = $_SERVER["PHP_SELF"];
 
 $sort_order="desc";
-//to be replaced by a single call to $_REQUEST
 if(isset($_REQUEST['asc'])) {
 	$sort_order="asc";
 }
@@ -13,7 +12,6 @@ if(isset($_REQUEST['asc'])) {
 	
 $sort="published_date";
 $default_sort = false;
-//to be replaced by a single call to $_REQUEST
 if(isset($_REQUEST['sort']) && strcmp($_REQUEST['sort'], "")) {
 	$sort=$_REQUEST['sort'];
 } else {
@@ -67,17 +65,24 @@ if($id_doc_group!=-1 && $id_doc_group!=0){
 								   ",$query_Documents,GetSQLValueString($id_doc_group, "int"),GetSQLValueString($id_doc_group, "int"),GetSQLValueString($id_doc_group, "int"));
 }
 if(isset($_GET['name']) && $_GET['name']!=""){
-	$query_Documents = sprintf("%s AND lower(title) LIKE %s ",$query_Documents,GetSQLValueString("%".$_GET['name']."%", "text"));
+	$query_Documents = sprintf("%s AND lower(title) LIKE %s ",$query_Documents,GetSQLValueString("%".implode("%", explode(" ",$_GET['name']))."%", "text"));
 }
+$year_searched = FALSE;
 if(isset($_GET['year']) && $_GET['year']!="" ){
 	$query_Documents = sprintf("%s AND YEAR(doc_meta.`date`)=%s ",$query_Documents,GetSQLValueString($_GET['year'], "text"));
+	$year_searched = TRUE;
 }
 if(isset($_GET['year1']) && $_GET['year1']!="" ){
 	$query_Documents = sprintf("%s AND YEAR(document.`published_date`)=%s ",$query_Documents,GetSQLValueString($_GET['year1'], "text"));
+	$year_searched = TRUE;
 }
 if(isset($_GET['number']) && $_GET['number']!=""){
 	//echo"1".$_GET['number']."number";
 	$query_Documents = sprintf("%s AND doc_meta.ordinal=%s ",$query_Documents,GetSQLValueString($_GET['number'], "int"));
+	$year_searched = TRUE;
+}
+if ($year_searched && !isset($_REQUEST['sort'])) {
+	$default_sort = false;
 }
 if(isset($_GET['court']) && $_GET['court']!=0){
 	//echo $_GET['court'];
@@ -92,9 +97,10 @@ if(isset($_GET['starts_with'])){
 if(isset($_GET['keyword'])){
 	$keywords_arr=explode(",", urldecode($_GET['keyword']));
 //	print_r($keywords_arr);
-	$keyQuery=" AND ";
+	$keyQuery="";
 	foreach($keywords_arr as $key){
-		$key1=str_replace("\n","",str_replace("\t","",$key));
+		$key1=implode("%", explode(" ", str_replace("\n"," ",str_replace("\t"," ",trim($key)))));
+		
 		//echo "pos ".strpos($key1," ");
 		if(strpos($key1," ")==0 && strpos($key1," ")!=NULL){
 			$key1=substr($key1,1);		
@@ -102,7 +108,7 @@ if(isset($_GET['keyword'])){
 		$keyQuery.=sprintf("lower(k.val) LIKE %s OR ",GetSQLValueString("%".$key1."%","text"));
 	}
 	$keyQuery=substr($keyQuery,0,-3);
-	$query_Documents = sprintf("%s %s",$query_Documents,$keyQuery);
+	$query_Documents = sprintf("%s AND (%s)",$query_Documents,$keyQuery);
 	
 	//echo $query_Documents;
 }
