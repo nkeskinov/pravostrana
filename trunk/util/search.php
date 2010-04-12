@@ -109,7 +109,7 @@ do{
     </label></td>
   </tr>
   <tr>
-    <td colspan="2" align="left">Базата содржи вкупно <strong><?php echo $total; ?></strong> закони донесени во периодот од <strong>1992</strong> до <strong><?php echo $to_date; ?></strong> година. </td>
+    <td colspan="2" align="left">Базата содржи вкупно <strong><?php echo $total; ?></strong> закони донесени во периодот од <strong><?php echo $from_date; ?></strong> до <strong><?php echo $to_date; ?></strong> година. </td>
    </tr>
    </table>
 </form>
