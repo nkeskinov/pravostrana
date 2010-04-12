@@ -38,8 +38,10 @@ if(isset($_GET['id_document']))
 mysql_select_db($database_pravo, $pravo);
 
 if (isset($_GET['id_document']) && isset($_GET['id_doc_type']) && isset($_GET['into_force']) && $_GET['id_document'] != '0' && $_GET['id_doc_type'] == '1') {
-	$query_IntoForce = sprintf("UPDATE document SET into_force = %s WHERE id_document = %s AND id_doc_type = 1", GetSQLValueString($_GET['into_force'], "int"), GetSQLValueString($_GET['id_document'], "int"));
+	$id_document = $_GET['id_document'];
+	$query_IntoForce = sprintf("UPDATE document SET into_force = %s WHERE id_document = %s AND id_doc_type = 1", GetSQLValueString($_GET['into_force'], "int"), GetSQLValueString($id_document, "int"));
 	mysql_query($query_IntoForce, $pravo) or die(mysql_error());
+	header('Location: '.'../documentDetail.php?id='.$id_document);
 }
 $editFormAction = $_SERVER['PHP_SELF'];
 if (isset($_SERVER['QUERY_STRING'])) {
