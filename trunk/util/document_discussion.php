@@ -205,8 +205,8 @@ function MM_swapImage() { //v3.0
 </form>
 </div> 
 <?php } ?>
-<div style=" margin-left:5px;">
-<table border="0" width="98%" cellspacing="0"><?php 
+<div style="margin-left:5px; margin-right:5px;">
+<table border="0" width="100%" cellspacing="0" style="padding-left: 5px; padding-right: 5px; padding-bottom: 5px;"><?php 
 	$isAdmin = isset($_SESSION['MM_UserGroup']) && $_SESSION['MM_UserGroup'] == "admin";
   do { 
   	if($num_of_posts){ ?><tr>
