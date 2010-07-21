@@ -21,7 +21,7 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
                     <div class="right"></div>
   </div>
   <div class="sodrzina" style="/*background:#fbf7e0;*/">
-    <form action="<?php echo $page; ?>" method="get">
+    <form action="<?php echo $page; ?>" method="get" enctype="application/x-www-form-urlencoded" >
                     <table width="240" border="0" cellpadding="1" cellspacing="1" >
                     <tr>
                         <td colspan="2" align="left"><div align="right" style="font-size:11px;"><a href="JavaScript:popUpWindow('help.php?id=1','','',450,'330');">совети за пребарување</a></div></td>
