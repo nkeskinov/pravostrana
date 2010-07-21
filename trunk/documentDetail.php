@@ -43,19 +43,19 @@ $id_type = $row_DetailRS1['id_doc_type'];
 $id_meta = $row_DetailRS1['id_doc_meta'];
 $page = $row_DetailRS1['path'];
 $document_title = $row_DetailRS1['title'];
-if (mb_strlen($document_title) > 70) {
+if (mb_strlen($document_title, "UTF-8") > 70) {
 	$document_title_words = explode(' ', $document_title);
 	$document_title_short = '';
 	$counter = 0;
 	$i = 0;
 	while ($counter <= 70) {
-		$document_title_short .= $document_title_words[$i].' ';
-		$counter += mb_strlen($document_title_words[$i++]) + 1;
+		$document_title_short = sprintf('%s %s', $document_title_short, $document_title_words[$i]);
+		$counter += mb_strlen($document_title_words[$i++], "UTF-8") + 1;
 	}
-	if (!ctype_alpha(mb_substr($document_title_short, $counter - 1))) {
-		$document_title_short = mb_substr($document_title_short, 0, $counter - 1);
+	if (!preg_match('/^\p{L}+$/u', mb_substr($document_title_short, $counter - 1, $counter, "UTF-8"))) {
+		$document_title_short = mb_substr($document_title_short, 0, $counter - 1, "UTF-8");
 	}
-	$document_title_short = sprintf('%s...', mb_substr($document_title_short, 0, mb_strlen($document_title_short) - 1));
+	$document_title_short = sprintf('%s...', $document_title_short);
 } else {
 	$document_title_short = $document_title;
 }
