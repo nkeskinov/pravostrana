@@ -28,7 +28,7 @@ if (isset($_GET['id'])) {
 mysql_select_db($database_pravo, $pravo);
 
 //document details
-$query_DetailRS1 = sprintf("select document_detail.*, doc_meta.ordinal, doc_meta.`date` FROM (SELECT document.title, document.description, document.id_document, document.id_superdoc, document.id_doc_group, document.id_doc_type,  document.id_doc_meta, document.into_force, document.published_date, document.uploaded_date, document.into_force_date, document.mimetype, document.no_downloads, page.path FROM document, doc_type, page WHERE document.id_document = %s AND doc_type.id_doc_type = document.id_doc_type AND doc_type.id_page = page.id_page) document_detail LEFT JOIN doc_meta ON document_detail.id_doc_meta = doc_meta.id_doc_meta", GetSQLValueString($id_document, "-1"));
+$query_DetailRS1 = sprintf("select document_detail.*, doc_meta.ordinal, doc_meta.`date` FROM (SELECT document.title, document.description, doc_type.name as doc_type_title, document.id_document, document.id_superdoc, document.id_doc_group, document.id_doc_type,  document.id_doc_meta, document.into_force, document.published_date, document.uploaded_date, document.into_force_date, document.mimetype, document.no_downloads, page.path FROM document, doc_type, page WHERE document.id_document = %s AND doc_type.id_doc_type = document.id_doc_type AND doc_type.id_page = page.id_page) document_detail LEFT JOIN doc_meta ON document_detail.id_doc_meta = doc_meta.id_doc_meta", GetSQLValueString($id_document, "-1"));
 $DetailRS1 = mysql_query($query_DetailRS1, $pravo) or die(mysql_error());
 if (mysql_num_rows($DetailRS1) != 1) {
 	header('Location: index.php');
@@ -60,6 +60,7 @@ if (mb_strlen($document_title, "UTF-8") > 70) {
 	$document_title_short = $document_title;
 }
 $document_description = $row_DetailRS1['description'];
+$document_type = $row_DetailRS1['doc_type_title'];
 $published_date = $row_DetailRS1['published_date'];
 $uploaded_date = $row_DetailRS1['uploaded_date'];
 $into_force_date = $row_DetailRS1['into_force_date'];
@@ -70,6 +71,39 @@ $meta_ordinal = $row_DetailRS1['ordinal'];
 $meta_date = $row_DetailRS1['date'];
 
 mysql_free_result($DetailRS1);
+
+//Selecting the subsubgroup, subgroup and group for the document
+$query_DocGroup=sprintf("SELECT id_doc_group, name
+						FROM doc_group
+						WHERE id_doc_group = (
+							SELECT id_supergroup
+							FROM doc_group
+							WHERE id_doc_group = (
+								SELECT id_supergroup
+								FROM doc_group
+								WHERE id_doc_group = %s
+							)
+						)						UNION
+						SELECT id_doc_group, name
+						FROM doc_group
+						WHERE id_doc_group = (
+							SELECT id_supergroup
+							FROM doc_group
+							WHERE id_doc_group = %s
+						)UNION
+						SELECT id_doc_group, name FROM doc_group
+						WHERE id_doc_group = %s 
+						",GetSQLValueString($id_group,"int"),GetSQLValueString($id_group,"int"),GetSQLValueString($id_group,"int"));
+						
+$DocGroup = mysql_query($query_DocGroup, $pravo) or die(mysql_error());
+$numRows_DocGroup = mysql_num_rows($DocGroup);
+$docGroups = array();
+for ($i = 0; $i < $numRows_DocGroup; $i++) {
+	$row_DocGroup = mysql_fetch_assoc($DocGroup);
+	$docGroups[$i] = array('id_doc_group' => $row_DocGroup['id_doc_group'], 'name' => $row_DocGroup['name']);
+}
+mysql_free_result($DocGroup);
+//print_r($row_DocGroup);
 
 //keywords
 $query_RecordsetKeyword = sprintf("SELECT k.val FROM keyword k, document_has_keyword dk, document d WHERE dk.id_keyword=k.id_keyword AND dk.id_document=d.id_document AND d.id_document=%s", GetSQLValueString($id_document, "int"));
@@ -227,15 +261,21 @@ transition: Fx.Transitions.sineOut
 </td></tr></table>
 <!-- Piwik -->
 <script type="text/javascript">
-var pkBaseURL = (("https:" == document.location.protocol) ? "https://pravo.org.mk/piwik/" : "http://pravo.org.mk/piwik/");
+var pkBaseURL = (("https:" == document.location.protocol) ? "https://www.pravo.org.mk/piwik/" : "http://www.pravo.org.mk/piwik/");
 document.write(unescape("%3Cscript src='" + pkBaseURL + "piwik.js' type='text/javascript'%3E%3C/script%3E"));
 </script><script type="text/javascript">
 try {
 var piwikTracker = Piwik.getTracker(pkBaseURL + "piwik.php", 1);
+piwikTracker.setDocumentTitle("<?php $documentPiwikName = $document_type . ' / ';
+for ($i = 0; $i < count($docGroups); $i++) {
+	$documentPiwikName .= $docGroups[$i]['name'] . ' / ';
+} 
+$documentPiwikName .= $document_title;
+echo $documentPiwikName; ?>");
 piwikTracker.trackPageView();
 piwikTracker.enableLinkTracking();
 } catch( err ) {}
-</script><noscript><p><img src="http://pravo.org.mk/piwik/piwik.php?idsite=1" style="border:0" alt=""/></p></noscript>
+</script><noscript><p><img src="http://www.pravo.org.mk/piwik/piwik.php?idsite=1" style="border:0" alt=""/></p></noscript>
 <!-- End Piwik Tag -->
 </body>
 <!-- InstanceEnd --></html>

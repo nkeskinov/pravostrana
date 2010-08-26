@@ -17,35 +17,6 @@ if(isset($_GET['subscribe']) && $_GET['subscribe']==1){
 			echo "<script>'Content-type: application/octet-stream'</script>";
 		}
 }
-
-//Selecting the subsubgroup, subgroup and group for the document
-$query_DocGroup=sprintf("SELECT id_doc_group, name
-						FROM doc_group
-						WHERE id_doc_group = (
-							SELECT id_supergroup
-							FROM doc_group
-							WHERE id_doc_group = (
-								SELECT id_supergroup
-								FROM doc_group
-								WHERE id_doc_group = %s
-							)
-						)						UNION
-						SELECT id_doc_group, name
-						FROM doc_group
-						WHERE id_doc_group = (
-							SELECT id_supergroup
-							FROM doc_group
-							WHERE id_doc_group = %s
-						)UNION
-						SELECT id_doc_group, name FROM doc_group
-						WHERE id_doc_group = %s 
-						",GetSQLValueString($id_group,"int"),GetSQLValueString($id_group,"int"),GetSQLValueString($id_group,"int"));
-						
-$DocGroup = mysql_query($query_DocGroup, $pravo) or die(mysql_error());
-//$row_DocGroup = mysql_fetch_assoc($DocGroup);
-$numRows_DocGroup = mysql_num_rows($DocGroup);
-//print_r($row_DocGroup);
-
 ?>
 <?php
 function getSubDocuments($id_document, $id_document_type, $pravo, $database_pravo){
@@ -61,7 +32,8 @@ function getSubDocuments($id_document, $id_document_type, $pravo, $database_prav
 <table border="0" width="100%" cellspacing="0" cellpadding="0">
 	<tr>
     <td colspan="4" style="border-bottom:1px solid #f5e6a2; background:#fbf7e0;"><strong>Измени и дополнувања</strong></td>
-  <tr>
+    </tr>
+  <tr></tr>
   <?php  
 	  do { 	$timestamp = strtotime($row_SubDocuments['published_date']); ?>
     <tr onmouseover="this.className='on'" onmouseout="this.className='off'" style="cursor:default;">
@@ -95,14 +67,14 @@ function getSubDocuments($id_document, $id_document_type, $pravo, $database_prav
     	<td> <img src="images/dot1.gif"/></td>
         <td colspan="3" style="padding:3px;"> 
         <div style="width:26px; height:22px; padding-top:1.5px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
-        <a href="admin/documents.php?superdocument=<?php echo $id_document; ?>" ><img src="images/new.png" border="0"  align="absmiddle" /></a> </div> <a href="admin/documents.php?superdocument=<?php echo $id_document; ?>" >Додадете нови поддокументи</a></td>
+        <a href="admin/documents.php?superdocument=<?php echo $id_document; ?>" ><img src="images/new.png" border="0"  align="middle" /></a> </div> <a href="admin/documents.php?superdocument=<?php echo $id_document; ?>" >Додадете нови поддокументи</a></td>
     </tr>
     <?php }  } ?>
 </table>
 <?php	} else {?>
 <?php if(isset($_SESSION['MM_UserGroup'])) {
 		if($_SESSION['MM_UserGroup'] == "admin"){ ?>
-<div style="float:left"><a href="admin/documents.php?superdocument=<?php echo $id_document; ?>" ><img src="images/new.png" border="0"  align="absmiddle" /></a> </div> <a href="admin/documents.php?superdocument=<?php echo $id_document; ?>">&nbsp;Додадете нови поддокументи</a>
+<div style="float:left"><a href="admin/documents.php?superdocument=<?php echo $id_document; ?>" ><img src="images/new.png" border="0"  align="middle" /></a> </div> <a href="admin/documents.php?superdocument=<?php echo $id_document; ?>">&nbsp;Додадете нови поддокументи</a>
 <?php } }  ?>
 <?php } ?>
 
@@ -141,12 +113,14 @@ function getDocumentCategory($id_document_group, $pravo, $database_pravo){
 		<?php if($_SESSION['MM_UserGroup'] =="admin"){ ?>
 		<div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
         <a href="?<?php echo $_SERVER['QUERY_STRING']; ?>&subscribe=1"><img src="images/subscribe.png" border="0" title="Претплатете се кон овој закон за да добивате информации по email"  /></a></div>
-        <?php if($id_type == '1') { ?><div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
-         <a href="admin/documents.php?id_document=<?php echo $id_document; ?>&id_doc_type=<?php echo $id_type; ?>&id_doc_meta=<?php echo $id_meta; ?>&into_force=<?php echo $into_force ? '0' : '1'; ?>" onClick="return confirm('<?php echo 'Стави во'.($into_force ? 'н' : '').' сила?'; ?>')"><img src="images/into_force.png" border="0" title="Промена на статус" /></a></div><?php } ?>
-         <div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
+        <?php 
+        if ($id_type == '1' || $id_type == '2') { 
+        ?><div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
+        <a href="admin/documents.php?id_document=<?php echo $id_document; ?>&id_doc_type=<?php echo $id_type; ?>&id_doc_meta=<?php echo $id_meta; ?>&into_force=<?php echo $into_force ? '0' : '1'; ?>" onClick="return confirm('<?php echo 'Стави во'.($into_force ? 'н' : '').' сила?'; ?>')"><img src="images/into_force.png" border="0" title="Промена на статус" /></a></div><?php } ?>
+        <div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
         <a href="admin/documents.php?id_document=<?php echo $id_document; ?>&id_doc_type=<?php echo $id_type; ?>&id_doc_meta=<?php echo $id_meta; ?>&delete=true" onClick="return confirm('Дали навистина сакате да го избришете документот?')"><img src="images/delete.png" border="0" title="Бриши"  /></a></div>
         <div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
-   <a href="admin/documents.php?id_document=<?php echo $id_document; ?>&edit=true"><img src="images/edit.png" border="0" title="Измени" /> </a></div>
+   		<a href="admin/documents.php?id_document=<?php echo $id_document; ?>&edit=true"><img src="images/edit.png" border="0" title="Измени" /> </a></div>
     <?php } }  ?></div>
     </td>
     <?php if (!$into_force) { ?>
@@ -157,14 +131,14 @@ function getDocumentCategory($id_document_group, $pravo, $database_pravo){
   <tr>
     <td width="38%">Датум на објавување:</td>
     <td width="42%"><?php if(isset($published_date)) echo date("d.m.Y",strtotime($published_date)); ?></td>
-    <td width="20%" <?php if ($id_type == '1') echo 'rowspan="4"'; else echo 'rowspan="2"'; ?> align="right"><a href="download.php?id=<?php echo $id_document; ?>"><?php if($mime_type=="application/msword"){ ?><img src="images/word_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /> <?php }elseif($mime_type=="text/plain"){ ?><img src="images/text_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /><?php }else{ ?><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /><?php } ?></a><br><span style="font-size:10px; color:#999;"><?php echo (($no_downloads == 0 ? 'Сеуште не е симнат' : ($no_downloads == 1 ? 'Еднаш симнат' : $no_downloads.' пати симнат'))); ?></span></td>
+    <td width="20%" <?php if ($id_type == '1' || $id_type == '2') echo 'rowspan="4"'; else echo 'rowspan="2"'; ?> align="right"><a href="download.php?id=<?php echo $id_document; ?>"><?php if($mime_type=="application/msword"){ ?><img src="images/word_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /> <?php }elseif($mime_type=="text/plain"){ ?><img src="images/text_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /><?php }else{ ?><img src="images/pdf_icon_small3.png" alt="Преземи го документот" title="Преземи го документот" width="35" height="35" border="0" /><?php } ?></a><br><span style="font-size:10px; color:#999;"><?php echo (($no_downloads == 0 ? 'Сеуште не е симнат' : ($no_downloads == 1 ? 'Еднаш симнат' : $no_downloads.' пати симнат'))); ?></span></td>
   </tr>
 <!--  <tr>
     <td>Датум на закачување:</td>
     <td><?php if(isset($uploaded_date)) echo date("d.m.Y",strtotime($uploaded_date)); ?></td>
   </tr>
 -->
-  <?php if ($id_type == '1') { ?>
+  <?php if ($id_type == '1' || $id_type == '2') { ?>
   <tr>
     <td>Датум на стапување во сила:</td>
     <td><?php if(isset($into_force_date)) echo date("d.m.Y",strtotime($into_force_date)); ?>&nbsp;</td>
@@ -178,16 +152,15 @@ function getDocumentCategory($id_document_group, $pravo, $database_pravo){
   <?php } ?>
     <td valign="top">Категорија:</td>
     <td colspan="2"><?php 
-	for ($i = 0; $i < $numRows_DocGroup; $i++) {
-		$row_DocGroup = mysql_fetch_assoc($DocGroup);
-		echo "<a href='".$page."?id_doc_group=".$row_DocGroup['id_doc_group']."'>".$row_DocGroup['name']."</a>".($i < $numRows_DocGroup - 1 ? " &raquo; " : ""); 
+	for ($i = 0; $i < count($docGroups); $i++) {
+		echo "<a href='".$page."?id_doc_group=".$docGroups[$i]['id_doc_group']."'>".$docGroups[$i]['name']."</a>".($i < count($docGroups) - 1 ? " &raquo; " : ""); 
 	}
 	?></td>
   </tr>
-  <tr>
+  <tr valign="top">
     <td>Забелешка:</td>
     <td colspan="2"><?php echo $document_description; ?></td>
-  <tr>
+  </tr>
   <tr>
     <td valign="top">Клучни зборови:</td>
     <td colspan="2"><?php 
@@ -197,6 +170,7 @@ function getDocumentCategory($id_document_group, $pravo, $database_pravo){
 	}
 	
 	?></td>
+  </tr>
   <tr>
     <td colspan="3"><?php getSubDocuments($id_document, $id_type, $pravo, $database_pravo); ?></td>
   </tr>
