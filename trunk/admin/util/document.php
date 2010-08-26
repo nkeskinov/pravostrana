@@ -50,6 +50,7 @@ $Recordset1 = mysql_query($query_Recordset1, $pravo) or die(mysql_error());
 $row_Recordset1 = mysql_fetch_assoc($Recordset1);
 $totalRows_Recordset1 = mysql_num_rows($Recordset1);
 
+$id_doc_type = $row_Recordset1['id_doc_type'] == '' ? -1 : $row_Recordset1['id_doc_type'];
 
 $query_DocGroup=sprintf("SELECT id_doc_group, name
 						FROM doc_group
@@ -102,11 +103,11 @@ $DocumentGroups = mysql_query($query_DocumentGroups, $pravo) or die(mysql_error(
 $row_DocumentGroups = mysql_fetch_assoc($DocumentGroups);
 $totalRows_DocumentGroups = mysql_num_rows($DocumentGroups);
 
-mysql_select_db($database_pravo, $pravo);
-$query_DocumentTypes = "SELECT * FROM doc_type";
-$DocumentTypes = mysql_query($query_DocumentTypes, $pravo) or die(mysql_error());
-$row_DocumentTypes = mysql_fetch_assoc($DocumentTypes);
-$totalRows_DocumentTypes = mysql_num_rows($DocumentTypes);
+//mysql_select_db($database_pravo, $pravo);
+//$query_DocumentTypes = "SELECT * FROM doc_type";
+//$DocumentTypes = mysql_query($query_DocumentTypes, $pravo) or die(mysql_error());
+//$row_DocumentTypes = mysql_fetch_assoc($DocumentTypes);
+//$totalRows_DocumentTypes = mysql_num_rows($DocumentTypes);
 ?>
 <div align="left" style="height:22px; width:99%; border-bottom:1px solid #a25852; background:#f5d6d4;  padding:3px; padding-top:1px;">
   <table cellpadding="0" cellspacing="0">
@@ -116,7 +117,7 @@ $totalRows_DocumentTypes = mysql_num_rows($DocumentTypes);
     <td><div style="width:26px; height:21px; padding-top:1.5px; float:left; text-align:center;" onmouseover="this.className='picture-button-over'" onmouseout="this.className='picture-button-out'"> <a href="#"><img src="../images/save.png" border="0" title="Зачувај документ" /></a></div></td>
     <td>
     <div style="width:26px; height:21px; padding-top:2px; float:left; text-align:center;" ONMOUSEOVER="this.className='picture-button-over'" ONMOUSEOUT="this.className='picture-button-out'">
-        <a href="documentlaws.php?id=<?php echo $row_Recordset1['id_document']; ?>&id_doc_type=<?php echo $row_Recordset1['id_doc_type']; ?>&id_doc_meta=<?php echo $row_Recordset1['id_doc_meta']; ?>&delete=true" onClick="return confirm('Дали навистина сакате да го избришете документот?')"><img src="../images/delete.png" border="0" title="Бриши"  /></a></div>
+        <a href="documentlaws.php?id=<?php echo $row_Recordset1['id_document']; ?>&id_doc_type=<?php echo $id_doc_type; ?>&id_doc_meta=<?php echo $row_Recordset1['id_doc_meta']; ?>&delete=true" onClick="return confirm('Дали навистина сакате да го избришете документот?')"><img src="../images/delete.png" border="0" title="Бриши"  /></a></div>
     </td>
     <td><div style="width:26px; height:21px; padding-top:1.5px; text-align:center;" onmouseover="this.className='picture-button-over'" onmouseout="this.className='picture-button-out'"> <a href="#"><img src="../images/print.png" border="0" title="Печати страна" /></a></div></td>
   </tr>
@@ -185,7 +186,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 		//echo $id_group;
 		$into_force_date = '';
 		$into_force = '';
-		if ($_POST['id_doc_type'] == '1') {
+		if ($_POST['id_doc_type'] == '1' || $_POST['id_doc_type'] == '2') {
 			$into_force_date = date("Y-m-d", strtotime($_POST['into_force_date']));
 			$into_force = '1';
 		}
@@ -320,12 +321,18 @@ if ((isset($_POST["MM_update"]))) {
 	}
 	$created_by = isset($_SESSION['MM_ID']) ? $_SESSION['MM_ID'] : 0 ;
 	
-	if(isset($_POST['subsubcategory']) && $_POST['subsubcategory']!=0){
+	if (isset($_POST['doctype']) && $_POST['doctype'] != 0) {
+		$id_doc_type = $_POST['doctype'];
+		if (isset($_POST['subsubcategory']) && $_POST['subsubcategory'] != 0) {
 			$id_group=$_POST['subsubcategory'];
-		}elseif(isset($_POST['subcategory']) && $_POST['subcategory']!=0){
+		} elseif(isset($_POST['subcategory']) && $_POST['subcategory'] != 0) {
 			$id_group=$_POST['subcategory'];
-		}elseif(isset($_POST['category']) && $_POST['category']!=0)
+		} elseif(isset($_POST['category']) && $_POST['category'] != 0) {
 			$id_group=$_POST['category'];
+		}
+	} else {
+		$id_doc_type = NULL;
+	}
 	
 //	echo $_POST['subsubcategory']."<br>";
 	//echo $_POST['subcategory']."<br>";
@@ -334,14 +341,15 @@ if ((isset($_POST["MM_update"]))) {
 	
 	if ($_POST['into_force_date']!="") {
 		$into_force_date =  date("Y-m-d", strtotime($_POST['into_force_date']));
-	}else
+	}else {
 		$into_force_date = "";
-	echo $into_force_date;
+	}
+//	echo $into_force_date;
   $updateSQL = sprintf("UPDATE `document` SET title=%s, published_date=%s, `description`=%s, id_doc_type=%s, id_doc_group=%s, filename=%s, forcesubscribe=%s, into_force_date=%s, show_on_home=%s WHERE id_document=%s",
                        GetSQLValueString($_POST['title'], "text"),
                        GetSQLValueString($published_date, "date"),
                        GetSQLValueString($_POST['description'], "text"),
-                       GetSQLValueString($_POST['id_doc_type'], "int"),
+                       GetSQLValueString($id_doc_type, "int"),
                        GetSQLValueString($id_group, "int"),
                        GetSQLValueString($filename, "text"),
                        GetSQLValueString(isset($_POST['forcesubscribe']) ? "true" : "", "defined","1","0"),
@@ -353,8 +361,6 @@ if ((isset($_POST["MM_update"]))) {
   $Result1 = mysql_query($updateSQL, $pravo) or die(mysql_error());
   
   /* Update the ordinal and date from the doc_meta*/
-  //TODO undefined index greska
-  $year = date("d.m.Y",strtotime($_POST['year']));
 	$UpdateDocMetaSQL = sprintf("UPDATE `doc_meta` SET ordinal=%s, `date`=%s WHERE `doc_meta`.`id_doc_meta`=%s",
                        GetSQLValueString($_POST['ordinal'], "int"),
                        GetSQLValueString($published_date, "date"),
@@ -642,25 +648,18 @@ jQuery("#jQueryUICalendar2").datepicker({ dateFormat: 'dd.mm.yy',  altField: '#a
     </tr>
     <tr valign="baseline">
       <td nowrap align="right">Тип на документот:</td>
-      <td><select name="id_doc_type">
-        <?php 
-do {  
-?>
-        <option value="<?php echo $row_DocumentTypes['id_doc_type']?>" <?php if (!(strcmp($row_DocumentTypes['id_doc_type'], htmlentities($row_Recordset1['id_doc_type'], ENT_COMPAT, '')))) {echo "SELECTED";} ?>><?php echo $row_DocumentTypes['name']?></option>
-        <?php
-} while ($row_DocumentTypes = mysql_fetch_assoc($DocumentTypes));
-?>
-      </select>
+      <td><font id='doctype'><select>
+      <option value='0'>Тип на документ</option>
+      </select></font>
       <a href="document_type.php?mode=new&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/add.gif" border="0" /></a>
       <a href="document_type.php?id=<?php echo $row_Recordset1['id_doc_type']; ?>&mode=edit&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/pencil.png" border="0" /></a>
       </td>
     </tr>
-    <form name=sel>
   	<tr>
         <td align='right'>Категорија: </td>
         <td>
 
-            <font id=category><select style='width:300px;'>
+            <font id='category'><select style='width:300px;'>
             <option value='0'>Категорија</option> 
             </select></font>
             <a href="document_category.php?mode=new&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/add.gif" border="0" /></a>
@@ -671,7 +670,7 @@ do {
 	<tr>
         <td align='right'>Подкатегорија: </td>
         <td>
-            <font id=subcategory><select style='width:300px;' disabled>
+            <font id='subcategory'><select style='width:300px;'>
             <option value='0'>Подкатегорија</option> 
             </select></font>
             <a href="document_category.php?mode=new&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/add.gif" border="0" /></a>
@@ -681,14 +680,13 @@ do {
     <tr>
          <td align='right'>Под-подкатегорија: </td>
          <td>
-            <font id=subsubcategory><select style='width:300px;' disabled>
+            <font id='subsubcategory'><select style='width:300px;'>
             <option value='0'>Под-подкатегорија</option>
             </select></font>
       <a href="document_category.php?mode=new&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/add.gif" border="0" /></a>
       <a href="document_category.php?id=<?php echo $subsubcat; ?>&mode=edit&url=<?php echo $_SERVER['PHP_SELF']."?".$_SERVER['QUERY_STRING']; ?>"><img src="../images/pencil.png" border="0" /></a>
       </td>
 	</tr>
-    </form>
     <?php if(isset($_GET['id_document']) && isset($_GET['edit'])) { ?>
     <tr valign="baseline">
       <td rowspan="2" align="right" valign="top" nowrap>Документ:</td>
@@ -735,7 +733,7 @@ function Inint_AJAX() {
    return null;
 };
 
-function dochange(src, val,sel) {
+function dochange(src, val, sel) {
      var req = Inint_AJAX();
      req.onreadystatechange = function () { 
           if (req.readyState==4) {
@@ -749,10 +747,10 @@ function dochange(src, val,sel) {
      req.send(null); //Êè§¤èÒ
 }
 
-
-	window.onload=dochange('category',-1,<?php echo $cat; ?> );
-	window.onload=dochange('subcategory',<?php echo $cat; ?>,<?php echo $subcat; ?>);
-	window.onload=dochange('subsubcategory',<?php echo $subcat; ?>,<?php echo $subsubcat; ?>);
+	window.onload=dochange('doctype', -1, <?php echo $id_doc_type; ?>);
+	window.onload=dochange('category', <?php echo $id_doc_type; ?>, <?php echo $cat; ?>);
+	window.onload=dochange('subcategory', <?php echo $cat; ?>, <?php echo $subcat; ?>);
+	window.onload=dochange('subsubcategory', <?php echo $subcat; ?>, <?php echo $subsubcat; ?>);
 
 </script>
 
@@ -761,6 +759,4 @@ function dochange(src, val,sel) {
 mysql_free_result($Recordset1);
 
 mysql_free_result($DocumentGroups);
-
-mysql_free_result($DocumentTypes);
 ?>
