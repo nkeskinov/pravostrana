@@ -94,7 +94,7 @@ if(isset($_GET['starts_with'])){
 }
 //echo lat2cyr($_GET['starts_with']);
 //echo html_entity_decode($_GET['starts_with'],null,'UTF-8');
-if(isset($_GET['keyword'])){
+if(isset($_GET['keyword']) && $_GET['keyword'] != NULL) {
 	$keywords_arr=explode(",", urldecode($_GET['keyword']));
 //	print_r($keywords_arr);
 	$keyQuery="";
