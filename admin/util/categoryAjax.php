@@ -12,26 +12,42 @@
      $val=$_GET['val'];
 	 $sel=$_GET['sel'];
 	 mysql_select_db($database_pravo, $pravo);
-	 $i=0;
-	 if ($data=='category') { 
-		if($i==0){
-			echo "<script language=Javascript>window.onLoad=dochange('subcategory', '19');</script>";
-		}
-	 	echo "<select name='category' style='width:300px;' onChange=\"dochange('subcategory', this.value,".$sel.")\">\n";
-        echo "<option value='0'>Категорија</option>\n";
-		$query = "SELECT id_doc_group, dg.name name FROM doc_group dg, doc_type dt WHERE dg.id_doc_type=dt.id_doc_type AND id_supergroup is NULL ORDER BY dg.id_doc_group";
+	 if ($data == 'doctype') {
+	 	echo "<select name='doctype' onChange=\"dochange('category', this.value, -1, -1)\">\n";
+	 	echo "<option value='0'>Тип на документ</option>\n";
+	 	$query = "SELECT id_doc_type, name from doc_type order by id_doc_type";
         $result=mysql_query($query, $pravo) or die(mysql_error());
+        while (list($id, $name)=mysql_fetch_array($result)) {
+        	echo "<option value=\"$id\" ";
+        	if (!(strcmp($id, htmlentities($sel, ENT_COMPAT, '')))) {
+        		echo "SELECTED"; 
+        	}
+        	echo ">$name</option>\n";
+        }
+	 } elseif ($data == 'category') { 
+	 	$query = sprintf("SELECT id_doc_group, dg.name name FROM doc_group dg WHERE id_supergroup is NULL AND id_doc_type = %s ORDER BY dg.id_doc_group", GetSQLValueString($val, "int"));
+        $result=mysql_query($query, $pravo) or die(mysql_error());
+	 	echo "<select name='category' ";
+	 	if ($sel<0 && mysql_num_rows($result)==0) {
+	 		echo "disabled='disabled'";
+	 	}
+	 	echo  " style='width:300px;' onChange=\"dochange('subcategory', this.value, ".$sel.")\">\n";
+        echo "<option value='0'>Категорија</option>\n";
         while(list($id, $name)=mysql_fetch_array($result)){
                echo "<option value=\"$id\" ";
-			   if (!(strcmp($id, htmlentities($sel, ENT_COMPAT, '')))) {echo "SELECTED"; $i++;}
+			   if (!(strcmp($id, htmlentities($sel, ENT_COMPAT, '')))) {
+			   	echo "SELECTED";
+			   }
 			   echo ">$name</option> \n" ;
         }		
-	 }elseif ($data=='subcategory') {
-		 $query1 = sprintf("SELECT id_doc_group, dg.name name FROM doc_group dg, doc_type dt WHERE dg.id_doc_type=dt.id_doc_type AND id_supergroup = %s ORDER BY dg.id_doc_group", GetSQLValueString($val, "int"));
+	 } elseif ($data=='subcategory') {
+		$query1 = sprintf("SELECT id_doc_group, dg.name name FROM doc_group dg WHERE id_supergroup = %s ORDER BY dg.id_doc_group", GetSQLValueString($val, "int"));
 	   	$result = mysql_query($query1, $pravo) or die(mysql_error());     
 		echo "<select name='subcategory' ";
-		if($sel<0 && mysql_num_rows($result)==0) echo "disabled='disabled'";
-		echo " style='width:300px;' onChange=\"dochange('subsubcategory', this.value,".$sel.")\">\n"; 
+		if ($sel < 0 && mysql_num_rows($result)==0) {
+			echo "disabled='disabled'";
+		}
+		echo " style='width:300px;' onChange=\"dochange('subsubcategory', this.value, ".$sel.")\">\n"; 
         echo "<option value='0'>Подкатегорија</option>\n";	                            
        	while(list($id, $name)=mysql_fetch_array($result)){       
                echo "<option value=\"$id\" ";
@@ -39,11 +55,13 @@
 			   echo ">$name</option> \n" ;
         }
 	 } elseif ($data=='subsubcategory') {
-		 	$query2 = sprintf("SELECT id_doc_group, dg.name name FROM doc_group dg, doc_type dt WHERE dg.id_doc_type=dt.id_doc_type AND id_supergroup = %s ORDER BY dg.id_doc_group", GetSQLValueString($val, "int"));
+		 	$query2 = sprintf("SELECT id_doc_group, dg.name name FROM doc_group dg WHERE id_supergroup = %s ORDER BY dg.id_doc_group", GetSQLValueString($val, "int"));
 	   	$result = mysql_query($query2, $pravo) or die(mysql_error());
 		echo "<select name='subsubcategory' ";
-		if($sel<0 && mysql_num_rows($result)==0) echo "disabled='disabled'";
-		echo " style='width:300px;' \">\n"; //onChange=\"dochange('tumbon', this.value)
+		if ($sel<0 && mysql_num_rows($result)==0) {
+			echo "disabled='disabled'";
+		}
+		echo " style='width:300px;' >\n";
         echo "<option value='0'>Под-подкатегорија</option>\n";
                                        
        	while(list($id, $name)=mysql_fetch_array($result)){       
