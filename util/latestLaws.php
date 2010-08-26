@@ -59,6 +59,7 @@ $totalPages_latestLawsRecordset = ceil($totalRows_latestLawsRecordset/$maxRows_l
 </table>
 <?php
 mysql_free_result($latestLawsRecordset);
-
-mysql_free_result($latestLaw_superdoc);
+if (isset($latestLaw_superdoc)) {
+	mysql_free_result($latestLaw_superdoc);
+}
 ?>
