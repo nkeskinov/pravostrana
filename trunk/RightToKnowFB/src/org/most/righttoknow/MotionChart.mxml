@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:amcharts="http://www.amcharts.com/com_internal"
+			   width="800" height="600" backgroundColor="#FFFFFF" viewSourceURL="srcview/index.html">
+	
+	<fx:Script>
+		<![CDATA[
+			import flash.events.Event;
+			
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			import mx.managers.SystemManager;
+			
+			import spark.events.IndexChangeEvent;
+			
+			protected function creationCompleteHandler(event:FlexEvent):void
+			{
+				trace("Target: " + event.target);
+				//if (viewstack.selectedChild == this["motionContent"]) {
+				//	motionChart.source = "charts/amtimeline.swf?path=charts/&data_file=../righttoknow/bubblechart";
+				//} else if (viewstack.selectedChild == this["mapContent"]) {
+				//	mapChart.source = "maps/amtimeline.swf?path=maps/&data_file=../righttoknow/mapchart";
+				//}
+			}	
+	
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		
+	</fx:Declarations>
+	<s:TabBar id="tabbar" x="273" y="60" dataProvider="{viewstack}"/>
+	<mx:ViewStack id="viewstack" x="279" y="90" width="200" height="200" creationComplete="creationCompleteHandler(event);">
+		<s:NavigatorContent id="motionContent" width="100%" height="100%" label="Motion Chart"> 
+			<s:SWFLoader id="motionChart" width="400" height="300" hasFocusableChildren="true" loadForCompatibility="true"
+						 maintainAspectRatio="true" smoothBitmapContent="true" trustContent="false"
+						 source="charts/amtimeline.swf?path=charts/&amp;data_file=pravo.org.mk/righttoknow/bubblechart"/>
+		</s:NavigatorContent>
+		<s:NavigatorContent id="mapContent" width="100%" height="100%" label="Map Chart">
+			<s:SWFLoader id="mapChart" width="400" height="300" hasFocusableChildren="true" loadForCompatibility="true"
+						 maintainAspectRatio="true" smoothBitmapContent="true" trustContent="false"
+						 source="maps/amtimeline.swf?path=maps/&amp;data_file=pravo.org.mk/righttoknow/mapchart"/>
+			<!--<s:List id="municipalitiesList" x="578" y="89" height="300"></s:List>-->
+		</s:NavigatorContent>
+	</mx:ViewStack>
+</s:Application>
