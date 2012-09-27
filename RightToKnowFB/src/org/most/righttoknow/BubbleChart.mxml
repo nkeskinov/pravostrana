@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- This example is made using amCharts Flex component. Visit http://flex.amcharts.com to see more examples -->
+
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:amcharts="http://www.amcharts.com/com_internal"
+			   xmlns:bubbleentriesservice="services.bubbleentriesservice.*"
+			   width="400" height="300" backgroundColor="#FFFFFF"
+			   viewSourceURL="srcview/index.html">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			
+			protected function chart_creationCompleteHandler(event:FlexEvent):void
+			{
+				getBubbleEntriesByIdsResult.token = bubbleEntriesService.getBubbleEntriesByIds(1, 2);
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:CallResponder id="getBubbleEntriesByIdsResult"/>
+		<bubbleentriesservice:BubbleEntriesService id="bubbleEntriesService"
+												   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+												   showBusyCursor="true"/>
+	</fx:Declarations>
+	
+	
+	<amcharts:AmXYChart id="chart" width="100%" height="100%"
+						creationComplete="chart_creationCompleteHandler(event)"
+						dataProvider="{getBubbleEntriesByIdsResult.lastResult}" startDuration="1">
+		<amcharts:graphs>
+			<amcharts:AmGraph 
+				id="g0"
+				balloonText="[[name]]"
+				xField="x"
+				yField="y"
+				bulletSize="10"
+				lineAlpha="0" 
+				bullet="bubble"
+				itemColors="[0xFF6600,0xFCD202,0xB0DE09,0x0D8ECF,0x2A0CD0,0xCD0D74,0xCC0000]"/>                        
+		</amcharts:graphs>
+		
+		<amcharts:balloon>
+			<amcharts:AmBalloon cornerRadius="10" borderThickness="2" borderColor="#FFFFFF" borderAlpha="1"/>                
+		</amcharts:balloon>
+		
+		<amcharts:chartCursor>
+			<amcharts:ChartCursor>                    
+			</amcharts:ChartCursor>
+		</amcharts:chartCursor>            
+		
+		<amcharts:chartScrollbar>
+			<amcharts:ChartScrollbar height="20">                    
+			</amcharts:ChartScrollbar>    
+		</amcharts:chartScrollbar>
+		
+	</amcharts:AmXYChart>
+	
+</s:Application>
