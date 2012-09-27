@@ -22,7 +22,7 @@
   </compiler>
   <applications>
     <application path="org/most/righttoknow/MotionChart.mxml"/>
-    <application path="BubbleChart.mxml"/>
+    <application path="org/most/righttoknow/BubbleChart.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>
