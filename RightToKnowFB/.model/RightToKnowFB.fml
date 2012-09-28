@@ -140,4 +140,82 @@
     <property name="y" type="string" required="true"/>
     <property name="x" type="string" required="true"/>
   </entity>
+  <service name="MapEntriesService">
+    <annotation name="ActionScriptGeneration">
+      <item name="Source">MapEntriesService</item>
+      <item name="ServiceType">RemoteObject</item>
+      <item name="Package">services.mapentriesservice</item>
+      <item name="Endpoint">gateway.php</item>
+      <item name="Destination">MapEntriesService</item>
+    </annotation>
+    <annotation name="ServiceTypeGroup">
+      <item name="ServiceBackendType">PHP</item>
+    </annotation>
+    <annotation name="ServiceConfig">
+      <item name="PHP_RELATIVE_LOCATION">righttoknow/services/MapEntriesService.php</item>
+      <item name="PHP_SERVER_ROOT">D:/dev/pravo.org.mk-php</item>
+      <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
+      <item name="PHP_SERVICES_FOLDER">D:/dev/pravo.org.mk-php/RightToKnowFB-debug/services</item>
+      <item name="PHP_LOCATION">D:/dev/pravo.org.mk-php/righttoknow/services/MapEntriesService.php</item>
+      <item name="LINKED_FILE">MapEntriesService.php</item>
+      <item name="PHP_SERVER_ROOT_URL">http://localhost/pravo/</item>
+      <item name="ABSOLUTE_ENDPOINT">http://localhost/pravo/RightToKnowFB-debug/gateway.php</item>
+      <item name="PHP_CLASS_NAME">MapEntriesService</item>
+    </annotation>
+    <function name="getMapEntriesByIds" return-type="MapEntry[]">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">title,instanceName,value,year</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">opaque</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+      <parameter name="id_entry_set" type="integer"/>
+    </function>
+  </service>
+  <entity name="CustomDatatype">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">CustomDatatype</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">MapEntriesService</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="getMapEntriesByIds">
+      <item name="propertySpecifier">title,instanceName,value,year</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="title" type="string" required="true"/>
+    <property name="instanceName" type="string" required="true"/>
+    <property name="value" type="string" required="true"/>
+    <property name="year" type="integer" required="true"/>
+  </entity>
+  <entity name="MapEntry">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">MapEntry</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">MapEntriesService</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="getMapEntriesByIds">
+      <item name="propertySpecifier">title,instanceName,value,year</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="title" type="string" required="true"/>
+    <property name="instanceName" type="string" required="true"/>
+    <property name="value" type="string" required="true"/>
+    <property name="year" type="integer" required="true"/>
+  </entity>
 </model>

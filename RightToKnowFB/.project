@@ -31,5 +31,10 @@
 			<type>1</type>
 			<location>D:/dev/pravo.org.mk-php/righttoknow/services/EntriesService.php</location>
 		</link>
+		<link>
+			<name>services/MapEntriesService.php</name>
+			<type>1</type>
+			<location>D:/dev/pravo.org.mk-php/righttoknow/services/MapEntriesService.php</location>
+		</link>
 	</linkedResources>
 </projectDescription>
