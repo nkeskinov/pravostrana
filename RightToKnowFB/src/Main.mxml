@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:righttoknow="org.most.righttoknow.*"
+			   minWidth="955" minHeight="600">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:TabNavigator x="63" y="65" width="450" height="350">
+		<s:NavigatorContent width="100%" height="100%" label="Map Chart">
+			<righttoknow:MapChartComponent x="0" y="0">
+			</righttoknow:MapChartComponent>
+		</s:NavigatorContent>
+		<s:NavigatorContent width="100%" height="100%" label="Bubble chart">
+			<righttoknow:BubbleChartComponent x="0" y="0">
+			</righttoknow:BubbleChartComponent>
+		</s:NavigatorContent>
+	</mx:TabNavigator>
+</s:Application>
