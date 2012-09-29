@@ -59,7 +59,7 @@ class BubbleEntriesService {
 	 *
 	 * @return array
 	 */
-	public function getBubbleEntriesByIds($x_axis, $y_axis) {
+	public function getBubbleEntriesByIds($x_axis, $y_axis, $year) {
 
 		$stmt = mysqli_prepare($this->connection,
                     "select x_entry_set.`value` as x, y_entry_set.`value` as y, municipalities.`name`, x_entry_set.`year` ".
@@ -69,11 +69,11 @@ class BubbleEntriesService {
                         "and x_entry_set.`year` = y_entry_set.`year` ".
                         "and x_entry_set.id_municipality = y_entry_set.id_municipality ".
                         "and x_entry_set.id_municipality = municipalities.id_municipality ".
-                        "and x_entry_set.`year` = '2010'".
-                    " order by `year` asc");
+                        "and x_entry_set.year = ? ".
+                    "order by `year` asc");
 		$this->throwExceptionOnError();
 
-        mysqli_stmt_bind_param($stmt, 'ii', $x_axis, $y_axis);
+        mysqli_stmt_bind_param($stmt, 'iii', $x_axis, $y_axis, $year);
         $this->throwExceptionOnError();
 		
 		mysqli_stmt_execute($stmt);
@@ -94,6 +94,38 @@ class BubbleEntriesService {
 	
 	    return $rows;
 	}
+
+    public function getPossibleYears($x_axis, $y_axis) {
+
+        $stmt = mysqli_prepare($this->connection,
+            "select distinct `year` ".
+                "from $this->tablename ".
+                "where id_entry_set = ? ".
+                "or id_entry_set = ? ".
+                "order by `year` asc");
+        $this->throwExceptionOnError();
+
+        mysqli_stmt_bind_param($stmt, 'ii', $x_axis, $y_axis);
+        $this->throwExceptionOnError();
+
+        mysqli_stmt_execute($stmt);
+        $this->throwExceptionOnError();
+
+        $rows = array();
+
+        mysqli_stmt_bind_result($stmt, $row->year);
+
+        while (mysqli_stmt_fetch($stmt)) {
+            $rows[] = $row;
+            $row = new stdClass();
+            mysqli_stmt_bind_result($stmt, $row->year);
+        }
+
+        mysqli_stmt_free_result($stmt);
+        mysqli_close($this->connection);
+
+        return $rows;
+    }
 
 	/**
 	 * Utility function to throw an exception if an error occurs 
