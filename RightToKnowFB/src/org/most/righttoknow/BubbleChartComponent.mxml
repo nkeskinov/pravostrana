@@ -13,7 +13,7 @@
 			
 			protected function chart_creationCompleteHandler(event:FlexEvent):void
 			{
-				getBubbleEntriesByIdsResult.token = bubbleEntriesService.getBubbleEntriesByIds(1, 2);
+				getBubbleEntriesByIdsResult.token = bubbleEntriesService.getBubbleEntriesByIds(1, 2, 2010);
 			}
 			
 		]]>

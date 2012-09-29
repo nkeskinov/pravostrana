@@ -7,33 +7,121 @@
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
 			   xmlns:amcharts="http://www.amcharts.com/com_internal"
 			   xmlns:bubbleentriesservice="services.bubbleentriesservice.*"
-			   width="400" height="300" backgroundColor="#FFFFFF"
+			   width="400" height="320" backgroundColor="#FFFFFF"
 			   viewSourceURL="srcview/index.html">
 	
 	<fx:Script>
 		<![CDATA[
+			import com.amcharts.events.AmChartEvent;
+			import com.amcharts.events.ValueAxisEvent;
+			
+			import flashx.textLayout.tlf_internal;
+			
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
+			import mx.effects.easing.Back;
 			import mx.events.FlexEvent;
+			import mx.rpc.events.ResultEvent;
 			
-			protected function chart_creationCompleteHandler(event:FlexEvent):void
+			import spark.formatters.NumberFormatter;
+			
+			private var xStart:Number = 0;
+			private var xEnd:Number = 0;
+			private var yStart:Number = 0;
+			private var yEnd:Number = 0;
+			
+			private var xStartToSet:Number = 0;
+			private var xEndToSet:Number = 0;
+			private var yStartToSet:Number = 0;
+			private var yEndToSet:Number = 0;
+			
+			protected function formatYear(value:Number):Object
 			{
-				getBubbleEntriesByIdsResult.token = bubbleEntriesService.getBubbleEntriesByIds(1, 2);
+				return value.toString();
+			}
+			
+			protected function hSlider_initializeHandler(event:FlexEvent):void
+			{
+				getPossibleYearsResult.token = bubbleEntriesService.getPossibleYears(1, 2);
+			}
+			
+			protected function hSlider_changeHandler(event:Event):void
+			{
+				if (xStart != 0 || xEnd != 0)
+				{
+					xStartToSet = xStart;
+					xEndToSet = xEnd;
+				}
+				if (yStart != 0 || yEnd != 0)
+				{
+					yStartToSet = yStart;
+					yEndToSet = yEnd;
+				}
+				
+				getBubbleEntriesByIdsResult.token = bubbleEntriesService.getBubbleEntriesByIds(1, 2, hSlider.value);
+			}
+			
+			protected function hSlider_creationCompleteHandler(event:FlexEvent):void
+			{
+				getBubbleEntriesByIdsResult.token = bubbleEntriesService.getBubbleEntriesByIds(1, 2, hSlider.value);
+			}
+			
+			protected function xAxis_axisZoomedHandler(event:ValueAxisEvent):void
+			{
+				xStart = event.startValue;
+				xEnd = event.endValue; 
+			}
+			
+			protected function yAxis_axisZoomedHandler(event:ValueAxisEvent):void
+			{
+				yStart = event.startValue;
+				yEnd = event.endValue;
+			}
+			
+			protected function g0_creationCompleteHandler(event:FlexEvent):void
+			{
+				g0.xAxis.min = 0;
+				g0.xAxis.max = 700;
+				g0.xAxis.addEventListener(ValueAxisEvent.AXIS_ZOOMED, xAxis_axisZoomedHandler);
+				
+				g0.yAxis.min = 0;
+				g0.yAxis.max = 14000;
+				g0.yAxis.addEventListener(ValueAxisEvent.AXIS_ZOOMED, yAxis_axisZoomedHandler);
+			}
+			
+			protected function chart_dataUpdatedHandler(event:AmChartEvent):void
+			{
+				trace("X: " + xStartToSet + "\t" + xEndToSet);
+				if (xStartToSet != 0 || xEndToSet != 0)
+				{
+					g0.xAxis.zoomToValues(xStartToSet, xEndToSet);
+					xStartToSet = 0;
+					xEndToSet = 0;
+				}
+				
+				trace("Y: " + yStartToSet + "\t" + yEndToSet);
+				if (yStartToSet != 0 || yEndToSet != 0)
+				{
+					g0.yAxis.zoomToValues(yStartToSet, yEndToSet);
+					yStartToSet = 0;
+					yEndToSet = 0;
+				}
 			}
 			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
-		<s:CallResponder id="getBubbleEntriesByIdsResult"/>
 		<bubbleentriesservice:BubbleEntriesService id="bubbleEntriesService"
 												   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 												   showBusyCursor="true"/>
+		
+		<s:CallResponder id="getBubbleEntriesByIdsResult"/>
+		<s:CallResponder id="getPossibleYearsResult"/>
 	</fx:Declarations>
 	
-
-	<amcharts:AmXYChart id="chart" width="100%" height="100%"
-						creationComplete="chart_creationCompleteHandler(event)"
-						dataProvider="{getBubbleEntriesByIdsResult.lastResult}" startDuration="1">
+	<amcharts:AmXYChart id="chart" width="400" height="280"
+						dataProvider="{getBubbleEntriesByIdsResult.lastResult}"
+						dataUpdated="chart_dataUpdatedHandler(event)">
 		<amcharts:graphs>
 			<amcharts:AmGraph 
 				id="g0"
@@ -43,7 +131,7 @@
 				bulletSize="10"
 				lineAlpha="0" 
 				bullet="bubble"
-				itemColors="[0xFF6600,0xFCD202,0xB0DE09,0x0D8ECF,0x2A0CD0,0xCD0D74,0xCC0000]"/>                        
+				creationComplete="g0_creationCompleteHandler(event)"/>
 		</amcharts:graphs>
 		
 		<amcharts:balloon>
@@ -61,5 +149,11 @@
 		</amcharts:chartScrollbar>
 		
 	</amcharts:AmXYChart>
+	<s:HSlider id="hSlider" x="10" y="293" width="380"
+			   minimum="{Number(getPossibleYearsResult.lastResult.getItemAt(0).year)}" 
+			   maximum="{Number(getPossibleYearsResult.lastResult.getItemAt(getPossibleYearsResult.lastResult.length - 1).year)}"
+			   dataTipFormatFunction="formatYear"
+			   initialize="hSlider_initializeHandler(event)"
+			   change="hSlider_changeHandler(event)"/>
 	
 </s:Application>

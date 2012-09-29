@@ -82,64 +82,6 @@
     <property name="year" type="integer"/>
     <property name="value" type="float"/>
   </entity>
-  <service name="BubbleEntriesService">
-    <annotation name="ActionScriptGeneration">
-      <item name="Source">BubbleEntriesService</item>
-      <item name="ServiceType">RemoteObject</item>
-      <item name="Package">services.bubbleentriesservice</item>
-      <item name="Endpoint">gateway.php</item>
-      <item name="Destination">BubbleEntriesService</item>
-    </annotation>
-    <annotation name="ServiceTypeGroup">
-      <item name="ServiceBackendType">PHP</item>
-    </annotation>
-    <annotation name="ServiceConfig">
-      <item name="PHP_RELATIVE_LOCATION">righttoknow/services/BubbleEntriesService.php</item>
-      <item name="PHP_SERVER_ROOT">D:/dev/pravo.org.mk-php</item>
-      <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
-      <item name="PHP_SERVICES_FOLDER">D:/dev/pravo.org.mk-php/RightToKnowFB-debug/services</item>
-      <item name="PHP_LOCATION">D:/dev/pravo.org.mk-php/righttoknow/services/BubbleEntriesService.php</item>
-      <item name="LINKED_FILE">BubbleEntriesService.php</item>
-      <item name="PHP_SERVER_ROOT_URL">http://localhost/pravo/</item>
-      <item name="ABSOLUTE_ENDPOINT">http://localhost/pravo/RightToKnowFB-debug/gateway.php</item>
-      <item name="PHP_CLASS_NAME">BubbleEntriesService</item>
-    </annotation>
-    <function name="getBubbleEntriesByIds" return-type="BubbleEntry[]">
-      <annotation name="analyze group">
-        <item name="analyzed">true</item>
-      </annotation>
-      <annotation name="ValidProperties">
-        <item name="propertySpecifier">name,year,y,x</item>
-      </annotation>
-      <annotation name="original signature">
-        <item name="inputParams">opaque,opaque</item>
-        <item name="returnType">opaque</item>
-      </annotation>
-      <parameter name="x_axis" type="integer"/>
-      <parameter name="y_axis" type="integer"/>
-    </function>
-  </service>
-  <entity name="BubbleEntry">
-    <annotation name="EntityProperties">
-      <item name="EntityOriginalName">BubbleEntry</item>
-    </annotation>
-    <annotation name="service Group">
-      <item name="service">BubbleEntriesService,BubbleEntriesServiceDummy</item>
-    </annotation>
-    <annotation name="ServerProperties">
-      <item name="IncludeRemoteClass">nonempty</item>
-    </annotation>
-    <annotation name="getBubbleEntriesByIds">
-      <item name="propertySpecifier">name,year,y,x</item>
-    </annotation>
-    <annotation name="ActionScriptGeneration">
-      <item name="Package">valueObjects</item>
-    </annotation>
-    <property name="name" type="string" required="true"/>
-    <property name="year" type="integer" required="true"/>
-    <property name="y" type="string" required="true"/>
-    <property name="x" type="string" required="true"/>
-  </entity>
   <service name="MapEntriesService">
     <annotation name="ActionScriptGeneration">
       <item name="Source">MapEntriesService</item>
@@ -196,5 +138,96 @@
     <property name="instanceName" type="string" required="true"/>
     <property name="value" type="string" required="true"/>
     <property name="year" type="integer" required="true"/>
+  </entity>
+  <service name="BubbleEntriesService">
+    <annotation name="ActionScriptGeneration">
+      <item name="Source">BubbleEntriesService</item>
+      <item name="ServiceType">RemoteObject</item>
+      <item name="Package">services.bubbleentriesservice</item>
+      <item name="Endpoint">gateway.php</item>
+      <item name="Destination">BubbleEntriesService</item>
+    </annotation>
+    <annotation name="ServiceTypeGroup">
+      <item name="ServiceBackendType">PHP</item>
+    </annotation>
+    <annotation name="ServiceConfig">
+      <item name="PHP_RELATIVE_LOCATION">righttoknow/services/BubbleEntriesService.php</item>
+      <item name="PHP_SERVER_ROOT">D:/dev/pravo.org.mk-php</item>
+      <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
+      <item name="PHP_SERVICES_FOLDER">D:/dev/pravo.org.mk-php/RightToKnowFB-debug/services</item>
+      <item name="PHP_LOCATION">D:/dev/pravo.org.mk-php/righttoknow/services/BubbleEntriesService.php</item>
+      <item name="LINKED_FILE">BubbleEntriesService.php</item>
+      <item name="PHP_SERVER_ROOT_URL">http://localhost/pravo/</item>
+      <item name="ABSOLUTE_ENDPOINT">http://localhost/pravo/RightToKnowFB-debug/gateway.php</item>
+      <item name="PHP_CLASS_NAME">BubbleEntriesService</item>
+    </annotation>
+    <function name="getBubbleEntriesByIds" return-type="BubbleEntry[]">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">name,year,y,x</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">opaque,opaque,opaque</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+      <parameter name="x_axis" type="integer"/>
+      <parameter name="y_axis" type="integer"/>
+      <parameter name="year" type="integer"/>
+    </function>
+    <function name="getPossibleYears" return-type="YearEntry[]">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">year</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">opaque,opaque</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+      <parameter name="x_axis" type="integer"/>
+      <parameter name="y_axis" type="integer"/>
+    </function>
+  </service>
+  <entity name="YearEntry">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">YearEntry</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">BubbleEntriesService,BubbleEntriesServiceDummy</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="getPossibleYears">
+      <item name="propertySpecifier">year</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="year" type="integer" required="true"/>
+  </entity>
+  <entity name="BubbleEntry">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">BubbleEntry</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">BubbleEntriesService,BubbleEntriesServiceDummy</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="getBubbleEntriesByIds">
+      <item name="propertySpecifier">name,year,y,x</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="name" type="string" required="true"/>
+    <property name="year" type="integer" required="true"/>
+    <property name="y" type="string" required="true"/>
+    <property name="x" type="string" required="true"/>
   </entity>
 </model>

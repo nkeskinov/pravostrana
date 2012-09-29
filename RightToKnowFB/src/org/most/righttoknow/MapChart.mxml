@@ -24,10 +24,6 @@
 				getMapEntriesByIdsResult.token = mapEntriesService.getMapEntriesByIds(1);
 			}
 			
-			protected function ammap_initializeHandler(event:FlexEvent):void
-			{
-			}
-			
 			protected function getMapEntriesByIdsResult_resultHandler(event:ResultEvent):void
 			{
 				var macedoniaDataSet:DataSet = new DataSet;
@@ -61,7 +57,7 @@
 	
 	<!-- map chart is a map which colors areas with color corresponding to it's value.
 	all you need to do is to set color and colorSolid - the other colors will be selected by the amMap -->
-	<ammap:AmMap id="ammap" width="100%" height="100%" useObjectColorForBalloon="false" initialize="ammap_initializeHandler(event)">
+	<ammap:AmMap id="ammap" width="100%" height="100%" useObjectColorForBalloon="false">
 		
 		<ammap:areasSettings>
 			<ammap:AreasSettings color="#FFFFFF" colorSolid="#000000" balloonText="[[value]] people live in [[title]]"/>

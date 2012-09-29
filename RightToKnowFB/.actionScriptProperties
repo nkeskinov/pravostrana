@@ -25,6 +25,7 @@
     <application path="org/most/righttoknow/MapChart.mxml"/>
     <application path="org/most/righttoknow/MotionChart.mxml"/>
     <application path="org/most/righttoknow/BubbleChart.mxml"/>
+    <application path="Main.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>
