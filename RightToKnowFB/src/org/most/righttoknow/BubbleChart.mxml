@@ -7,7 +7,7 @@
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
 			   xmlns:amcharts="http://www.amcharts.com/com_internal"
 			   xmlns:bubbleentriesservice="services.bubbleentriesservice.*"
-			   width="400" height="320" backgroundColor="#FFFFFF"
+			   width="400" height="400" backgroundColor="#FFFFFF"
 			   viewSourceURL="srcview/index.html">
 	
 	<fx:Script>
@@ -19,11 +19,12 @@
 			
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
-			import mx.effects.easing.Back;
 			import mx.events.FlexEvent;
 			import mx.rpc.events.ResultEvent;
 			
 			import spark.formatters.NumberFormatter;
+			
+			import valueObjects.YearEntry;
 			
 			private var xStart:Number = 0;
 			private var xEnd:Number = 0;
@@ -108,6 +109,23 @@
 				}
 			}
 			
+			protected function getPossibleYearsResult_resultHandler(event:ResultEvent):void
+			{
+				var possibleYears:ArrayCollection = getPossibleYearsResult.lastResult;
+				var possibleYearsArray:Array = new Array(possibleYears.length);
+				
+				hSlider.minimum = possibleYears[0].year;
+				for (var i:int = 0; i < possibleYears.length; i++)
+				{
+					possibleYearsArray[i] = possibleYears[i].year;
+				}
+				hSlider.maximum = possibleYears[possibleYears.length - 1].year;
+				
+				hSlider.labels = possibleYearsArray;
+				
+				hSlider.invalidateDisplayList();
+			}
+			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -116,44 +134,48 @@
 												   showBusyCursor="true"/>
 		
 		<s:CallResponder id="getBubbleEntriesByIdsResult"/>
-		<s:CallResponder id="getPossibleYearsResult"/>
+		<s:CallResponder id="getPossibleYearsResult" result="getPossibleYearsResult_resultHandler(event)"/>
 	</fx:Declarations>
+	<s:VGroup x="0" y="0" width="400" height="400" horizontalAlign="center">
 	
-	<amcharts:AmXYChart id="chart" width="400" height="280"
-						dataProvider="{getBubbleEntriesByIdsResult.lastResult}"
-						dataUpdated="chart_dataUpdatedHandler(event)">
-		<amcharts:graphs>
-			<amcharts:AmGraph 
-				id="g0"
-				balloonText="[[name]]"
-				xField="x"
-				yField="y"
-				bulletSize="10"
-				lineAlpha="0" 
-				bullet="bubble"
-				creationComplete="g0_creationCompleteHandler(event)"/>
-		</amcharts:graphs>
-		
-		<amcharts:balloon>
-			<amcharts:AmBalloon cornerRadius="10" borderThickness="2" borderColor="#FFFFFF" borderAlpha="1"/>                
-		</amcharts:balloon>
-		
-		<amcharts:chartCursor>
-			<amcharts:ChartCursor>                    
-			</amcharts:ChartCursor>
-		</amcharts:chartCursor>            
-		
-		<amcharts:chartScrollbar>
-			<amcharts:ChartScrollbar height="20">                    
-			</amcharts:ChartScrollbar>    
-		</amcharts:chartScrollbar>
-		
-	</amcharts:AmXYChart>
-	<s:HSlider id="hSlider" x="10" y="293" width="380"
-			   minimum="{Number(getPossibleYearsResult.lastResult.getItemAt(0).year)}" 
-			   maximum="{Number(getPossibleYearsResult.lastResult.getItemAt(getPossibleYearsResult.lastResult.length - 1).year)}"
-			   dataTipFormatFunction="formatYear"
-			   initialize="hSlider_initializeHandler(event)"
-			   change="hSlider_changeHandler(event)"/>
+		<amcharts:AmXYChart id="chart" width="400" height="350"
+							dataProvider="{getBubbleEntriesByIdsResult.lastResult}"
+							dataUpdated="chart_dataUpdatedHandler(event)">
+			<amcharts:graphs>
+				<amcharts:AmGraph 
+					id="g0"
+					balloonText="[[name]]"
+					xField="x"
+					yField="y"
+					bulletSize="10"
+					lineAlpha="0" 
+					bullet="bubble"
+					creationComplete="g0_creationCompleteHandler(event)"/>
+			</amcharts:graphs>
+			
+			<amcharts:balloon>
+				<amcharts:AmBalloon cornerRadius="10" borderThickness="2" borderColor="#FFFFFF" borderAlpha="1"/>                
+			</amcharts:balloon>
+			
+			<amcharts:chartCursor>
+				<amcharts:ChartCursor>                    
+				</amcharts:ChartCursor>
+			</amcharts:chartCursor>            
+			
+			<amcharts:chartScrollbar>
+				<amcharts:ChartScrollbar height="20">                    
+				</amcharts:ChartScrollbar>    
+			</amcharts:chartScrollbar>
+			
+		</amcharts:AmXYChart>
+		<mx:HSlider id="hSlider" width="390" height="40"
+				   dataTipFormatFunction="formatYear"
+				   initialize="hSlider_initializeHandler(event)"
+				   change="hSlider_changeHandler(event)"
+				   labelOffset="35"
+				   snapInterval="1"
+				   tickInterval="1" tickOffset="15"/>
+
+	</s:VGroup>
 	
 </s:Application>
