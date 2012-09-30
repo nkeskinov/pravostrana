@@ -4,17 +4,55 @@
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
 			   xmlns:righttoknow="org.most.righttoknow.*"
 			   minWidth="955" minHeight="600">
+	<fx:Script>
+		<![CDATA[
+			
+		]]>
+	</fx:Script>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<mx:TabNavigator x="63" y="65" width="450" height="350">
-		<s:NavigatorContent width="100%" height="100%" label="Map Chart">
-			<righttoknow:MapChartComponent x="0" y="0">
-			</righttoknow:MapChartComponent>
-		</s:NavigatorContent>
-		<s:NavigatorContent width="100%" height="100%" label="Bubble chart">
-			<righttoknow:BubbleChartComponent x="0" y="0">
-			</righttoknow:BubbleChartComponent>
-		</s:NavigatorContent>
-	</mx:TabNavigator>
+	<s:BorderContainer x="6" y="60" width="600" height="437">
+		
+		<s:HGroup left="10" right="10" top="10" bottom="10">
+			<s:VGroup height="100%">
+				<mx:TabNavigator width="430" height="355" paddingBottom="0" paddingLeft="0" paddingRight="0">
+					<s:NavigatorContent width="100%" height="100%" label="Графикон">
+						<righttoknow:BubbleChartComponent  id="bubblechart" x="0" y="2">
+						</righttoknow:BubbleChartComponent>
+						<s:DropDownList x="387" y="267" width="229" prompt="ипсилон оска" rotation="-90"></s:DropDownList>
+						<s:DropDownList x="62" y="-7" width="303" prompt="икс оска"></s:DropDownList>
+					</s:NavigatorContent>
+					<s:NavigatorContent width="100%" height="100%" label="Мапа">
+						
+							<righttoknow:MapChartComponent x="3" y="16">
+							</righttoknow:MapChartComponent>
+						
+						<s:DropDownList x="405" y="317" width="300" prompt="ипсилон оска" rotation="-90"></s:DropDownList>
+						<s:DropDownList x="3" y="-7" width="400" prompt="икс оска"></s:DropDownList>
+					</s:NavigatorContent>
+					
+				</mx:TabNavigator>
+			
+				<s:BorderContainer y="386" left="10" width="100%" height="53" backgroundColor="#D6D3D3">
+					<s:HGroup x="0" y="0" width="100%" height="100%" paddingLeft="5" verticalAlign="middle">
+						<mx:Button width="40" icon="@Embed(source='assets/play.png')"/>
+						<mx:HSlider width="302" allowTrackClick="true"
+									labels="[2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012]"
+									liveDragging="true" maximum="2012" minimum="2005"
+									snapInterval="1" />
+					</s:HGroup>
+				</s:BorderContainer>
+			</s:VGroup>
+			
+			<s:VGroup width="100%" height="100%">
+				<s:Panel width="100%" height="85%" dropShadowVisible="false" title="Градови">
+					<s:List x="0" y="0" width="100%" height="100%"></s:List>
+				</s:Panel>
+				<s:Panel width="100%" height="15%" dropShadowVisible="false"
+						 title="Големина на балони">
+				</s:Panel>
+			</s:VGroup>
+		</s:HGroup>
+	</s:BorderContainer>
 </s:Application>
