@@ -44,6 +44,7 @@
 			protected function hSlider_initializeHandler(event:FlexEvent):void
 			{
 				getPossibleYearsResult.token = bubbleEntriesService.getPossibleYears(1, 2);
+				getBubbleEntriesPerYearByIdsResult.token = bubbleEntriesService.getBubbleEntriesPerYearByIds(1, 2);
 			}
 			
 			protected function hSlider_changeHandler(event:Event):void
@@ -59,12 +60,7 @@
 					yEndToSet = yEnd;
 				}
 				
-				getBubbleEntriesByIdsResult.token = bubbleEntriesService.getBubbleEntriesByIds(1, 2, hSlider.value);
-			}
-			
-			protected function hSlider_creationCompleteHandler(event:FlexEvent):void
-			{
-				getBubbleEntriesByIdsResult.token = bubbleEntriesService.getBubbleEntriesByIds(1, 2, hSlider.value);
+				/* getBubbleEntriesByIdsResult.token = bubbleEntriesService.getBubbleEntriesByIds(1, 2, hSlider.value); */
 			}
 			
 			protected function xAxis_axisZoomedHandler(event:ValueAxisEvent):void
@@ -133,13 +129,14 @@
 												   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 												   showBusyCursor="true"/>
 		
-		<s:CallResponder id="getBubbleEntriesByIdsResult"/>
+		<!--<s:CallResponder id="getBubbleEntriesByIdsResult"/>-->
+		<s:CallResponder id="getBubbleEntriesPerYearByIdsResult"/>
 		<s:CallResponder id="getPossibleYearsResult" result="getPossibleYearsResult_resultHandler(event)"/>
 	</fx:Declarations>
 	<s:VGroup x="0" y="0" width="400" height="400" horizontalAlign="center">
 	
 		<amcharts:AmXYChart id="chart" width="400" height="350"
-							dataProvider="{getBubbleEntriesByIdsResult.lastResult}"
+							dataProvider="{getBubbleEntriesPerYearByIdsResult.lastResult.getItemAt(hSlider.value - hSlider.minimum)}"
 							dataUpdated="chart_dataUpdatedHandler(event)">
 			<amcharts:graphs>
 				<amcharts:AmGraph 
