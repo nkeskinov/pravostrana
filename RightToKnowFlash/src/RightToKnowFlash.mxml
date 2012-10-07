@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:righttoknow="org.most.righttoknow.*"
+			   xmlns:components="org.most.righttoknow.components.*"
+			   xmlns:municipalitiesservice="services.municipalitiesservice.*"
+			   minWidth="955" minHeight="600">
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			import mx.events.SliderEvent;
+			
+			import org.osmf.events.TimeEvent;
+			
+			import services.municipalitiesservice.MunicipalitiesService;
+			
+			protected var timer:Timer;
+			
+			protected function list_creationCompleteHandler(event:FlexEvent):void
+			{
+				getAllMunicipalitiesResult.token = municipalitiesService.getAllMunicipalities();
+			}
+			
+		
+			
+			protected function bubbleSizeHSlider_changeHandler(event:SliderEvent):void
+			{
+				
+				bubblechart.setBulletSize(bubbleSizeHSlider.value);
+			}
+			
+			protected function playBtn_clickHandler(event:MouseEvent):void
+			{
+				timer = new Timer(1000*playSpeed.value);
+				timer.addEventListener("timer", playTimeline);
+				timelineSlider.value = 2006;
+				bubblechart.getBubbleEntriesByIds(1,2,timelineSlider.value);
+				timer.start();
+				
+			}
+			
+			private function playTimeline(e:TimerEvent):void{
+				//Alert.show("Test="+timelineSlider.value);
+				if(timelineSlider.value == 2010)
+					timer.stop();
+				else
+					timelineSlider.value = timelineSlider.value+1;
+				
+				bubblechart.getBubbleEntriesByIds(1,2,timelineSlider.value);
+			}
+			
+			protected function timelineSlider_changeHandler(event:SliderEvent):void
+			{
+				bubblechart.getBubbleEntriesByIds(1,2,timelineSlider.value);
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:CallResponder id="getAllMunicipalitiesResult"/>
+		
+		<municipalitiesservice:MunicipalitiesService id="municipalitiesService"
+													 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+													 showBusyCursor="true"/>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:BorderContainer width="600" height="430" horizontalCenter="0" verticalCenter="0">
+		
+		<s:HGroup left="10" right="10" top="10" bottom="10" gap="3">
+			<s:VGroup height="100%" gap="3">
+				<mx:TabNavigator width="430" height="355" paddingBottom="0" paddingLeft="0" paddingRight="0">
+					<s:NavigatorContent width="100%" height="100%" label="Графикон">
+						<components:BubbleChartComponent  id="bubblechart" x="0" y="2">
+						</components:BubbleChartComponent>
+						<s:DropDownList x="387" y="267" width="229" prompt="ипсилон оска" rotation="-90"></s:DropDownList>
+						<s:DropDownList x="62" y="-7" width="303" prompt="икс оска"></s:DropDownList>
+						<!--<s:Label id="yearLbl" color="#ADADAD" fontSize="128" fontWeight="bold"
+								 horizontalCenter="0" text="{timelineSlider.value}"
+								 verticalCenter="4" textAlpha="0.35"  /> -->
+					</s:NavigatorContent>
+					<s:NavigatorContent width="100%" height="100%" label="Мапа">
+						
+						<components:MapChartComponent x="3" y="16">
+						</components:MapChartComponent>
+						
+						<s:DropDownList x="405" y="317" width="300" prompt="ипсилон оска" rotation="-90"></s:DropDownList>
+						<s:DropDownList x="3" y="-7" width="400" prompt="икс оска"></s:DropDownList>
+						<s:Label id="yearLbl0" right="30" bottom="5" color="#ADADAD" fontSize="48"
+								 fontWeight="bold" text="{timelineSlider.value}" textAlpha="0.35"/>
+					</s:NavigatorContent>
+					<s:NavigatorContent width="100%" height="100%" label="Табела">
+						<components:TableComponent x="3" y="16">
+						</components:TableComponent>
+						<s:DropDownList x="405" y="317" width="300" prompt="ипсилон оска" rotation="-90"></s:DropDownList>
+						<s:DropDownList x="3" y="-7" width="400" prompt="икс оска"></s:DropDownList>
+					</s:NavigatorContent>
+					
+				</mx:TabNavigator>
+				
+				<s:BorderContainer y="386" left="10" width="100%" height="50" backgroundColor="#D6D3D3">
+					<s:HGroup x="0" y="0" width="100%" height="100%" paddingLeft="5" verticalAlign="middle">
+						<mx:Button id="playBtn" y="6" width="35" height="35"
+								   click="playBtn_clickHandler(event)"
+								   icon="@Embed(source='assets/play.png')"/>
+						<s:BorderContainer width="16" height="100%" backgroundColor="#D6D3D3"
+										   borderVisible="false">
+							<s:VSlider id="playSpeed" height="34" horizontalCenter="0" maximum="6"
+									   minimum="1" stepSize="0.5" toolTip="Брзина на плејбек"
+									   value="3" verticalCenter="0"/>
+						</s:BorderContainer>
+						<mx:HSlider id="timelineSlider" y="4" width="341" height="40"
+									allowTrackClick="true"
+									change="timelineSlider_changeHandler(event)"
+									labels="[2006, 2007, 2008, 2009, 2010]"
+									liveDragging="true" maximum="2010" minimum="2006"
+									snapInterval="1" value="2010"/>
+					</s:HGroup>
+				</s:BorderContainer>
+			</s:VGroup>
+			
+			<s:VGroup width="100%" height="100%" gap="3">
+				<s:Panel width="100%" height="80%" dropShadowVisible="false" fontSize="11"
+						 fontWeight="normal" skinClass="org.most.righttoknow.skins.PanelSkin"
+						 title="Градови">
+					<s:List id="list" y="0" width="100%" height="100%" borderVisible="false"
+							creationComplete="list_creationCompleteHandler(event)"
+							dataProvider="{getAllMunicipalitiesResult.lastResult}" fontSize="10"
+							horizontalCenter="0" labelField="name">
+						
+						<s:itemRenderer>
+							<fx:Component>
+								
+									<mx:CheckBox label="{data.name}" paddingLeft="5">
+									</mx:CheckBox>
+								
+							</fx:Component>
+						</s:itemRenderer> 
+					</s:List>
+				</s:Panel>
+				<s:Panel width="100%" height="101" dropShadowVisible="false" fontSize="10"
+						 skinClass="org.most.righttoknow.skins.PanelSkin" title="Големина на балони">
+					<s:VGroup x="0" y="0" width="100%" height="100%">
+						<s:DropDownList width="100%" height="15" fontSize="8"></s:DropDownList>
+						<s:Group width="100%" height="100%">
+							<mx:HSlider id="bubbleSizeHSlider" x="10" bottom="5" width="123"
+										allowTrackClick="true"
+										change="bubbleSizeHSlider_changeHandler(event)"
+										labels="[0, 10, 20, 30, 40 , 50]" liveDragging="true"
+										maximum="50" minimum="5" snapInterval="5" value="10"/>
+						</s:Group>
+					</s:VGroup>
+				</s:Panel>
+			</s:VGroup> 
+		</s:HGroup>
+		<s:HGroup x="191" y="10" width="249" height="22" gap="2" horizontalAlign="right">
+			<s:Button label="Помош" fontSize="11" icon="@Embed(source='assets/help.png')"/>  
+			<mx:Button label="Сподели" fontSize="11" icon="@Embed(source='assets/share2.png')"
+					   paddingLeft="5" paddingRight="5"/>
+			<s:Button width="21" height="21" icon="@Embed(source='assets/full_screen.png')"/>
+		</s:HGroup>
+	</s:BorderContainer>
+</s:Application>

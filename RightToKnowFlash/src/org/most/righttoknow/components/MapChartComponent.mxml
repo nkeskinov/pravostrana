@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:ammap="http://www.ammap.com/com_internal"
+		 xmlns:mapentriesservice="services.mapentriesservice.*"
+		 width="400" height="300" creationComplete="application1_creationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import com.ammap.mapClasses.DataSet;
+			import com.ammap.mapClasses.MapArea;
+			
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			import mx.rpc.events.ResultEvent;
+			
+			
+			import services.mapentriesservice.MapEntriesService;
+			
+			import valueObjects.MapEntry;
+			[Bindable]
+			[Embed(source="../flexassets/maps/macedonia.swf")]
+			private var _macedonia:Class 
+
+			
+			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			{
+				getMapEntriesByIds(1);
+				
+			}
+		
+			protected function getMapEntriesByIds(id_entry_set:int):void
+			{
+				getMapEntriesByIdsResult.token = mapEntriesService.getMapEntriesByIds(id_entry_set);
+			}
+			
+			protected function ammap_initializeHandler(event:FlexEvent):void
+			{
+			}
+			
+			protected function getMapEntriesByIdsResult_resultHandler(event:ResultEvent):void
+			{
+				var macedoniaDataSet:DataSet = new DataSet;
+				macedoniaDataSet.mapClass = _macedonia;
+				
+				var bordersMapArea:MapArea = new MapArea;
+				bordersMapArea.instanceName = "borders";
+				bordersMapArea.color = Number("FFFFFF");
+				bordersMapArea.mouseEnabled = false;
+				macedoniaDataSet.addObject(bordersMapArea);
+				
+				for each(var mapEntry:MapEntry in event.result) {
+					var mapArea:MapArea = new MapArea;
+					mapArea.instanceName = mapEntry.instanceName;
+					mapArea.title = mapEntry.title;
+					mapArea.value = Number(mapEntry.value);
+					macedoniaDataSet.addObject(mapArea);
+					trace(mapEntry.title);
+				}
+				ammap.dataSets.push(macedoniaDataSet);
+				ammap.invalidateData();
+			}
+			
+		
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:CallResponder id="getMapEntriesByIdsResult" result="getMapEntriesByIdsResult_resultHandler(event)"/>
+		<mapentriesservice:MapEntriesService id="mapEntriesService"
+											 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+											 showBusyCursor="true"/>
+	</fx:Declarations>
+	<ammap:AmMap id="ammap" width="100%" height="100%" useObjectColorForBalloon="false" initialize="ammap_initializeHandler(event)">
+		
+		<ammap:areasSettings>
+			<ammap:AreasSettings color="#FFFFFF" colorSolid="#000000" balloonText="[[value]] people live in [[title]]"/>
+		</ammap:areasSettings>
+		
+		<ammap:zoomControl>
+			<ammap:ZoomControl visible="false"/>
+		</ammap:zoomControl>
+		
+		<ammap:moviesSettings>
+			<ammap:MoviesSettings bringForwardOnHover="true" color="#FFFFFF" rollOverColor="#CC0000" selectedColor="#000000"/>
+		</ammap:moviesSettings>
+		
+	</ammap:AmMap>
+	
+</s:Group>
