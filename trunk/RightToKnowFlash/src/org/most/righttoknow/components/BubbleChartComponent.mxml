@@ -41,7 +41,7 @@
 	
 	<amcharts:AmXYChart id="chart" width="100%" height="100%"
 						creationComplete="chart_creationCompleteHandler(event)"
-						dataProvider="{getBubbleEntriesByIdsResult.lastResult}" startDuration="1">
+						dataProvider="{getBubbleEntriesByIdsResult.lastResult}">
 		<amcharts:graphs>
 			<amcharts:AmGraph 
 				id="g0"
