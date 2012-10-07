@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:amcharts="http://www.amcharts.com/com_internal"
+		 xmlns:bubbleentriesservice="services.bubbleentriesservice.*"
+		 width="400" height="300">
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			
+			public var bulletSizeValue:Number = 10;
+			
+			protected function chart_creationCompleteHandler(event:FlexEvent):void
+			{
+				getBubbleEntriesByIds(1, 2, 2010);
+			}
+			
+			public function setBulletSize(value:Number):void{
+				g0.setStyle("bulletSize", value);
+			}
+			
+			
+			public function getBubbleEntriesByIds(x_axis:Number, y_axis:Number, year:Number):void
+			{
+				getBubbleEntriesByIdsResult.token = bubbleEntriesService.getBubbleEntriesByIds(x_axis, y_axis, year);
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:CallResponder id="getBubbleEntriesByIdsResult"/>
+		<bubbleentriesservice:BubbleEntriesService id="bubbleEntriesService"
+												   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+												   showBusyCursor="true"/>
+		
+	</fx:Declarations>
+	
+	
+	<amcharts:AmXYChart id="chart" width="100%" height="100%"
+						creationComplete="chart_creationCompleteHandler(event)"
+						dataProvider="{getBubbleEntriesByIdsResult.lastResult}" startDuration="1">
+		<amcharts:graphs>
+			<amcharts:AmGraph 
+				id="g0"
+				balloonText="[[name]]"
+				xField="x"
+				yField="y"
+				lineAlpha="0.1" 
+				bulletSize="10"
+				bullet="bubble" bulletAlpha="0.1"
+				itemColors="[0xFF6600,0xFCD202,0xB0DE09,0x0D8ECF,0x2A0CD0,0xCD0D74,0xCC0000]"/>                        
+		</amcharts:graphs>
+		
+		<amcharts:balloon>
+			<amcharts:AmBalloon cornerRadius="10" borderThickness="2" borderColor="#FFFFFF" borderAlpha="1"/>                
+		</amcharts:balloon>
+		
+		<amcharts:chartCursor>
+			<amcharts:ChartCursor>                    
+			</amcharts:ChartCursor>
+		</amcharts:chartCursor>            
+		
+		<amcharts:chartScrollbar>
+			<amcharts:ChartScrollbar height="20">                    
+			</amcharts:ChartScrollbar>    
+		</amcharts:chartScrollbar>
+		
+	</amcharts:AmXYChart>
+</s:Group>

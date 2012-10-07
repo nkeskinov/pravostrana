@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:bubbleentriesservice="services.bubbleentriesservice.*"
+		 width="400" height="300" creationComplete="group1_creationCompleteHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.events.FlexEvent;
+			
+			protected function getBubbleEntriesByIds(x_axis:Number, y_axis:Number, year:Number):void
+			{
+				getBubbleEntriesByIdsResult.token = bubbleEntriesService.getBubbleEntriesByIds(x_axis, y_axis, year);
+			}
+			
+			protected function group1_creationCompleteHandler(event:FlexEvent):void
+			{
+				getBubbleEntriesByIds(1,2,2010);
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:CallResponder id="getBubbleEntriesByIdsResult"/>
+		<bubbleentriesservice:BubbleEntriesService id="bubbleEntriesService"
+												   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+												   showBusyCursor="true"/>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<mx:BubbleChart id="bubblechart1" x="0" y="0" width="100%" height="100%" showDataTips="true" >
+		
+		<mx:series>
+			<mx:BubbleSeries id="series1" displayName="name" minRadius="1" maxRadius="10" 
+							 yField="y_axis" xField="x_axis" dataProvider="{getBubbleEntriesByIdsResult.lastResult}" />
+		</mx:series>
+	</mx:BubbleChart>
+</s:Group>
