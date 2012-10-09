@@ -5,7 +5,7 @@
 			   xmlns:righttoknow="org.most.righttoknow.*"
 			   xmlns:components="org.most.righttoknow.components.*"
 			   xmlns:municipalitiesservice="services.municipalitiesservice.*"
-			   minWidth="955" minHeight="600">
+			   width="600" height="430" applicationComplete="init()" horizontalCenter="0" verticalCenter="0">
 	<fx:Script>
 		<![CDATA[
 			import mx.controls.Alert;
@@ -17,6 +17,14 @@
 			import services.municipalitiesservice.MunicipalitiesService;
 			
 			protected var timer:Timer;
+			
+			[Bindable]
+			private var fullScreenState:String;
+			
+			private function init():void {
+				fullScreenState = stage.displayState;
+				stage.addEventListener(FullScreenEvent.FULL_SCREEN, stage_fullScreen);
+			}
 			
 			protected function list_creationCompleteHandler(event:FlexEvent):void
 			{
@@ -56,6 +64,32 @@
 				bubblechart.getBubbleEntriesByIds(1,2,timelineSlider.value);
 			}
 			
+			protected function fullScreenBtn_clickHandler(event:MouseEvent):void
+			{
+				if (isFullScreen()) {
+					fullScreenState = StageDisplayState.NORMAL;
+				} else {
+					fullScreenState = StageDisplayState.FULL_SCREEN;
+					this.percentWidth = 100;
+					this.percentHeight = 100;
+				}
+				
+				try {
+					stage.displayState = fullScreenState;
+				} catch (any:*) {
+					// ignore
+				}
+				
+			}
+			
+			private function isFullScreen():Boolean {
+				return (stage.displayState == StageDisplayState.FULL_SCREEN);
+			}
+			
+			private function stage_fullScreen(evt:FullScreenEvent):void {
+				fullScreenBtn.selected = isFullScreen();
+			}
+			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -66,14 +100,16 @@
 													 showBusyCursor="true"/>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:BorderContainer width="600" height="430" horizontalCenter="0" verticalCenter="0">
+	<s:BorderContainer width="100%" height="100%" horizontalCenter="0" verticalCenter="0">
 		
-		<s:HGroup left="10" right="10" top="10" bottom="10" gap="3">
-			<s:VGroup height="100%" gap="3">
-				<mx:TabNavigator width="430" height="355" paddingBottom="0" paddingLeft="0" paddingRight="0">
+		<s:HGroup left="10" right="10" top="10" bottom="10" gap="3" width="100%" height="100%">
+			<s:VGroup height="100%" gap="3" width="100%">
+				<mx:TabNavigator width="100%" height="100%" paddingBottom="0" paddingLeft="0" paddingRight="0">
 					<s:NavigatorContent width="100%" height="100%" label="Графикон">
-						<components:BubbleChartComponent  id="bubblechart" x="0" y="2">
-						</components:BubbleChartComponent>
+						<s:HGroup width="100%" height="100%">
+							<components:BubbleChartComponent  id="bubblechart" x="0" y="2">
+							</components:BubbleChartComponent>
+						</s:HGroup>
 						<s:DropDownList x="387" y="267" width="229" prompt="ипсилон оска" rotation="-90"></s:DropDownList>
 						<s:DropDownList x="62" y="-7" width="303" prompt="икс оска"></s:DropDownList>
 						<!--<s:Label id="yearLbl" color="#ADADAD" fontSize="128" fontWeight="bold"
@@ -99,29 +135,27 @@
 					
 				</mx:TabNavigator>
 				
-				<s:BorderContainer y="386" left="10" width="100%" height="50" backgroundColor="#D6D3D3">
+				<s:BorderContainer left="10" width="100%" height="50" backgroundColor="#D6D3D3">
 					<s:HGroup x="0" y="0" width="100%" height="100%" paddingLeft="5" verticalAlign="middle">
-						<mx:Button id="playBtn" y="6" width="35" height="35"
+						<mx:Button id="playBtn" y="6" width="10%" height="80%"
 								   click="playBtn_clickHandler(event)"
 								   icon="@Embed(source='assets/play.png')"/>
 						<s:BorderContainer width="16" height="100%" backgroundColor="#D6D3D3"
 										   borderVisible="false">
-							<s:VSlider id="playSpeed" height="34" horizontalCenter="0" maximum="6"
+							<s:VSlider id="playSpeed" height="80%" horizontalCenter="0" maximum="6"
 									   minimum="1" stepSize="0.5" toolTip="Брзина на плејбек"
 									   value="3" verticalCenter="0"/>
 						</s:BorderContainer>
-						<mx:HSlider id="timelineSlider" y="4" width="341" height="40"
-									allowTrackClick="true"
+						<mx:HSlider id="timelineSlider" y="4" width="90%" allowTrackClick="true"
 									change="timelineSlider_changeHandler(event)"
-									labels="[2006, 2007, 2008, 2009, 2010]"
-									liveDragging="true" maximum="2010" minimum="2006"
-									snapInterval="1" value="2010"/>
+									labels="[2006, 2007, 2008, 2009, 2010]" liveDragging="true"
+									maximum="2010" minimum="2006" snapInterval="1" value="2010"/>
 					</s:HGroup>
 				</s:BorderContainer>
 			</s:VGroup>
 			
-			<s:VGroup width="100%" height="100%" gap="3">
-				<s:Panel width="100%" height="80%" dropShadowVisible="false" fontSize="11"
+			<s:VGroup width="155" height="100%" gap="3">
+				<s:Panel width="100%" height="85%" dropShadowVisible="false" fontSize="11"
 						 fontWeight="normal" skinClass="org.most.righttoknow.skins.PanelSkin"
 						 title="Градови">
 					<s:List id="list" y="0" width="100%" height="100%" borderVisible="false"
@@ -139,26 +173,26 @@
 						</s:itemRenderer> 
 					</s:List>
 				</s:Panel>
-				<s:Panel width="100%" height="101" dropShadowVisible="false" fontSize="10"
-						 skinClass="org.most.righttoknow.skins.PanelSkin" title="Големина на балони">
-					<s:VGroup x="0" y="0" width="100%" height="100%">
-						<s:DropDownList width="100%" height="15" fontSize="8"></s:DropDownList>
-						<s:Group width="100%" height="100%">
-							<mx:HSlider id="bubbleSizeHSlider" x="10" bottom="5" width="123"
-										allowTrackClick="true"
-										change="bubbleSizeHSlider_changeHandler(event)"
-										labels="[0, 10, 20, 30, 40 , 50]" liveDragging="true"
-										maximum="50" minimum="5" snapInterval="5" value="10"/>
-						</s:Group>
+				<s:Panel width="100%" height="15%" dropShadowVisible="false"
+						 skinClass="org.most.righttoknow.skins.PanelSkin" title="Големина">
+					<s:VGroup left="0" top="0" bottom="0" width="100%">
+						<mx:HSlider id="bubbleSizeHSlider" width="150"
+									allowTrackClick="true"
+									change="bubbleSizeHSlider_changeHandler(event)"
+									labels="[0, 10, 20, 30, 40 , 50]" liveDragging="true"
+									maximum="50" minimum="5" snapInterval="5" value="10"/>
 					</s:VGroup>
 				</s:Panel>
+				
 			</s:VGroup> 
 		</s:HGroup>
-		<s:HGroup x="191" y="10" width="249" height="22" gap="2" horizontalAlign="right">
+		<s:HGroup y="10" right="168" width="249" height="22" gap="2" horizontalAlign="right">
 			<s:Button label="Помош" fontSize="11" icon="@Embed(source='assets/help.png')"/>  
 			<mx:Button label="Сподели" fontSize="11" icon="@Embed(source='assets/share2.png')"
 					   paddingLeft="5" paddingRight="5"/>
-			<s:Button width="21" height="21" icon="@Embed(source='assets/full_screen.png')"/>
+			<s:ToggleButton  id="fullScreenBtn" width="21" height="21"
+					  click="fullScreenBtn_clickHandler(event)"
+					  icon="@Embed(source='assets/full_screen.png')"/>
 		</s:HGroup>
 	</s:BorderContainer>
 </s:Application>
