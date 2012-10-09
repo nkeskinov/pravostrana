@@ -4,7 +4,7 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
 		 xmlns:ammap="http://www.ammap.com/com_internal"
 		 xmlns:mapentriesservice="services.mapentriesservice.*"
-		 width="400" height="300" creationComplete="application1_creationCompleteHandler(event)">
+		 width="100%" height="100%" creationComplete="application1_creationCompleteHandler(event)">
 	<fx:Script>
 		<![CDATA[
 			import com.ammap.mapClasses.DataSet;

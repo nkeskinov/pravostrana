@@ -4,7 +4,7 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
 		 xmlns:amcharts="http://www.amcharts.com/com_internal"
 		 xmlns:bubbleentriesservice="services.bubbleentriesservice.*"
-		 width="400" height="300">
+		 width="100%" height="100%">
 	<fx:Script>
 		<![CDATA[
 			import mx.collections.ArrayCollection;
@@ -28,6 +28,8 @@
 				getBubbleEntriesByIdsResult.token = bubbleEntriesService.getBubbleEntriesByIds(x_axis, y_axis, year);
 			}
 			
+			
+			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -48,9 +50,9 @@
 				balloonText="[[name]]"
 				xField="x"
 				yField="y"
-				lineAlpha="0.1" 
 				bulletSize="10"
-				bullet="bubble" bulletAlpha="0.1"
+				lineAlpha="0" 
+				bullet="bubble"
 				itemColors="[0xFF6600,0xFCD202,0xB0DE09,0x0D8ECF,0x2A0CD0,0xCD0D74,0xCC0000]"/>                        
 		</amcharts:graphs>
 		
