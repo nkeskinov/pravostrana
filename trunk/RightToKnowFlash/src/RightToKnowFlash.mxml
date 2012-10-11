@@ -5,13 +5,23 @@
 			   xmlns:righttoknow="org.most.righttoknow.*"
 			   xmlns:components="org.most.righttoknow.components.*"
 			   xmlns:municipalitiesservice="services.municipalitiesservice.*"
-			   width="600" height="430" applicationComplete="init()" horizontalCenter="0" verticalCenter="0">
-	<fx:Script>
+			   xmlns:ammap="http://www.ammap.com/com_internal"
+			   xmlns:categoriesservice="services.categoriesservice.*"
+			   width="600" height="430" applicationComplete="init()" horizontalCenter="0"
+			   verticalCenter="0">
+	<fx:Script> 
 		<![CDATA[
+			import mx.collections.XMLListCollection;
 			import mx.controls.Alert;
+			import mx.controls.Menu;
 			import mx.events.FlexEvent;
+			import mx.events.MenuEvent;
 			import mx.events.SliderEvent;
+			import mx.managers.PopUpManager;
+			import mx.rpc.events.ResultEvent;
 			
+			import org.most.righttoknow.components.HelpTitleWindow;
+			import org.most.righttoknow.components.ShareTitleWindow;
 			import org.osmf.events.TimeEvent;
 			
 			import services.municipalitiesservice.MunicipalitiesService;
@@ -21,9 +31,22 @@
 			[Bindable]
 			private var fullScreenState:String;
 			
+			[Bindable]
+			public var menuXaxis:XMLListCollection;
+			public var menuYaxis:XMLListCollection;
+			private var menubarXML:XMLList;
+			
+			[Bindable]
+			public var xmlData:XML;
+			
+			protected var menuX:Menu;
+			protected var menuY:Menu;
+			
+			protected var axisControlVar:String;
+			
 			private function init():void {
 				fullScreenState = stage.displayState;
-				stage.addEventListener(FullScreenEvent.FULL_SCREEN, stage_fullScreen);
+				stage.addEventListener(FullScreenEvent.FULL_SCREEN, stage_fullScreen);		
 			}
 			
 			protected function list_creationCompleteHandler(event:FlexEvent):void
@@ -90,6 +113,80 @@
 				fullScreenBtn.selected = isFullScreen();
 			}
 			
+			protected function helpBtn_clickHandler(event:MouseEvent):void
+			{ 
+				
+				var titleWindowInstance:HelpTitleWindow = HelpTitleWindow(PopUpManager.createPopUp(this, HelpTitleWindow, false));
+				
+				PopUpManager.centerPopUp(titleWindowInstance);
+			}
+			
+			protected function shareBtn_clickHandler(event:MouseEvent):void
+			{
+				var titleWindowInstance:ShareTitleWindow = ShareTitleWindow(PopUpManager.createPopUp(this, ShareTitleWindow, false));
+				
+				PopUpManager.centerPopUp(titleWindowInstance);
+			}
+	
+			
+			protected function categoriesService_resultHandler(event:ResultEvent):void
+			{
+				//Alert.show(event.message+"");
+				xmlData = new XML(getCategoriesMenuResult.lastResult);
+				
+				menubarXML = xmlData.children();
+				menuXaxis = new XMLListCollection(menubarXML);
+				menuYaxis = new XMLListCollection(menubarXML);
+				
+				menuX = Menu.createMenu(null, menuXaxis, false);
+				menuX.labelField="@name";
+				
+				menuY = Menu.createMenu(null, menuYaxis, false);
+				menuY.labelField="@name";
+			}
+			
+			
+			protected function xAxisPopup_itemClickHandler(event:MenuEvent):void
+			{
+				event.currentTarget.label = event.label;
+				//Alert.show(event.item.@id+"");
+				/*Alert.show("itemClick event label: " + event.label
+					+ "  \nindex: " + event.index
+					+ "  \nitem.label: " + event.item.label 
+					+ "  \nitem.data: " + event.item.data);
+				*/
+			}
+			
+			protected function xAxisPopup_creationCompleteHandler(event:FlexEvent):void
+			{
+				getCategoriesMenu();
+			}
+			
+			
+			
+			protected function getCategoriesMenu():void
+			{
+				getCategoriesMenuResult.token = categoriesService.getCategoriesMenu();
+			}
+			
+			protected function xAxisPopup_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				menuX.show(xAxisPopup.x+13, xAxisPopup.y+63);
+			}
+			
+			protected function yAxisPopup_creationCompleteHandler(event:FlexEvent):void
+			{
+				// TODO Auto-generated method stub
+				
+			}
+			
+			protected function yAxisPopup_clickHandler(event:MouseEvent):void
+			{
+				menuX.show(yAxisPopup.x, yAxisPopup.y);
+				
+			}
+			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -98,6 +195,13 @@
 		<municipalitiesservice:MunicipalitiesService id="municipalitiesService"
 													 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 													 showBusyCursor="true"/>
+		<s:CallResponder id="getCategoriesByAxesResult"/>
+		<categoriesservice:CategoriesService id="categoriesService"
+											 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+											 showBusyCursor="true"
+											  result="categoriesService_resultHandler(event)"/>
+		<s:CallResponder id="getCategoriesMenuResult"/>
+		<s:CallResponder id="getCategoriesMenuResult2"/>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<s:BorderContainer width="100%" height="100%" horizontalCenter="0" verticalCenter="0">
@@ -106,38 +210,55 @@
 			<s:VGroup height="100%" gap="3" width="100%">
 				<mx:TabNavigator width="100%" height="100%" paddingBottom="0" paddingLeft="0" paddingRight="0">
 					<s:NavigatorContent width="100%" height="100%" label="Графикон">
-						<s:HGroup width="100%" height="100%">
-							<components:BubbleChartComponent  id="bubblechart" x="0" y="2">
-							</components:BubbleChartComponent>
+						<s:HGroup width="100%" height="100%" gap="-12">
+							<s:VGroup width="100%" height="100%" gap="-12">
+								<s:Group width="100%">
+									<s:Button id="xAxisPopup" width="99%" right="16" 
+											  creationComplete="xAxisPopup_creationCompleteHandler(event)" 
+											  click="xAxisPopup_clickHandler(event)"/>
+								</s:Group>
+								<s:Group width="100%" height="100%">
+									<components:BubbleChartComponent  id="bubblechart" x="5">
+									</components:BubbleChartComponent>
+								</s:Group>
+							</s:VGroup>
+							<s:Group height="100%" width="30">
+									<s:Button id="yAxisPopup" top="20" right="14" height="100%" 
+											  rotation="90" creationComplete="yAxisPopup_creationCompleteHandler(event)"
+											  click="yAxisPopup_clickHandler(event)" ></s:Button>
+							</s:Group>
+							
 						</s:HGroup>
-						<s:DropDownList x="387" y="267" width="229" prompt="ипсилон оска" rotation="-90"></s:DropDownList>
-						<s:DropDownList x="62" y="-7" width="303" prompt="икс оска"></s:DropDownList>
+						
 						<!--<s:Label id="yearLbl" color="#ADADAD" fontSize="128" fontWeight="bold"
 								 horizontalCenter="0" text="{timelineSlider.value}"
 								 verticalCenter="4" textAlpha="0.35"  /> -->
 					</s:NavigatorContent>
 					<s:NavigatorContent width="100%" height="100%" label="Мапа">
-						
-						<components:MapChartComponent x="3" y="16">
-						</components:MapChartComponent>
-						
-						<s:DropDownList x="405" y="317" width="300" prompt="ипсилон оска" rotation="-90"></s:DropDownList>
-						<s:DropDownList x="3" y="-7" width="400" prompt="икс оска"></s:DropDownList>
-						<s:Label id="yearLbl0" right="30" bottom="5" color="#ADADAD" fontSize="48"
+						<s:HGroup width="100%" height="100%" gap="1">
+							<s:VGroup width="100%" height="100%" gap="1">
+								<s:Group width="100%">
+									<s:DropDownList width="99%" right="0"
+													prompt="икс оска"></s:DropDownList>
+								</s:Group>
+								<s:Group width="100%" height="100%">
+									<components:MapChartComponent x="5" width="100%" height="100%" horizontalCenter="0">
+									</components:MapChartComponent>
+								</s:Group>
+							</s:VGroup>
+							<s:Group height="100%" width="30">
+								<s:DropDownList height="99%" prompt="ипсилон оска" rotation="-90" top="20"></s:DropDownList>
+							</s:Group>
+						</s:HGroup>
+						<s:Label id="yearLbl0" right="40" bottom="5" color="#ADADAD" fontSize="48"
 								 fontWeight="bold" text="{timelineSlider.value}" textAlpha="0.35"/>
-					</s:NavigatorContent>
-					<s:NavigatorContent width="100%" height="100%" label="Табела">
-						<components:TableComponent x="3" y="16">
-						</components:TableComponent>
-						<s:DropDownList x="405" y="317" width="300" prompt="ипсилон оска" rotation="-90"></s:DropDownList>
-						<s:DropDownList x="3" y="-7" width="400" prompt="икс оска"></s:DropDownList>
 					</s:NavigatorContent>
 					
 				</mx:TabNavigator>
 				
 				<s:BorderContainer left="10" width="100%" height="50" backgroundColor="#D6D3D3">
 					<s:HGroup x="0" y="0" width="100%" height="100%" paddingLeft="5" verticalAlign="middle">
-						<mx:Button id="playBtn" y="6" width="10%" height="80%"
+						<mx:Button id="playBtn" y="6" width="50" height="40"
 								   click="playBtn_clickHandler(event)"
 								   icon="@Embed(source='assets/play.png')"/>
 						<s:BorderContainer width="16" height="100%" backgroundColor="#D6D3D3"
@@ -146,7 +267,7 @@
 									   minimum="1" stepSize="0.5" toolTip="Брзина на плејбек"
 									   value="3" verticalCenter="0"/>
 						</s:BorderContainer>
-						<mx:HSlider id="timelineSlider" y="4" width="90%" allowTrackClick="true"
+						<mx:HSlider id="timelineSlider" y="4" width="100%" allowTrackClick="true"
 									change="timelineSlider_changeHandler(event)"
 									labels="[2006, 2007, 2008, 2009, 2010]" liveDragging="true"
 									maximum="2010" minimum="2006" snapInterval="1" value="2010"/>
@@ -187,9 +308,11 @@
 			</s:VGroup> 
 		</s:HGroup>
 		<s:HGroup y="10" right="168" width="249" height="22" gap="2" horizontalAlign="right">
-			<s:Button label="Помош" fontSize="11" icon="@Embed(source='assets/help.png')"/>  
-			<mx:Button label="Сподели" fontSize="11" icon="@Embed(source='assets/share2.png')"
-					   paddingLeft="5" paddingRight="5"/>
+			<s:Button id="helpBtn" label="Помош" click="helpBtn_clickHandler(event)" fontSize="11"
+					  icon="@Embed(source='assets/help.png')"/>  
+			<mx:Button id="shareBtn" label="Сподели" click="shareBtn_clickHandler(event)"
+					   fontSize="11" icon="@Embed(source='assets/share2.png')" paddingLeft="5"
+					   paddingRight="5"/>
 			<s:ToggleButton  id="fullScreenBtn" width="21" height="21"
 					  click="fullScreenBtn_clickHandler(event)"
 					  icon="@Embed(source='assets/full_screen.png')"/>

@@ -45,8 +45,8 @@
 						creationComplete="chart_creationCompleteHandler(event)"
 						dataProvider="{getBubbleEntriesByIdsResult.lastResult}">
 		<amcharts:graphs>
-			<amcharts:AmGraph 
-				id="g0"
+			<amcharts:AmGraph
+				id="g0" 
 				balloonText="[[name]]"
 				xField="x"
 				yField="y"
