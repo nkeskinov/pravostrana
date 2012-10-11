@@ -143,23 +143,23 @@ internal class _Super_MunicipalitiesService extends com.adobe.fiber.services.wra
         var operation:mx.rpc.remoting.Operation;
 
         operation = new mx.rpc.remoting.Operation(null, "getAllMunicipalities");
-         operation.resultElementType = valueObjects.Municipalities;
+        operation.resultElementType = valueObjects.Municipalities;
         operations["getAllMunicipalities"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "getMunicipalitiesByID");
-         operation.resultType = valueObjects.Municipalities;
+        operation.resultType = valueObjects.Municipalities;
         operations["getMunicipalitiesByID"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "createMunicipalities");
-         operation.resultType = int;
+        operation.resultType = int;
         operations["createMunicipalities"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "updateMunicipalities");
         operations["updateMunicipalities"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "deleteMunicipalities");
         operations["deleteMunicipalities"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "count");
-         operation.resultType = int;
+        operation.resultType = int;
         operations["count"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "getMunicipalities_paged");
-         operation.resultElementType = valueObjects.Municipalities;
+        operation.resultElementType = valueObjects.Municipalities;
         operations["getMunicipalities_paged"] = operation;
 
         _serviceControl.operations = operations;
@@ -228,9 +228,9 @@ internal class _Super_MunicipalitiesService extends com.adobe.fiber.services.wra
     
 
     /**
-      * This method is a generated wrapper used to call the 'getAllMunicipalities' operation. It returns an mx.rpc.AsyncToken whose 
-      * result property will be populated with the result of the operation when the server response is received. 
-      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
+      * This method is a generated wrapper used to call the 'getAllMunicipalities' operation. It returns an mx.rpc.AsyncToken whose
+      * result property will be populated with the result of the operation when the server response is received.
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value.
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
       *
       * @see mx.rpc.AsyncToken
@@ -241,14 +241,14 @@ internal class _Super_MunicipalitiesService extends com.adobe.fiber.services.wra
     public function getAllMunicipalities() : mx.rpc.AsyncToken
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getAllMunicipalities");
-		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send() ;
+        var _internal_token:mx.rpc.AsyncToken = _internal_operation.send() ;
         return _internal_token;
     }
      
     /**
-      * This method is a generated wrapper used to call the 'getMunicipalitiesByID' operation. It returns an mx.data.ItemReference whose 
-      * result property will be populated with the result of the operation when the server response is received. 
-      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
+      * This method is a generated wrapper used to call the 'getMunicipalitiesByID' operation. It returns an mx.data.ItemReference whose
+      * result property will be populated with the result of the operation when the server response is received.
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value.
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
       *
       * @see mx.data.ItemReference
@@ -259,14 +259,14 @@ internal class _Super_MunicipalitiesService extends com.adobe.fiber.services.wra
     public function getMunicipalitiesByID(itemID:int) : mx.data.ItemReference
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getMunicipalitiesByID");
-		var _internal_token:mx.data.ItemReference = _internal_operation.send(itemID) as mx.data.ItemReference;
+        var _internal_token:mx.data.ItemReference = _internal_operation.send(itemID) as mx.data.ItemReference;
         return _internal_token;
     }
      
     /**
-      * This method is a generated wrapper used to call the 'createMunicipalities' operation. It returns an mx.data.ItemReference whose 
-      * result property will be populated with the result of the operation when the server response is received. 
-      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
+      * This method is a generated wrapper used to call the 'createMunicipalities' operation. It returns an mx.data.ItemReference whose
+      * result property will be populated with the result of the operation when the server response is received.
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value.
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
       *
       * @see mx.data.ItemReference
@@ -277,14 +277,14 @@ internal class _Super_MunicipalitiesService extends com.adobe.fiber.services.wra
     public function createMunicipalities(item:valueObjects.Municipalities) : mx.data.ItemReference
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("createMunicipalities");
-		var _internal_token:mx.data.ItemReference = _internal_operation.send(item) as mx.data.ItemReference;
+        var _internal_token:mx.data.ItemReference = _internal_operation.send(item) as mx.data.ItemReference;
         return _internal_token;
     }
      
     /**
-      * This method is a generated wrapper used to call the 'updateMunicipalities' operation. It returns an mx.data.ItemReference whose 
-      * result property will be populated with the result of the operation when the server response is received. 
-      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
+      * This method is a generated wrapper used to call the 'updateMunicipalities' operation. It returns an mx.data.ItemReference whose
+      * result property will be populated with the result of the operation when the server response is received.
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value.
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
       *
       * @see mx.data.ItemReference
@@ -295,14 +295,14 @@ internal class _Super_MunicipalitiesService extends com.adobe.fiber.services.wra
     public function updateMunicipalities(item:valueObjects.Municipalities) : mx.data.ItemReference
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("updateMunicipalities");
-		var _internal_token:mx.data.ItemReference = _internal_operation.send(item) as mx.data.ItemReference;
+        var _internal_token:mx.data.ItemReference = _internal_operation.send(item) as mx.data.ItemReference;
         return _internal_token;
     }
      
     /**
-      * This method is a generated wrapper used to call the 'deleteMunicipalities' operation. It returns an mx.rpc.AsyncToken whose 
-      * result property will be populated with the result of the operation when the server response is received. 
-      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
+      * This method is a generated wrapper used to call the 'deleteMunicipalities' operation. It returns an mx.rpc.AsyncToken whose
+      * result property will be populated with the result of the operation when the server response is received.
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value.
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
       *
       * @see mx.rpc.AsyncToken
@@ -313,14 +313,14 @@ internal class _Super_MunicipalitiesService extends com.adobe.fiber.services.wra
     public function deleteMunicipalities(itemID:int) : mx.rpc.AsyncToken
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("deleteMunicipalities");
-		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(itemID) ;
+        var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(itemID) ;
         return _internal_token;
     }
      
     /**
-      * This method is a generated wrapper used to call the 'count' operation. It returns an mx.rpc.AsyncToken whose 
-      * result property will be populated with the result of the operation when the server response is received. 
-      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
+      * This method is a generated wrapper used to call the 'count' operation. It returns an mx.rpc.AsyncToken whose
+      * result property will be populated with the result of the operation when the server response is received.
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value.
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
       *
       * @see mx.rpc.AsyncToken
@@ -331,14 +331,14 @@ internal class _Super_MunicipalitiesService extends com.adobe.fiber.services.wra
     public function count() : mx.rpc.AsyncToken
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("count");
-		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send() ;
+        var _internal_token:mx.rpc.AsyncToken = _internal_operation.send() ;
         return _internal_token;
     }
      
     /**
-      * This method is a generated wrapper used to call the 'getMunicipalities_paged' operation. It returns an mx.rpc.AsyncToken whose 
-      * result property will be populated with the result of the operation when the server response is received. 
-      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
+      * This method is a generated wrapper used to call the 'getMunicipalities_paged' operation. It returns an mx.rpc.AsyncToken whose
+      * result property will be populated with the result of the operation when the server response is received.
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value.
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
       *
       * @see mx.rpc.AsyncToken
@@ -349,7 +349,7 @@ internal class _Super_MunicipalitiesService extends com.adobe.fiber.services.wra
     public function getMunicipalities_paged() : mx.rpc.AsyncToken
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getMunicipalities_paged");
-		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send() ;
+        var _internal_token:mx.rpc.AsyncToken = _internal_operation.send() ;
         return _internal_token;
     }
      

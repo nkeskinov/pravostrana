@@ -191,6 +191,7 @@ public class _Super_BubbleEntry extends flash.events.EventDispatcher implements 
     /**
      * derived property calculators
      */
+    
 
     /**
      * isValid calculator
