@@ -62,7 +62,7 @@
 				bubblechart.setBulletSize(bubbleSizeHSlider.value);
 			}
 			
-			protected function playBtn_clickHandler(event:MouseEvent):void
+			/* protected function playBtn_clickHandler(event:MouseEvent):void
 			{
 				timer = new Timer(1000*playSpeed.value);
 				timer.addEventListener("timer", playTimeline);
@@ -70,23 +70,24 @@
 				bubblechart.getBubbleEntriesByIds(1,2,timelineSlider.value);
 				timer.start();
 				
-			}
+			} */
 			
-			private function playTimeline(e:TimerEvent):void{
+			/* private function playTimeline(e:TimerEvent):void{
 				//Alert.show("Test="+timelineSlider.value);
 				if(timelineSlider.value == 2010)
 					timer.stop();
 				else
 					timelineSlider.value = timelineSlider.value+1;
 				
-				bubblechart.getBubbleEntriesByIds(1,2,timelineSlider.value);
-			}
+				// playing timeline will be implemented otherwise
+				//bubblechart.getBubbleEntriesByIds(1,2,timelineSlider.value);
+			} */
 			
-			protected function timelineSlider_changeHandler(event:SliderEvent):void
+			/* protected function timelineSlider_changeHandler(event:SliderEvent):void
 			{
 				bubblechart.getBubbleEntriesByIds(1,2,timelineSlider.value);
 			}
-			
+			 */
 			protected function fullScreenBtn_clickHandler(event:MouseEvent):void
 			{
 				if (isFullScreen()) {
@@ -250,8 +251,8 @@
 								<s:DropDownList height="99%" prompt="ипсилон оска" rotation="-90" top="20"></s:DropDownList>
 							</s:Group>
 						</s:HGroup>
-						<s:Label id="yearLbl0" right="40" bottom="5" color="#ADADAD" fontSize="48"
-								 fontWeight="bold" text="{timelineSlider.value}" textAlpha="0.35"/>
+						<!--<s:Label id="yearLbl0" right="40" bottom="5" color="#ADADAD" fontSize="48"
+								 fontWeight="bold" text="{timelineSlider.value}" textAlpha="0.35"/>-->
 					</s:NavigatorContent>
 					
 				</mx:TabNavigator>
@@ -259,7 +260,6 @@
 				<s:BorderContainer left="10" width="100%" height="50" backgroundColor="#D6D3D3">
 					<s:HGroup x="0" y="0" width="100%" height="100%" paddingLeft="5" verticalAlign="middle">
 						<mx:Button id="playBtn" y="6" width="50" height="40"
-								   click="playBtn_clickHandler(event)"
 								   icon="@Embed(source='assets/play.png')"/>
 						<s:BorderContainer width="16" height="100%" backgroundColor="#D6D3D3"
 										   borderVisible="false">
@@ -267,10 +267,10 @@
 									   minimum="1" stepSize="0.5" toolTip="Брзина на плејбек"
 									   value="3" verticalCenter="0"/>
 						</s:BorderContainer>
-						<mx:HSlider id="timelineSlider" y="4" width="100%" allowTrackClick="true"
+					<!--	<mx:HSlider id="timelineSlider" y="4" width="100%" allowTrackClick="true"
 									change="timelineSlider_changeHandler(event)"
 									labels="[2006, 2007, 2008, 2009, 2010]" liveDragging="true"
-									maximum="2010" minimum="2006" snapInterval="1" value="2010"/>
+									maximum="2010" minimum="2006" snapInterval="1" value="2010"/>-->
 					</s:HGroup>
 				</s:BorderContainer>
 			</s:VGroup>
