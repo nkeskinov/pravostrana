@@ -20,11 +20,11 @@
  */
 class BubbleEntriesService {
 
-	var $username = "righttoknow";
-	var $password = "righttoknow";
+	var $username = "righttoknowdb";
+	var $password = "rightoKnow2012";
 	var $server = "localhost";
 	var $port = "";
-	var $databasename = "righttoknow";
+	var $databasename = "righttoknowdb";
 	var $tablename = "entries";
 
 	var $connection;
