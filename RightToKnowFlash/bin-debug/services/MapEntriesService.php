@@ -20,11 +20,11 @@
  */
 class MapEntriesService {
 
-	var $username = "righttoknow";
-	var $password = "righttoknow";
+	var $username = "righttoknowdb";
+	var $password = "rightoKnow2012";
 	var $server = "localhost";
 	var $port = "3306";
-	var $databasename = "righttoknow";
+	var $databasename = "righttoknowdb";
 	var $tablename = "entries";
 
 	var $connection;
