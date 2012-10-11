@@ -20,11 +20,11 @@
  */
 class MunicipalitiesService {
 
-	var $username = "righttoknowdb";
-	var $password = "rightoKnow2012";
+	var $username = "righttoknow";
+	var $password = "righttoknow";
 	var $server = "localhost";
 	var $port = "";
-	var $databasename = "righttoknowdb";
+	var $databasename = "righttoknow";
 	var $tablename = "municipalities";
 
 	var $connection;

@@ -20,11 +20,11 @@
  */
 class BubbleEntriesService {
 
-	var $username = "righttoknowdb";
-	var $password = "rightoKnow2012";
+	var $username = "righttoknow";
+	var $password = "righttoknow";
 	var $server = "localhost";
 	var $port = "";
-	var $databasename = "righttoknowdb";
+	var $databasename = "righttoknow";
 	var $tablename = "entries";
 
 	var $connection;
@@ -99,10 +99,11 @@ class BubbleEntriesService {
      *
      * Add authroization or any logical checks for secure access to your data
      *
-     * @return array
+     * @return BubbleServiceResult
      */
     public function getBubbleEntriesPerYearByIds($x_axis, $y_axis) {
 
+		// prepare SQL
         $stmt = mysqli_prepare($this->connection,
             "select x_entry_set.`value` as x, y_entry_set.`value` as y, municipalities.`name`, x_entry_set.`year` ".
                 "from $this->tablename as x_entry_set, $this->tablename as y_entry_set, municipalities ".
@@ -114,26 +115,81 @@ class BubbleEntriesService {
                 "order by `year` asc");
         $this->throwExceptionOnError();
 
+		// bind input parameters for statement
         mysqli_stmt_bind_param($stmt, 'ii', $x_axis, $y_axis);
         $this->throwExceptionOnError();
 
+		// execute SQL
         mysqli_stmt_execute($stmt);
         $this->throwExceptionOnError();
 
-        $rows = array();
+		// initialize result to the corresponding return type
+        $result = new BubbleServiceResult;
+		// initialize internal result field
+        $result->rows = array();
 
+		// bind result to a helper object and fetch actual data
+        mysqli_stmt_bind_result($stmt, $entry->x, $entry->y, $entry->name, $year);
+        mysqli_stmt_fetch($stmt);
+		
+		// force type "number" for the corresponding fields
+		$entry->x = $entry->x + 0.0;
+		$entry->y = $entry->y + 0.0;
+
+		// initialize result object fields
+        $result->minYear = $year;
+        $result->maxYear = $year;
+        $result->minXValue = $entry->x;
+        $result->maxXValue = $entry->x;
+        $result->minYValue = $entry->y;
+        $result->maxYValue = $entry->y;
+
+		// insert first row
+        $result->rows[0][] = $entry;
+		// initialize new empty object
+        $entry = new stdClass();
+		// bind results again for another fetch
         mysqli_stmt_bind_result($stmt, $entry->x, $entry->y, $entry->name, $year);
 
         while (mysqli_stmt_fetch($stmt)) {
-            $rows[$year][] = $entry;
+			// force type "number"
+			$entry->x = $entry->x + 0.0;
+			// update the result object fields
+            if ($entry->x < $result->minXValue) {
+                $result->minXValue = $entry->x;
+            }
+            if ($entry->x > $result->maxXValue) {
+                $result->maxXValue = $entry->x;
+            }
+			
+			// force type "number"
+			$entry->y = $entry->y + 0.0;
+			// update the result object fields
+            if ($entry->y < $result->minYValue) {
+                $result->minYValue = $entry->y + 0.0;
+            }
+            if ($entry->y > $result->maxYValue) {
+                $result->maxYValue = $entry->y + 0.0;
+            }
+			
+            if ($year < $result->minYear) {
+                $result->minYear = $year;
+            }
+            if ($year > $result->maxYear) {
+                $result->maxYear = $year;
+            }
+			// insert row
+            $result->rows[$year - $result->minYear][] = $entry;
+			// initialize new empty object
             $entry = new stdClass();
+			// bind results for the subsequent fetch
             mysqli_stmt_bind_result($stmt, $entry->x, $entry->y, $entry->name, $year);
         }
 
         mysqli_stmt_free_result($stmt);
         mysqli_close($this->connection);
 
-        return $rows;
+        return $result;
     }
 
     public function getPossibleYears($x_axis, $y_axis) {
@@ -181,6 +237,16 @@ class BubbleEntriesService {
 			throw new Exception('MySQL Error - '. $msg);
 		}		
 	}
+}
+
+class BubbleServiceResult {
+	public $minYear;
+	public $maxYear;
+	public $minXValue;
+	public $maxXValue;
+	public $minYValue;
+	public $maxYValue;
+	public $rows;
 }
 
 ?>
