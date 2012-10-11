@@ -12,7 +12,7 @@ import mx.rpc.AsyncToken;
 import mx.rpc.remoting.Operation;
 import mx.rpc.remoting.RemoteObject;
 import valueObjects.BubbleEntry;
-import valueObjects.BubbleServiceResult;
+//import valueObjects.BubbleServiceResult;
 
 import mx.collections.ItemResponder;
 import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
@@ -37,7 +37,7 @@ internal class _Super_BubbleEntriesService extends com.adobe.fiber.services.wrap
          operation.resultElementType = valueObjects.BubbleEntry;
         operations["getBubbleEntriesByIds"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "getBubbleEntriesPerYearByIds");
-         operation.resultType = valueObjects.BubbleServiceResult;
+       // operation.resultType = valueObjects.BubbleServiceResult;
         operations["getBubbleEntriesPerYearByIds"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "getPossibleYears");
          operation.resultType = Object;
