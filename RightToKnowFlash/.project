@@ -19,17 +19,17 @@
 		<link>
 			<name>services/BubbleEntriesService.php</name>
 			<type>1</type>
-			<location>D:/Development/pravostrana/RightToKnowFlash/bin-debug/services/BubbleEntriesService.php</location>
+			<location>bin-debug/services/BubbleEntriesService.php</location>
 		</link>
 		<link>
 			<name>services/MapEntriesService.php</name>
 			<type>1</type>
-			<location>D:/Development/pravostrana/RightToKnowFlash/bin-debug/services/MapEntriesService.php</location>
+			<location>bin-debug/services/MapEntriesService.php</location>
 		</link>
 		<link>
 			<name>services/MunicipalitiesService.php</name>
 			<type>1</type>
-			<location>D:/Development/pravostrana/RightToKnowFlash/bin-debug/services/MunicipalitiesService.php</location>
+			<location>bin-debug/services/MunicipalitiesService.php</location>
 		</link>
 	</linkedResources>
 </projectDescription>

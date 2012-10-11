@@ -12,6 +12,7 @@ import mx.rpc.AsyncToken;
 import mx.rpc.remoting.Operation;
 import mx.rpc.remoting.RemoteObject;
 import valueObjects.BubbleEntry;
+import valueObjects.BubbleServiceResult;
 
 import mx.collections.ItemResponder;
 import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
@@ -36,7 +37,7 @@ internal class _Super_BubbleEntriesService extends com.adobe.fiber.services.wrap
          operation.resultElementType = valueObjects.BubbleEntry;
         operations["getBubbleEntriesByIds"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "getBubbleEntriesPerYearByIds");
-         operation.resultElementType = valueObjects.BubbleEntry;
+         operation.resultType = valueObjects.BubbleServiceResult;
         operations["getBubbleEntriesPerYearByIds"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "getPossibleYears");
          operation.resultType = Object;
@@ -89,7 +90,7 @@ internal class _Super_BubbleEntriesService extends com.adobe.fiber.services.wrap
       *
       * @return an mx.rpc.AsyncToken whose result property will be populated with the result of the operation when the server response is received.
       */
-    public function getBubbleEntriesPerYearByIds(x_axis:Object, y_axis:Object) : mx.rpc.AsyncToken
+    public function getBubbleEntriesPerYearByIds(x_axis:int, y_axis:int) : mx.rpc.AsyncToken
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getBubbleEntriesPerYearByIds");
 		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(x_axis,y_axis) ;
