@@ -1,49 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
 		 xmlns:amcharts="http://www.amcharts.com/com_internal"
 		 xmlns:bubbleentriesservice="services.bubbleentriesservice.*"
-		 width="100%" height="100%">
+		 width="100%" height="100%"
+		 horizontalAlign="right">
 	<fx:Script>
 		<![CDATA[
+			import com.amcharts.events.AmChartEvent;
+			import com.amcharts.events.ValueAxisEvent;
+			
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
 			import mx.events.FlexEvent;
+			import mx.rpc.events.ResultEvent;
 			
 			public var bulletSizeValue:Number = 10;
 			
-			protected function chart_creationCompleteHandler(event:FlexEvent):void
-			{
-				getBubbleEntriesByIds(1, 2, 2010);
-			}
+			private var xStart:Number = 0;
+			private var xEnd:Number = 0;
+			private var yStart:Number = 0;
+			private var yEnd:Number = 0;
+			
+			private var xStartToSet:Number = 0;
+			private var xEndToSet:Number = 0;
+			private var yStartToSet:Number = 0;
+			private var yEndToSet:Number = 0;
 			
 			public function setBulletSize(value:Number):void{
 				g0.setStyle("bulletSize", value);
 			}
 			
-			
-			public function getBubbleEntriesByIds(x_axis:Number, y_axis:Number, year:Number):void
+			/**
+			 * Utility function to format years retrieved as int-s from DB.
+			 */
+			protected function formatYear(value:Number):Object
 			{
-				getBubbleEntriesByIdsResult.token = bubbleEntriesService.getBubbleEntriesByIds(x_axis, y_axis, year);
+				return value.toString();
 			}
 			
+			/**
+			 * Service is started upon slider initialization. 
+			 */
 			
+			protected function hSlider_initializeHandler(event:FlexEvent):void
+			{
+				getBubbleEntriesPerYearByIdsResult.token = bubbleEntriesService.getBubbleEntriesPerYearByIds(1, 2);
+			}
+			
+			/**
+			 * Update the start and end zoom value fields.
+			 */
+			protected function xAxis_axisZoomedHandler(event:ValueAxisEvent):void
+			{
+				xStart = event.startValue;
+				xEnd = event.endValue; 
+			}
+			
+			/**
+			 * Update the start and end zoom value fields.
+			 */
+			protected function yAxis_axisZoomedHandler(event:ValueAxisEvent):void
+			{
+				yStart = event.startValue;
+				yEnd = event.endValue;
+			}
+			
+			/**
+			 * When data is updated for the chart (i.e. timeline slider changed),
+			 * try to retain the previous zoom level and area.
+			 * The "toSet" values, which are previously maintained, help for this matter.
+			 */
+			protected function chart_dataUpdatedHandler(event:AmChartEvent):void
+			{
+				if (xStartToSet != 0 || xEndToSet != 0)
+				{
+					g0.xAxis.zoomToValues(xStartToSet, xEndToSet);
+					xStartToSet = 0;
+					xEndToSet = 0;
+				}
+				
+				if (yStartToSet != 0 || yEndToSet != 0)
+				{
+					g0.yAxis.zoomToValues(yStartToSet, yEndToSet);
+					yStartToSet = 0;
+					yEndToSet = 0;
+				}
+			}
+			
+			/**
+			 * Detect changes in timeline slider and store "toSet" values 
+			 */
+			protected function hSlider_changeHandler(event:Event):void
+			{
+				if (xStart != 0 || xEnd != 0)
+				{
+					xStartToSet = xStart;
+					xEndToSet = xEnd;
+				}
+				if (yStart != 0 || yEnd != 0)
+				{
+					yStartToSet = yStart;
+					yEndToSet = yEnd;
+				}
+				
+			}
+			
+			protected function getBubbleEntriesPerYearByIdsResult_resultHandler(event:ResultEvent):void
+			{
+				var minYear:int = getBubbleEntriesPerYearByIdsResult.lastResult.minYear;
+				var maxYear:int = getBubbleEntriesPerYearByIdsResult.lastResult.maxYear;
+				
+				hSlider.minimum = minYear;
+				hSlider.maximum = maxYear;
+				
+				hSlider.labels = new Array(maxYear - minYear + 1);
+				
+				for (var i:int = minYear; i <= maxYear; i++) {
+					hSlider.labels[i - minYear] = i;
+				}
+				
+				g0.xAxis.min = 0;
+				g0.xAxis.max = getBubbleEntriesPerYearByIdsResult.lastResult.maxXValue;
+				
+				g0.yAxis.min = 0;
+				g0.yAxis.max = getBubbleEntriesPerYearByIdsResult.lastResult.maxYValue;
+				
+				g0.xAxis.addEventListener(ValueAxisEvent.AXIS_ZOOMED, xAxis_axisZoomedHandler);
+				g0.yAxis.addEventListener(ValueAxisEvent.AXIS_ZOOMED, yAxis_axisZoomedHandler);
+			}
 			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
-		<s:CallResponder id="getBubbleEntriesByIdsResult"/>
 		<bubbleentriesservice:BubbleEntriesService id="bubbleEntriesService"
 												   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 												   showBusyCursor="true"/>
-		
+		<s:CallResponder id="getBubbleEntriesPerYearByIdsResult" result="getBubbleEntriesPerYearByIdsResult_resultHandler(event)"/>
 	</fx:Declarations>
 	
 	
-	<amcharts:AmXYChart id="chart" width="100%" height="100%"
-						creationComplete="chart_creationCompleteHandler(event)"
-						dataProvider="{getBubbleEntriesByIdsResult.lastResult}">
+	<amcharts:AmXYChart id="chart" width="100%" height="90%"
+						dataUpdated="chart_dataUpdatedHandler(event)"
+						dataProvider="{getBubbleEntriesPerYearByIdsResult.lastResult.rows.getItemAt(hSlider.value - hSlider.minimum)}">
 		<amcharts:graphs>
 			<amcharts:AmGraph
 				id="g0" 
@@ -52,8 +152,7 @@
 				yField="y"
 				bulletSize="10"
 				lineAlpha="0" 
-				bullet="bubble"
-				itemColors="[0xFF6600,0xFCD202,0xB0DE09,0x0D8ECF,0x2A0CD0,0xCD0D74,0xCC0000]"/>                        
+				bullet="bubble"/>                        
 		</amcharts:graphs>
 		
 		<amcharts:balloon>
@@ -71,4 +170,9 @@
 		</amcharts:chartScrollbar>
 		
 	</amcharts:AmXYChart>
-</s:Group>
+	
+	<mx:HSlider id="hSlider" width="75%" height="10%"
+				change="hSlider_changeHandler(event)" dataTipFormatFunction="formatYear"
+				initialize="hSlider_initializeHandler(event)" labelOffset="35" snapInterval="1"
+				tickInterval="1" tickOffset="15"/>
+</s:VGroup>
