@@ -11,6 +11,8 @@
 			   verticalCenter="0">
 	<fx:Script> 
 		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.collections.ArrayList;
 			import mx.collections.XMLListCollection;
 			import mx.controls.Alert;
 			import mx.controls.Menu;
@@ -31,22 +33,15 @@
 			[Bindable]
 			private var fullScreenState:String;
 			
-			[Bindable]
-			public var menuXaxis:XMLListCollection;
-			public var menuYaxis:XMLListCollection;
-			private var menubarXML:XMLList;
 			
 			[Bindable]
-			public var xmlData:XML;
+			protected var allCities:ArrayCollection;
 			
-			protected var menuX:Menu;
-			protected var menuY:Menu;
-			
-			protected var axisControlVar:String;
 			
 			private function init():void {
 				fullScreenState = stage.displayState;
 				stage.addEventListener(FullScreenEvent.FULL_SCREEN, stage_fullScreen);		
+				allCities = new ArrayCollection();
 			}
 			
 			protected function list_creationCompleteHandler(event:FlexEvent):void
@@ -128,81 +123,50 @@
 				
 				PopUpManager.centerPopUp(titleWindowInstance);
 			}
-	
-			
-			protected function categoriesService_resultHandler(event:ResultEvent):void
-			{
-				//Alert.show(event.message+"");
-				xmlData = new XML(getCategoriesMenuResult.lastResult);
-				
-				menubarXML = xmlData.children();
-				menuXaxis = new XMLListCollection(menubarXML);
-				menuYaxis = new XMLListCollection(menubarXML);
-				
-				menuX = Menu.createMenu(null, menuXaxis, false);
-				menuX.labelField="@name";
-				
-				menuY = Menu.createMenu(null, menuYaxis, false);
-				menuY.labelField="@name";
-			}
 			
 			
-			protected function xAxisPopup_itemClickHandler(event:MenuEvent):void
-			{
-				event.currentTarget.label = event.label;
-				//Alert.show(event.item.@id+"");
-				/*Alert.show("itemClick event label: " + event.label
-					+ "  \nindex: " + event.index
-					+ "  \nitem.label: " + event.item.label 
-					+ "  \nitem.data: " + event.item.data);
-				*/
-			}
-			
-			protected function xAxisPopup_creationCompleteHandler(event:FlexEvent):void
-			{
-				getCategoriesMenu();
-			}
-			
-			
-			
-			protected function getCategoriesMenu():void
-			{
-				getCategoriesMenuResult.token = categoriesService.getCategoriesMenu();
-			}
-			
-			protected function xAxisPopup_clickHandler(event:MouseEvent):void
-			{
-				// TODO Auto-generated method stub
-				menuX.show(xAxisPopup.x+13, xAxisPopup.y+63);
-			}
-			
-			protected function yAxisPopup_creationCompleteHandler(event:FlexEvent):void
+			protected function checkAllCities_clickHandler(event:MouseEvent):void
 			{
 				// TODO Auto-generated method stub
 				
+				if(checkAllCities.selected){
+					for(var i:int=0; i<allCities.length; i++){
+						allCities.getItemAt(i).isSelected = true;
+						
+					}
+				}else{
+					for(var i:int=0; i<allCities.length; i++){
+						allCities.getItemAt(i).isSelected = false;
+					}
+				}
+				
+				list.dataProvider = allCities;
+				
 			}
 			
-			protected function yAxisPopup_clickHandler(event:MouseEvent):void
+			protected function getAllMunicipalitiesResult_resultHandler(event:ResultEvent):void
 			{
-				menuX.show(yAxisPopup.x, yAxisPopup.y);
+				// TODO Auto-generated method stub
+				var tmpArray:ArrayCollection = getAllMunicipalitiesResult.lastResult;
 				
+				for each(var item:Object in tmpArray){
+					var o:Object = {label:item.name, dataField:id, isSelected:false};
+					allCities.addItem(o);
+				}
+				
+				//allCities=getAllMunicipalitiesResult.lastResult;
 			}
 			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
-		<s:CallResponder id="getAllMunicipalitiesResult"/>
+		<s:CallResponder id="getAllMunicipalitiesResult" result="getAllMunicipalitiesResult_resultHandler(event)"/>
 		
 		<municipalitiesservice:MunicipalitiesService id="municipalitiesService"
 													 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 													 showBusyCursor="true"/>
 		<s:CallResponder id="getCategoriesByAxesResult"/>
-		<categoriesservice:CategoriesService id="categoriesService"
-											 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
-											 showBusyCursor="true"
-											  result="categoriesService_resultHandler(event)"/>
-		<s:CallResponder id="getCategoriesMenuResult"/>
-		<s:CallResponder id="getCategoriesMenuResult2"/>
+		
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
 	<s:BorderContainer width="100%" height="100%" horizontalCenter="0" verticalCenter="0">
@@ -211,25 +175,10 @@
 			<s:VGroup height="100%" gap="3" width="100%">
 				<mx:TabNavigator width="100%" height="100%" paddingBottom="0" paddingLeft="0" paddingRight="0">
 					<s:NavigatorContent width="100%" height="100%" label="Графикон">
-						<s:HGroup width="100%" height="100%" gap="-12">
-							<s:VGroup width="100%" height="100%" gap="-12">
-								<s:Group width="100%">
-									<s:Button id="xAxisPopup" width="99%" right="16" 
-											  creationComplete="xAxisPopup_creationCompleteHandler(event)" 
-											  click="xAxisPopup_clickHandler(event)"/>
-								</s:Group>
-								<s:Group width="100%" height="100%">
+						
 									<components:BubbleChartComponent  id="bubblechart" x="5">
 									</components:BubbleChartComponent>
-								</s:Group>
-							</s:VGroup>
-							<s:Group height="100%" width="30">
-									<s:Button id="yAxisPopup" top="20" right="14" height="100%" 
-											  rotation="90" creationComplete="yAxisPopup_creationCompleteHandler(event)"
-											  click="yAxisPopup_clickHandler(event)" ></s:Button>
-							</s:Group>
-							
-						</s:HGroup>
+								
 						
 						<!--<s:Label id="yearLbl" color="#ADADAD" fontSize="128" fontWeight="bold"
 								 horizontalCenter="0" text="{timelineSlider.value}"
@@ -279,20 +228,19 @@
 				<s:Panel width="100%" height="85%" dropShadowVisible="false" fontSize="11"
 						 fontWeight="normal" skinClass="org.most.righttoknow.skins.PanelSkin"
 						 title="Градови">
-					<s:List id="list" y="0" width="100%" height="100%" borderVisible="false"
-							creationComplete="list_creationCompleteHandler(event)"
-							dataProvider="{getAllMunicipalitiesResult.lastResult}" fontSize="10"
-							horizontalCenter="0" labelField="name">
-						
-						<s:itemRenderer>
+					<mx:List id="list" y="0" width="100%" height="100%" borderVisible="false"
+							 creationComplete="list_creationCompleteHandler(event)"
+							 dataProvider="{allCities}" fontSize="10" horizontalCenter="0"
+							 labelField="label" paddingBottom="0" paddingLeft="0" paddingTop="0">
+						<mx:itemRenderer>
 							<fx:Component>
-								
-									<mx:CheckBox label="{data.name}" paddingLeft="5">
+									<mx:CheckBox label="{data.label}" paddingLeft="5" selected="{data.isSelected}">
 									</mx:CheckBox>
-								
 							</fx:Component>
-						</s:itemRenderer> 
-					</s:List>
+						</mx:itemRenderer> 
+					</mx:List>
+					<s:CheckBox id="checkAllCities" x="5" y="-19"
+								click="checkAllCities_clickHandler(event)"/>
 				</s:Panel>
 				<s:Panel width="100%" height="15%" dropShadowVisible="false"
 						 skinClass="org.most.righttoknow.skins.PanelSkin" title="Големина">

@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009" 
-		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx"
-		 xmlns:amcharts="http://www.amcharts.com/com_internal"
-		 xmlns:bubbleentriesservice="services.bubbleentriesservice.*"
-		 width="100%" height="100%"
-		 horizontalAlign="right">
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009"
+		  xmlns:s="library://ns.adobe.com/flex/spark"
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  xmlns:amcharts="http://www.amcharts.com/com_internal"
+		  xmlns:bubbleentriesservice="services.bubbleentriesservice.*"
+		  xmlns:categoriesservice="services.categoriesservice.*"
+		  width="100%" height="100%" horizontalAlign="right">
 	<fx:Script>
 		<![CDATA[
 			import com.amcharts.events.AmChartEvent;
 			import com.amcharts.events.ValueAxisEvent;
 			
 			import mx.collections.ArrayCollection;
+			import mx.collections.XMLListCollection;
 			import mx.controls.Alert;
+			import mx.controls.Menu;
 			import mx.events.FlexEvent;
+			import mx.events.MenuEvent;
+			import mx.events.SliderEvent;
 			import mx.rpc.events.ResultEvent;
 			
 			public var bulletSizeValue:Number = 10;
@@ -27,6 +31,20 @@
 			private var xEndToSet:Number = 0;
 			private var yStartToSet:Number = 0;
 			private var yEndToSet:Number = 0;
+			
+			[Bindable]
+			protected var chartDataProvider:ArrayCollection;
+			
+			[Bindable]
+			public var menuXaxis:XMLListCollection;
+			public var menuYaxis:XMLListCollection;
+			private var menubarXML:XMLList;
+			
+			[Bindable]
+			public var xmlData:XML;
+			
+			protected var menuX:Menu;
+			protected var menuY:Menu;
 			
 			public function setBulletSize(value:Number):void{
 				g0.setStyle("bulletSize", value);
@@ -46,7 +64,7 @@
 			
 			protected function hSlider_initializeHandler(event:FlexEvent):void
 			{
-				getBubbleEntriesPerYearByIdsResult.token = bubbleEntriesService.getBubbleEntriesPerYearByIds(1, 2);
+				getBubbleEntriesPerYearByIds(1, 2);
 			}
 			
 			/**
@@ -92,7 +110,7 @@
 			/**
 			 * Detect changes in timeline slider and store "toSet" values 
 			 */
-			protected function hSlider_changeHandler(event:Event):void
+			protected function hSlider_changeHandler(event:SliderEvent):void
 			{
 				if (xStart != 0 || xEnd != 0)
 				{
@@ -109,6 +127,8 @@
 			
 			protected function getBubbleEntriesPerYearByIdsResult_resultHandler(event:ResultEvent):void
 			{
+				//Alert.show(getBubbleEntriesPerYearByIdsResult.lastResult.minYear+"");
+				//chartDataProvider = getBubbleEntriesPerYearByIdsResult.lastResult.rows;
 				var minYear:int = getBubbleEntriesPerYearByIdsResult.lastResult.minYear;
 				var maxYear:int = getBubbleEntriesPerYearByIdsResult.lastResult.maxYear;
 				
@@ -129,8 +149,87 @@
 				
 				g0.xAxis.addEventListener(ValueAxisEvent.AXIS_ZOOMED, xAxis_axisZoomedHandler);
 				g0.yAxis.addEventListener(ValueAxisEvent.AXIS_ZOOMED, yAxis_axisZoomedHandler);
+				
 			}
 			
+			
+			protected function getBubbleEntriesPerYearByIds(x_axis:int, y_axis:int):void
+			{
+				getBubbleEntriesPerYearByIdsResult.token = bubbleEntriesService.getBubbleEntriesPerYearByIds(x_axis, y_axis);
+			}
+			
+			protected function xAxisPopup_creationCompleteHandler(event:FlexEvent):void
+			{
+				getCategoriesMenu();
+			}
+			
+			protected function xAxisPopup_clickHandler(event:MouseEvent):void
+			{
+				// TODO Auto-generated method stub
+				menuX.show(chart.x+38, chart.y+chart.height-4);
+			}
+			
+			protected function yAxisPopup_creationCompleteHandler(event:FlexEvent):void
+			{
+				
+			}
+			
+			protected function yAxisPopup_clickHandler(event:MouseEvent):void
+			{
+				menuY.show(chart.x+38, chart.y+60);
+				
+			}
+			
+			
+			protected function getCategoriesMenu():void
+			{
+				getCategoriesMenuResult.token = categoriesService.getCategoriesMenu();
+			}
+			
+			protected function getCategoriesMenuResult_resultHandler(event:ResultEvent):void
+			{
+				//Alert.show(event.message+"");
+				xmlData = new XML(getCategoriesMenuResult.lastResult);
+				
+				menubarXML = xmlData.children();
+				menuXaxis = new XMLListCollection(menubarXML);
+				menuYaxis = new XMLListCollection(menubarXML);
+				
+				menuX = Menu.createMenu(null, menuXaxis, false);
+				menuX.labelField="@name";
+				menuX.addEventListener(MenuEvent.ITEM_CLICK, 
+					menuXitemClick);
+				
+				xAxisPopup.label = menuXaxis.getItemAt(0).@name;
+				
+				menuY = Menu.createMenu(null, menuYaxis, false);
+				menuY.labelField="@name";
+				menuY.addEventListener(MenuEvent.ITEM_CLICK, 
+					menuYitemClick);
+				
+				yAxisPopup.label = menuYaxis.getItemAt(0).@name;
+			}
+			
+			/**
+			 * Click handler for the menu on the X axis
+			 * */
+			private function menuXitemClick(event:MenuEvent):void {
+				/*Alert.show("event.type: " + event.type
+					+ 	"\nevent.index: " + event.index
+					+ 	"\nItem label: " + event.item.@name
+					+ 	"\nItem selected: " + event.item.@toggled
+					+	"\nItem id: " + event.item.@id);
+				*/
+				xAxisPopup.label = event.item.@name;
+			}
+			
+			/**
+			 * Click handler for the menu on the X axis
+			 * */
+			private function menuYitemClick(event:MenuEvent):void {
+				
+				yAxisPopup.label = event.item.@name;
+			}
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -138,39 +237,60 @@
 												   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 												   showBusyCursor="true"/>
 		<s:CallResponder id="getBubbleEntriesPerYearByIdsResult" result="getBubbleEntriesPerYearByIdsResult_resultHandler(event)"/>
+		<s:CallResponder id="getCategoriesMenuResult" result="getCategoriesMenuResult_resultHandler(event)"/>
+		<categoriesservice:CategoriesService id="categoriesService"
+											 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+											 showBusyCursor="true"/>
+		
 	</fx:Declarations>
 	
+	<s:HGroup width="100%" height="100%" gap="0">
+		<s:Group  height="100%" width="20">
+			<s:Button id="yAxisPopup" bottom="20" left="0" height="100%" top="16" fontWeight="bold"
+					  rotation="-90" creationComplete="yAxisPopup_creationCompleteHandler(event)"
+					  click="yAxisPopup_clickHandler(event)" ></s:Button>
+		</s:Group>
+		<s:VGroup width="100%" height="100%" gap="0">
+			<s:Group width="100%" height="100%">
+				<amcharts:AmXYChart id="chart" width="100%" height="100%"
+									dataUpdated="chart_dataUpdatedHandler(event)"
+									dataProvider="{getBubbleEntriesPerYearByIdsResult.lastResult.rows.getItemAt(hSlider.value - hSlider.minimum)}">
+					<amcharts:graphs>
+						<amcharts:AmGraph
+							id="g0" 
+							balloonText="[[name]]"
+							xField="x"
+							yField="y"
+							bulletSize="10"
+							lineAlpha="0" 
+							bullet="bubble"/>                        
+					</amcharts:graphs>
+					
+					<amcharts:balloon>
+						<amcharts:AmBalloon cornerRadius="10" borderThickness="2" borderColor="#FFFFFF" borderAlpha="1"/>                
+					</amcharts:balloon>
+					
+					<amcharts:chartCursor>
+						<amcharts:ChartCursor>                    
+						</amcharts:ChartCursor>
+					</amcharts:chartCursor>            
+					
+					<amcharts:chartScrollbar>
+						<amcharts:ChartScrollbar height="20">                    
+						</amcharts:ChartScrollbar>    
+					</amcharts:chartScrollbar>
+					
+				</amcharts:AmXYChart>
 	
-	<amcharts:AmXYChart id="chart" width="100%" height="90%"
-						dataUpdated="chart_dataUpdatedHandler(event)"
-						dataProvider="{getBubbleEntriesPerYearByIdsResult.lastResult.rows.getItemAt(hSlider.value - hSlider.minimum)}">
-		<amcharts:graphs>
-			<amcharts:AmGraph
-				id="g0" 
-				balloonText="[[name]]"
-				xField="x"
-				yField="y"
-				bulletSize="10"
-				lineAlpha="0" 
-				bullet="bubble"/>                        
-		</amcharts:graphs>
+			</s:Group>
+			<s:Group width="100%" height="20">
+				<s:Button id="xAxisPopup" width="100%" right="16" fontWeight="bold" 
+						  creationComplete="xAxisPopup_creationCompleteHandler(event)" 
+						  click="xAxisPopup_clickHandler(event)"/>
+			</s:Group>
+		</s:VGroup>
 		
-		<amcharts:balloon>
-			<amcharts:AmBalloon cornerRadius="10" borderThickness="2" borderColor="#FFFFFF" borderAlpha="1"/>                
-		</amcharts:balloon>
-		
-		<amcharts:chartCursor>
-			<amcharts:ChartCursor>                    
-			</amcharts:ChartCursor>
-		</amcharts:chartCursor>            
-		
-		<amcharts:chartScrollbar>
-			<amcharts:ChartScrollbar height="20">                    
-			</amcharts:ChartScrollbar>    
-		</amcharts:chartScrollbar>
-		
-	</amcharts:AmXYChart>
-	
+	</s:HGroup>
 	<mx:HSlider id="hSlider" width="75%" height="10%"
 				change="hSlider_changeHandler(event)" dataTipFormatFunction="formatYear"
 				initialize="hSlider_initializeHandler(event)" labelOffset="35" snapInterval="1"
