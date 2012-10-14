@@ -112,7 +112,7 @@ class BubbleEntriesService {
                 "and x_entry_set.`year` = y_entry_set.`year` ".
                 "and x_entry_set.id_municipality = y_entry_set.id_municipality ".
                 "and x_entry_set.id_municipality = municipalities.id_municipality ".
-                "order by `year` asc");
+                "order by `year`, municipalities.`id_municipality` asc");
         $this->throwExceptionOnError();
 
 		// bind input parameters for statement
