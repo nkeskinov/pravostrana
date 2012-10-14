@@ -187,84 +187,6 @@
     <property name="name" type="string"/>
     <property name="map_id" type="string"/>
   </entity>
-  <entity name="CategoriesMenu">
-    <annotation name="EntityProperties">
-      <item name="EntityOriginalName">CategoriesMenu</item>
-    </annotation>
-    <annotation name="service Group">
-      <item name="service">CategoriesService</item>
-    </annotation>
-    <annotation name="ServerProperties">
-      <item name="IncludeRemoteClass">nonempty</item>
-    </annotation>
-    <annotation name="getCategoriesByAxes">
-      <item name="propertySpecifier">menu</item>
-    </annotation>
-    <annotation name="ActionScriptGeneration">
-      <item name="Package">valueObjects</item>
-    </annotation>
-    <property name="menu" type="opaque" required="true"/>
-  </entity>
-  <service name="CategoriesService">
-    <annotation name="ActionScriptGeneration">
-      <item name="Source">CategoriesService</item>
-      <item name="ServiceType">RemoteObject</item>
-      <item name="Package">services.categoriesservice</item>
-      <item name="Endpoint">gateway.php</item>
-      <item name="Destination">CategoriesService</item>
-    </annotation>
-    <annotation name="ServiceTypeGroup">
-      <item name="ServiceBackendType">PHP</item>
-    </annotation>
-    <annotation name="ServiceConfig">
-      <item name="PHP_RELATIVE_LOCATION">RightToKnowFlash/bin-debug/services/CategoriesService.php</item>
-      <item name="PHP_SERVER_ROOT">../</item>
-      <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
-      <item name="PHP_SERVICES_FOLDER">bin-debug/services</item>
-      <item name="PHP_LOCATION">bin-debug/services/CategoriesService.php</item>
-      <item name="LINKED_FILE">CategoriesService.php</item>
-      <item name="PHP_SERVER_ROOT_URL">http://localhost/pravostrana/</item>
-      <item name="ABSOLUTE_ENDPOINT">http://localhost/pravostrana/RightToKnowFlash/bin-debug/gateway.php</item>
-      <item name="PHP_CLASS_NAME">CategoriesService</item>
-    </annotation>
-    <function name="getAllCategories" return-type="Categories[]">
-      <annotation name="analyze group">
-        <item name="analyzed">true</item>
-      </annotation>
-      <annotation name="original signature">
-        <item name="returnType">opaque</item>
-      </annotation>
-    </function>
-    <function name="getCategoriesMenu" return-type="string">
-      <annotation name="analyze group">
-        <item name="analyzed">true</item>
-      </annotation>
-      <annotation name="original signature">
-        <item name="returnType">opaque</item>
-      </annotation>
-    </function>
-  </service>
-  <entity name="Categories" persistent="true">
-    <annotation name="EntityProperties">
-      <item name="EntityOriginalName">Categories</item>
-    </annotation>
-    <annotation name="service Group">
-      <item name="service">CategoriesService,CategoriesServiceDummy</item>
-    </annotation>
-    <annotation name="ServerProperties">
-      <item name="IncludeRemoteClass">nonempty</item>
-    </annotation>
-    <annotation name="getAllCategories">
-      <item name="propertySpecifier">id,name,axis,parent</item>
-    </annotation>
-    <annotation name="ActionScriptGeneration">
-      <item name="Package">valueObjects</item>
-    </annotation>
-    <id name="id" type="integer"/>
-    <property name="name" type="string"/>
-    <property name="axis" type="string"/>
-    <property name="parent" type="integer"/>
-  </entity>
   <service name="BubbleEntriesService">
     <annotation name="ActionScriptGeneration">
       <item name="Source">BubbleEntriesService</item>
@@ -376,5 +298,184 @@
     <property name="year" type="integer" required="true"/>
     <property name="y" type="string" required="true"/>
     <property name="x" type="string" required="true"/>
+  </entity>
+  <service name="EntrysetsService">
+    <annotation name="ActionScriptGeneration">
+      <item name="Source">EntrysetsService</item>
+      <item name="ServiceType">RemoteObject</item>
+      <item name="Package">services.entrysetsservice</item>
+      <item name="Endpoint">gateway.php</item>
+      <item name="Destination">EntrysetsService</item>
+    </annotation>
+    <annotation name="ServiceTypeGroup">
+      <item name="ServiceBackendType">PHP</item>
+    </annotation>
+    <annotation name="ServiceConfig">
+      <item name="PHP_RELATIVE_LOCATION">RightToKnowFlash/bin-debug/services/EntrysetsService.php</item>
+      <item name="PHP_SERVER_ROOT">D:/Development/pravostrana</item>
+      <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
+      <item name="PHP_SERVICES_FOLDER">D:/Development/pravostrana/RightToKnowFlash/bin-debug/services</item>
+      <item name="PHP_LOCATION">D:/Development/pravostrana/RightToKnowFlash/bin-debug/services/EntrysetsService.php</item>
+      <item name="LINKED_FILE">EntrysetsService.php</item>
+      <item name="PHP_SERVER_ROOT_URL">http://localhost/pravostrana</item>
+      <item name="ABSOLUTE_ENDPOINT">http://localhost/pravostrana/RightToKnowFlash/bin-debug/gateway.php</item>
+      <item name="PHP_CLASS_NAME">EntrysetsService</item>
+    </annotation>
+    <function name="getAllEntry_sets" return-type="Entry_sets[]">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">opaque</item>
+      </annotation>
+    </function>
+    <function name="getEntry_setsByID" return-type="Entry_sets">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">opaque</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+      <parameter name="itemID" type="integer"/>
+    </function>
+    <function name="createEntry_sets" return-type="integer">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">opaque</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+      <parameter name="item" type="Entry_sets"/>
+    </function>
+    <function name="updateEntry_sets" return-type="void">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">opaque</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+      <parameter name="item" type="Entry_sets"/>
+    </function>
+    <function name="deleteEntry_sets" return-type="void">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">opaque</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+      <parameter name="itemID" type="integer"/>
+    </function>
+    <function name="count" return-type="integer">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">opaque</item>
+      </annotation>
+    </function>
+    <function name="getEntry_sets_paged" return-type="Entry_sets[]">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">opaque,opaque</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+      <parameter name="startIndex" type="integer"/>
+      <parameter name="numItems" type="integer"/>
+    </function>
+    <function name="getEntrySetMenu" return-type="EntrySetsMenu">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">default_x,default_x_id,default_y,default_y_id,menu</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="returnType">EntrySetsMenu</item>
+      </annotation>
+    </function>
+  </service>
+  <entity name="EntrySetsMenu">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">EntrySetsMenu</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="RemoteClass">EntrySetsMenu</item>
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">EntrysetsService,EntrysetsServiceDummy</item>
+    </annotation>
+    <annotation name="getEntrySetMenu">
+      <item name="propertySpecifier">default_x,default_x_id,default_y,default_y_id,menu</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="default_x" type="opaque"/>
+    <property name="default_x_id" type="opaque"/>
+    <property name="default_y" type="opaque"/>
+    <property name="default_y_id" type="opaque"/>
+    <property name="menu" type="opaque"/>
+  </entity>
+  <entity name="Entry_sets" persistent="true">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">Entry_sets</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">EntrysetsService</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="DataManagement">
+      <item name="create">createEntry_sets</item>
+      <item name="update">updateEntry_sets</item>
+      <item name="get">getEntry_setsByID</item>
+      <item name="delete">deleteEntry_sets</item>
+      <item name="fillFunc">getAllEntry_sets,getEntry_sets_paged</item>
+      <item name="managingService">EntrysetsService</item>
+    </annotation>
+    <annotation name="getEntry_setsByID">
+      <item name="propertySpecifier">id_entry_set,name,default_x,default_y,parent</item>
+    </annotation>
+    <annotation name="getAllEntry_sets">
+      <item name="propertySpecifier">id_entry_set,name,default_x,default_y,parent</item>
+    </annotation>
+    <annotation name="getEntry_sets_paged">
+      <item name="propertySpecifier">id_entry_set,name,default_x,default_y,parent</item>
+      <item name="pagingEnabled">true</item>
+      <item name="positionalPagingParameters">true</item>
+      <item name="countOperation">count</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <id name="id_entry_set" type="integer"/>
+    <property name="name" type="string"/>
+    <property name="default_x" type="integer"/>
+    <property name="default_y" type="integer"/>
+    <property name="parent" type="integer"/>
+  </entity>
+  <entity name="CategoriesMenu">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">CategoriesMenu</item>
+    </annotation>
+    <annotation name="service Group"/>
+    <annotation name="ServerProperties">
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="getCategoriesByAxes">
+      <item name="propertySpecifier">menu</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="menu" type="opaque" required="true"/>
   </entity>
 </model>

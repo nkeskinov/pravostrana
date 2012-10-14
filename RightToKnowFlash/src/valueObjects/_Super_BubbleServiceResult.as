@@ -29,7 +29,17 @@ public class _Super_BubbleServiceResult extends flash.events.EventDispatcher imp
 {
     model_internal static function initRemoteClassAliasSingle(cz:Class) : void
     {
-        flash.net.registerClassAlias("BubbleServiceResult", cz);
+        try
+        {
+            if (flash.net.getClassByAlias("BubbleServiceResult") == null)
+            {
+                flash.net.registerClassAlias("BubbleServiceResult", cz);
+            }
+        }
+        catch (e:Error)
+        {
+            flash.net.registerClassAlias("BubbleServiceResult", cz);
+        }
     }
 
     model_internal static function initRemoteClassAliasAllRelated() : void
@@ -256,7 +266,6 @@ public class _Super_BubbleServiceResult extends flash.events.EventDispatcher imp
     /**
      * derived property calculators
      */
-    
 
     /**
      * isValid calculator

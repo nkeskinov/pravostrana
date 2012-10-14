@@ -26,7 +26,7 @@
 			import org.most.righttoknow.components.HelpTitleWindow;
 			import org.most.righttoknow.components.ShareTitleWindow;
 			import org.osmf.events.TimeEvent;
-			import org.most.righttoknow.controls.*;
+			
 			
 			import services.municipalitiesservice.MunicipalitiesService;
 			
@@ -158,8 +158,8 @@
 				<mx:TabNavigator width="100%" height="100%" paddingBottom="0" paddingLeft="0" paddingRight="0">
 					<s:NavigatorContent width="100%" height="100%" label="Графикон">
 						<s:Group width="100%" height="100%" top="-10">
-							<components:BubbleChartComponent  id="bubblechart" x="0">
-							</components:BubbleChartComponent>
+							<components:BubbleChartCustomComponent  id="bubblechart" x="0">
+							</components:BubbleChartCustomComponent>
 						</s:Group>
 						<!--<s:Label id="yearLbl" color="#ADADAD" fontSize="128" fontWeight="bold"
 								 horizontalCenter="0" text="{timelineSlider.value}"

@@ -29,19 +29,18 @@ internal class _Super_BubbleEntriesService extends com.adobe.fiber.services.wrap
 
         // initialize RemoteClass alias for all entities returned by functions of this service
         valueObjects.BubbleEntry._initRemoteClassAlias();
-        valueObjects.BubbleServiceResult._initRemoteClassAlias();
 
         var operations:Object = new Object();
         var operation:mx.rpc.remoting.Operation;
 
         operation = new mx.rpc.remoting.Operation(null, "getBubbleEntriesByIds");
-        operation.resultElementType = valueObjects.BubbleEntry;
+         operation.resultElementType = valueObjects.BubbleEntry;
         operations["getBubbleEntriesByIds"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "getBubbleEntriesPerYearByIds");
-        operation.resultType = valueObjects.BubbleServiceResult;
+         operation.resultType = valueObjects.BubbleServiceResult;
         operations["getBubbleEntriesPerYearByIds"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "getPossibleYears");
-        operation.resultType = Object;
+         operation.resultType = Object;
         operations["getPossibleYears"] = operation;
 
         _serviceControl.operations = operations;
@@ -63,9 +62,9 @@ internal class _Super_BubbleEntriesService extends com.adobe.fiber.services.wrap
     
 
     /**
-      * This method is a generated wrapper used to call the 'getBubbleEntriesByIds' operation. It returns an mx.rpc.AsyncToken whose
-      * result property will be populated with the result of the operation when the server response is received.
-      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value.
+      * This method is a generated wrapper used to call the 'getBubbleEntriesByIds' operation. It returns an mx.rpc.AsyncToken whose 
+      * result property will be populated with the result of the operation when the server response is received. 
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
       *
       * @see mx.rpc.AsyncToken
@@ -76,14 +75,14 @@ internal class _Super_BubbleEntriesService extends com.adobe.fiber.services.wrap
     public function getBubbleEntriesByIds(x_axis:Number, y_axis:Number, year:Number) : mx.rpc.AsyncToken
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getBubbleEntriesByIds");
-        var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(x_axis,y_axis,year) ;
+		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(x_axis,y_axis,year) ;
         return _internal_token;
     }
      
     /**
-      * This method is a generated wrapper used to call the 'getBubbleEntriesPerYearByIds' operation. It returns an mx.rpc.AsyncToken whose
-      * result property will be populated with the result of the operation when the server response is received.
-      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value.
+      * This method is a generated wrapper used to call the 'getBubbleEntriesPerYearByIds' operation. It returns an mx.rpc.AsyncToken whose 
+      * result property will be populated with the result of the operation when the server response is received. 
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
       *
       * @see mx.rpc.AsyncToken
@@ -94,14 +93,14 @@ internal class _Super_BubbleEntriesService extends com.adobe.fiber.services.wrap
     public function getBubbleEntriesPerYearByIds(x_axis:int, y_axis:int) : mx.rpc.AsyncToken
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getBubbleEntriesPerYearByIds");
-        var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(x_axis,y_axis) ;
+		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(x_axis,y_axis) ;
         return _internal_token;
     }
      
     /**
-      * This method is a generated wrapper used to call the 'getPossibleYears' operation. It returns an mx.rpc.AsyncToken whose
-      * result property will be populated with the result of the operation when the server response is received.
-      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value.
+      * This method is a generated wrapper used to call the 'getPossibleYears' operation. It returns an mx.rpc.AsyncToken whose 
+      * result property will be populated with the result of the operation when the server response is received. 
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
       *
       * @see mx.rpc.AsyncToken
@@ -112,7 +111,7 @@ internal class _Super_BubbleEntriesService extends com.adobe.fiber.services.wrap
     public function getPossibleYears(x_axis:Object, y_axis:Object) : mx.rpc.AsyncToken
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getPossibleYears");
-        var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(x_axis,y_axis) ;
+		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(x_axis,y_axis) ;
         return _internal_token;
     }
      
