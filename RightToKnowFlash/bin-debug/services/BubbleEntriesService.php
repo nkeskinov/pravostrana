@@ -101,22 +101,26 @@ class BubbleEntriesService {
      *
      * @return BubbleServiceResult
      */
-    public function getBubbleEntriesPerYearByIds($x_axis, $y_axis) {
+    public function getBubbleEntriesPerYearByIds($x_axis, $y_axis, $z_axis) {
 
 		// prepare SQL
         $stmt = mysqli_prepare($this->connection,
-            "select x_entry_set.`value` as x, y_entry_set.`value` as y, municipalities.`name`, x_entry_set.`year` ".
-                "from $this->tablename as x_entry_set, $this->tablename as y_entry_set, municipalities ".
+            "select x_entry_set.`value` as x, y_entry_set.`value` as y, z_entry_set.`value` as z, ". 
+				"municipalities.`id_municipality`, municipalities.`name`, x_entry_set.`year` ".
+                "from entries as x_entry_set, entries  as y_entry_set, entries as z_entry_set,  municipalities ".
                 "where x_entry_set.id_entry_set = ? ".
                 "and y_entry_set.id_entry_set = ? ".
+                "and z_entry_set.id_entry_set = ? ".
                 "and x_entry_set.`year` = y_entry_set.`year` ".
+				"and x_entry_set.`year` = z_entry_set.`year` ".
                 "and x_entry_set.id_municipality = y_entry_set.id_municipality ".
+                "and x_entry_set.id_municipality = z_entry_set.id_municipality  ".
                 "and x_entry_set.id_municipality = municipalities.id_municipality ".
                 "order by `year`, municipalities.`id_municipality` asc");
         $this->throwExceptionOnError();
 
 		// bind input parameters for statement
-        mysqli_stmt_bind_param($stmt, 'ii', $x_axis, $y_axis);
+        mysqli_stmt_bind_param($stmt, 'iii', $x_axis, $y_axis, $z_axis);
         $this->throwExceptionOnError();
 
 		// execute SQL
@@ -129,12 +133,13 @@ class BubbleEntriesService {
         $result->rows = array();
 
 		// bind result to a helper object and fetch actual data
-        mysqli_stmt_bind_result($stmt, $entry->x, $entry->y, $entry->name, $year);
+        mysqli_stmt_bind_result($stmt, $entry->x, $entry->y, $entry->z, $entry->id_municipality, $entry->name, $year);
         mysqli_stmt_fetch($stmt);
 		
 		// force type "number" for the corresponding fields
 		$entry->x = $entry->x + 0.0;
 		$entry->y = $entry->y + 0.0;
+		$entry->z = $entry->z + 0.0;
 
 		// initialize result object fields
         $result->minYear = $year;
@@ -149,7 +154,7 @@ class BubbleEntriesService {
 		// initialize new empty object
         $entry = new stdClass();
 		// bind results again for another fetch
-        mysqli_stmt_bind_result($stmt, $entry->x, $entry->y, $entry->name, $year);
+        mysqli_stmt_bind_result($stmt, $entry->x, $entry->y, $entry->z, $entry->id_municipality, $entry->name, $year);
 
         while (mysqli_stmt_fetch($stmt)) {
 			// force type "number"
@@ -164,6 +169,7 @@ class BubbleEntriesService {
 			
 			// force type "number"
 			$entry->y = $entry->y + 0.0;
+			$entry->z = $entry->z + 0.0;
 			// update the result object fields
             if ($entry->y < $result->minYValue) {
                 $result->minYValue = $entry->y + 0.0;
@@ -183,7 +189,7 @@ class BubbleEntriesService {
 			// initialize new empty object
             $entry = new stdClass();
 			// bind results for the subsequent fetch
-            mysqli_stmt_bind_result($stmt, $entry->x, $entry->y, $entry->name, $year);
+            mysqli_stmt_bind_result($stmt, $entry->x, $entry->y, $entry->z, $entry->id_municipality, $entry->name, $year);
         }
 
         mysqli_stmt_free_result($stmt);
