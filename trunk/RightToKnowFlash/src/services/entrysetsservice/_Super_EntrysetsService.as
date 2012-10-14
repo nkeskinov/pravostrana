@@ -1,8 +1,8 @@
 /**
  * This is a generated class and is not intended for modification.  To customize behavior
- * of this service wrapper you may modify the generated sub-class of this class - MunicipalitiesService.as.
+ * of this service wrapper you may modify the generated sub-class of this class - EntrysetsService.as.
  */
-package services.municipalitiesservice
+package services.entrysetsservice
 {
 import com.adobe.fiber.core.model_internal;
 import com.adobe.fiber.services.wrapper.RemoteObjectServiceWrapper;
@@ -21,25 +21,26 @@ import mx.rpc.AbstractOperation;
 import mx.rpc.AsyncToken;
 import mx.rpc.remoting.Operation;
 import mx.rpc.remoting.RemoteObject;
-import valueObjects.Municipalities;
+import valueObjects.EntrySetsMenu;
+import valueObjects.Entry_sets;
 
 import mx.collections.ItemResponder;
 import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
 
 [ExcludeClass]
-internal class _Super_MunicipalitiesService extends com.adobe.fiber.services.wrapper.RemoteObjectServiceWrapper
+internal class _Super_EntrysetsService extends com.adobe.fiber.services.wrapper.RemoteObjectServiceWrapper
 {
-    private var _municipalitiesRPCDataManager : mx.data.RPCDataManager;
+    private var _entry_setsRPCDataManager : mx.data.RPCDataManager;
     private var managersArray : Array = new Array();
 
-    public const DATA_MANAGER_MUNICIPALITIES : String = "Municipalities";
+    public const DATA_MANAGER_ENTRY_SETS : String = "Entry_sets";
 
     public function getDataManager(dataManagerName:String) : mx.data.RPCDataManager
     {
         switch (dataManagerName)
         {
-             case (DATA_MANAGER_MUNICIPALITIES):
-                return _municipalitiesRPCDataManager;
+             case (DATA_MANAGER_ENTRY_SETS):
+                return _entry_setsRPCDataManager;
             default:
                 return null;
         }
@@ -74,7 +75,7 @@ internal class _Super_MunicipalitiesService extends com.adobe.fiber.services.wra
      */
     public function commit(itemsOrCollections:Array=null, cascadeCommit:Boolean=false):mx.rpc.AsyncToken
     {
-        return _municipalitiesRPCDataManager.dataStore.commit(itemsOrCollections, cascadeCommit);
+        return _entry_setsRPCDataManager.dataStore.commit(itemsOrCollections, cascadeCommit);
     }
 
     /**
@@ -102,7 +103,7 @@ internal class _Super_MunicipalitiesService extends com.adobe.fiber.services.wra
         if (itemsOrCollections == null)
         {
             // Revert all changes
-            return _municipalitiesRPCDataManager.dataStore.revertChanges();
+            return _entry_setsRPCDataManager.dataStore.revertChanges();
         }
         else
         {
@@ -119,7 +120,7 @@ internal class _Super_MunicipalitiesService extends com.adobe.fiber.services.wra
                 }
                 else if (changeItem is mx.collections.ListCollectionView)
                 {
-                    anyChangeItemReverted ||= _municipalitiesRPCDataManager.dataStore.revertChangesForCollection(mx.collections.ListCollectionView(changeItem));
+                    anyChangeItemReverted ||= _entry_setsRPCDataManager.dataStore.revertChangesForCollection(mx.collections.ListCollectionView(changeItem));
                 }
                 else
                 {
@@ -131,87 +132,90 @@ internal class _Super_MunicipalitiesService extends com.adobe.fiber.services.wra
     }
 
     // Constructor
-    public function _Super_MunicipalitiesService()
+    public function _Super_EntrysetsService()
     {
         // initialize service control
         _serviceControl = new mx.rpc.remoting.RemoteObject();
 
         // initialize RemoteClass alias for all entities returned by functions of this service
-        valueObjects.Municipalities._initRemoteClassAlias();
+        valueObjects.Entry_sets._initRemoteClassAlias();
 
         var operations:Object = new Object();
         var operation:mx.rpc.remoting.Operation;
 
-        operation = new mx.rpc.remoting.Operation(null, "getAllMunicipalities");
-         operation.resultElementType = valueObjects.Municipalities;
-        operations["getAllMunicipalities"] = operation;
-        operation = new mx.rpc.remoting.Operation(null, "getMunicipalitiesByID");
-         operation.resultType = valueObjects.Municipalities;
-        operations["getMunicipalitiesByID"] = operation;
-        operation = new mx.rpc.remoting.Operation(null, "createMunicipalities");
+        operation = new mx.rpc.remoting.Operation(null, "getAllEntry_sets");
+         operation.resultElementType = valueObjects.Entry_sets;
+        operations["getAllEntry_sets"] = operation;
+        operation = new mx.rpc.remoting.Operation(null, "getEntry_setsByID");
+         operation.resultType = valueObjects.Entry_sets;
+        operations["getEntry_setsByID"] = operation;
+        operation = new mx.rpc.remoting.Operation(null, "createEntry_sets");
          operation.resultType = int;
-        operations["createMunicipalities"] = operation;
-        operation = new mx.rpc.remoting.Operation(null, "updateMunicipalities");
-        operations["updateMunicipalities"] = operation;
-        operation = new mx.rpc.remoting.Operation(null, "deleteMunicipalities");
-        operations["deleteMunicipalities"] = operation;
+        operations["createEntry_sets"] = operation;
+        operation = new mx.rpc.remoting.Operation(null, "updateEntry_sets");
+        operations["updateEntry_sets"] = operation;
+        operation = new mx.rpc.remoting.Operation(null, "deleteEntry_sets");
+        operations["deleteEntry_sets"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "count");
          operation.resultType = int;
         operations["count"] = operation;
-        operation = new mx.rpc.remoting.Operation(null, "getMunicipalities_paged");
-         operation.resultElementType = valueObjects.Municipalities;
-        operations["getMunicipalities_paged"] = operation;
+        operation = new mx.rpc.remoting.Operation(null, "getEntry_sets_paged");
+         operation.resultElementType = valueObjects.Entry_sets;
+        operations["getEntry_sets_paged"] = operation;
+        operation = new mx.rpc.remoting.Operation(null, "getEntrySetMenu");
+         operation.resultType = valueObjects.EntrySetsMenu;
+        operations["getEntrySetMenu"] = operation;
 
         _serviceControl.operations = operations;
         _serviceControl.convertResultHandler = com.adobe.serializers.utility.TypeUtility.convertResultHandler;
-        _serviceControl.source = "MunicipalitiesService";
+        _serviceControl.source = "EntrysetsService";
         _serviceControl.endpoint = "gateway.php";
         var managedAssociation : mx.data.ManagedAssociation;
         var managedAssocsArray : Array;
-        // initialize Municipalities data manager
-        _municipalitiesRPCDataManager = new mx.data.RPCDataManager();
-        managersArray.push(_municipalitiesRPCDataManager);
+        // initialize Entry_sets data manager
+        _entry_setsRPCDataManager = new mx.data.RPCDataManager();
+        managersArray.push(_entry_setsRPCDataManager);
 
         managedAssocsArray = new Array();
 
-        _municipalitiesRPCDataManager.destination = "municipalitiesRPCDataManager";
-        _municipalitiesRPCDataManager.service = _serviceControl;        
-        _municipalitiesRPCDataManager.identities =  "id_municipality";      
-        _municipalitiesRPCDataManager.itemClass = valueObjects.Municipalities; 
+        _entry_setsRPCDataManager.destination = "entry_setsRPCDataManager";
+        _entry_setsRPCDataManager.service = _serviceControl;        
+        _entry_setsRPCDataManager.identities =  "id_entry_set";      
+        _entry_setsRPCDataManager.itemClass = valueObjects.Entry_sets; 
 
 
 
         var dmOperation : mx.data.ManagedOperation;
         var dmQuery : mx.data.ManagedQuery;
 
-        dmOperation = new mx.data.ManagedOperation("getMunicipalitiesByID", "get");
-        dmOperation.parameters = "id_municipality";
-        _municipalitiesRPCDataManager.addManagedOperation(dmOperation);     
+        dmOperation = new mx.data.ManagedOperation("updateEntry_sets", "update");
+        dmOperation.parameters = "item";
+        _entry_setsRPCDataManager.addManagedOperation(dmOperation);     
 
-        dmQuery = new mx.data.ManagedQuery("getAllMunicipalities");
-        dmQuery.propertySpecifier = "id_municipality,name,map_id";
+        dmOperation = new mx.data.ManagedOperation("createEntry_sets", "create");
+        dmOperation.parameters = "item";
+        _entry_setsRPCDataManager.addManagedOperation(dmOperation);     
+
+        dmOperation = new mx.data.ManagedOperation("deleteEntry_sets", "delete");
+        dmOperation.parameters = "id";
+        _entry_setsRPCDataManager.addManagedOperation(dmOperation);     
+
+        dmQuery = new mx.data.ManagedQuery("getAllEntry_sets");
+        dmQuery.propertySpecifier = "id_entry_set,name,default_x,default_y,parent";
         dmQuery.parameters = "";
-        _municipalitiesRPCDataManager.addManagedOperation(dmQuery);
+        _entry_setsRPCDataManager.addManagedOperation(dmQuery);
 
-        dmQuery = new mx.data.ManagedQuery("getMunicipalities_paged");
-        dmQuery.propertySpecifier = "id_municipality,name,map_id";
+        dmQuery = new mx.data.ManagedQuery("getEntry_sets_paged");
+        dmQuery.propertySpecifier = "id_entry_set,name,default_x,default_y,parent";
         dmQuery.countOperation = "count";
         dmQuery.pagingEnabled = true;
         dmQuery.positionalPagingParameters = true;
         dmQuery.parameters = "startIndex,numItems";
-        _municipalitiesRPCDataManager.addManagedOperation(dmQuery);
+        _entry_setsRPCDataManager.addManagedOperation(dmQuery);
 
-        dmOperation = new mx.data.ManagedOperation("createMunicipalities", "create");
-        dmOperation.parameters = "item";
-        _municipalitiesRPCDataManager.addManagedOperation(dmOperation);     
-
-        dmOperation = new mx.data.ManagedOperation("deleteMunicipalities", "delete");
-        dmOperation.parameters = "id";
-        _municipalitiesRPCDataManager.addManagedOperation(dmOperation);     
-
-        dmOperation = new mx.data.ManagedOperation("updateMunicipalities", "update");
-        dmOperation.parameters = "item";
-        _municipalitiesRPCDataManager.addManagedOperation(dmOperation);     
+        dmOperation = new mx.data.ManagedOperation("getEntry_setsByID", "get");
+        dmOperation.parameters = "id_entry_set";
+        _entry_setsRPCDataManager.addManagedOperation(dmOperation);     
 
         _serviceControl.managers = managersArray;
 
@@ -222,13 +226,13 @@ internal class _Super_MunicipalitiesService extends com.adobe.fiber.services.wra
     //init initialization routine here, child class to override
     protected function preInitializeService():void
     {
-        destination = "MunicipalitiesService";
+        destination = "EntrysetsService";
       
     }
     
 
     /**
-      * This method is a generated wrapper used to call the 'getAllMunicipalities' operation. It returns an mx.rpc.AsyncToken whose 
+      * This method is a generated wrapper used to call the 'getAllEntry_sets' operation. It returns an mx.rpc.AsyncToken whose 
       * result property will be populated with the result of the operation when the server response is received. 
       * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
@@ -238,15 +242,15 @@ internal class _Super_MunicipalitiesService extends com.adobe.fiber.services.wra
       *
       * @return an mx.rpc.AsyncToken whose result property will be populated with the result of the operation when the server response is received.
       */
-    public function getAllMunicipalities() : mx.rpc.AsyncToken
+    public function getAllEntry_sets() : mx.rpc.AsyncToken
     {
-        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getAllMunicipalities");
+        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getAllEntry_sets");
 		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send() ;
         return _internal_token;
     }
      
     /**
-      * This method is a generated wrapper used to call the 'getMunicipalitiesByID' operation. It returns an mx.data.ItemReference whose 
+      * This method is a generated wrapper used to call the 'getEntry_setsByID' operation. It returns an mx.data.ItemReference whose 
       * result property will be populated with the result of the operation when the server response is received. 
       * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
@@ -256,15 +260,15 @@ internal class _Super_MunicipalitiesService extends com.adobe.fiber.services.wra
       *
       * @return an mx.data.ItemReference whose result property will be populated with the result of the operation when the server response is received.
       */
-    public function getMunicipalitiesByID(itemID:int) : mx.data.ItemReference
+    public function getEntry_setsByID(itemID:int) : mx.data.ItemReference
     {
-        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getMunicipalitiesByID");
+        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getEntry_setsByID");
 		var _internal_token:mx.data.ItemReference = _internal_operation.send(itemID) as mx.data.ItemReference;
         return _internal_token;
     }
      
     /**
-      * This method is a generated wrapper used to call the 'createMunicipalities' operation. It returns an mx.data.ItemReference whose 
+      * This method is a generated wrapper used to call the 'createEntry_sets' operation. It returns an mx.data.ItemReference whose 
       * result property will be populated with the result of the operation when the server response is received. 
       * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
@@ -274,15 +278,15 @@ internal class _Super_MunicipalitiesService extends com.adobe.fiber.services.wra
       *
       * @return an mx.data.ItemReference whose result property will be populated with the result of the operation when the server response is received.
       */
-    public function createMunicipalities(item:valueObjects.Municipalities) : mx.data.ItemReference
+    public function createEntry_sets(item:valueObjects.Entry_sets) : mx.data.ItemReference
     {
-        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("createMunicipalities");
+        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("createEntry_sets");
 		var _internal_token:mx.data.ItemReference = _internal_operation.send(item) as mx.data.ItemReference;
         return _internal_token;
     }
      
     /**
-      * This method is a generated wrapper used to call the 'updateMunicipalities' operation. It returns an mx.data.ItemReference whose 
+      * This method is a generated wrapper used to call the 'updateEntry_sets' operation. It returns an mx.data.ItemReference whose 
       * result property will be populated with the result of the operation when the server response is received. 
       * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
@@ -292,15 +296,15 @@ internal class _Super_MunicipalitiesService extends com.adobe.fiber.services.wra
       *
       * @return an mx.data.ItemReference whose result property will be populated with the result of the operation when the server response is received.
       */
-    public function updateMunicipalities(item:valueObjects.Municipalities) : mx.data.ItemReference
+    public function updateEntry_sets(item:valueObjects.Entry_sets) : mx.data.ItemReference
     {
-        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("updateMunicipalities");
+        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("updateEntry_sets");
 		var _internal_token:mx.data.ItemReference = _internal_operation.send(item) as mx.data.ItemReference;
         return _internal_token;
     }
      
     /**
-      * This method is a generated wrapper used to call the 'deleteMunicipalities' operation. It returns an mx.rpc.AsyncToken whose 
+      * This method is a generated wrapper used to call the 'deleteEntry_sets' operation. It returns an mx.rpc.AsyncToken whose 
       * result property will be populated with the result of the operation when the server response is received. 
       * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
@@ -310,9 +314,9 @@ internal class _Super_MunicipalitiesService extends com.adobe.fiber.services.wra
       *
       * @return an mx.rpc.AsyncToken whose result property will be populated with the result of the operation when the server response is received.
       */
-    public function deleteMunicipalities(itemID:int) : mx.rpc.AsyncToken
+    public function deleteEntry_sets(itemID:int) : mx.rpc.AsyncToken
     {
-        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("deleteMunicipalities");
+        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("deleteEntry_sets");
 		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(itemID) ;
         return _internal_token;
     }
@@ -336,7 +340,7 @@ internal class _Super_MunicipalitiesService extends com.adobe.fiber.services.wra
     }
      
     /**
-      * This method is a generated wrapper used to call the 'getMunicipalities_paged' operation. It returns an mx.rpc.AsyncToken whose 
+      * This method is a generated wrapper used to call the 'getEntry_sets_paged' operation. It returns an mx.rpc.AsyncToken whose 
       * result property will be populated with the result of the operation when the server response is received. 
       * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
@@ -346,9 +350,27 @@ internal class _Super_MunicipalitiesService extends com.adobe.fiber.services.wra
       *
       * @return an mx.rpc.AsyncToken whose result property will be populated with the result of the operation when the server response is received.
       */
-    public function getMunicipalities_paged() : mx.rpc.AsyncToken
+    public function getEntry_sets_paged() : mx.rpc.AsyncToken
     {
-        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getMunicipalities_paged");
+        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getEntry_sets_paged");
+		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send() ;
+        return _internal_token;
+    }
+     
+    /**
+      * This method is a generated wrapper used to call the 'getEntrySetMenu' operation. It returns an mx.rpc.AsyncToken whose 
+      * result property will be populated with the result of the operation when the server response is received. 
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
+      * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
+      *
+      * @see mx.rpc.AsyncToken
+      * @see mx.rpc.CallResponder 
+      *
+      * @return an mx.rpc.AsyncToken whose result property will be populated with the result of the operation when the server response is received.
+      */
+    public function getEntrySetMenu() : mx.rpc.AsyncToken
+    {
+        var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getEntrySetMenu");
 		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send() ;
         return _internal_token;
     }

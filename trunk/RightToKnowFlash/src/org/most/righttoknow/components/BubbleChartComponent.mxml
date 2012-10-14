@@ -5,6 +5,7 @@
 		  xmlns:amcharts="http://www.amcharts.com/com_internal"
 		  xmlns:bubbleentriesservice="services.bubbleentriesservice.*"
 		  xmlns:categoriesservice="services.categoriesservice.*"
+		  xmlns:entrysetsservice="services.entrysetsservice.*"
 		  width="100%" height="100%">
 	<fx:Script>
 		<![CDATA[
@@ -48,6 +49,12 @@
 			protected var menuX:Menu;
 			protected var menuY:Menu;
 			
+			protected var xSelected:Number;
+			protected var ySelected:Number;
+			
+			/**
+			 * Public funciton to set the size of the bubbles from the parent component
+			 * */
 			public function setBulletSize(value:Number):void{
 				g0.setStyle("bulletSize", value);
 			}
@@ -62,11 +69,13 @@
 			
 			/**
 			 * Service is started upon slider initialization. 
+			 * 
+			 * Dragan M: the service sturtup is moved to the result handler for the menus
 			 */
 			
 			protected function hSlider_initializeHandler(event:FlexEvent):void
 			{
-				getBubbleEntriesPerYearByIds(1, 2);
+				//getBubbleEntriesPerYearByIds(1, 2);
 			}
 			
 			/**
@@ -127,6 +136,10 @@
 				
 			}
 			
+			/**
+			 * Result handler for the BubbleEntriesPerYEarByIds web method
+			 * 
+			 * */
 			protected function getBubbleEntriesPerYearByIdsResult_resultHandler(event:ResultEvent):void
 			{
 				//Alert.show(getBubbleEntriesPerYearByIdsResult.lastResult.minYear+"");
@@ -154,27 +167,34 @@
 				
 			}
 			
-			
+			/**
+			 * Service call for the web method getBubbleEntriesPerYearById's
+			 **/
 			protected function getBubbleEntriesPerYearByIds(x_axis:int, y_axis:int):void
 			{
 				getBubbleEntriesPerYearByIdsResult.token = bubbleEntriesService.getBubbleEntriesPerYearByIds(x_axis, y_axis);
 			}
 			
+			/**
+			 * Call the web method that initialize the menu, on the menu creation
+			 * */
 			protected function xAxisPopup_creationCompleteHandler(event:FlexEvent):void
 			{
-				getCategoriesMenu();
+				getEntrySetMenu();
 			}
 			
+			/**
+			 * Click handler of the X axis button
+			 * */
 			protected function xAxisPopup_clickHandler(event:MouseEvent):void
 			{
-				// TODO Auto-generated method stub
-				menuX.show(chart.x+37, chart.y+chart.height-13);
+				
+				menuX.show(chart.x+37, chart.y+chart.height-36);
 			}
 			
-			protected function yAxisPopup_creationCompleteHandler(event:FlexEvent):void
-			{
-				
-			}
+			/**
+			 * Click handler of the Y axis button
+			 * */
 			
 			protected function yAxisPopup_clickHandler(event:MouseEvent):void
 			{
@@ -182,35 +202,6 @@
 				
 			}
 			
-			
-			protected function getCategoriesMenu():void
-			{
-				getCategoriesMenuResult.token = categoriesService.getCategoriesMenu();
-			}
-			
-			protected function getCategoriesMenuResult_resultHandler(event:ResultEvent):void
-			{
-				//Alert.show(event.message+"");
-				xmlData = new XML(getCategoriesMenuResult.lastResult);
-				
-				menubarXML = xmlData.children();
-				menuXaxis = new XMLListCollection(menubarXML);
-				menuYaxis = new XMLListCollection(menubarXML);
-				
-				menuX = Menu.createMenu(null, menuXaxis, false);
-				menuX.labelField="@name";
-				menuX.addEventListener(MenuEvent.ITEM_CLICK, 
-					menuXitemClick);
-				
-				xAxisPopup.label = menuXaxis.getItemAt(0).@name;
-				
-				menuY = Menu.createMenu(null, menuYaxis, false);
-				menuY.labelField="@name";
-				menuY.addEventListener(MenuEvent.ITEM_CLICK, 
-					menuYitemClick);
-				
-				yAxisPopup.label = menuYaxis.getItemAt(0).@name;
-			}
 			
 			/**
 			 * Click handler for the menu on the X axis
@@ -222,7 +213,11 @@
 					+ 	"\nItem selected: " + event.item.@toggled
 					+	"\nItem id: " + event.item.@id);
 				*/
-				xAxisPopup.label = event.item.@name;
+				//Alert.show("x="+event.item.id +" y="+ySelected);
+				xAxisPopup.label = event.item.label;
+				xSelected = event.item.id
+				getBubbleEntriesPerYearByIds(xSelected, ySelected);
+				
 			}
 			
 			/**
@@ -230,7 +225,10 @@
 			 * */
 			private function menuYitemClick(event:MenuEvent):void {
 				
-				yAxisPopup.label = event.item.@name;
+				yAxisPopup.label = event.item.label;
+				ySelected = event.item.id;
+				getBubbleEntriesPerYearByIds(xSelected, ySelected);
+				//Alert.show("x="+xSelected +" y="+event.item.id);
 			}
 			
 			protected function playBtn_clickHandler(event:MouseEvent):void
@@ -248,6 +246,41 @@
 					hSlider.value = hSlider.value+1;
 			} 
 			
+			/**
+			 * Service call for the entrysetsService 
+			 * */
+			protected function getEntrySetMenu():void
+			{
+				getEntrySetMenuResult.token = entrysetsService.getEntrySetMenu();
+			}
+			
+			/**
+			 * Result handler for the getEntrySetMenu web method
+			 * */
+			protected function getEntrySetMenuResult_resultHandler(event:ResultEvent):void
+			{
+				var menuData:Array = getEntrySetMenuResult.lastResult.menu;
+				
+				
+				menuX = Menu.createMenu(null, menuData, false);
+				menuX.labelField="label";
+				menuX.addEventListener(MenuEvent.ITEM_CLICK, menuXitemClick);
+				
+				//Set the default_x and default_y
+				xSelected = getEntrySetMenuResult.lastResult.default_x_id;
+				ySelected = getEntrySetMenuResult.lastResult.default_y_id;
+				
+				menuY = Menu.createMenu(null, menuData, false);
+				menuY.labelField="label";
+				menuY.addEventListener(MenuEvent.ITEM_CLICK, menuYitemClick);
+				
+				xAxisPopup.label = getEntrySetMenuResult.lastResult.default_x;
+				yAxisPopup.label = getEntrySetMenuResult.lastResult.default_y;
+				
+				//Initialize the bubble chart with the default values 
+				getBubbleEntriesPerYearByIds(xSelected, ySelected);
+			}
+			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
@@ -255,10 +288,11 @@
 												   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 												   showBusyCursor="true"/>
 		<s:CallResponder id="getBubbleEntriesPerYearByIdsResult" result="getBubbleEntriesPerYearByIdsResult_resultHandler(event)"/>
-		<s:CallResponder id="getCategoriesMenuResult" result="getCategoriesMenuResult_resultHandler(event)"/>
-		<categoriesservice:CategoriesService id="categoriesService"
-											 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
-											 showBusyCursor="true"/>
+		
+		<s:CallResponder id="getEntrySetMenuResult" result="getEntrySetMenuResult_resultHandler(event)"/>
+		<entrysetsservice:EntrysetsService id="entrysetsService"
+										   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+										   showBusyCursor="true"/>
 		
 	</fx:Declarations>
 	<s:Panel width="100%" height="100%" borderVisible="false" dropShadowVisible="false"
@@ -266,8 +300,7 @@
 	<s:HGroup width="100%" height="100%" gap="0" paddingLeft="5" paddingBottom="5">
 		<s:Group  height="100%" width="20">
 			<s:Button id="yAxisPopup" bottom="20" left="0" height="100%" top="16" fontWeight="bold"
-					  rotation="-90" creationComplete="yAxisPopup_creationCompleteHandler(event)"
-					  click="yAxisPopup_clickHandler(event)" ></s:Button>
+					  rotation="-90" click="yAxisPopup_clickHandler(event)" ></s:Button>
 		</s:Group>
 		<s:VGroup width="100%" height="100%" gap="0">
 			<s:Group width="100%" height="100%">
@@ -312,8 +345,8 @@
 	</s:HGroup>
 	
 	<s:controlBarContent>
-			<s:HGroup x="0" y="0" width="100%" height="50" paddingLeft="5" verticalAlign="middle">
-				<mx:Button id="playBtn" y="6" width="50" height="40"
+			<s:HGroup x="0" y="0" width="100%" height="30" paddingLeft="5" verticalAlign="middle">
+				<mx:Button id="playBtn" y="6" width="40" height="30"
 						   icon="@Embed(source='assets/play.png')"
 						   click="playBtn_clickHandler(event)"/>
 				<s:VSlider id="playSpeed" height="80%" horizontalCenter="0" maximum="6"

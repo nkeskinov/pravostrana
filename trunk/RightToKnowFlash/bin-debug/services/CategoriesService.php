@@ -67,12 +67,12 @@ class CategoriesService {
 		
 		$rows = array();
 		
-		mysqli_stmt_bind_result($stmt, $row->id, $row->name, $row->axis, $row->parent);
+		mysqli_stmt_bind_result($stmt, $row->id, $row->name, $row->parent);
 		
 	    while (mysqli_stmt_fetch($stmt)) {
 	      $rows[] = $row;
 	      $row = new stdClass();
-	      mysqli_stmt_bind_result($stmt, $row->id, $row->name, $row->axis, $row->parent);
+	      mysqli_stmt_bind_result($stmt, $row->id, $row->name,  $row->parent);
 	    }
 		
 		mysqli_stmt_free_result($stmt);
@@ -87,7 +87,7 @@ class CategoriesService {
 		$root = $dom->createElement( "menus" );
 		$dom->appendChild( $root );
 
-		$stmt = mysqli_prepare($this->connection, "SELECT * FROM $this->tablename where parent is null");		
+		$stmt = mysqli_prepare($this->connection, "SELECT * FROM $this->tablename ");		
 		$this->throwExceptionOnError();
 		
 		
@@ -97,28 +97,27 @@ class CategoriesService {
 		$rows = array();
 		$rows2 = array();
 		
-		mysqli_stmt_bind_result($stmt, $row->id, $row->name, $row->axis, $row->parent);
+		mysqli_stmt_bind_result($stmt, $row->id, $row->name, $row->parent);
 		
 	    while (mysqli_stmt_fetch($stmt)) {
 	      $rows[] = $row;
 	      $row = new stdClass();
-	      mysqli_stmt_bind_result($stmt, $row->id, $row->name, $row->axis, $row->parent);
+	      mysqli_stmt_bind_result($stmt, $row->id, $row->name, $row->parent);
 		
 	    }
 		
 		mysqli_stmt_free_result($stmt);
 
-		
+		/*
 		$menu = array();
 		foreach($rows as $item){
 		 
 		 $menu = $dom->createElement( "menu");
 		 $menu->setAttribute( 'id', $item->id );
 		 $menu->setAttribute( 'name', $item->name );
-		 $menu->setAttribute( 'axis', $item->axis );
 		 $menu->setAttribute( 'parent', $item->parent );
 	
-		 $stmt = mysqli_prepare($this->connection, "SELECT * FROM $this->tablename where parent = ?");		
+		 $stmt = mysqli_prepare($this->connection, "SELECT * FROM entry_sets where id_category = ?");		
 		 $this->throwExceptionOnError();
 		  
 		  mysqli_stmt_bind_param($stmt, 'i', $item->id);
@@ -128,7 +127,7 @@ class CategoriesService {
 		  $this->throwExceptionOnError();
 		  
 		  
-		  mysqli_stmt_bind_result($stmt, $row->id, $row->name, $row->axis, $row->parent);
+		  mysqli_stmt_bind_result($stmt, $row->id, $row->name, $row->id_category);
 		  
 		  while (mysqli_stmt_fetch($stmt)) {
 			$rows2[] = $row;
@@ -137,12 +136,11 @@ class CategoriesService {
 			$item2 = $dom->createElement( "item");
 			$item2->setAttribute( 'id', $row->id );
 			$item2->setAttribute( 'name', $row->name);
-			$item2->setAttribute( 'axis', $row->axis );
-			$item2->setAttribute( 'parent', $row->parent );
+			$item2->setAttribute( 'parent', $row->id_category );
 			
 			$menu->appendChild( $item2 );
 			$row = new stdClass();
-			mysqli_stmt_bind_result($stmt, $row->id, $row->name, $row->axis, $row->parent);
+			mysqli_stmt_bind_result($stmt, $row->id, $row->name, $row->id_category);
 			
 		  }
 		  
@@ -151,9 +149,10 @@ class CategoriesService {
 		}
 		
 		mysqli_stmt_free_result($stmt);
+		*/
 	    mysqli_close($this->connection);
 	
-	    return $dom->saveXML();
+	    return $rows;
 	}
 
 	/**

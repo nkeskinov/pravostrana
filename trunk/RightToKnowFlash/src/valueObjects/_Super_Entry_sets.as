@@ -1,19 +1,15 @@
 /**
  * This is a generated class and is not intended for modification.  To customize behavior
- * of this value object you may modify the generated sub-class of this class - CategoriesMenu.as.
+ * of this value object you may modify the generated sub-class of this class - Entry_sets.as.
  */
 
 package valueObjects
 {
 import com.adobe.fiber.services.IFiberManagingService;
-import com.adobe.fiber.util.FiberUtils;
 import com.adobe.fiber.valueobjects.IValueObject;
-import flash.events.Event;
 import flash.events.EventDispatcher;
-import mx.binding.utils.ChangeWatcher;
 import mx.collections.ArrayCollection;
 import mx.events.PropertyChangeEvent;
-import mx.validators.ValidationResult;
 
 import flash.net.registerClassAlias;
 import flash.net.getClassByAlias;
@@ -23,8 +19,9 @@ import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
 
 use namespace model_internal;
 
+[Managed]
 [ExcludeClass]
-public class _Super_CategoriesMenu extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
+public class _Super_Entry_sets extends flash.events.EventDispatcher implements com.adobe.fiber.valueobjects.IValueObject
 {
     model_internal static function initRemoteClassAliasSingle(cz:Class) : void
     {
@@ -34,7 +31,7 @@ public class _Super_CategoriesMenu extends flash.events.EventDispatcher implemen
     {
     }
 
-    model_internal var _dminternal_model : _CategoriesMenuEntityMetadata;
+    model_internal var _dminternal_model : _Entry_setsEntityMetadata;
     model_internal var _changedObjects:mx.collections.ArrayCollection = new ArrayCollection();
 
     public function getChangedObjects() : Array
@@ -51,7 +48,11 @@ public class _Super_CategoriesMenu extends flash.events.EventDispatcher implemen
     /**
      * properties
      */
-    private var _internal_menu : Object;
+    private var _internal_id_entry_set : int;
+    private var _internal_name : String;
+    private var _internal_default_x : int;
+    private var _internal_default_y : int;
+    private var _internal_parent : int;
 
     private static var emptyArray:Array = new Array();
 
@@ -63,12 +64,11 @@ public class _Super_CategoriesMenu extends flash.events.EventDispatcher implemen
 
     model_internal var _changeWatcherArray:Array = new Array();
 
-    public function _Super_CategoriesMenu()
+    public function _Super_Entry_sets()
     {
-        _model = new _CategoriesMenuEntityMetadata(this);
+        _model = new _Entry_setsEntityMetadata(this);
 
         // Bind to own data or source properties for cache invalidation triggering
-        model_internal::_changeWatcherArray.push(mx.binding.utils.ChangeWatcher.watch(this, "menu", model_internal::setterListenerMenu));
 
     }
 
@@ -77,9 +77,33 @@ public class _Super_CategoriesMenu extends flash.events.EventDispatcher implemen
      */
 
     [Bindable(event="propertyChange")]
-    public function get menu() : Object
+    public function get id_entry_set() : int
     {
-        return _internal_menu;
+        return _internal_id_entry_set;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get name() : String
+    {
+        return _internal_name;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get default_x() : int
+    {
+        return _internal_default_x;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get default_y() : int
+    {
+        return _internal_default_y;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get parent() : int
+    {
+        return _internal_parent;
     }
 
     public function clearAssociations() : void
@@ -90,13 +114,48 @@ public class _Super_CategoriesMenu extends flash.events.EventDispatcher implemen
      * data/source property setters
      */
 
-    public function set menu(value:Object) : void
+    public function set id_entry_set(value:int) : void
     {
-        var oldValue:Object = _internal_menu;
+        var oldValue:int = _internal_id_entry_set;
         if (oldValue !== value)
         {
-            _internal_menu = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "menu", oldValue, _internal_menu));
+            _internal_id_entry_set = value;
+        }
+    }
+
+    public function set name(value:String) : void
+    {
+        var oldValue:String = _internal_name;
+        if (oldValue !== value)
+        {
+            _internal_name = value;
+        }
+    }
+
+    public function set default_x(value:int) : void
+    {
+        var oldValue:int = _internal_default_x;
+        if (oldValue !== value)
+        {
+            _internal_default_x = value;
+        }
+    }
+
+    public function set default_y(value:int) : void
+    {
+        var oldValue:int = _internal_default_y;
+        if (oldValue !== value)
+        {
+            _internal_default_y = value;
+        }
+    }
+
+    public function set parent(value:int) : void
+    {
+        var oldValue:int = _internal_parent;
+        if (oldValue !== value)
+        {
+            _internal_parent = value;
         }
     }
 
@@ -111,11 +170,6 @@ public class _Super_CategoriesMenu extends flash.events.EventDispatcher implemen
      *  - the validity of the property (and the containing entity) if the given data property has a length restriction.
      *  - the validity of the property (and the containing entity) if the given data property is required.
      */
-
-    model_internal function setterListenerMenu(value:flash.events.Event):void
-    {
-        _model.invalidateDependentOnMenu();
-    }
 
 
     /**
@@ -138,11 +192,6 @@ public class _Super_CategoriesMenu extends flash.events.EventDispatcher implemen
         var validationFailureMessages:Array = new Array();
 
         var propertyValidity:Boolean = true;
-        if (!_model.menuIsValid)
-        {
-            propertyValidity = false;
-            com.adobe.fiber.util.FiberUtils.arrayAdd(validationFailureMessages, _model.model_internal::_menuValidationFailureMessages);
-        }
 
         model_internal::_cacheInitialized_isValid = true;
         model_internal::invalidConstraints_der = violatedConsts;
@@ -170,14 +219,14 @@ public class _Super_CategoriesMenu extends flash.events.EventDispatcher implemen
 
     [Transient]
     [Bindable(event="propertyChange")]
-    public function get _model() : _CategoriesMenuEntityMetadata
+    public function get _model() : _Entry_setsEntityMetadata
     {
         return model_internal::_dminternal_model;
     }
 
-    public function set _model(value : _CategoriesMenuEntityMetadata) : void
+    public function set _model(value : _Entry_setsEntityMetadata) : void
     {
-        var oldValue : _CategoriesMenuEntityMetadata = model_internal::_dminternal_model;
+        var oldValue : _Entry_setsEntityMetadata = model_internal::_dminternal_model;
         if (oldValue !== value)
         {
             model_internal::_dminternal_model = value;
@@ -222,33 +271,6 @@ public class _Super_CategoriesMenu extends flash.events.EventDispatcher implemen
         }
     }
 
-    model_internal var _doValidationCacheOfMenu : Array = null;
-    model_internal var _doValidationLastValOfMenu : Object;
-
-    model_internal function _doValidationForMenu(valueIn:Object):Array
-    {
-        var value : Object = valueIn as Object;
-
-        if (model_internal::_doValidationCacheOfMenu != null && model_internal::_doValidationLastValOfMenu == value)
-           return model_internal::_doValidationCacheOfMenu ;
-
-        _model.model_internal::_menuIsValidCacheInitialized = true;
-        var validationFailures:Array = new Array();
-        var errorMessage:String;
-        var failure:Boolean;
-
-        var valRes:ValidationResult;
-        if (_model.isMenuAvailable && _internal_menu == null)
-        {
-            validationFailures.push(new ValidationResult(true, "", "", "menu is required"));
-        }
-
-        model_internal::_doValidationCacheOfMenu = validationFailures;
-        model_internal::_doValidationLastValOfMenu = value;
-
-        return validationFailures;
-    }
-    
 
 }
 
