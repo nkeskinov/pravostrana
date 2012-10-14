@@ -367,9 +367,8 @@
 											 dataProvider="{chartDataProvider.getItemAt(hSlider.value - hSlider.minimum)}"/>
 						</mx:series>
 						
-						
 						<mx:horizontalAxis>
-							<mx:LinearAxis id="xAxis" minimum="0" maximum="{maxXValue+50}" />
+							<mx:LinearAxis id="xAxis" />
 						</mx:horizontalAxis>
 						
 						<mx:horizontalAxisRenderers>
@@ -380,7 +379,7 @@
 						</mx:horizontalAxisRenderers>
 						
 						<mx:verticalAxis>
-							<mx:LinearAxis id="yAxis" minimum="0" maximum="{maxYValue+500}" />
+							<mx:LinearAxis id="yAxis" />
 						</mx:verticalAxis>
 						
 						<mx:verticalAxisRenderers>
