@@ -137,11 +137,11 @@
 			 * 
 			 * */
 			protected function getBubbleEntriesPerYearByIdsResult_resultHandler(event:ResultEvent):void
-			{
-				//Alert.show(getBubbleEntriesPerYearByIdsResult.lastResult.minYear+"");
+			{ 
+				
 				chartDataProvider = new ArrayCollection();
 				chartDataProvider = getBubbleEntriesPerYearByIdsResult.lastResult.rows;
-				
+				//Alert.show(getBubbleEntriesPerYearByIdsResult.lastResult.rows[0][0].name+"");
 				var minYear:int = getBubbleEntriesPerYearByIdsResult.lastResult.minYear;
 				var maxYear:int = getBubbleEntriesPerYearByIdsResult.lastResult.maxYear;
 				
@@ -158,6 +158,7 @@
 				
 				maxXValue= getBubbleEntriesPerYearByIdsResult.lastResult.maxXValue;
 				maxYValue= getBubbleEntriesPerYearByIdsResult.lastResult.maxYValue;
+				
 				
 				/*g0.xAxis.addEventListener(ValueAxisEvent.AXIS_ZOOMED, xAxis_axisZoomedHandler);
 				g0.yAxis.addEventListener(ValueAxisEvent.AXIS_ZOOMED, yAxis_axisZoomedHandler);
@@ -337,8 +338,8 @@
 		<entrysetsservice:EntrysetsService id="entrysetsService"
 										   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 										   showBusyCursor="true"/>
-		<mx:SeriesInterpolate id="changeEffect" duration="2000"/>
-		<mx:SeriesInterpolate id="interpolateIn" duration="1000"/>
+		<mx:SeriesInterpolate id="changeEffect" duration="3000"/>
+		<mx:SeriesInterpolate id="interpolateIn" duration="3000"/>
 	</fx:Declarations>
 	<s:Panel width="100%" height="100%" borderVisible="false" dropShadowVisible="false"
 			 skinClass="org.most.righttoknow.skins.TitlelessPanel">
@@ -362,8 +363,8 @@
 							<mx:BubbleSeries displayName="Series 1" 
 											 xField="x"
 											 yField="y"
-											 radiusField="x"
-											 showDataEffect="{changeEffect}"
+											 radiusField="y"
+											 showDataEffect="{interpolateIn}"
 											 dataProvider="{chartDataProvider.getItemAt(hSlider.value - hSlider.minimum)}"/>
 						</mx:series>
 						
@@ -388,6 +389,19 @@
 											 styleName="linedNumericAxis"
 											 axis="{yAxis}"/>
 						</mx:verticalAxisRenderers>
+						<mx:backgroundElements>
+							<mx:GridLines horizontalShowOrigin="true"
+										  verticalShowOrigin="true"
+										  y="0" x="0"
+										  horizontalStroke="{new Stroke(0x666666,1,0.2)}"
+										  verticalStroke="{new Stroke(0x666666,1,1)}"
+										  />
+							
+							<s:Label text="{hSlider.value}" 
+									 verticalAlign="middle"
+									 alpha="0.3"  
+									 fontSize="128" />
+						</mx:backgroundElements>
 					</mx:BubbleChart>
 					
 				</s:Group>
