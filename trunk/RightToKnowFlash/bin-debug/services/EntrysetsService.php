@@ -65,17 +65,21 @@ class EntrysetsService {
 		$this->throwExceptionOnError();
 		
 		// initialize result to the corresponding return type
-		$result = new EntrySetsMenu;
+		$result = new EntrySetsMenu; 
 		$result->default_x = null;
 		$result->default_y = null;
+		$result->default_z = null; 
+		$result->default_x_id = null;
+		$result->default_y_id = null;
+		$result->default_z_id = null;
 		$result->menu =  array();
 		$rows = array();
 		
 		// bind result to a helper object and fetch actual data
-        mysqli_stmt_bind_result($stmt, $entry->id_entry_set, $entry->name, $entry->default_x, $entry->default_y, $entry->parent);
+        mysqli_stmt_bind_result($stmt, $entry->id_entry_set, $entry->name, $entry->default_x, $entry->default_y, $entry->default_z, $entry->parent);
 		
         while (mysqli_stmt_fetch($stmt)) {
-		  if($entry->default_x == 1){
+		  if($entry->default_x == 1){ 
 			$result->default_x_id = $entry->id_entry_set;
 			$result->default_x = $entry->name;
 		  }
@@ -83,9 +87,13 @@ class EntrysetsService {
 			$result->default_y_id = $entry->id_entry_set;
 			$result->default_y = $entry->name;
 		  }
+		  if($entry->default_z == 1){
+			$result->default_z_id = $entry->id_entry_set;
+			$result->default_z = $entry->name;
+		  }
 		  $rows[] = $entry;
 	      $entry = new stdClass();
-	      mysqli_stmt_bind_result($stmt, $entry->id_entry_set, $entry->name, $entry->default_x, $entry->default_y, $entry->parent);
+	      mysqli_stmt_bind_result($stmt, $entry->id_entry_set, $entry->name, $entry->default_x, $entry->default_y, $entry->default_z,  $entry->parent);
 	    }
 		
 		mysqli_stmt_free_result($stmt);
@@ -107,7 +115,7 @@ class EntrysetsService {
 			$this->throwExceptionOnError();
 
 			$entry = new stdClass();
-			mysqli_stmt_bind_result($stmt, $entry->id_entry_set, $entry->name, $entry->default_x, $entry->default_y, $entry->parent);
+			mysqli_stmt_bind_result($stmt, $entry->id_entry_set, $entry->name, $entry->default_x, $entry->default_y, $entry->default_z, $entry->parent);
 			
 			while (mysqli_stmt_fetch($stmt)) {
 				
@@ -120,6 +128,12 @@ class EntrysetsService {
 					$result->default_y_id = $entry->id_entry_set;
 					$result->default_y = $entry->name;
 				}
+				if($entry->default_z == 1){
+					$result->default_z_id = $entry->id_entry_set;
+					$result->default_z = $entry->name;
+				}
+				
+				
 					
 				$item->id = $entry->id_entry_set;
 				$item->label = $entry->name;
@@ -127,7 +141,7 @@ class EntrysetsService {
 				$item = new stdClass();
 				
 				$entry = new stdClass();
-				mysqli_stmt_bind_result($stmt, $entry->id_entry_set, $entry->name, $entry->default_x, $entry->default_y, $entry->parent);
+				mysqli_stmt_bind_result($stmt, $entry->id_entry_set, $entry->name, $entry->default_x, $entry->default_y, $entry->default_z,  $entry->parent);
 			}
 			
 		   $result->menu[] = $menu;

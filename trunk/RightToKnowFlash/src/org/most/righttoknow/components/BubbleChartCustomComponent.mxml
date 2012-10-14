@@ -52,6 +52,7 @@
 			public var menuYaxis:XMLListCollection;
 			private var menubarXML:XMLList;
 			
+			
 			[Bindable]
 			public var xmlData:XML;
 			
@@ -60,6 +61,9 @@
 			
 			protected var xSelected:Number;
 			protected var ySelected:Number;
+			
+			[Bindable]
+			public var zSelected:Number = 0 ;
 			
 			[Bindable]
 			protected var maxXValue:Number;
@@ -73,6 +77,7 @@
 			 * */
 			public function setBulletSize(value:Number):void{
 				//g0.setStyle("bulletSize", value);
+				zSelected = value;
 			}
 			
 			/**
@@ -169,9 +174,9 @@
 			/**
 			 * Service call for the web method getBubbleEntriesPerYearById's
 			 **/
-			protected function getBubbleEntriesPerYearByIds(x_axis:int, y_axis:int):void
+			protected function getBubbleEntriesPerYearByIds(x_axis:int, y_axis:int, z_axis:int):void
 			{
-				getBubbleEntriesPerYearByIdsResult.token = bubbleEntriesService.getBubbleEntriesPerYearByIds(x_axis, y_axis);
+				getBubbleEntriesPerYearByIdsResult.token = bubbleEntriesService.getBubbleEntriesPerYearByIds(x_axis, y_axis, z_axis);
 			}
 			
 			/**
@@ -215,7 +220,7 @@
 				//Alert.show("x="+event.item.id +" y="+ySelected);
 				xAxisPopup.label = event.item.label;
 				xSelected = event.item.id
-				getBubbleEntriesPerYearByIds(xSelected, ySelected);
+				getBubbleEntriesPerYearByIds(xSelected, ySelected, zSelected);
 				
 			}
 			
@@ -226,7 +231,7 @@
 				
 				yAxisPopup.label = event.item.label;
 				ySelected = event.item.id;
-				getBubbleEntriesPerYearByIds(xSelected, ySelected);
+				getBubbleEntriesPerYearByIds(xSelected, ySelected, zSelected);
 				//Alert.show("x="+xSelected +" y="+event.item.id);
 			}
 			
@@ -277,7 +282,7 @@
 				yAxisPopup.label = getEntrySetMenuResult.lastResult.default_y;
 				
 				//Initialize the bubble chart with the default values 
-				getBubbleEntriesPerYearByIds(xSelected, ySelected);
+				getBubbleEntriesPerYearByIds(xSelected, ySelected, zSelected);
 			}
 			
 			/**
@@ -285,7 +290,8 @@
 			 * */
 			protected function dataTipFunction(hitData:HitData):String{
 				
-				return hitData.item.name;
+				return "<b>"+hitData.item.name+"</b><br>x: "+hitData.item.x+"<br>y: "+hitData.item.y+"<br>r: "+hitData.item.z;
+				
 			}
 			
 			
@@ -295,7 +301,7 @@
 			protected function chart_changeHandler(event:ChartItemEvent):void
 			{
 				
-				var bc:BubbleChart = event.target as BubbleChart;
+				/*var bc:BubbleChart = event.target as BubbleChart;
 				
 				for each (var bs:BubbleSeries in bc.series)
 				{
@@ -310,6 +316,7 @@
 				}
 				bc.clearSelection();
 				chartCanReset = true;
+				*/
 			}
 			
 			protected function chart_doubleClickHandler(event:MouseEvent):void
@@ -345,25 +352,23 @@
 			 skinClass="org.most.righttoknow.skins.TitlelessPanel">
 		<s:HGroup width="100%" height="100%" gap="0" paddingLeft="5" paddingBottom="5">
 			<s:Group  height="100%" width="20">
-				<s:Button id="yAxisPopup" bottom="20" left="0" height="100%" top="16" fontWeight="bold"
-						  rotation="-90" click="yAxisPopup_clickHandler(event)" ></s:Button>
+				<s:Button id="yAxisPopup" bottom="19" left="0" height="100%" top="16" fontWeight="bold"
+						  rotation="-90" click="yAxisPopup_clickHandler(event)" cornerRadius="0" ></s:Button>
 			</s:Group>
 			<s:VGroup width="100%" height="100%" gap="0">
 				<s:Group width="100%" height="100%">
-					<mx:BubbleChart id="chart" x="0" y="0" width="100%" height="100%" 
-									showDataTips="true" maxRadius="20" 
-									paddingTop="5" paddingLeft="5"
-								    dataTipFunction="dataTipFunction"
-									selectionMode="multiple"
-								    change="chart_changeHandler(event)"	
-								    doubleClickEnabled="true"
-								    doubleClick="chart_doubleClickHandler(event)"	
-									>
+					<mx:BubbleChart id="chart" x="0" y="0" width="100%" height="100%"
+									change="chart_changeHandler(event)"
+									dataTipFunction="dataTipFunction" 
+									doubleClick="chart_doubleClickHandler(event)"
+									doubleClickEnabled="true" maxRadius="20" minRadius="1"
+									paddingLeft="5" paddingTop="5" selectionMode="multiple"
+									showDataTips="true">
 						<mx:series>
 							<mx:BubbleSeries displayName="Series 1" 
 											 xField="x"
 											 yField="y"
-											 radiusField="y"
+											 radiusField="z"
 											 showDataEffect="{interpolateIn}"
 											 dataProvider="{chartDataProvider.getItemAt(hSlider.value - hSlider.minimum)}"/>
 						</mx:series>
@@ -392,21 +397,26 @@
 						<mx:backgroundElements>
 							<mx:GridLines horizontalShowOrigin="true"
 										  verticalShowOrigin="true"
-										  y="0" x="0"
+										  y="0" x="0" gridDirection="both"
 										  horizontalStroke="{new Stroke(0x666666,1,0.2)}"
-										  verticalStroke="{new Stroke(0x666666,1,1)}"
+										  verticalStroke="{new Stroke(0x666666,1,0.2)}"
 										  />
+							<s:HGroup width="100%" verticalAlign="middle" horizontalAlign="center">
+								<s:Label text="{hSlider.value}" 
+										 verticalAlign="middle"
+										 alpha="0.2"  
+										 fontSize="128"
+										 color="#666666"
+										 fontWeight="bold" />
+							</s:HGroup>
 							
-							<s:Label text="{hSlider.value}" 
-									 verticalAlign="middle"
-									 alpha="0.3"  
-									 fontSize="128" />
 						</mx:backgroundElements>
 					</mx:BubbleChart>
 					
+					
 				</s:Group>
 				<s:Group width="100%" height="20">
-					<s:Button id="xAxisPopup" width="100%" right="16" fontWeight="bold" 
+					<s:Button id="xAxisPopup" width="100%" right="16" fontWeight="bold" cornerRadius="0" 
 							  creationComplete="xAxisPopup_creationCompleteHandler(event)" 
 							  click="xAxisPopup_clickHandler(event)"/>
 				</s:Group>

@@ -90,10 +90,10 @@ internal class _Super_BubbleEntriesService extends com.adobe.fiber.services.wrap
       *
       * @return an mx.rpc.AsyncToken whose result property will be populated with the result of the operation when the server response is received.
       */
-    public function getBubbleEntriesPerYearByIds(x_axis:int, y_axis:int) : mx.rpc.AsyncToken
+    public function getBubbleEntriesPerYearByIds(x_axis:Object, y_axis:Object, z_axis:Object) : mx.rpc.AsyncToken
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getBubbleEntriesPerYearByIds");
-		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(x_axis,y_axis) ;
+		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(x_axis,y_axis,z_axis) ;
         return _internal_token;
     }
      

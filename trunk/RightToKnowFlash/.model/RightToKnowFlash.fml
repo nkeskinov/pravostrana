@@ -187,6 +187,22 @@
     <property name="name" type="string"/>
     <property name="map_id" type="string"/>
   </entity>
+  <entity name="CategoriesMenu">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">CategoriesMenu</item>
+    </annotation>
+    <annotation name="service Group"/>
+    <annotation name="ServerProperties">
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="getCategoriesByAxes">
+      <item name="propertySpecifier">menu</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="menu" type="opaque" required="true"/>
+  </entity>
   <service name="EntrysetsService">
     <annotation name="ActionScriptGeneration">
       <item name="Source">EntrysetsService</item>
@@ -305,6 +321,8 @@
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
     </annotation>
+    <property name="default_z" type="string" required="true"/>
+    <property name="default_z_id" type="integer" required="true"/>
     <property name="default_x" type="opaque"/>
     <property name="default_x_id" type="opaque"/>
     <property name="default_y" type="opaque"/>
@@ -350,22 +368,6 @@
     <property name="default_y" type="integer"/>
     <property name="parent" type="integer"/>
   </entity>
-  <entity name="CategoriesMenu">
-    <annotation name="EntityProperties">
-      <item name="EntityOriginalName">CategoriesMenu</item>
-    </annotation>
-    <annotation name="service Group"/>
-    <annotation name="ServerProperties">
-      <item name="IncludeRemoteClass">nonempty</item>
-    </annotation>
-    <annotation name="getCategoriesByAxes">
-      <item name="propertySpecifier">menu</item>
-    </annotation>
-    <annotation name="ActionScriptGeneration">
-      <item name="Package">valueObjects</item>
-    </annotation>
-    <property name="menu" type="opaque" required="true"/>
-  </entity>
   <service name="BubbleEntriesService">
     <annotation name="ActionScriptGeneration">
       <item name="Source">BubbleEntriesService</item>
@@ -408,14 +410,15 @@
         <item name="analyzed">true</item>
       </annotation>
       <annotation name="original signature">
-        <item name="inputParams">opaque,opaque</item>
+        <item name="inputParams">opaque,opaque,opaque</item>
         <item name="returnType">BubbleServiceResult</item>
       </annotation>
       <annotation name="ValidProperties">
         <item name="propertySpecifier">minYValue,maxXValue,minYear,maxYValue,minXValue,rows,maxYear</item>
       </annotation>
-      <parameter name="x_axis" type="integer"/>
-      <parameter name="y_axis" type="integer"/>
+      <parameter name="x_axis" type="opaque"/>
+      <parameter name="y_axis" type="opaque"/>
+      <parameter name="z_axis" type="opaque"/>
     </function>
     <function name="getPossibleYears" return-type="opaque">
       <annotation name="analyze group">
