@@ -373,7 +373,7 @@
 			 * */
 			protected function dataTipFunction(hitData:HitData):String{
 				
-				return "<b>"+hitData.item.name+"</b><br>x: "+hitData.item.x+"<br>y: "+hitData.item.y+"<br>r: "+hitData.item.z;
+				return "<b>"+hitData.item.name+"</b><br>"+xAxisPopup.label+": "+hitData.item.x+"<br>"+yAxisPopup.label+": "+hitData.item.y+"<br>"+zAxisPopup.label+": "+hitData.item.z;
 				
 			}
 			
