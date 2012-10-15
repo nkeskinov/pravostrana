@@ -4,11 +4,12 @@
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
 			   xmlns:righttoknow="org.most.righttoknow.*"
 			   xmlns:components="org.most.righttoknow.components.*"
-			   xmlns:municipalitiesservice="services.municipalitiesservice.*"
 			   xmlns:bubbleentriesservice="services.bubbleentriesservice.*"
 			   xmlns:ammap="http://www.ammap.com/com_internal"
 			   xmlns:controls="org.most.righttoknow.controls.*"
 			   xmlns:entrysetsservice="services.entrysetsservice.*"
+			   xmlns:local="*"
+			   xmlns:municipalitiesservice="services.municipalitiesservice.*"
 			   width="600" height="430" applicationComplete="init()" horizontalCenter="0"
 			   verticalCenter="0">
 	<fx:Script> 
@@ -16,9 +17,12 @@
 			import com.amcharts.events.AmChartEvent;
 			import com.amcharts.events.ValueAxisEvent;
 			
+			import mx.charts.AxisRenderer;
 			import mx.charts.BubbleChart;
 			import mx.charts.ChartItem;
 			import mx.charts.HitData;
+			import mx.charts.LinearAxis;
+			import mx.charts.LogAxis;
 			import mx.charts.events.ChartItemEvent;
 			import mx.charts.series.LineSeries;
 			import mx.charts.series.items.BubbleSeriesItem;
@@ -27,11 +31,14 @@
 			import mx.collections.XMLListCollection;
 			import mx.controls.Alert;
 			import mx.controls.Menu;
+			import mx.events.DataGridEvent;
 			import mx.events.FlexEvent;
+			import mx.events.ListEvent;
 			import mx.events.MenuEvent;
 			import mx.events.SliderEvent;
 			import mx.graphics.IFill;
 			import mx.graphics.SolidColor;
+			import mx.graphics.SolidColorStroke;
 			import mx.graphics.Stroke;
 			import mx.managers.PopUpManager;
 			import mx.rpc.events.ResultEvent;
@@ -39,8 +46,8 @@
 			
 			import org.most.righttoknow.components.HelpTitleWindow;
 			import org.most.righttoknow.components.ShareTitleWindow;
+			import org.most.righttoknow.controls.StyledAxisRenderer;
 			
-			import services.municipalitiesservice.MunicipalitiesService;
 			
 			protected var timer:Timer;
 			
@@ -58,6 +65,13 @@
 			
 			[Bindable]
 			protected var chartDataProvider:ArrayCollection;
+			
+			protected var originalData:ArrayCollection;
+			protected var prevData:ArrayCollection;
+			protected var arrData:ArrayCollection;
+			
+			[Bindable]
+			protected var bubbleSeriesProvider:ArrayCollection;
 			
 			[Bindable]
 			public var menuXaxis:XMLListCollection;
@@ -87,23 +101,22 @@
 			
 			
 			[Bindable]
-			protected var allCities:ArrayCollection;
+			public var allCities:ArrayCollection;
 			
 			protected var menuZ:Menu;
 			
-			
+			protected var filtered:Boolean = false;
 			
 			
 			private function init():void {
 				fullScreenState = stage.displayState;
 				stage.addEventListener(FullScreenEvent.FULL_SCREEN, stage_fullScreen);		
-				allCities = new ArrayCollection();
+				
+				getAllMunicipalities();
+				
 			}
 			
-			protected function list_creationCompleteHandler(event:FlexEvent):void
-			{
-				getAllMunicipalitiesResult.token = municipalitiesService.getAllMunicipalities();
-			}
+			
 			
 		
 			protected function fullScreenBtn_clickHandler(event:MouseEvent):void
@@ -147,31 +160,16 @@
 				PopUpManager.centerPopUp(titleWindowInstance);
 			}
 			
-			
-			protected function checkAllCities_clickHandler(event:MouseEvent):void
-			{
-				
-				if(checkAllCities.selected){
-					for(var i:int=0; i<allCities.length; i++){
-						allCities.getItemAt(i).isSelected = true;
-						
-					}
-				}else{
-					for(var i:int=0; i<allCities.length; i++){
-						allCities.getItemAt(i).isSelected = false;
-					}
-				}
-				
-				list.dataProvider = allCities;
-				
-			}
+		
 			
 			protected function getAllMunicipalitiesResult_resultHandler(event:ResultEvent):void
 			{
+				//allCities = getAllMunicipalitiesResult.lastResult;
+				allCities = new ArrayCollection();
 				var tmpArray:ArrayCollection = getAllMunicipalitiesResult.lastResult;
-				for each(var item:Object in tmpArray){
-					
-					var o:Object = {label:item.name, dataField:item.id_municipality, isSelected:false};
+				for(var i:int =0; i<tmpArray.length; i++){
+					var item:Object = tmpArray.getItemAt(i);
+					var o:Object = {id:i, label:item.name, dataField:item.id_municipality, isSelected:false};
 					allCities.addItem(o);
 				}
 				
@@ -221,6 +219,7 @@
 				
 				chartDataProvider = new ArrayCollection();
 				chartDataProvider = getBubbleEntriesPerYearByIdsResult.lastResult.rows;
+				originalData = chartDataProvider;
 				//Alert.show(getBubbleEntriesPerYearByIdsResult.lastResult.rows[0][0].name+"");
 				var minYear:int = getBubbleEntriesPerYearByIdsResult.lastResult.minYear;
 				var maxYear:int = getBubbleEntriesPerYearByIdsResult.lastResult.maxYear;
@@ -425,25 +424,170 @@
 			}
 			
 			
+			
+			/**
+			 * Change the y axis from log to lin and vice versa
+			 * */
+			protected function yToggle_clickHandler(event:MouseEvent):void
+			{
+				
+				var linAxis:LinearAxis = new LinearAxis();
+				var logAxis:LogAxis = new LogAxis();
+				
+				
+				if(yToggle.selected){
+					logAxis.minimum = 0;
+					logAxis.maximum = maxYValue+1000;
+					chart.verticalAxis = logAxis;
+					
+				}
+				else{
+					//linAxis.maximum = maxYValue+1000;
+					linAxis.minimum = 0;
+					linAxis.maximum = maxYValue+1000;
+					chart.verticalAxis = linAxis;
+				}
+			}
+			
+			/**
+			 * Change the x axis from log to lin and vice versa
+			 * */
+			protected function xToggle_clickHandler(event:MouseEvent):void
+			{
+				var linAxis:LinearAxis = new LinearAxis();
+				var logAxis:LogAxis = new LogAxis();
+				
+				if(xToggle.selected){
+					//logAxis.baseAtZero = true;
+					//logAxis.autoAdjust = true;
+					logAxis.minimum=0;
+					logAxis.maximum = maxXValue+100;
+					//logAxis.autoAdjust = true;
+				
+					chart.horizontalAxis = logAxis;
+				}
+				else{
+					linAxis.minimum=0;
+					linAxis.maximum = maxXValue+100;
+					chart.horizontalAxis = linAxis;
+				}
+			}
+			
+			
+			protected function getAllMunicipalities():void
+			{
+				getAllMunicipalitiesResult.token = municipalitiesService.getAllMunicipalities();
+			}
+			
+			
+			
+			public function filter():void{
+				
+				if(filtered){
+					chartDataProvider = originalData;
+				}
+				var tmpArrayCollection:ArrayCollection = new ArrayCollection();;
+				for each(var item:Array in chartDataProvider){
+					
+					var k:ArrayCollection =new ArrayCollection(item);
+					k.filterFunction = customFilterFunction;
+					k.refresh();
+					// This is to keep the order of the data in the data provider
+					// So the interpolate effect in the data chart wont distort
+					var t1:ArrayCollection = new ArrayCollection();
+					for(var i:int = 0; i<allCities.length; i++){
+						if(allCities.getItemAt(i).isSelected){
+							for(var j:int=0; j<k.length; j++){
+								if(allCities.getItemAt(i).dataField == k.getItemAt(j).id_municipality)
+									t1.addItemAt(k.getItemAt(j),i);
+							}
+							
+						}
+						else{
+							
+							t1.addItemAt(new Object(),i);
+						}
+					}
+						
+					//Alert.show("k="+k.getItemAt(0).id_municipality);
+					tmpArrayCollection.addItem(t1);
+				}
+				chartDataProvider = tmpArrayCollection;
+			}
+			private function customFilterFunction(item:Object):Boolean{
+				
+				var bool:Boolean = false;
+				
+				for(var i:int=0; i<allCities.length; i++){
+					if(allCities.getItemAt(i).isSelected && allCities.getItemAt(i).dataField == item.id_municipality)
+					{	
+						bool = true;
+					}
+				}
+				filtered = true;
+				return bool;
+			}
+			
+			
+			protected function checkAllCities_clickHandler(event:MouseEvent):void
+			{
+				
+				if(checkAllCities.selected){
+					for(var i:int=0; i<allCities.length; i++){
+						allCities.getItemAt(i).isSelected = true;
+						
+					}
+				}else{
+					for(var i:int=0; i<allCities.length; i++){
+						allCities.getItemAt(i).isSelected = false;
+					}
+				}
+				
+				list.dataProvider = allCities;
+				chartDataProvider = originalData;
+			}
+			
+			
+			
 		]]>
 	</fx:Script>
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace local "*";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		
+		.toggleSwitch
+		{
+			skinClass:ClassReference("org.most.righttoknow.skins.ToggleSwitchSkin");
+		}
+		mx|BubbleChart {
+			horizontalAxisStyleName:myAxisStyles;
+			verticalAxisStyleName:myAxisStyles;
+		}
+		
+		.myAxisStyles {
+			tickPlacement:none
+		}
+	</fx:Style>
 	<fx:Declarations>
 		<bubbleentriesservice:BubbleEntriesService id="bubbleEntriesService"
 												   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 												   showBusyCursor="true"/>
 		<s:CallResponder id="getBubbleEntriesPerYearByIdsResult" result="getBubbleEntriesPerYearByIdsResult_resultHandler(event)"/>
-		<s:CallResponder id="getAllMunicipalitiesResult" result="getAllMunicipalitiesResult_resultHandler(event)"/>
 		
-		<municipalitiesservice:MunicipalitiesService id="municipalitiesService"
-													 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
-													 showBusyCursor="true"/>
 		
 		<s:CallResponder id="getEntrySetMenuResult" result="getEntrySetMenuResult_resultHandler(event)"/>
 		<entrysetsservice:EntrysetsService id="entrysetsService"
 										   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 										   showBusyCursor="true"/>
+
 		<mx:SeriesInterpolate id="interpolateIn" duration="3000" elementOffset="0" easingFunction="Linear.easeNone"/>
-		
+		<s:CallResponder id="getAllMunicipalitiesResult" result="getAllMunicipalitiesResult_resultHandler(event)"/>
+		<municipalitiesservice:MunicipalitiesService id="municipalitiesService"
+													 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+													 showBusyCursor="true"/>
+
+		<mx:SolidColorStroke id="stroke1" color="blue" weight="0.5" alpha="0.3"/>
 	</fx:Declarations>
 	<s:BorderContainer width="100%" height="100%" horizontalCenter="0" verticalCenter="0">
 		
@@ -456,50 +600,54 @@
 									 skinClass="org.most.righttoknow.skins.TitlelessPanel">
 								<s:HGroup width="100%" height="100%" gap="0" paddingLeft="5" paddingBottom="5">
 									<s:Group  height="100%" width="20">
-										<s:Button id="yAxisPopup" bottom="19" left="0" height="100%" top="16" fontWeight="bold"
+									<s:VGroup width="100%" height="100%" bottom="19" >
+										
+										<controls:ToggleSwitch id="yToggle" selected="false" selectedLabel="log" deselectedLabel="lin" 
+															   styleName="toggleSwitch" rotation="-90"
+															    
+															    click="yToggle_clickHandler(event)"/>
+										<s:Button id="yAxisPopup" left="0" height="100%" fontWeight="bold"
 												  rotation="-90" click="yAxisPopup_clickHandler(event)" cornerRadius="0" ></s:Button>
+									</s:VGroup>
 									</s:Group>
+									
 									<s:VGroup width="100%" height="100%" gap="0">
 										<s:Group width="100%" height="100%">
 											<mx:BubbleChart id="chart" x="0" y="0" width="100%" height="100%"
 															change="chart_changeHandler(event)"
 															dataTipFunction="dataTipFunction" 
 															doubleClick="chart_doubleClickHandler(event)"
-															doubleClickEnabled="true" 
+															doubleClickEnabled="true"
 															maxRadius="{bubbleSizeHSlider.values[1]}" minRadius="{bubbleSizeHSlider.values[0]}"
 															paddingRight="5" paddingTop="5" selectionMode="multiple"
-															showDataTips="true">
+															showDataTips="true" dataTipMode="single"
+														    horizontalAxisStyleNames="linedNumericAxis"
+															verticalAxisStyleNames="linedNumericAxis"
+															
+															>
 												<mx:series>
-													<mx:BubbleSeries displayName="Series 1" 
+													<mx:BubbleSeries id="bubbleSeries"
+																	 displayName="Series 1" 
 																	 xField="x"
 																	 yField="y"
 																	 radiusField="z"
 																	 showDataEffect="{interpolateIn}"
-																	 dataProvider="{chartDataProvider.getItemAt(hSlider.value - hSlider.minimum)}"
-																	 fillFunction="bubbleSeriesFillFunction" />
+																	 dataProvider="{chartDataProvider.getItemAt(hSlider.value - hSlider.minimum)}"		  
+																	 fillFunction="bubbleSeriesFillFunction"
+																	  stroke="{new SolidColorStroke(0x666666,1,0.6)}" />
 												</mx:series>
 												
 												<mx:horizontalAxis>
-													<mx:LinearAxis id="xAxis" minimum="0" maximum="{maxXValue+100}"/>
+													<mx:LogAxis  id="xAxis" minimum="0" maximum="{maxXValue+100}"/>
 												</mx:horizontalAxis>
 												
-												<mx:horizontalAxisRenderers>
-													<mx:AxisRenderer axisStroke="{new Stroke(0x666666, 1, 1)}"
-																	 showLine="true"
-																	 styleName="linedNumericAxis"
-																	 axis="{xAxis}"/>
-												</mx:horizontalAxisRenderers>
-												
 												<mx:verticalAxis>
-													<mx:LinearAxis id="yAxis" minimum="0" maximum="{maxYValue+1000}" />
+													<mx:LinearAxis id="yAxis" minimum="0" maximum="{maxYValue+1000}"/>
 												</mx:verticalAxis>
 												
-												<mx:verticalAxisRenderers>
-													<mx:AxisRenderer axisStroke="{new Stroke(0x666666, 1, 1)}"
-																	 showLine="true"
-																	 styleName="linedNumericAxis"
-																	 axis="{yAxis}"/>
-												</mx:verticalAxisRenderers>
+												<mx:annotationElements>
+													<controls:RangeSelector styleName="anno" />
+									 			</mx:annotationElements>
 												<mx:backgroundElements>
 													<mx:GridLines horizontalShowOrigin="true"
 																  verticalShowOrigin="true"
@@ -521,11 +669,14 @@
 											
 											
 										</s:Group>
-										<s:Group width="100%" height="20">
+										<s:HGroup width="100%" height="20">
 											<s:Button id="xAxisPopup" width="100%" right="16" fontWeight="bold" cornerRadius="0" 
 													  creationComplete="xAxisPopup_creationCompleteHandler(event)" 
 													  click="xAxisPopup_clickHandler(event)"/>
-										</s:Group>
+											<controls:ToggleSwitch id="xToggle" selected="true" selectedLabel="log" 
+																   deselectedLabel="lin" styleName="toggleSwitch"
+																   click="xToggle_clickHandler(event)" />
+										</s:HGroup>
 									</s:VGroup>
 									
 								</s:HGroup>
@@ -544,11 +695,10 @@
 													change="hSlider_changeHandler(event)" dataTipFormatFunction="formatYear"
 													snapInterval="1" tickInterval="1" tickLength="10" tickOffset="4" 
 													labelOffset="-1"/>
+										
 									</s:HGroup>
 								</s:controlBarContent>
 							</s:Panel>
-							
-							
 							
 						</s:Group>
 						
@@ -568,33 +718,41 @@
 			<s:VGroup width="155" height="100%" gap="3">
 				<s:Panel width="100%" height="100%" dropShadowVisible="false" fontSize="11"
 						 fontWeight="normal" skinClass="org.most.righttoknow.skins.PanelSkin"
-						 title="Градови">
+						 title="Изберете...">
 					
 					<mx:List id="list" y="0" width="100%" height="100%" borderVisible="false"
-							 creationComplete="list_creationCompleteHandler(event)"
 							 dataProvider="{allCities}"
 							 fontSize="10" horizontalCenter="0"
 							 labelField="label" paddingBottom="0" paddingLeft="0" paddingTop="0" >
 						<mx:itemRenderer>
 							<fx:Component>
-								<mx:CheckBox label="{data.label}" change="onChange(event);" paddingLeft="5" selected="{data.isSelected}">
+								<mx:CheckBox label="{data.label}" change="onChange(event);"  paddingLeft="5" selected="{data.isSelected}">
 									<fx:Script>
 										<![CDATA[
 											import mx.controls.Alert;
-											private function onChange(evt:Event):void {	
-												Alert.show("Item clicked="+data.label +" id="+data.dataField);
-												
+											private function onChange(evt:Event):void {     
+												//Alert.show("Item clicked="+data.label +" id="+data.dataField+" ");
+												//Alert.show("al="+outerDocument.allCities.getItemAt(data.dataField-1).label);
+												var o:Object;
+												if(selected){
+													o = {id:data.id, label:data.label, dataField:data.dataField, isSelected:true};
+												}else{
+													o = {id:data.id, label:data.label, dataField:data.dataField, isSelected:false};
+												}
+												outerDocument.allCities.setItemAt(o,data.id);
+												outerDocument.filter();
 											}
 											
 										]]>
 									</fx:Script>
-								
+									
 								</mx:CheckBox>
 							</fx:Component>
 						</mx:itemRenderer> 
 					</mx:List>
 					<s:CheckBox id="checkAllCities" x="5" y="-19"
-								click="checkAllCities_clickHandler(event)"/>
+								click="checkAllCities_clickHandler(event)"/>					
+					
 				</s:Panel>
 				<s:Panel width="100%" height="90" dropShadowVisible="false"
 						 skinClass="org.most.righttoknow.skins.PanelSkin" title="Големина">
@@ -604,11 +762,12 @@
 								 />
 						<mx:HSlider id="bubbleSizeHSlider" width="150"
 									allowTrackClick="true" thumbCount="2"
-									liveDragging="true" values="[2,10]"  
+									liveDragging="true" values="[3,15]"  
 									maximum="20" minimum="1" snapInterval="1"
 								    labels="[4,8,12,16,20]" toolTip="Промена на минимална и максимална големина на балоните"	
 									tickInterval="1" tickLength="10" tickOffset="4" labelOffset="-1"/>
 					</s:VGroup>
+					
 				</s:Panel>
 				
 			</s:VGroup> 
