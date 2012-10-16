@@ -367,27 +367,29 @@
 			
 			protected function playBtn_clickHandler(event:MouseEvent):void
 			{
-				if(!playing){
-					if(hSlider.value == maxYear){
-						hSlider.value = minYear;
-					}
-					playing = true;
-					playBtn.setStyle("icon",pauseBtnIcn);
-					
-					//hSlider.setStyle("slideDuration", 1);
-					//hSlider.setStyle("slideEasingFunction", Elastic.easeInOut(2000,100,100,100));
-					
-					
-					
-					timer = new Timer(1000 * playSpeed.value);
-					timer.addEventListener("timer", playTimeline);
-					timer.start();
-					
-				}else{
-					playing = false;
-					playBtn.setStyle("icon",playBtnIcn);
-					timer.stop();
-				}
+//				if(!playing){
+//					if(hSlider.value == maxYear){
+//						hSlider.value = minYear;
+//					}
+//					playing = true;
+//					playBtn.setStyle("icon",pauseBtnIcn);
+//					
+//					//hSlider.setStyle("slideDuration", 1);
+//					//hSlider.setStyle("slideEasingFunction", Elastic.easeInOut(2000,100,100,100));
+//					
+//					
+//					
+//					timer = new Timer(1000 * playSpeed.value);
+//					timer.addEventListener("timer", playTimeline);
+//					timer.start();
+//					
+//				}else{
+//					playing = false;
+//					playBtn.setStyle("icon",playBtnIcn);
+//					timer.stop();
+//				}
+				animateProperty.end();
+				animateProperty.play();
 			}
 			
 			protected function playSpeed_changeHandler(event:SliderEvent):void
@@ -674,6 +676,8 @@
 		}
 	</fx:Style>
 	<fx:Declarations>
+		<mx:AnimateProperty id="animateProperty" property="value" fromValue="2006" toValue="2010" repeatDelay="{playSpeed.value * 1000}" target="{hSlider}" roundValue="true"/>
+		
 		<bubbleentriesservice:BubbleEntriesService id="bubbleEntriesService"
 												   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 												   showBusyCursor="true"/>
@@ -801,7 +805,7 @@
 												   minimum="1" toolTip="Брзина на плејбек"
 												   value="3" verticalCenter="0"
 												   snapInterval="1" tickInterval="1" tickLength="10" tickOffset="4" labelOffset="-1"
-												   change="playSpeed_changeHandler(event)" 
+												   change="playSpeed_changeHandler(event)"
 												  /> 
 										<mx:HSlider id="hSlider" y="2" width="100%" height="40"
 													allowTrackClick="true" 
