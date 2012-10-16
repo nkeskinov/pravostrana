@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_recordset_document" value="name:id_document;datatype:int,name:id_doc_type;datatype:int,name:filename;datatype:string,name:title;datatype:string" />
+	<infoitem key="UD_recordset_doc_type" value="name:directory;datatype:string" />
+</info>

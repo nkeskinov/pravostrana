@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_Post" value="name:name;datatype:string,name:surname;datatype:string,name:date_created;datatype:timestamp,name:content;datatype:blob,name:subject;datatype:string,name:date_modified;datatype:timestamp" />
+</info>

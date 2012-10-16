@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="PageAccessControlMethod" value="useAccessList" />
+	<infoitem key="PageAccessControl" value="user,admin" />
+	<infoitem key="MM_URL1" value="id" />
+	<infoitem key="MM_URL_Count" value="3" />
+	<infoitem key="MM_URL2" value="accesscheck" />
+	<infoitem key="MM_Session1" value="MM_ID" />
+	<infoitem key="MM_Session_Count" value="2" />
+	<infoitem key="MM_URL3" value="superdocument" />
+	<infoitem key="MM_Session2" value="id_visit" />
+</info>

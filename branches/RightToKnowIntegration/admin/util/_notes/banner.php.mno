@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_Oranization" value="name:id_organization;datatype:int,name:name;datatype:string" />
+	<infoitem key="UD_Banner" value="name:id_banner;datatype:int,name:id_organization;datatype:int,name:id_user;datatype:int,name:path;datatype:string,name:title;datatype:string,name:alt;datatype:string,name:position;datatype:int,name:type;datatype:string,name:visible;datatype:int,name:mimetype;datatype:string,name:filesize;datatype:int,name:extension;datatype:string,name:url;datatype:string" />
+	<infoitem key="UD_Banner_All" value="name:id_banner;datatype:int,name:id_organization;datatype:int,name:id_user;datatype:int,name:path;datatype:string,name:title;datatype:string,name:alt;datatype:string,name:position;datatype:int,name:type;datatype:string,name:visible;datatype:int,name:mimetype;datatype:string,name:filesize;datatype:int,name:extension;datatype:string,name:url;datatype:string" />
+</info>

@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_DocumentType" value="name:id_doc_type;datatype:int,name:name;datatype:string,name:directory;datatype:string" />
+	<infoitem key="UD_DocumentTypeEdit" value="name:id_doc_type;datatype:int,name:name;datatype:string,name:directory;datatype:string" />
+</info>

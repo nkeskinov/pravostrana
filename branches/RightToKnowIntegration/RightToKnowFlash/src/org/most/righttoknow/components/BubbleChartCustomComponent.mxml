@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009"
+		  xmlns:s="library://ns.adobe.com/flex/spark"
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  xmlns:amcharts="http://www.amcharts.com/com_internal"
+		  xmlns:bubbleentriesservice="services.bubbleentriesservice.*"
+		  xmlns:categoriesservice="services.categoriesservice.*"
+		  xmlns:entrysetsservice="services.entrysetsservice.*"
+		  width="100%" height="100%" xmlns:controls="org.most.righttoknow.controls.*">
+	<fx:Script>
+		<![CDATA[
+			import com.amcharts.events.AmChartEvent;
+			import com.amcharts.events.ValueAxisEvent;
+			
+			import mx.charts.BubbleChart;
+			import mx.charts.HitData;
+			import mx.charts.events.ChartItemEvent;
+			import mx.charts.series.LineSeries;
+			import mx.charts.series.items.BubbleSeriesItem;
+			import mx.charts.series.items.LineSeriesItem;
+			import mx.collections.ArrayCollection;
+			import mx.collections.XMLListCollection;
+			import mx.controls.Alert;
+			import mx.controls.Menu;
+			import mx.events.FlexEvent;
+			import mx.events.MenuEvent;
+			import mx.events.SliderEvent;
+			import mx.graphics.SolidColor;
+			import mx.graphics.Stroke;
+			import mx.rpc.events.ResultEvent;
+			
+			
+			protected var timer:Timer;
+			
+			public var bulletSizeValue:Number = 10;
+			
+			private var xStart:Number = 0;
+			private var xEnd:Number = 0;
+			private var yStart:Number = 0;
+			private var yEnd:Number = 0;
+			
+			private var xStartToSet:Number = 0;
+			private var xEndToSet:Number = 0;
+			private var yStartToSet:Number = 0;
+			private var yEndToSet:Number = 0;
+			
+			[Bindable]
+			protected var chartDataProvider:ArrayCollection;
+			
+			[Bindable]
+			public var menuXaxis:XMLListCollection;
+			public var menuYaxis:XMLListCollection;
+			private var menubarXML:XMLList;
+			
+			
+			[Bindable]
+			public var xmlData:XML;
+			
+			protected var menuX:Menu;
+			protected var menuY:Menu;
+			
+			protected var xSelected:Number;
+			protected var ySelected:Number;
+			
+			[Bindable]
+			public var zSelected:Number = 0 ;
+			
+			[Bindable]
+			protected var maxXValue:Number;
+			[Bindable]
+			protected var maxYValue:Number;
+			
+			private var chartCanReset:Boolean = false;
+			
+			/**
+			 * Public funciton to set the size of the bubbles from the parent component
+			 * */
+			public function setBulletSize(value:Number):void{
+				//g0.setStyle("bulletSize", value);
+				zSelected = value;
+			}
+			
+			/**
+			 * Utility function to format years retrieved as int-s from DB.
+			 */
+			protected function formatYear(value:Number):Object
+			{
+				return value.toString();
+			}
+			
+			/**
+			 * Service is started upon slider initialization. 
+			 * 
+			 * Dragan M: the service sturtup is moved to the result handler for the menus
+			 */
+			
+			protected function hSlider_initializeHandler(event:FlexEvent):void
+			{
+				//getBubbleEntriesPerYearByIds(1, 2);
+			}
+			
+			/**
+			 * Update the start and end zoom value fields.
+			 */
+			protected function xAxis_axisZoomedHandler(event:ValueAxisEvent):void
+			{
+				xStart = event.startValue;
+				xEnd = event.endValue; 
+			}
+			
+			/**
+			 * Update the start and end zoom value fields.
+			 */
+			protected function yAxis_axisZoomedHandler(event:ValueAxisEvent):void
+			{
+				yStart = event.startValue;
+				yEnd = event.endValue;
+			}
+			
+			/**
+			 * Detect changes in timeline slider and store "toSet" values 
+			 */
+			protected function hSlider_changeHandler(event:SliderEvent):void
+			{
+				if (xStart != 0 || xEnd != 0)
+				{
+					xStartToSet = xStart;
+					xEndToSet = xEnd;
+				}
+				if (yStart != 0 || yEnd != 0)
+				{
+					yStartToSet = yStart;
+					yEndToSet = yEnd;
+				}
+				
+			}
+			
+			
+			
+			/**
+			 * Result handler for the BubbleEntriesPerYEarByIds web method
+			 * 
+			 * */
+			protected function getBubbleEntriesPerYearByIdsResult_resultHandler(event:ResultEvent):void
+			{ 
+				
+				chartDataProvider = new ArrayCollection();
+				chartDataProvider = getBubbleEntriesPerYearByIdsResult.lastResult.rows;
+				//Alert.show(getBubbleEntriesPerYearByIdsResult.lastResult.rows[0][0].name+"");
+				var minYear:int = getBubbleEntriesPerYearByIdsResult.lastResult.minYear;
+				var maxYear:int = getBubbleEntriesPerYearByIdsResult.lastResult.maxYear;
+				
+				hSlider.minimum = minYear;
+				hSlider.maximum = maxYear;
+				
+				hSlider.labels = new Array(maxYear - minYear + 1);
+				
+				for (var i:int = minYear; i <= maxYear; i++) {
+					hSlider.labels[i - minYear] = i;
+				}
+				
+				
+				
+				maxXValue= getBubbleEntriesPerYearByIdsResult.lastResult.maxXValue;
+				maxYValue= getBubbleEntriesPerYearByIdsResult.lastResult.maxYValue;
+				
+				
+				/*g0.xAxis.addEventListener(ValueAxisEvent.AXIS_ZOOMED, xAxis_axisZoomedHandler);
+				g0.yAxis.addEventListener(ValueAxisEvent.AXIS_ZOOMED, yAxis_axisZoomedHandler);
+				*/
+				
+			}
+			
+			/**
+			 * Service call for the web method getBubbleEntriesPerYearById's
+			 **/
+			protected function getBubbleEntriesPerYearByIds(x_axis:int, y_axis:int, z_axis:int):void
+			{
+				getBubbleEntriesPerYearByIdsResult.token = bubbleEntriesService.getBubbleEntriesPerYearByIds(x_axis, y_axis, z_axis);
+			}
+			
+			/**
+			 * Call the web method that initialize the menu, on the menu creation
+			 * */
+			protected function xAxisPopup_creationCompleteHandler(event:FlexEvent):void
+			{
+				getEntrySetMenu();
+			}
+			
+			/**
+			 * Click handler of the X axis button
+			 * */
+			protected function xAxisPopup_clickHandler(event:MouseEvent):void
+			{
+				
+				menuX.show(chart.x+37, chart.y+chart.height-36);
+			}
+			
+			/**
+			 * Click handler of the Y axis button
+			 * */
+			
+			protected function yAxisPopup_clickHandler(event:MouseEvent):void
+			{
+				menuY.show(chart.x+37, chart.y+50);
+				
+			}
+			
+			
+			/**
+			 * Click handler for the menu on the X axis
+			 * */
+			private function menuXitemClick(event:MenuEvent):void {
+				/*Alert.show("event.type: " + event.type
+				+ 	"\nevent.index: " + event.index
+				+ 	"\nItem label: " + event.item.@name
+				+ 	"\nItem selected: " + event.item.@toggled
+				+	"\nItem id: " + event.item.@id);
+				*/
+				//Alert.show("x="+event.item.id +" y="+ySelected);
+				xAxisPopup.label = event.item.label;
+				xSelected = event.item.id
+				getBubbleEntriesPerYearByIds(xSelected, ySelected, zSelected);
+				
+			}
+			
+			/**
+			 * Click handler for the menu on the X axis
+			 * */
+			private function menuYitemClick(event:MenuEvent):void {
+				
+				yAxisPopup.label = event.item.label;
+				ySelected = event.item.id;
+				getBubbleEntriesPerYearByIds(xSelected, ySelected, zSelected);
+				//Alert.show("x="+xSelected +" y="+event.item.id);
+			}
+			
+			protected function playBtn_clickHandler(event:MouseEvent):void
+			{
+				timer = new Timer(1000 * playSpeed.value);
+				timer.addEventListener("timer", playTimeline);
+				timer.start();
+			}
+			
+			private function playTimeline(e:TimerEvent):void{
+				//Alert.show("Test="+timelineSlider.value);
+				if(hSlider.value == getBubbleEntriesPerYearByIdsResult.lastResult.maxYear)
+					timer.stop();
+				else
+					hSlider.value = hSlider.value+1;
+			} 
+			
+			/**
+			 * Service call for the entrysetsService 
+			 * */
+			protected function getEntrySetMenu():void
+			{
+				getEntrySetMenuResult.token = entrysetsService.getEntrySetMenu();
+			}
+			
+			/**
+			 * Result handler for the getEntrySetMenu web method
+			 * */
+			protected function getEntrySetMenuResult_resultHandler(event:ResultEvent):void
+			{
+				var menuData:Array = getEntrySetMenuResult.lastResult.menu;
+				
+				
+				menuX = Menu.createMenu(null, menuData, false);
+				menuX.labelField="label";
+				menuX.addEventListener(MenuEvent.ITEM_CLICK, menuXitemClick);
+				
+				//Set the default_x and default_y
+				xSelected = getEntrySetMenuResult.lastResult.default_x_id;
+				ySelected = getEntrySetMenuResult.lastResult.default_y_id;
+				
+				menuY = Menu.createMenu(null, menuData, false);
+				menuY.labelField="label";
+				menuY.addEventListener(MenuEvent.ITEM_CLICK, menuYitemClick);
+				
+				xAxisPopup.label = getEntrySetMenuResult.lastResult.default_x;
+				yAxisPopup.label = getEntrySetMenuResult.lastResult.default_y;
+				
+				//Initialize the bubble chart with the default values 
+				getBubbleEntriesPerYearByIds(xSelected, ySelected, zSelected);
+			}
+			
+			/**
+			 * Populate the data tip for each individual bubble
+			 * */
+			protected function dataTipFunction(hitData:HitData):String{
+				
+				return "<b>"+hitData.item.name+"</b><br>x: "+hitData.item.x+"<br>y: "+hitData.item.y+"<br>r: "+hitData.item.z;
+				
+			}
+			
+			
+			/**
+			 * The change handler of the chart
+			 * */
+			protected function chart_changeHandler(event:ChartItemEvent):void
+			{
+				
+				/*var bc:BubbleChart = event.target as BubbleChart;
+				
+				for each (var bs:BubbleSeries in bc.series)
+				{
+					var ac:ArrayCollection = new ArrayCollection();
+					var dp:ArrayCollection = bs.dataProvider as ArrayCollection;
+					
+					for each (var bsi:BubbleSeriesItem in bs.selectedItems)
+					{
+						ac.addItem(bsi.item);
+					}
+					bs.dataProvider = ac;
+				}
+				bc.clearSelection();
+				chartCanReset = true;
+				*/
+			}
+			
+			protected function chart_doubleClickHandler(event:MouseEvent):void
+			{
+				if(chartCanReset)
+				{
+					var bc:BubbleChart = event.target as BubbleChart;
+					for (var i:int = 0; i < bc.series.length; i++)
+					{
+						var bs:BubbleSeries = bc.series[i] as BubbleSeries;
+						bs.dataProvider =  chartDataProvider.getItemAt(hSlider.value - hSlider.minimum);
+					}
+					chartCanReset = false;
+				}
+			}
+			
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<bubbleentriesservice:BubbleEntriesService id="bubbleEntriesService"
+												   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+												   showBusyCursor="true"/>
+		<s:CallResponder id="getBubbleEntriesPerYearByIdsResult" result="getBubbleEntriesPerYearByIdsResult_resultHandler(event)"/>
+		
+		<s:CallResponder id="getEntrySetMenuResult" result="getEntrySetMenuResult_resultHandler(event)"/>
+		<entrysetsservice:EntrysetsService id="entrysetsService"
+										   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+										   showBusyCursor="true"/>
+		<mx:SeriesInterpolate id="changeEffect" duration="3000"/>
+		<mx:SeriesInterpolate id="interpolateIn" duration="3000"/>
+	</fx:Declarations>
+	<s:Panel width="100%" height="100%" borderVisible="false" dropShadowVisible="false"
+			 skinClass="org.most.righttoknow.skins.TitlelessPanel">
+		<s:HGroup width="100%" height="100%" gap="0" paddingLeft="5" paddingBottom="5">
+			<s:Group  height="100%" width="20">
+				<s:Button id="yAxisPopup" bottom="19" left="0" height="100%" top="16" fontWeight="bold"
+						  rotation="-90" click="yAxisPopup_clickHandler(event)" cornerRadius="0" ></s:Button>
+			</s:Group>
+			<s:VGroup width="100%" height="100%" gap="0">
+				<s:Group width="100%" height="100%">
+					<mx:BubbleChart id="chart" x="0" y="0" width="100%" height="100%"
+									change="chart_changeHandler(event)"
+									dataTipFunction="dataTipFunction" 
+									doubleClick="chart_doubleClickHandler(event)"
+									doubleClickEnabled="true" maxRadius="20" minRadius="1"
+									paddingLeft="5" paddingTop="5" selectionMode="multiple"
+									showDataTips="true">
+						<mx:series>
+							<mx:BubbleSeries displayName="Series 1" 
+											 xField="x"
+											 yField="y"
+											 radiusField="z"
+											 showDataEffect="{interpolateIn}"
+											 dataProvider="{chartDataProvider.getItemAt(hSlider.value - hSlider.minimum)}"/>
+						</mx:series>
+						
+						<mx:horizontalAxis>
+							<mx:LinearAxis id="xAxis" />
+						</mx:horizontalAxis>
+						
+						<mx:horizontalAxisRenderers>
+							<mx:AxisRenderer axisStroke="{new Stroke(0x666666, 1, 1)}"
+											 showLine="true"
+											 styleName="linedNumericAxis"
+											 axis="{xAxis}"/>
+						</mx:horizontalAxisRenderers>
+						
+						<mx:verticalAxis>
+							<mx:LinearAxis id="yAxis" />
+						</mx:verticalAxis>
+						
+						<mx:verticalAxisRenderers>
+							<mx:AxisRenderer axisStroke="{new Stroke(0x666666, 1, 1)}"
+											 showLine="true"
+											 styleName="linedNumericAxis"
+											 axis="{yAxis}"/>
+						</mx:verticalAxisRenderers>
+						<mx:backgroundElements>
+							<mx:GridLines horizontalShowOrigin="true"
+										  verticalShowOrigin="true"
+										  y="0" x="0" gridDirection="both"
+										  horizontalStroke="{new Stroke(0x666666,1,0.2)}"
+										  verticalStroke="{new Stroke(0x666666,1,0.2)}"
+										  />
+							<s:HGroup width="100%" verticalAlign="middle" horizontalAlign="center">
+								<s:Label text="{hSlider.value}" 
+										 verticalAlign="middle"
+										 alpha="0.2"  
+										 fontSize="128"
+										 color="#666666"
+										 fontWeight="bold" />
+							</s:HGroup>
+							
+						</mx:backgroundElements>
+					</mx:BubbleChart>
+					
+					
+				</s:Group>
+				<s:Group width="100%" height="20">
+					<s:Button id="xAxisPopup" width="100%" right="16" fontWeight="bold" cornerRadius="0" 
+							  creationComplete="xAxisPopup_creationCompleteHandler(event)" 
+							  click="xAxisPopup_clickHandler(event)"/>
+				</s:Group>
+			</s:VGroup>
+			
+		</s:HGroup>
+		
+		<s:controlBarContent>
+			<s:HGroup x="0" y="0" width="100%" height="30" paddingLeft="5" verticalAlign="middle">
+				<mx:Button id="playBtn" y="6" width="40" height="30"
+						   icon="@Embed(source='assets/play.png')"
+						   click="playBtn_clickHandler(event)"/>
+				<s:VSlider id="playSpeed" height="80%" horizontalCenter="0" maximum="6"
+						   minimum="1" stepSize="0.5" toolTip="Брзина на плејбек"
+						   value="3" verticalCenter="0"/>
+				<mx:HSlider id="hSlider" y="2" width="100%" height="40"
+							change="hSlider_changeHandler(event)" dataTipFormatFunction="formatYear"
+							initialize="hSlider_initializeHandler(event)" snapInterval="1" 
+							tickInterval="1" tickLength="10" tickOffset="4" labelOffset="-1"/>
+				
+			</s:HGroup>
+		</s:controlBarContent>
+	</s:Panel>
+	
+</s:VGroup>

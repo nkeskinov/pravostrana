@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_Recordset1" value="name:id_doc_group;datatype:int,name:id_doc_type;datatype:int,name:id_supergroup;datatype:int,name:name;datatype:string,name:forcesubscribe;datatype:int" />
+</info>

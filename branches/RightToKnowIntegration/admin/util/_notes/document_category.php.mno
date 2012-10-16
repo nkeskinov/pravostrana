@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_RecordsetDocType" value="name:id_doc_type;datatype:int,name:name;datatype:string,name:directory;datatype:string" />
+	<infoitem key="UD_RecordsetDocGroup" value="name:id_doc_group;datatype:int,name:id_doc_type;datatype:int,name:id_supergroup;datatype:int,name:name;datatype:string,name:forcesubscribe;datatype:int" />
+	<infoitem key="UD_RecordsetDocCategoryEdit" value="name:id_doc_group;datatype:int,name:id_doc_type;datatype:int,name:id_supergroup;datatype:int,name:name;datatype:string,name:forcesubscribe;datatype:int" />
+	<infoitem key="UD_RecordsetDocGroupSuper" value="name:id_doc_group;datatype:int,name:id_doc_type;datatype:int,name:id_supergroup;datatype:int,name:name;datatype:string,name:forcesubscribe;datatype:int" />
+	<infoitem key="UD_RecordsetDocCategorySub" value="name:id_doc_group;datatype:int,name:id_doc_type;datatype:int,name:id_supergroup;datatype:int,name:name;datatype:string,name:forcesubscribe;datatype:int" />
+</info>

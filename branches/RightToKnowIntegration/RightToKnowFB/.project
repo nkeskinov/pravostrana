@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>RightToKnowFB</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>com.adobe.flexbuilder.project.flexbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.adobe.flexbuilder.project.flexnature</nature>
+		<nature>com.adobe.flexbuilder.project.actionscriptnature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>bin-debug</name>
+			<type>2</type>
+			<location>D:/dev/pravo.org.mk-php/RightToKnowFB-debug</location>
+		</link>
+		<link>
+			<name>services/BubbleEntriesService.php</name>
+			<type>1</type>
+			<location>D:/dev/pravo.org.mk-php/righttoknow/services/BubbleEntriesService.php</location>
+		</link>
+		<link>
+			<name>services/EntriesService.php</name>
+			<type>1</type>
+			<location>D:/dev/pravo.org.mk-php/righttoknow/services/EntriesService.php</location>
+		</link>
+		<link>
+			<name>services/MapEntriesService.php</name>
+			<type>1</type>
+			<location>D:/dev/pravo.org.mk-php/righttoknow/services/MapEntriesService.php</location>
+		</link>
+	</linkedResources>
+</projectDescription>

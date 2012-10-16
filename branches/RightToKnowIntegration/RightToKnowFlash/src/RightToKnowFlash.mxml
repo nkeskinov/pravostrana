@@ -1,0 +1,903 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:righttoknow="org.most.righttoknow.*"
+			   xmlns:components="org.most.righttoknow.components.*"
+			   xmlns:bubbleentriesservice="services.bubbleentriesservice.*"
+			   xmlns:ammap="http://www.ammap.com/com_internal"
+			   xmlns:controls="org.most.righttoknow.controls.*"
+			   xmlns:entrysetsservice="services.entrysetsservice.*"
+			   xmlns:local="*"
+			   xmlns:municipalitiesservice="services.municipalitiesservice.*"
+			   width="600" height="430" applicationComplete="init()" horizontalCenter="0"
+			   verticalCenter="0">
+	<fx:Script> 
+		<![CDATA[
+			import com.amcharts.events.AmChartEvent;
+			import com.amcharts.events.ValueAxisEvent;
+			
+			import mx.charts.AxisRenderer;
+			import mx.charts.BubbleChart;
+			import mx.charts.ChartItem;
+			import mx.charts.HitData;
+			import mx.charts.LinearAxis;
+			import mx.charts.LogAxis;
+			import mx.charts.events.ChartItemEvent;
+			import mx.charts.series.LineSeries;
+			import mx.charts.series.items.BubbleSeriesItem;
+			import mx.charts.series.items.LineSeriesItem;
+			import mx.collections.ArrayCollection;
+			import mx.collections.XMLListCollection;
+			import mx.controls.Alert;
+			import mx.controls.Menu;
+			import mx.effects.easing.Back;
+			import mx.effects.easing.Bounce;
+			import mx.effects.easing.Elastic;
+			import mx.effects.easing.Linear;
+			import mx.events.DataGridEvent;
+			import mx.events.FlexEvent;
+			import mx.events.ListEvent;
+			import mx.events.MenuEvent;
+			import mx.events.SliderEvent;
+			import mx.graphics.IFill;
+			import mx.graphics.SolidColor;
+			import mx.graphics.SolidColorStroke;
+			import mx.graphics.Stroke;
+			import mx.managers.PopUpManager;
+			import mx.rpc.events.ResultEvent;
+			
+			import org.most.righttoknow.components.HelpTitleWindow;
+			import org.most.righttoknow.components.ShareTitleWindow;
+			import org.most.righttoknow.controls.StyledAxisRenderer;
+			
+			
+			protected var timer:Timer;
+			
+			public var bulletSizeValue:Number = 10;
+			
+			private var xStart:Number = 0;
+			private var xEnd:Number = 0;
+			private var yStart:Number = 0;
+			private var yEnd:Number = 0;
+			
+			private var xStartToSet:Number = 0;
+			private var xEndToSet:Number = 0;
+			private var yStartToSet:Number = 0;
+			private var yEndToSet:Number = 0;
+			
+			[Bindable]
+			protected var chartDataProvider:ArrayCollection;
+			
+			protected var originalData:ArrayCollection;
+			protected var prevData:ArrayCollection;
+			protected var arrData:ArrayCollection;
+			
+			[Bindable]
+			protected var bubbleSeriesProvider:ArrayCollection;
+			
+			[Bindable]
+			public var menuXaxis:XMLListCollection;
+			public var menuYaxis:XMLListCollection;
+			private var menubarXML:XMLList;
+			
+			
+			[Bindable]
+			public var xmlData:XML;
+			
+			protected var menuX:Menu;
+			protected var menuY:Menu;
+			
+			protected var xSelected:Number;
+			protected var ySelected:Number;
+			protected var zSelected:Number;
+			
+			[Bindable]
+			protected var maxXValue:Number;
+			[Bindable]
+			protected var maxYValue:Number;
+			
+			private var chartCanReset:Boolean = false;
+			
+			[Bindable]
+			private var fullScreenState:String;
+			
+			
+			[Bindable]
+			public var allCities:ArrayCollection;
+			
+			protected var menuZ:Menu;
+			
+			protected var filtered:Boolean = false;
+			
+			protected static var DEFAULT_SIZE:Number = 10;
+			protected static var MIN_SIZE:Number = 5;
+			protected static var MAX_SIZE:Number = 15;
+			
+			[Bindable]
+			protected var minSize:Number = MIN_SIZE;
+			[Bindable]
+			protected var maxSize:Number = MAX_SIZE;
+			
+			// Classes for icons
+			[Embed(source='assets/full_screen.png')]
+			public static var fullInIcn:Class;
+			[Embed(source='assets/normal_screen.png')]
+			public static var fullOutIcn:Class;
+			[Embed(source='assets/play_blue.png')]
+			public static var playBtnIcn:Class;
+			[Embed(source='assets/pause_blue.png')]
+			public static var pauseBtnIcn:Class;
+			
+			protected var playing:Boolean = false;
+			
+			protected var minYear:Number;
+			protected var maxYear:Number;
+			
+			/**
+			 * Start up function
+			 * */
+			private function init():void {
+				fullScreenState = stage.displayState;
+				stage.addEventListener(FullScreenEvent.FULL_SCREEN, stage_fullScreen);		
+				
+				getAllMunicipalities();
+				
+			}
+			
+		
+			protected function fullScreenBtn_clickHandler(event:MouseEvent):void
+			{
+				if(fullScreenBtn.selected)
+					fullScreenBtn.setStyle("icon",fullOutIcn);
+				else
+					fullScreenBtn.setStyle("icon",fullInIcn);
+				
+				if (isFullScreen()) {
+					fullScreenState = StageDisplayState.NORMAL;
+					
+				} else {
+					fullScreenState = StageDisplayState.FULL_SCREEN;
+					this.percentWidth = 100;
+					this.percentHeight = 100;
+					
+				}
+				
+				try {
+					stage.displayState = fullScreenState;
+				} catch (any:*) {
+					// ignore
+				}
+				
+			}
+			
+			private function isFullScreen():Boolean {
+				return (stage.displayState == StageDisplayState.FULL_SCREEN);
+			}
+			
+			private function stage_fullScreen(evt:FullScreenEvent):void {
+				fullScreenBtn.selected = isFullScreen();
+			}
+			
+			protected function helpBtn_clickHandler(event:MouseEvent):void
+			{ 
+				
+				var titleWindowInstance:HelpTitleWindow = HelpTitleWindow(PopUpManager.createPopUp(this, HelpTitleWindow, false));
+				 
+				PopUpManager.centerPopUp(titleWindowInstance);
+			}
+			
+			protected function shareBtn_clickHandler(event:MouseEvent):void
+			{
+				var titleWindowInstance:ShareTitleWindow = ShareTitleWindow(PopUpManager.createPopUp(this, ShareTitleWindow, false));
+				
+				PopUpManager.centerPopUp(titleWindowInstance);
+			}
+			
+		
+			
+			protected function getAllMunicipalitiesResult_resultHandler(event:ResultEvent):void
+			{
+				//allCities = getAllMunicipalitiesResult.lastResult;
+				allCities = new ArrayCollection();
+				var tmpArray:ArrayCollection = getAllMunicipalitiesResult.lastResult;
+				for(var i:int =0; i<tmpArray.length; i++){
+					var item:Object = tmpArray.getItemAt(i);
+					var o:Object = {id:i, label:item.name, dataField:item.id_municipality, isSelected:false};
+					allCities.addItem(o);
+				}
+				
+			}
+		
+			
+			protected function getEntrySetMenu():void
+			{
+				getEntrySetMenuResult.token = entrysetsService.getEntrySetMenu();
+			}
+			
+			
+			/**
+			 * Utility function to format years retrieved as int-s from DB.
+			 */
+			protected function formatYear(value:Number):Object
+			{
+				return value.toString();
+			}
+			
+			/**
+			 * Detect changes in timeline slider and store "toSet" values 
+			 */
+			protected function hSlider_changeHandler(event:SliderEvent):void
+			{
+				if (xStart != 0 || xEnd != 0)
+				{
+					xStartToSet = xStart;
+					xEndToSet = xEnd;
+				}
+				if (yStart != 0 || yEnd != 0)
+				{
+					yStartToSet = yStart;
+					yEndToSet = yEnd;
+				}
+				
+			}
+			
+			
+			
+			/**
+			 * Result handler for the BubbleEntriesPerYEarByIds web method
+			 * 
+			 * */
+			protected function getBubbleEntriesPerYearByIdsResult_resultHandler(event:ResultEvent):void
+			{ 
+				
+				chartDataProvider = new ArrayCollection();
+				chartDataProvider = getBubbleEntriesPerYearByIdsResult.lastResult.rows;
+				originalData = chartDataProvider;
+				//Alert.show(getBubbleEntriesPerYearByIdsResult.lastResult.rows[0][0].name+"");
+				minYear = getBubbleEntriesPerYearByIdsResult.lastResult.minYear;
+				maxYear = getBubbleEntriesPerYearByIdsResult.lastResult.maxYear;
+				
+				hSlider.minimum = minYear;
+				hSlider.maximum = maxYear;
+				
+				hSlider.labels = new Array(maxYear - minYear + 1);
+				
+				for (var i:int = minYear; i <= maxYear; i++) {
+					hSlider.labels[i - minYear] = i;
+				}
+				
+				
+				maxXValue= getBubbleEntriesPerYearByIdsResult.lastResult.maxXValue;
+				maxYValue= getBubbleEntriesPerYearByIdsResult.lastResult.maxYValue;
+				
+			}
+			
+			/**
+			 * Service call for the web method getBubbleEntriesPerYearById's
+			 **/
+			protected function getBubbleEntriesPerYearByIds(x_axis:int, y_axis:int, z_axis:int):void
+			{
+				getBubbleEntriesPerYearByIdsResult.token = bubbleEntriesService.getBubbleEntriesPerYearByIds(x_axis, y_axis, z_axis);
+			}
+			
+			/**
+			 * Call the web method that initialize the menu, on the menu creation
+			 * */
+			protected function xAxisPopup_creationCompleteHandler(event:FlexEvent):void
+			{
+				getEntrySetMenu();
+			}
+			
+			/**
+			 * Click handler of the X axis button
+			 * */
+			protected function xAxisPopup_clickHandler(event:MouseEvent):void
+			{
+				
+				menuX.show(chart.x+37, chart.y+chart.height-36);
+			}
+			
+			/**
+			 * Click handler of the Y axis button
+			 * */
+			
+			protected function yAxisPopup_clickHandler(event:MouseEvent):void
+			{
+				menuY.show(chart.x+37, chart.y+120);
+				
+			}
+			
+			protected function zAxisPopup_clickHandler(event:MouseEvent):void
+			{
+				menuZ.show(chart.width+42, chart.height+58);
+			}
+			
+			/**
+			 * Click handler for the menu on the X axis
+			 * */
+			private function menuZitemClick(event:MenuEvent):void {
+				
+				zAxisPopup.label = event.item.label;
+				zSelected = event.item.id;
+				if(zSelected == 0){
+					
+					minSize = DEFAULT_SIZE;
+					maxSize = DEFAULT_SIZE;
+					bubbleSizeHSlider.thumbCount = 1;
+					bubbleSizeHSlider.setThumbValueAt(0,DEFAULT_SIZE);
+				}else{
+					minSize = MIN_SIZE;
+					maxSize = MAX_SIZE;
+					bubbleSizeHSlider.thumbCount = 2;
+					bubbleSizeHSlider.setThumbValueAt(0,MIN_SIZE);
+					bubbleSizeHSlider.setThumbValueAt(1,MAX_SIZE);
+					getBubbleEntriesPerYearByIds(xSelected, ySelected, zSelected);
+					
+				}
+			}
+			
+			/**
+			 * Click handler for the menu on the X axis
+			 * */
+			private function menuXitemClick(event:MenuEvent):void {
+				/*Alert.show("event.type: " + event.type
+				+ 	"\nevent.index: " + event.index
+				+ 	"\nItem label: " + event.item.@name
+				+ 	"\nItem selected: " + event.item.@toggled
+				+	"\nItem id: " + event.item.@id);
+				*/
+				//Alert.show("x="+event.item.id +" y="+ySelected);
+				xAxisPopup.label = event.item.label;
+				xSelected = event.item.id
+				getBubbleEntriesPerYearByIds(xSelected, ySelected, zSelected);
+				
+			}
+			
+			/**
+			 * Click handler for the menu on the X axis
+			 * */
+			private function menuYitemClick(event:MenuEvent):void {
+				
+				yAxisPopup.label = event.item.label;
+				ySelected = event.item.id;
+				getBubbleEntriesPerYearByIds(xSelected, ySelected, zSelected);
+				//Alert.show("x="+xSelected +" y="+event.item.id);
+			}
+			
+			protected function playBtn_clickHandler(event:MouseEvent):void
+			{
+				if(!playing){
+					if(hSlider.value == maxYear){
+						hSlider.value = minYear;
+					}
+					playing = true;
+					playBtn.setStyle("icon",pauseBtnIcn);
+					
+					//hSlider.setStyle("slideDuration", 1);
+					//hSlider.setStyle("slideEasingFunction", Elastic.easeInOut(2000,100,100,100));
+					
+					
+					
+					timer = new Timer(1000 * playSpeed.value);
+					timer.addEventListener("timer", playTimeline);
+					timer.start();
+					
+				}else{
+					playing = false;
+					playBtn.setStyle("icon",playBtnIcn);
+					timer.stop();
+				}
+			}
+			
+			protected function playSpeed_changeHandler(event:SliderEvent):void
+			{
+				if(playing){
+					timer.stop();
+					timer = new Timer(1000 * playSpeed.value);
+					timer.addEventListener("timer", playTimeline);
+					timer.start();
+				}
+			}
+			private function playTimeline(e:TimerEvent):void{
+				//Alert.show("Test="+timelineSlider.value);
+				if(hSlider.value == maxYear){
+					timer.stop();
+					playing = false;
+					playBtn.setStyle("icon",playBtnIcn);
+				}else
+					
+					hSlider.value = hSlider.value+1;
+			} 
+			
+			
+			/**
+			 * Result handler for the getEntrySetMenu web method
+			 * */
+			protected function getEntrySetMenuResult_resultHandler(event:ResultEvent):void
+			{
+				var menuData:Array = getEntrySetMenuResult.lastResult.menu;
+				
+				
+				menuX = Menu.createMenu(null, menuData, false);
+				menuX.labelField="label";
+				menuX.addEventListener(MenuEvent.ITEM_CLICK, menuXitemClick);
+				
+				//Set the default_x and default_y
+				xSelected = getEntrySetMenuResult.lastResult.default_x_id;
+				ySelected = getEntrySetMenuResult.lastResult.default_y_id;
+				zSelected = getEntrySetMenuResult.lastResult.default_z_id;
+				
+				menuY = Menu.createMenu(null, menuData, false);
+				menuY.labelField="label";
+				menuY.addEventListener(MenuEvent.ITEM_CLICK, menuYitemClick);
+				
+				var tmpArr:ArrayCollection = new ArrayCollection();
+				var item:Object = new Object;
+				item.id = -1;
+				item.label = "Индикатори";
+				item.children = menuData;
+				tmpArr.addItem(item);
+				tmpArr.addItem({id:0, label:"Иста големина"});
+				
+				
+				menuZ = Menu.createMenu(null, tmpArr, false);
+				menuZ.labelField="label";
+				menuZ.layoutDirection="rtl";
+				menuZ.addEventListener(MenuEvent.ITEM_CLICK, menuZitemClick);
+				
+				
+				zAxisPopup.label = getEntrySetMenuResult.lastResult.default_z;
+				xAxisPopup.label = getEntrySetMenuResult.lastResult.default_x;
+				yAxisPopup.label = getEntrySetMenuResult.lastResult.default_y;
+				
+				//Initialize the bubble chart with the default values 
+				getBubbleEntriesPerYearByIds(xSelected, ySelected, zSelected);
+			}
+			
+			/**
+			 * Populate the data tip for each individual bubble
+			 * */
+			protected function dataTipFunction(hitData:HitData):String{
+				
+				return "<b>"+hitData.item.name+"</b><br>"+xAxisPopup.label+": "+hitData.item.x+"<br>"+yAxisPopup.label+": "+hitData.item.y+"<br>"+zAxisPopup.label+": "+hitData.item.z;
+				
+			}
+			
+			
+			/**
+			 * The change handler of the chart
+			 * */
+			protected function chart_changeHandler(event:ChartItemEvent):void
+			{
+				
+				/*var bc:BubbleChart = event.target as BubbleChart;
+				
+				for each (var bs:BubbleSeries in bc.series)
+				{
+				var ac:ArrayCollection = new ArrayCollection();
+				var dp:ArrayCollection = bs.dataProvider as ArrayCollection;
+				
+				for each (var bsi:BubbleSeriesItem in bs.selectedItems)
+				{
+				ac.addItem(bsi.item);
+				}
+				bs.dataProvider = ac;
+				}
+				bc.clearSelection();
+				chartCanReset = true;
+				*/
+			}
+			
+			protected function chart_doubleClickHandler(event:MouseEvent):void
+			{
+				if(chartCanReset)
+				{
+					var bc:BubbleChart = event.target as BubbleChart;
+					for (var i:int = 0; i < bc.series.length; i++)
+					{
+						var bs:BubbleSeries = bc.series[i] as BubbleSeries;
+						bs.dataProvider =  chartDataProvider.getItemAt(hSlider.value - hSlider.minimum);
+					}
+					chartCanReset = false;
+				}
+			}
+			
+			
+			private function bubbleSeriesFillFunction(item:ChartItem, index:Number):IFill {
+				
+				return new SolidColor(0xffffff*(item.item.id_municipality)*0.001, 0.4);
+				
+			}
+			
+			
+			
+			/**
+			 * Change the y axis from log to lin and vice versa
+			 * */
+			protected function yToggle_clickHandler(event:MouseEvent):void
+			{
+				
+				var linAxis:LinearAxis = new LinearAxis();
+				var logAxis:LogAxis = new LogAxis();
+				
+				
+				if(yToggle.selected){
+					logAxis.minimum = 0;
+					logAxis.maximum = maxYValue+1000;
+					chart.verticalAxis = logAxis;
+					
+				}
+				else{
+					//linAxis.maximum = maxYValue+1000;
+					linAxis.minimum = 0;
+					linAxis.maximum = maxYValue+1000;
+					chart.verticalAxis = linAxis;
+				}
+			}
+			
+			/**
+			 * Change the x axis from log to lin and vice versa
+			 * */
+			protected function xToggle_clickHandler(event:MouseEvent):void
+			{
+				var linAxis:LinearAxis = new LinearAxis();
+				var logAxis:LogAxis = new LogAxis();
+				
+				if(xToggle.selected){
+					//logAxis.baseAtZero = true;
+					//logAxis.autoAdjust = true;
+					logAxis.minimum=0;
+					logAxis.maximum = maxXValue+100;
+					//logAxis.autoAdjust = true;
+				
+					chart.horizontalAxis = logAxis;
+				}
+				else{
+					linAxis.minimum=0;
+					linAxis.maximum = maxXValue+100;
+					chart.horizontalAxis = linAxis;
+				}
+			}
+			
+			
+			protected function getAllMunicipalities():void
+			{
+				getAllMunicipalitiesResult.token = municipalitiesService.getAllMunicipalities();
+			}
+			
+			
+			
+			public function filter():void{
+				
+				//if(filtered){
+					chartDataProvider = originalData;
+				//}
+				var tmpArrayCollection:ArrayCollection = new ArrayCollection();;
+				for each(var item:Array in chartDataProvider){
+					
+					var k:ArrayCollection =new ArrayCollection(item);
+					k.filterFunction = customFilterFunction;
+					k.refresh();
+					// This is to keep the order of the data in the data provider
+					// So the interpolate effect in the data chart wont distort
+					var t1:ArrayCollection = new ArrayCollection();
+					for(var i:int = 0; i<allCities.length; i++){
+						if(allCities.getItemAt(i).isSelected){
+							for(var j:int=0; j<k.length; j++){
+								if(allCities.getItemAt(i).dataField == k.getItemAt(j).id_municipality)
+									t1.addItemAt(k.getItemAt(j),i);
+							}
+							
+						} 
+						else{
+							
+							t1.addItemAt(new Object(),i);
+						}
+					}
+						
+					//Alert.show("k="+k.getItemAt(0).id_municipality);
+					tmpArrayCollection.addItem(t1);
+				}
+				chartDataProvider = tmpArrayCollection;
+			}
+			private function customFilterFunction(item:Object):Boolean{
+				
+				var bool:Boolean = false;
+				
+				for(var i:int=0; i<allCities.length; i++){
+					if(allCities.getItemAt(i).isSelected && allCities.getItemAt(i).dataField == item.id_municipality)
+					{	
+						bool = true;
+					}
+				}
+				filtered = true;
+				return bool;
+			}
+			
+			
+			protected function checkAllCities_clickHandler(event:MouseEvent):void
+			{
+				
+				if(checkAllCities.selected){
+					for(var i:int=0; i<allCities.length; i++){
+						allCities.getItemAt(i).isSelected = true;
+						
+					}
+				}else{
+					for(var i:int=0; i<allCities.length; i++){
+						allCities.getItemAt(i).isSelected = false;
+					}
+				}
+				
+				list.dataProvider = allCities;
+				chartDataProvider = originalData;
+			}
+			
+			
+			
+			
+			
+			protected function bubbleSizeHSlider_changeHandler(event:SliderEvent):void
+			{
+				if(bubbleSizeHSlider.thumbCount==2){
+					minSize = bubbleSizeHSlider.values[0];
+					maxSize = bubbleSizeHSlider.values[1];
+				}else{
+					minSize = bubbleSizeHSlider.values[0];
+					maxSize = bubbleSizeHSlider.values[0];
+				}
+				
+				//Alert.show("max="+maxSize);
+			}
+			
+			
+			
+		]]>
+	</fx:Script>
+	<fx:Style>
+		@namespace s "library://ns.adobe.com/flex/spark";
+		@namespace local "*";
+		@namespace mx "library://ns.adobe.com/flex/mx";
+		
+		.toggleSwitch
+		{
+			skinClass:ClassReference("org.most.righttoknow.skins.ToggleSwitchSkin");
+		}
+		mx|BubbleChart {
+			horizontalAxisStyleName:myAxisStyles;
+			verticalAxisStyleName:myAxisStyles;
+		}
+		
+		.myAxisStyles {
+			tickPlacement:none
+		}
+	</fx:Style>
+	<fx:Declarations>
+		<bubbleentriesservice:BubbleEntriesService id="bubbleEntriesService"
+												   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+												   showBusyCursor="true"/>
+		<s:CallResponder id="getBubbleEntriesPerYearByIdsResult" result="getBubbleEntriesPerYearByIdsResult_resultHandler(event)"/>
+		
+		
+		<s:CallResponder id="getEntrySetMenuResult" result="getEntrySetMenuResult_resultHandler(event)"/>
+		<entrysetsservice:EntrysetsService id="entrysetsService"
+										   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+										   showBusyCursor="true"/>
+
+		<mx:SeriesInterpolate id="interpolateIn" duration="{1000*playSpeed.value}" elementOffset="0" easingFunction="Linear.easeNone"/>
+		<s:CallResponder id="getAllMunicipalitiesResult" result="getAllMunicipalitiesResult_resultHandler(event)"/>
+		<municipalitiesservice:MunicipalitiesService id="municipalitiesService"
+													 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
+													 showBusyCursor="true"/>
+
+		<mx:SolidColorStroke id="stroke1" color="blue" weight="0.5" alpha="0.3"/>
+		
+	</fx:Declarations>
+	<s:BorderContainer width="100%" height="100%" horizontalCenter="0" verticalCenter="0">
+		
+		<s:HGroup left="10" right="10" top="10" bottom="10" gap="3" width="100%" height="100%">
+			<s:VGroup height="100%" gap="3" width="100%">
+				<mx:TabNavigator width="100%" height="100%" paddingBottom="0" paddingLeft="0" paddingRight="0">
+					<s:NavigatorContent width="100%" height="100%" label="Графикон">
+						<s:Group width="100%" height="100%" top="-10">
+							<s:Panel width="100%" height="100%" borderVisible="false" dropShadowVisible="false"
+									 skinClass="org.most.righttoknow.skins.TitlelessPanel">
+								<s:HGroup width="100%" height="100%" gap="0" paddingLeft="5" paddingBottom="5">
+									<s:Group  height="100%" width="20">
+									<s:VGroup width="100%" height="100%" bottom="19" >
+										
+										<controls:ToggleSwitch id="yToggle" selected="false" selectedLabel="log" deselectedLabel="lin" 
+															   styleName="toggleSwitch" rotation="-90"
+															    
+															    click="yToggle_clickHandler(event)"/>
+										<s:Button id="yAxisPopup" left="0" height="100%" fontWeight="bold"
+												  rotation="-90" click="yAxisPopup_clickHandler(event)"
+												  cornerRadius="0" 
+												  skinClass="org.most.righttoknow.skins.ButtonAsAList"></s:Button>
+									</s:VGroup>
+									</s:Group>
+									
+									<s:VGroup width="100%" height="100%" gap="0">
+										<s:Group width="100%" height="100%">
+											<mx:BubbleChart id="chart" x="0" y="0" width="100%" height="100%"
+															change="chart_changeHandler(event)"
+															dataTipFunction="dataTipFunction" 
+															doubleClick="chart_doubleClickHandler(event)"
+															doubleClickEnabled="true"
+															minRadius="{minSize}"
+															maxRadius="{maxSize}" 
+															paddingRight="5" paddingTop="5" selectionMode="multiple"
+															showDataTips="true" dataTipMode="single"
+														    horizontalAxisStyleNames="linedNumericAxis"
+															verticalAxisStyleNames="linedNumericAxis"
+															
+															>
+												<mx:series>
+													<mx:BubbleSeries id="bubbleSeries"
+																	 displayName="Series 1" 
+																	 xField="x"
+																	 yField="y"
+																	 radiusField="z"
+																	 showDataEffect="{interpolateIn}"
+																	 dataProvider="{chartDataProvider.getItemAt(hSlider.value - hSlider.minimum)}"		  
+																	 fillFunction="bubbleSeriesFillFunction"
+																	  stroke="{new SolidColorStroke(0x666666,1,0.6)}" />
+												</mx:series>
+												
+												<mx:horizontalAxis>
+													<mx:LogAxis  id="xAxis" minimum="0" maximum="{maxXValue+100}"/>
+												</mx:horizontalAxis>
+												
+												<mx:verticalAxis>
+													<mx:LinearAxis id="yAxis" minimum="0" maximum="{maxYValue+1000}"/>
+												</mx:verticalAxis>
+												
+												<mx:annotationElements>
+													<controls:RangeSelector styleName="anno" />
+									 			</mx:annotationElements>
+												<mx:backgroundElements>
+													<mx:GridLines horizontalShowOrigin="true"
+																  verticalShowOrigin="true"
+																  y="0" x="0" gridDirection="both"
+																  horizontalStroke="{new Stroke(0x666666,1,0.2)}"
+																  verticalStroke="{new Stroke(0x666666,1,0.2)}"
+																  />
+													<s:HGroup width="100%" verticalAlign="middle" horizontalAlign="center">
+														<s:Label text="{hSlider.value}" 
+																 verticalAlign="middle"
+																 alpha="0.2"  
+																 fontSize="128"
+																 color="#666666"
+																 fontWeight="bold" />
+													</s:HGroup>
+													
+												</mx:backgroundElements>
+											</mx:BubbleChart>
+											
+											
+										</s:Group>
+										<s:HGroup width="100%" height="20">
+											<s:Button id="xAxisPopup" right="16" width="100%"
+													  click="xAxisPopup_clickHandler(event)"
+													  cornerRadius="0"
+													  creationComplete="xAxisPopup_creationCompleteHandler(event)"
+													  fontWeight="bold"
+													  skinClass="org.most.righttoknow.skins.ButtonAsAList"/>
+											<controls:ToggleSwitch id="xToggle" selected="true" selectedLabel="log" 
+																   deselectedLabel="lin" styleName="toggleSwitch"
+																   click="xToggle_clickHandler(event)" />
+										</s:HGroup>
+									</s:VGroup>
+									
+								</s:HGroup>
+								
+								<s:controlBarContent>
+									<s:HGroup x="0" y="0" width="100%" height="30" paddingLeft="5" verticalAlign="middle">
+										<mx:Button id="playBtn" y="6" width="40" height="35"
+												   icon="@Embed(source='assets/play_blue.png')"
+												   click="playBtn_clickHandler(event)"/>
+										<mx:VSlider id="playSpeed" height="40" horizontalCenter="0" maximum="6"
+												   minimum="1" toolTip="Брзина на плејбек"
+												   value="3" verticalCenter="0"
+												   snapInterval="1" tickInterval="1" tickLength="10" tickOffset="4" labelOffset="-1"
+												   change="playSpeed_changeHandler(event)" 
+												  /> 
+										<mx:HSlider id="hSlider" y="2" width="100%" height="40"
+													allowTrackClick="true" 
+													change="hSlider_changeHandler(event)"
+													dataTipFormatFunction="formatYear"
+													labelOffset="-1" liveDragging="true"
+													showTrackHighlight="true" snapInterval="1"
+													tickInterval="1" tickLength="10" tickOffset="4"/>
+										
+									</s:HGroup>
+								</s:controlBarContent>
+							</s:Panel>
+							
+						</s:Group>
+						
+					</s:NavigatorContent>
+					<s:NavigatorContent width="100%" height="100%" label="Мапа">
+						<s:Group width="100%" height="100%" top="-10">
+							<components:MapChartComponent x="5" width="100%" height="100%" horizontalCenter="0">
+							</components:MapChartComponent>
+						</s:Group>
+						<!--<s:Label id="yearLbl0" right="40" bottom="5" color="#ADADAD" fontSize="48"
+								 fontWeight="bold" text="{timelineSlider.value}" textAlpha="0.35"/>-->
+					</s:NavigatorContent>
+					
+				</mx:TabNavigator>
+			</s:VGroup>
+			
+			<s:VGroup width="155" height="100%" gap="3">
+				<s:Panel width="100%" height="100%" dropShadowVisible="false" fontSize="11"
+						 fontWeight="normal" skinClass="org.most.righttoknow.skins.PanelSkin"
+						 title="Изберете...">
+					
+					<mx:List id="list" y="0" width="100%" height="100%" borderVisible="false"
+							 dataProvider="{allCities}"
+							 fontSize="10" horizontalCenter="0"
+							 labelField="label" paddingBottom="0" paddingLeft="0" paddingTop="0" >
+						<mx:itemRenderer>
+							<fx:Component>
+								<mx:CheckBox label="{data.label}" change="onChange(event);"  paddingLeft="5" selected="{data.isSelected}">
+									<fx:Script>
+										<![CDATA[
+											import mx.controls.Alert;
+											private function onChange(evt:Event):void {     
+												//Alert.show("Item clicked="+data.label +" id="+data.dataField+" ");
+												//Alert.show("al="+outerDocument.allCities.getItemAt(data.dataField-1).label);
+												var o:Object;
+												if(selected){
+													o = {id:data.id, label:data.label, dataField:data.dataField, isSelected:true};
+												}else{
+													o = {id:data.id, label:data.label, dataField:data.dataField, isSelected:false};
+												}
+												outerDocument.allCities.setItemAt(o,data.id);
+												outerDocument.filter();
+											}
+											
+										]]>
+									</fx:Script>
+									
+								</mx:CheckBox>
+							</fx:Component>
+						</mx:itemRenderer> 
+					</mx:List>
+					<s:CheckBox id="checkAllCities" x="5" y="-19"
+								click="checkAllCities_clickHandler(event)"/>					
+					
+				</s:Panel>
+				<s:Panel width="100%" height="90" dropShadowVisible="false"
+						 skinClass="org.most.righttoknow.skins.PanelSkin" title="Големина">
+					<s:VGroup left="0" top="0" bottom="0" width="100%">
+						<s:Button id="zAxisPopup" width="100%" click="zAxisPopup_clickHandler(event)"
+								  cornerRadius="0" fontWeight="bold"
+								  skinClass="org.most.righttoknow.skins.ButtonAsAList"
+								 />
+						<mx:HSlider id="bubbleSizeHSlider" width="150" 
+								    change="bubbleSizeHSlider_changeHandler(event)"	
+									allowTrackClick="true" thumbCount="2"
+									liveDragging="true" values="{[MIN_SIZE,MAX_SIZE]}"  
+									maximum="30" minimum="1" snapInterval="1"
+								    labels="[5,10,15,20,25,30]" toolTip="Промена на минимална и максимална големина на балоните"	
+									tickInterval="1" tickLength="10" tickOffset="4" labelOffset="-1"/>
+					</s:VGroup>
+					
+				</s:Panel>
+				
+			</s:VGroup> 
+		</s:HGroup>
+		<s:HGroup y="10" right="168" width="249" height="22" gap="2" horizontalAlign="right">
+			<s:Button id="helpBtn" label="Помош" click="helpBtn_clickHandler(event)" fontSize="11"
+					  icon="@Embed(source='assets/help.png')"/>  
+			<mx:Button id="shareBtn" label="Сподели" click="shareBtn_clickHandler(event)"
+					   fontSize="11" icon="@Embed(source='assets/share2.png')" paddingLeft="5"
+					   paddingRight="5"/>
+			<s:ToggleButton  id="fullScreenBtn" width="21" height="21"
+					  click="fullScreenBtn_clickHandler(event)"
+					  icon="@Embed(source='assets/full_screen.png')"/>
+		</s:HGroup>
+	</s:BorderContainer>
+</s:Application>
