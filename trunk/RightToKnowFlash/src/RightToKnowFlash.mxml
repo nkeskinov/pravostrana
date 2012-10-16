@@ -31,6 +31,9 @@
 			import mx.collections.XMLListCollection;
 			import mx.controls.Alert;
 			import mx.controls.Menu;
+			import mx.effects.easing.Back;
+			import mx.effects.easing.Bounce;
+			import mx.effects.easing.Elastic;
 			import mx.effects.easing.Linear;
 			import mx.events.DataGridEvent;
 			import mx.events.FlexEvent;
@@ -121,6 +124,15 @@
 			public static var fullInIcn:Class;
 			[Embed(source='assets/normal_screen.png')]
 			public static var fullOutIcn:Class;
+			[Embed(source='assets/play_blue.png')]
+			public static var playBtnIcn:Class;
+			[Embed(source='assets/pause_blue.png')]
+			public static var pauseBtnIcn:Class;
+			
+			protected var playing:Boolean = false;
+			
+			protected var minYear:Number;
+			protected var maxYear:Number;
 			
 			/**
 			 * Start up function
@@ -243,8 +255,8 @@
 				chartDataProvider = getBubbleEntriesPerYearByIdsResult.lastResult.rows;
 				originalData = chartDataProvider;
 				//Alert.show(getBubbleEntriesPerYearByIdsResult.lastResult.rows[0][0].name+"");
-				var minYear:int = getBubbleEntriesPerYearByIdsResult.lastResult.minYear;
-				var maxYear:int = getBubbleEntriesPerYearByIdsResult.lastResult.maxYear;
+				minYear = getBubbleEntriesPerYearByIdsResult.lastResult.minYear;
+				maxYear = getBubbleEntriesPerYearByIdsResult.lastResult.maxYear;
 				
 				hSlider.minimum = minYear;
 				hSlider.maximum = maxYear;
@@ -355,16 +367,46 @@
 			
 			protected function playBtn_clickHandler(event:MouseEvent):void
 			{
-				timer = new Timer(1000 * playSpeed.value);
-				timer.addEventListener("timer", playTimeline);
-				timer.start();
+				if(!playing){
+					if(hSlider.value == maxYear){
+						hSlider.value = minYear;
+					}
+					playing = true;
+					playBtn.setStyle("icon",pauseBtnIcn);
+					
+					//hSlider.setStyle("slideDuration", 1);
+					//hSlider.setStyle("slideEasingFunction", Elastic.easeInOut(2000,100,100,100));
+					
+					
+					
+					timer = new Timer(1000 * playSpeed.value);
+					timer.addEventListener("timer", playTimeline);
+					timer.start();
+					
+				}else{
+					playing = false;
+					playBtn.setStyle("icon",playBtnIcn);
+					timer.stop();
+				}
 			}
 			
+			protected function playSpeed_changeHandler(event:SliderEvent):void
+			{
+				if(playing){
+					timer.stop();
+					timer = new Timer(1000 * playSpeed.value);
+					timer.addEventListener("timer", playTimeline);
+					timer.start();
+				}
+			}
 			private function playTimeline(e:TimerEvent):void{
 				//Alert.show("Test="+timelineSlider.value);
-				if(hSlider.value == getBubbleEntriesPerYearByIdsResult.lastResult.maxYear)
+				if(hSlider.value == maxYear){
 					timer.stop();
-				else
+					playing = false;
+					playBtn.setStyle("icon",playBtnIcn);
+				}else
+					
 					hSlider.value = hSlider.value+1;
 			} 
 			
@@ -609,6 +651,8 @@
 				//Alert.show("max="+maxSize);
 			}
 			
+			
+			
 		]]>
 	</fx:Script>
 	<fx:Style>
@@ -641,13 +685,14 @@
 										   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 										   showBusyCursor="true"/>
 
-		<mx:SeriesInterpolate id="interpolateIn" duration="3000" elementOffset="0" easingFunction="Linear.easeNone"/>
+		<mx:SeriesInterpolate id="interpolateIn" duration="{1000*playSpeed.value}" elementOffset="0" easingFunction="Linear.easeNone"/>
 		<s:CallResponder id="getAllMunicipalitiesResult" result="getAllMunicipalitiesResult_resultHandler(event)"/>
 		<municipalitiesservice:MunicipalitiesService id="municipalitiesService"
 													 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 													 showBusyCursor="true"/>
 
 		<mx:SolidColorStroke id="stroke1" color="blue" weight="0.5" alpha="0.3"/>
+		
 	</fx:Declarations>
 	<s:BorderContainer width="100%" height="100%" horizontalCenter="0" verticalCenter="0">
 		
@@ -749,18 +794,22 @@
 								
 								<s:controlBarContent>
 									<s:HGroup x="0" y="0" width="100%" height="30" paddingLeft="5" verticalAlign="middle">
-										<mx:Button id="playBtn" y="6" width="40" height="30"
-												   icon="@Embed(source='assets/play.png')"
+										<mx:Button id="playBtn" y="6" width="40" height="35"
+												   icon="@Embed(source='assets/play_blue.png')"
 												   click="playBtn_clickHandler(event)"/>
 										<mx:VSlider id="playSpeed" height="40" horizontalCenter="0" maximum="6"
 												   minimum="1" toolTip="Брзина на плејбек"
 												   value="3" verticalCenter="0"
 												   snapInterval="1" tickInterval="1" tickLength="10" tickOffset="4" labelOffset="-1"
-												  />
+												   change="playSpeed_changeHandler(event)" 
+												  /> 
 										<mx:HSlider id="hSlider" y="2" width="100%" height="40"
-													change="hSlider_changeHandler(event)" dataTipFormatFunction="formatYear"
-													snapInterval="1" tickInterval="1" tickLength="10" tickOffset="4" 
-													labelOffset="-1"/>
+													allowTrackClick="true" 
+													change="hSlider_changeHandler(event)"
+													dataTipFormatFunction="formatYear"
+													labelOffset="-1" liveDragging="true"
+													showTrackHighlight="true" snapInterval="1"
+													tickInterval="1" tickLength="10" tickOffset="4"/>
 										
 									</s:HGroup>
 								</s:controlBarContent>
