@@ -31,6 +31,7 @@
 			import mx.collections.XMLListCollection;
 			import mx.controls.Alert;
 			import mx.controls.Menu;
+			import mx.effects.easing.Linear;
 			import mx.events.DataGridEvent;
 			import mx.events.FlexEvent;
 			import mx.events.ListEvent;
@@ -42,7 +43,6 @@
 			import mx.graphics.Stroke;
 			import mx.managers.PopUpManager;
 			import mx.rpc.events.ResultEvent;
-			import mx.effects.easing.Linear;
 			
 			import org.most.righttoknow.components.HelpTitleWindow;
 			import org.most.righttoknow.components.ShareTitleWindow;
@@ -107,7 +107,24 @@
 			
 			protected var filtered:Boolean = false;
 			
+			protected static var DEFAULT_SIZE:Number = 10;
+			protected static var MIN_SIZE:Number = 5;
+			protected static var MAX_SIZE:Number = 15;
 			
+			[Bindable]
+			protected var minSize:Number = MIN_SIZE;
+			[Bindable]
+			protected var maxSize:Number = MAX_SIZE;
+			
+			// Classes for icons
+			[Embed(source='assets/full_screen.png')]
+			public static var fullInIcn:Class;
+			[Embed(source='assets/normal_screen.png')]
+			public static var fullOutIcn:Class;
+			
+			/**
+			 * Start up function
+			 * */
 			private function init():void {
 				fullScreenState = stage.displayState;
 				stage.addEventListener(FullScreenEvent.FULL_SCREEN, stage_fullScreen);		
@@ -116,17 +133,22 @@
 				
 			}
 			
-			
-			
 		
 			protected function fullScreenBtn_clickHandler(event:MouseEvent):void
 			{
+				if(fullScreenBtn.selected)
+					fullScreenBtn.setStyle("icon",fullOutIcn);
+				else
+					fullScreenBtn.setStyle("icon",fullInIcn);
+				
 				if (isFullScreen()) {
 					fullScreenState = StageDisplayState.NORMAL;
+					
 				} else {
 					fullScreenState = StageDisplayState.FULL_SCREEN;
 					this.percentWidth = 100;
 					this.percentHeight = 100;
+					
 				}
 				
 				try {
@@ -270,13 +292,13 @@
 			
 			protected function yAxisPopup_clickHandler(event:MouseEvent):void
 			{
-				menuY.show(chart.x+37, chart.y+50);
+				menuY.show(chart.x+37, chart.y+120);
 				
 			}
 			
 			protected function zAxisPopup_clickHandler(event:MouseEvent):void
 			{
-				menuZ.show(chart.width-2, chart.height+20);
+				menuZ.show(chart.width+42, chart.height+58);
 			}
 			
 			/**
@@ -285,8 +307,22 @@
 			private function menuZitemClick(event:MenuEvent):void {
 				
 				zAxisPopup.label = event.item.label;
-				zSelected = event.item.id
-				getBubbleEntriesPerYearByIds(xSelected, ySelected, zSelected);
+				zSelected = event.item.id;
+				if(zSelected == 0){
+					
+					minSize = DEFAULT_SIZE;
+					maxSize = DEFAULT_SIZE;
+					bubbleSizeHSlider.thumbCount = 1;
+					bubbleSizeHSlider.setThumbValueAt(0,DEFAULT_SIZE);
+				}else{
+					minSize = MIN_SIZE;
+					maxSize = MAX_SIZE;
+					bubbleSizeHSlider.thumbCount = 2;
+					bubbleSizeHSlider.setThumbValueAt(0,MIN_SIZE);
+					bubbleSizeHSlider.setThumbValueAt(1,MAX_SIZE);
+					getBubbleEntriesPerYearByIds(xSelected, ySelected, zSelected);
+					
+				}
 			}
 			
 			/**
@@ -354,7 +390,16 @@
 				menuY.labelField="label";
 				menuY.addEventListener(MenuEvent.ITEM_CLICK, menuYitemClick);
 				
-				menuZ = Menu.createMenu(null, menuData, false);
+				var tmpArr:ArrayCollection = new ArrayCollection();
+				var item:Object = new Object;
+				item.id = -1;
+				item.label = "Индикатори";
+				item.children = menuData;
+				tmpArr.addItem(item);
+				tmpArr.addItem({id:0, label:"Иста големина"});
+				
+				
+				menuZ = Menu.createMenu(null, tmpArr, false);
 				menuZ.labelField="label";
 				menuZ.layoutDirection="rtl";
 				menuZ.addEventListener(MenuEvent.ITEM_CLICK, menuZitemClick);
@@ -483,9 +528,9 @@
 			
 			public function filter():void{
 				
-				if(filtered){
+				//if(filtered){
 					chartDataProvider = originalData;
-				}
+				//}
 				var tmpArrayCollection:ArrayCollection = new ArrayCollection();;
 				for each(var item:Array in chartDataProvider){
 					
@@ -502,7 +547,7 @@
 									t1.addItemAt(k.getItemAt(j),i);
 							}
 							
-						}
+						} 
 						else{
 							
 							t1.addItemAt(new Object(),i);
@@ -548,6 +593,21 @@
 			}
 			
 			
+			
+			
+			
+			protected function bubbleSizeHSlider_changeHandler(event:SliderEvent):void
+			{
+				if(bubbleSizeHSlider.thumbCount==2){
+					minSize = bubbleSizeHSlider.values[0];
+					maxSize = bubbleSizeHSlider.values[1];
+				}else{
+					minSize = bubbleSizeHSlider.values[0];
+					maxSize = bubbleSizeHSlider.values[0];
+				}
+				
+				//Alert.show("max="+maxSize);
+			}
 			
 		]]>
 	</fx:Script>
@@ -607,7 +667,9 @@
 															    
 															    click="yToggle_clickHandler(event)"/>
 										<s:Button id="yAxisPopup" left="0" height="100%" fontWeight="bold"
-												  rotation="-90" click="yAxisPopup_clickHandler(event)" cornerRadius="0" ></s:Button>
+												  rotation="-90" click="yAxisPopup_clickHandler(event)"
+												  cornerRadius="0" 
+												  skinClass="org.most.righttoknow.skins.ButtonAsAList"></s:Button>
 									</s:VGroup>
 									</s:Group>
 									
@@ -618,7 +680,8 @@
 															dataTipFunction="dataTipFunction" 
 															doubleClick="chart_doubleClickHandler(event)"
 															doubleClickEnabled="true"
-															maxRadius="{bubbleSizeHSlider.values[1]}" minRadius="{bubbleSizeHSlider.values[0]}"
+															minRadius="{minSize}"
+															maxRadius="{maxSize}" 
 															paddingRight="5" paddingTop="5" selectionMode="multiple"
 															showDataTips="true" dataTipMode="single"
 														    horizontalAxisStyleNames="linedNumericAxis"
@@ -670,9 +733,12 @@
 											
 										</s:Group>
 										<s:HGroup width="100%" height="20">
-											<s:Button id="xAxisPopup" width="100%" right="16" fontWeight="bold" cornerRadius="0" 
-													  creationComplete="xAxisPopup_creationCompleteHandler(event)" 
-													  click="xAxisPopup_clickHandler(event)"/>
+											<s:Button id="xAxisPopup" right="16" width="100%"
+													  click="xAxisPopup_clickHandler(event)"
+													  cornerRadius="0"
+													  creationComplete="xAxisPopup_creationCompleteHandler(event)"
+													  fontWeight="bold"
+													  skinClass="org.most.righttoknow.skins.ButtonAsAList"/>
 											<controls:ToggleSwitch id="xToggle" selected="true" selectedLabel="log" 
 																   deselectedLabel="lin" styleName="toggleSwitch"
 																   click="xToggle_clickHandler(event)" />
@@ -759,12 +825,14 @@
 					<s:VGroup left="0" top="0" bottom="0" width="100%">
 						<s:Button id="zAxisPopup" width="100%" click="zAxisPopup_clickHandler(event)"
 								  cornerRadius="0" fontWeight="bold"
+								  skinClass="org.most.righttoknow.skins.ButtonAsAList"
 								 />
-						<mx:HSlider id="bubbleSizeHSlider" width="150"
+						<mx:HSlider id="bubbleSizeHSlider" width="150" 
+								    change="bubbleSizeHSlider_changeHandler(event)"	
 									allowTrackClick="true" thumbCount="2"
-									liveDragging="true" values="[3,15]"  
-									maximum="20" minimum="1" snapInterval="1"
-								    labels="[4,8,12,16,20]" toolTip="Промена на минимална и максимална големина на балоните"	
+									liveDragging="true" values="{[MIN_SIZE,MAX_SIZE]}"  
+									maximum="30" minimum="1" snapInterval="1"
+								    labels="[5,10,15,20,25,30]" toolTip="Промена на минимална и максимална големина на балоните"	
 									tickInterval="1" tickLength="10" tickOffset="4" labelOffset="-1"/>
 					</s:VGroup>
 					
