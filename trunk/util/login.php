@@ -4,7 +4,7 @@
 /* if (!isset($_SESSION)) {
 session_start();
 } 
- */
+*/
 $selfArray = explode('/',$_SERVER['PHP_SELF']);
 $phpSelfAdaptation = $selfArray[count($selfArray)-1];
 $loginFormAction = $phpSelfAdaptation.($_SERVER['QUERY_STRING'] != '' ? "?".$_SERVER['QUERY_STRING'] : '');
@@ -22,7 +22,7 @@ if (isset($_POST['username_login'])) {
   $MM_redirecttoReferrer = false;
   mysql_select_db($database_pravo, $pravo);
   
-  $LoginRS_query=sprintf("SELECT username, password, id_user, name, surname FROM `user` WHERE username=%s AND password=password(%s) AND is_approved = 1 AND (deleted!=1 OR deleted is null)",
+  $LoginRS_query=sprintf("SELECT username, password, id_user, name, surname FROM `user` WHERE username=%s AND password=password(%s) AND is_approved = 1 AND (deleted<>1 OR deleted is null)",
   GetSQLValueString($loginUsername, "text"), GetSQLValueString($password, "text")); 
    
   $LoginRS = mysql_query($LoginRS_query, $pravo) or die(mysql_error());
@@ -79,7 +79,7 @@ if (isset($_POST['username_login'])) {
 	}
   }
   else {
-	  $LoginRS_query=sprintf("SELECT username FROM `user` WHERE username=%s AND password=password(%s) AND is_approved = 0 AND (deleted!=1 OR deleted is null)",
+	  $LoginRS_query=sprintf("SELECT username FROM `user` WHERE username=%s AND password=password(%s) AND is_approved = 0 AND (deleted<>1 OR deleted is null)",
   GetSQLValueString($loginUsername, "text"), GetSQLValueString($password, "text")); 
   $LoginRS = mysql_query($LoginRS_query, $pravo) or die(mysql_error());
   $loginUserNotActivated = mysql_num_rows($LoginRS);

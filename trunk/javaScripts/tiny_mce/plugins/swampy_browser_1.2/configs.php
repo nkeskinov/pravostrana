@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
 	@name Swampy File and Image Manager (SwampyBrowser) - Sample config file
 	@version 1.2
@@ -10,10 +10,10 @@
 	@license http://creativecommons.org/licenses/by-nc/3.0/
 **/
 
-$HOST = "http://localhost/pravo/";
+$HOST = "http://pravo.org.mk/";
 
 // absolute path to your public_html directory
-$PUBLIC_HTML_DIR = "D:/dev/pravo.org.mk/";
+$PUBLIC_HTML_DIR = "/home/content/68/5509168/html/";
 
 // valid image extension
 $IMAGE_EXTENSIONS = array("jpg", "jpeg","png", "gif");
@@ -25,7 +25,7 @@ $IMAGE_EXTENSIONS = array("jpg", "jpeg","png", "gif");
 */
 $DIRS = array
 (
-	array('title'=>"Слики за новости",	'dir'=>"pravo.org.mk/images/news/"),
+	array('title'=>"Новости за слики",'dir'=>"/images/gallery/")
 );
 /*
 	IMAGE_FORMATS - custom image formats for uploading images

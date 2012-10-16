@@ -105,7 +105,7 @@ transition: Fx.Transitions.sineOut
                  <p>Едноставна статистика на посети на месечно ниво.</p>
                    <p>
                      <object id="FlashID" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="710" height="305">
-                       <param name="movie" value="charts1.swf">
+                       <param name="movie" value="Main.swf">
                        <param name="quality" value="high">
                        <param name="wmode" value="opaque">
                        <param name="swfversion" value="9.0.45.0">
@@ -113,7 +113,7 @@ transition: Fx.Transitions.sineOut
                        <param name="expressinstall" value="../Scripts/expressInstall.swf">
                        <!-- Next object tag is for non-IE browsers. So hide it from IE using IECC. -->
                        <!--[if !IE]>-->
-                       <object type="application/x-shockwave-flash" data="charts1.swf" width="710" height="305">
+                       <object type="application/x-shockwave-flash" data="Main.swf" width="710" height="305">
                          <!--<![endif]-->
                          <param name="quality" value="high">
                          <param name="wmode" value="opaque">

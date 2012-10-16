@@ -145,7 +145,7 @@ plugins : "safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotio
 
 		theme_advanced_buttons1 : "mymenubutton,bold,italic,underline,separator,strikethrough,justifyleft,justifycenter,justifyright,justifyfull,bullist,numlist,emotions,undo,redo,link,unlink",
 		theme_advanced_buttons2 : "",
-		theme_advanced_buttons3 : "",
+		theme_advanced_buttons3 : ""
 
 		
 		

@@ -17,13 +17,13 @@ if ((isset($_GET['doLogout'])) &&($_GET['doLogout']=="true")){
 //  $_SESSION['PrevUrl'] = NULL;
   $_SESSION['MM_Name']=NULL;
   $_SESSION['MM_ID']=NULL;
-  //$_SESSION['id_visit']=NULL;
+  $_SESSION['id_visit']=NULL;
   unset($_SESSION['MM_Username']);
   unset($_SESSION['MM_UserGroup']);
 //  unset($_SESSION['PrevUrl']);
   unset($_SESSION['MM_Name']);
   unset($_SESSION['MM_ID']);
-  //unset($_SESSION['id_visit']);
+  unset($_SESSION['id_visit']);
   
   $_SESSION['logoutDone'] = 'true';
 	

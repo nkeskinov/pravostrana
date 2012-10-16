@@ -135,7 +135,17 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
      $result_query = @mysql_query($query, $pravo);
 	 $success=true;
 	 
-	$DocTypeQuery = sprintf("SELECT * FROM doc_type WHERE id_doc_type=%s", GetSQLValueString($_POST['id_doc_type'],"int"));
+	 if (isset($_POST['doctype']) && $_POST['doctype'] != 0) {
+			$id_doc_type = $_POST['doctype'];
+		} else if (isset($_GET['superdocument'])) {
+		    $checkSupertype = sprintf("SELECT id_doc_type FROM document where id_document = %s", GetSQLValueString($_GET['superdocument'], "int"));
+	        $Result6 = mysql_query($checkSupertype, $pravo) or die(mysql_error());
+	        if(mysql_num_rows($Result6)>0) {
+		        $id_doc_type =mysql_result($Result6,0,'id_doc_type');
+		    }
+		}
+	 
+	$DocTypeQuery = sprintf("SELECT * FROM doc_type WHERE id_doc_type=%s", GetSQLValueString($id_doc_type,"int"));
 	$DocType = mysql_query($DocTypeQuery, $pravo) or die(mysql_error());
 	$directory = mysql_result($DocType,0,'directory');
 	
@@ -162,18 +172,18 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 		$id_doc_meta =mysql_result($Result5,0,'id_doc_meta');
 	}else{
 	$insertSQL = sprintf("INSERT INTO doc_meta (id_doc_type, ordinal, `date`) VALUES (%s, %s, %s)",
-                       GetSQLValueString($_POST['id_doc_type'], "int"),
+                       GetSQLValueString($_POST['doctype'], "int"),
                        GetSQLValueString($_POST['ordinal'], "int"),
                        GetSQLValueString($published_date, "date"));
 	 
   	$Result1 = mysql_query($insertSQL, $pravo) or die(mysql_error());
 	
-	 if($Result1){
+	 if ($Result1){
 		 $id_doc_meta = mysql_insert_id();
 	 	}
 	}
 		/* Insert new document*/
-		if(isset($_POST['subsubcategory']) && $_POST['subsubcategory']!=0){
+		if (isset($_POST['subsubcategory']) && $_POST['subsubcategory']!=0){
 			$id_group=$_POST['subsubcategory'];
 		}elseif(isset($_POST['subcategory']) && $_POST['subcategory']!=0){
 			$id_group=$_POST['subcategory'];
@@ -186,14 +196,14 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 		//echo $id_group;
 		$into_force_date = '';
 		$into_force = '';
-		if ($_POST['id_doc_type'] == '1' || $_POST['id_doc_type'] == '2') {
+		if ($_POST['doctype'] == '1' || $_POST['doctype'] == '2') {
 			$into_force_date = date("Y-m-d", strtotime($_POST['into_force_date']));
 			$into_force = '1';
 		}
 		$idx = isset($_POST['idx']) ? $_POST['idx'] : "";
 
 		$insertSQL = sprintf("INSERT INTO `document` (id_doc_type, filename, title, id_doc_group, `description`, extension, filesize, mimetype, forcesubscribe, published_date, created_by, id_doc_meta, uploaded_date, into_force_date, into_force, idx, show_on_home) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-						   GetSQLValueString($_POST['id_doc_type'], "int"),
+						   GetSQLValueString($id_doc_type, "int"),
 						   GetSQLValueString($filename, "text"),
 						   GetSQLValueString($_POST['title'], "text"),
 						   GetSQLValueString($id_group, "int"),
@@ -288,7 +298,7 @@ if ((isset($_POST["MM_update"]))) {
 		$Document = mysql_query($DocumentQuery,$pravo) or die(mysql_error());
 		$id_doc_type = mysql_result($Document,0,'id_doc_type');
 		$file = mysql_result($Document, 0, 'filename');
-		$DocTypeQuery_old = sprintf("SELECT * FROM doc_type WHERE id_doc_type=%s", GetSQLValueString($_POST['id_doc_type'],"int"));
+		$DocTypeQuery_old = sprintf("SELECT * FROM doc_type WHERE id_doc_type=%s", GetSQLValueString($id_doc_type,"int"));
 		$DocType_old = mysql_query($DocTypeQuery_old, $pravo) or die(mysql_error());
 		$directory_old = mysql_result($DocType_old,0,'directory');
 		
@@ -301,7 +311,7 @@ if ((isset($_POST["MM_update"]))) {
 		}
 	
 	
-	$DocTypeQuery = sprintf("SELECT * FROM doc_type WHERE id_doc_type=%s", GetSQLValueString($_POST['id_doc_type'],"int"));
+	$DocTypeQuery = sprintf("SELECT * FROM doc_type WHERE id_doc_type=%s", GetSQLValueString($_POST['doctype'],"int"));
 	$DocType = mysql_query($DocTypeQuery, $pravo) or die(mysql_error());
 	$directory = mysql_result($DocType,0,'directory');
 	

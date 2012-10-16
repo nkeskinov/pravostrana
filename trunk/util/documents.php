@@ -13,14 +13,14 @@ if(isset($_REQUEST['asc'])) {
 $sort="published_date";
 $default_sort = false;
 if(isset($_REQUEST['sort']) && strcmp($_REQUEST['sort'], "")) {
-	$sort=$_REQUEST['sort'];
+	$sort=GetSQLValueString($_REQUEST['sort'], "text");
 } else {
 	$default_sort = true;
 }
 $maxRows_Documents = 10;
 $pageNum_Documents = 0;
 if (isset($_GET['pageNum_Documents'])) {
-  $pageNum_Documents = $_GET['pageNum_Documents'];
+  $pageNum_Documents = GetSQLValueString($_GET['pageNum_Documents'], "int");
 }
 $startRow_Documents = $pageNum_Documents * $maxRows_Documents;
 
