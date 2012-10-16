@@ -287,7 +287,7 @@ if ((isset($_POST["Comment_insert"])) && ($_POST["Comment_insert"] == "insert"))
 		mode : "specific_textareas",
 		editor_selector : "mceEditor",
 		theme : "advanced",
-plugins : "safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template,imagemanager",
+plugins : "safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
 
 
 		theme_advanced_buttons1 : "save,newdocument,|,mymenubutton,bold,italic,underline,separator,strikethrough,justifyleft,justifycenter,justifyright,justifyfull,|,bullist,numlist,|,forecolor,backcolor",
@@ -298,14 +298,14 @@ plugins : "safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotio
 		theme_advanced_statusbar_location : "bottom",
 		theme_advanced_resizing : true,
 		
-		content_css : "style.css",
+		content_css : "style.css"
 
 		// Drop lists for link/image/media/template dialogs
 		//template_external_list_url : "js/template_list.js",
 		//external_link_list_url : "js/link_list.js",
 		//external_image_list_url : "js/image_list.js",
 		//media_external_list_url : "js/media_list.js",
-		file_browser_callback : "openSwampyBrowser" /* you need this line for SwampyBrowser */
+//		file_browser_callback : "openSwampyBrowser" /* you need this line for SwampyBrowser */
 
 		
 	});

@@ -877,3 +877,7 @@ tr.off {
 	height:60px;
 	z-index:1;
 }
+
+#username_login, #password_login {
+	width:232px;
+}

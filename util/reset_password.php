@@ -28,6 +28,7 @@
 			
 			//echo $Message;
 			send_mail("Pravo.org.mk","no-reply@pravo.org.mk","$name $surname <$to_email>",$subject,$Message);
+			//send_mail("Pravo.org.mk","no-reply@pravo.org.mk","nkeskinov@gmail.com",$subject,$Message);
 			_show_message_color("Инструкции за промена на вашата лозинка се пратени на ".$to_email,'GREEN');
 		  }else{
 			_show_message_color('Вашата email адреса не е најдена во нашата база!','RED');    
@@ -45,7 +46,7 @@
 			$email=NULL;
 		
 		mysql_select_db($database_pravo, $pravo);
-		$Query=sprintf("SELECT * FROM `user` where username = %s",GetSQLValueString($email,"text"));
+		$Query=sprintf("SELECT * FROM `user` where email = %s",GetSQLValueString($email,"text"));
 		
 		$Result = mysql_query($Query, $pravo) or die(mysql_error());
 		if(mysql_num_rows($Result)>0){
@@ -125,7 +126,7 @@ echo $selfArray[count($selfArray)-1];
       <span class="passwordRequiredMsg">Лозинката е задолжителна.</span></span></td>
     </tr>
     <tr>
-      <td>Поветорете ја лозинката:</td>
+      <td>Повторете ја лозинката:</td>
       <td align="left"><span id="spryconfirm1">
       <input type="password" name="password-new2" id="password-new2" />
       <span class="confirmRequiredMsg">Лозинката е задолжителна.</span><span class="confirmInvalidMsg">Лозинките не се совпаѓаат.</span></span>

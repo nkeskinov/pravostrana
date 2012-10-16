@@ -1,5 +1,8 @@
 <?php require_once('Connections/pravo.php'); ?>
 <?php include('util/misc.php'); ?>
+<?php 
+require_once('util/PiwikTracker.php');
+?>
 <?php
 if (!isset($_SESSION)) {
   session_start();
@@ -68,8 +71,11 @@ if ($totalRows_recordset_document == 1) {
 	$file_size = filesize($path);
 	if ($fp = fopen ($path, "r")) {
 		if ($_SESSION['MM_UserGroup'] != 'admin') {
-			if (!mysql_query(sprintf("INSERT INTO download (id_document, id_user, downloaded_date) VALUES (%s, %s, %s)", GetSQLValueString($row_recordset_document['id_document'], "int"), GetSQLValueString($_SESSION['MM_ID'], "int"), GetSQLValueString(date('Y-m-d H:i:s'), "date"))) || !mysql_query(sprintf("UPDATE document SET no_downloads = no_downloads + 1 WHERE id_document = %s", $row_recordset_document['id_document'])))
+			if (!mysql_query(sprintf("INSERT INTO download (id_document, id_user, downloaded_date) VALUES (%s, %s, %s)", GetSQLValueString($row_recordset_document['id_document'], "int"), GetSQLValueString($_SESSION['MM_ID'], "int"), GetSQLValueString(date('Y-m-d H:i:s'), "date"))) || !mysql_query(sprintf("UPDATE document SET no_downloads = no_downloads + 1 WHERE id_document = %s", $row_recordset_document['id_document']))) {
 				die('Problem so registracijata na simnuvanjeto: ' . mysql_error());
+			}
+			$t = new PiwikTracker( $idSite = 1, 'http://www.pravo.org.mk/piwik/' );
+			$t->doTrackAction(str_replace(" ", "_", $row_recordset_document['filename']), 'download');
 		}
 		
 		ob_start();

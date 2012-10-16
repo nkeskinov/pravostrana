@@ -1,5 +1,5 @@
 <?php include("util/login.php"); ?>
-<?php if((!isset( $_SESSION['MM_Username'] )) or (!isset($_SESSION['MM_UserGroup']))){  ?>
+<?php if(!isset( $_SESSION['MM_Username'] ) || !isset($_SESSION['MM_UserGroup'])){  ?>
 <div class="login" style="width:250px;">
               <div class="title" style="text-align:left; padding-left:10px;">Најавување</div>
                 <div class="forms">
@@ -41,7 +41,7 @@
                     </form>
 	</div>
 </div>
-<?php }elseif((isset( $_SESSION['MM_Username'] )) and  (isset($_SESSION['MM_UserGroup']))){ ?>
+<?php }elseif(isset( $_SESSION['MM_Username'] ) &&  isset($_SESSION['MM_UserGroup'])){ ?>
 	<div class="login" style="border-bottom:1px solid #f5e6a2; width:250px; height:87px;">
               <div class="title" style="text-align:left; padding-left:10px;">Добредојде</div>
                 <div class="forms" >

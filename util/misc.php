@@ -83,30 +83,26 @@ if (!function_exists("cyr2lat")) {
 			$cyr=array(
     "а","б","в","г","д","ѓ","е","ж","з","ѕ","и","ј","к","л","љ","м","н","њ","о","п","р","с","т","ќ","у","ф","х","ц","ч","џ","ш");
     $lat=array(
-    "a","b","v","g","d","gj","e","zh","z","dz","i","j","k","l","lj","m","n","nj","o","p","r","s","t","kj","u","f","h","c","ch","dz","sh");
-	$input=mb_strtolower($input,"UTF-8");
+    "a","b","v","g","d","gj","e","zh","z","dz","i","j","k","l","lj","m","n","nj","o","p","r","s","t","kj","u","f","h","c","ch","dzh","sh");
 		 for($i=0; $i < count($cyr); $i++){
-		   $current_cyr= $cyr[$i];
-		   $current_lat= $lat[$i];
-		   $input=str_replace($current_cyr,$current_lat,$input);
-		   $input=str_replace(strtolower($current_cyr),strtolower($current_lat),$input);
+		   $current_cyr = $cyr[$i];
+		   $current_lat = $lat[$i];
+		   $input = str_replace($current_cyr,$current_lat,$input);
+		   $input = str_replace(mb_strtoupper($current_cyr, "UTF-8"), strtoupper($current_lat), $input);
 		 }
     	return($input);
     }
 }
 if (!function_exists("lat2cyr")) {
 	function lat2cyr($input){
-			$cyr=array(
-    "ѕ","ж","ќ","њ","љ","ѓ","ч","џ","ш","а","б","в","г","д","е","з","и","ј","к","л","м","н","о","п","р","с","т","у","ф","х","ц","Ѕ","Ж","Ќ","Њ","Љ","Ѓ","Ч","Џ","Ш","А","Б","В","Г","Д","Е","З","Ѕ","И","Ј","К","Л","М","Н","О","П","Р","С","Т","У","Ф","Х","Ц",);
-    $lat=array(
-    "dz","zh","kj","nj","lj","gj","ch","dch","sh","a","b","v","g","d","e","z","i","j","k","l","m","n","o","p","r","s","t","u","f","h","c","Dz","Zh","Kj","Nj","Lj","Gj","Ch","Dch","Sh","A","B","V","G","D","E","Z","I","J","K","L","M","N","O","P","R","S","T","U","F","H","C");
-	//$input=mb_strtolower($input,"UTF-8");
+		$cyr=array("а","б","в","г","д","ѓ","е","ж","з","ѕ","и","ј","к","л","љ","м","н","њ","о","п","р","с","т","ќ","у","ф","х","ц","ч","џ","ш");
+        $lat=array("a","b","v","g","d","gj","e","zh","z","dz","i","j","k","l","lj","m","n","nj","o","p","r","s","t","kj","u","f","h","c","ch","dzh","sh");
 	
      for($i=0;$i<count($lat);$i++){
-       $current_cyr=$cyr[$i];
-       $current_lat=$lat[$i];
-       $input=str_replace($current_lat,$current_cyr,$input);
-       $input=str_replace(strtolower($current_lat),strtolower($current_cyr),$input);
+       $current_cyr = $cyr[$i];
+       $current_lat = $lat[$i];
+       $input = str_replace($current_lat, $current_cyr, $input);
+	   $input = str_replace(strtoupper($current_lat), mb_strtoupper($current_cyr, "UTF-8"), $input);
      }
     return($input);
     }
@@ -115,13 +111,18 @@ if (!function_exists("send_mail")) {
 	function send_mail($_from_name,$_from_email,$_to,$_subject,$_message)
 	{
 		# Is the OS Windows or Mac or Linux 
-		if (strtoupper(substr(PHP_OS,0,3)=='WIN')) { 
-		  $eol="\r\n"; 
-		} elseif (strtoupper(substr(PHP_OS,0,3)=='MAC')) { 
-		  $eol="\r"; 
-		} else { 
-		  $eol="\n"; 
-		}
+		#if (strtoupper(substr(PHP_OS,0,3)=='WIN')) { 
+		#  $eol="\r\n"; 
+		#} elseif (strtoupper(substr(PHP_OS,0,3)=='MAC')) { 
+		#  $eol="\r"; 
+		#} else { 
+		#  $eol="\r\n"; 
+		#}
+		$eol = "\r\n";
+		
+		$_from_name = cyr2lat($_from_name);
+		$_from_email = cyr2lat($_from_email);
+		$_to = cyr2lat($_to);
 		
 		# Common Headers 
 		$headers = "From: $_from_name <$_from_email>".$eol; 
@@ -131,13 +132,19 @@ if (!function_exists("send_mail")) {
 		
 		# Boundry for marking the split & Multitype Headers 
 		$headers .= 'MIME-Version: 1.0'.$eol; 
-		$headers .= "Content-Type:multipart/mixed; boundary=\"PHP-mixed-{$sep}\" charset=UTF-8".$eol; 
+		$headers .= "Content-Type: text/html; charset=UTF-8".$eol; 
 		$headers .= "Content-Transfer-Encoding: 8bit".$eol; 	
 	
-	     
 		# SEND THE EMAIL 
 		ini_set("sendmail_from",$_from_email);  // the INI lines are to force the From Address to be used ! 
 		$_subject = '=?UTF-8?B?'.base64_encode($_subject).'?=';
+		
+		//tried to format the to parameter differently
+		//$_to = explode('<',$_to );
+		//$_to = quoted_printable_encode($_to[0]).' <'. $_to[1] ;
+		//echo 'To:'.$_to.' ';
+		//echo 'Subject:'.$_subject;
+		
 		$res = mail($_to, $_subject, $_message, $headers); 
 		ini_restore("sendmail_from");
 		return $res;
@@ -145,13 +152,14 @@ if (!function_exists("send_mail")) {
 }
 
 if (!function_exists("trackVisit")) {
-function trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_page, $database_pravo, $pravo){
+function trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page, $from_page, $database_pravo, $pravo){/*
 	mysql_select_db($database_pravo, $pravo);
 	$success=false;
 	
 	$QueryPage=sprintf("SELECT * from page where path = %s",GetSQLValueString($page, "text"));
 	$ResultPage = mysql_query($QueryPage, $pravo);	
 	$id_page=-1;
+	//najdi go id-to na stranicata koja se otvora
 	if(mysql_num_rows($ResultPage)>0){
 		$id_page=mysql_result($ResultPage,0,'id_page');	
 	}
@@ -159,11 +167,12 @@ function trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page
 	$QueryFromPage=sprintf("SELECT * from page where path = %s",GetSQLValueString($from_page, "text"));
 	$ResultFromPage = mysql_query($QueryFromPage, $pravo);	
 	$id_from_page=NULL;
+	//najdi go id-to na stranicata koja e povikuvac
 	if(mysql_num_rows($ResultFromPage)>0){
 		$id_from_page=mysql_result($ResultFromPage,0,'id_page');	
 	}
-	
-	if(!(isset($_SESSION['id_visit']))){
+	//registriraj nov visit
+	if(!(isset($_SESSION['id_visit'])) && !(isset($_SESSION['logoutDone']))){
 		$now = date("Y-m-d H:i:s");
 		$Query=sprintf("INSERT INTO visit(id_user, ip, referrer, browser, language, visited_date) 
 						 VALUES(%s,%s,%s,%s,%s, %s)",
@@ -179,8 +188,9 @@ function trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page
 			$success=true;
 		
 	}
+	
 	if(isset($_SESSION['id_visit']) && isset($_SESSION['MM_ID'])){
-		
+		//ako ne se pravi logout, napravi update na visit-ot so korisnikot koj ja otvora stranicata
 		if (!isset($_SESSION['logoutDone'])) {
 			$UpdateQuery=sprintf("UPDATE visit SET id_user=%s WHERE id_visit=%s",	
 								 GetSQLValueString($_SESSION['MM_ID'], "int"),
@@ -195,10 +205,12 @@ function trackVisit($ip_address, $referrer, $browser, $language, $id_user, $page
 	//echo "Session:".$_SESSION['id_visit']."<br>";
 	//echo "Page:".$id_page."<br>";
 	//echo "From page:".$id_from_page."<br>";
+	
+	//zapisi ja posetata vo page_visit
 	$Query1=sprintf("INSERT INTO page_visit(id_visit, id_page, id_from_page) VALUES(%s,%s,%s)",GetSQLValueString($_SESSION['id_visit'], "int"),GetSQLValueString($id_page, "int"), GetSQLValueString($id_from_page, "int"));
 	$ResultPageVisit = mysql_query($Query1, $pravo);
 	if($ResultPageVisit)
-		$success=true;
+		$success=true;*/
 }
 }
 ?>

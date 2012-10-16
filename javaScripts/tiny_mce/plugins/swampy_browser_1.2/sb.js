@@ -1,4 +1,4 @@
-var browser_url = "/pravo/javaScripts/tiny_mce/plugins/swampy_browser_1.2/";
+var browser_url = "/javaScripts/tiny_mce/plugins/swampy_browser_1.2/";
 
 var fieldName = null;
 var wind = null;
