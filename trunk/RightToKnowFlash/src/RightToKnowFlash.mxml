@@ -206,6 +206,7 @@
 			protected function getAllMunicipalitiesResult_resultHandler(event:ResultEvent):void
 			{
 				//allCities = getAllMunicipalitiesResult.lastResult;
+				busyIndicator1.busy = true;
 				allCities = new ArrayCollection();
 				var tmpArray:ArrayCollection = getAllMunicipalitiesResult.lastResult;
 				for(var i:int =0; i<tmpArray.length; i++){
@@ -213,7 +214,7 @@
 					var o:Object = {id:i, label:item.name, dataField:item.id_municipality, isSelected:false};
 					allCities.addItem(o);
 				}
-				
+				busyIndicator1.busy = false;
 			}
 		
 			
@@ -257,7 +258,7 @@
 			 * */
 			protected function getBubbleEntriesPerYearByIdsResult_resultHandler(event:ResultEvent):void
 			{ 
-				
+				showBusyCursor();
 				chartDataProvider = new ArrayCollection();
 				chartDataProvider = getBubbleEntriesPerYearByIdsResult.lastResult.rows;
 				originalData = chartDataProvider;
@@ -279,7 +280,9 @@
 				
 				maxXValue= getBubbleEntriesPerYearByIdsResult.lastResult.maxXValue;
 				maxYValue= getBubbleEntriesPerYearByIdsResult.lastResult.maxYValue;
+				charBgLabel.visible = true;
 				
+				hideBusyCursor();
 			}
 			
 			/**
@@ -350,13 +353,7 @@
 			 * Click handler for the menu on the X axis
 			 * */
 			private function menuXitemClick(event:MenuEvent):void {
-				/*Alert.show("event.type: " + event.type
-				+ 	"\nevent.index: " + event.index
-				+ 	"\nItem label: " + event.item.@name
-				+ 	"\nItem selected: " + event.item.@toggled
-				+	"\nItem id: " + event.item.@id);
-				*/
-				//Alert.show("x="+event.item.id +" y="+ySelected);
+				
 				xAxisPopup.label = event.item.label;
 				xSelected = event.item.id
 				getBubbleEntriesPerYearByIds(xSelected, ySelected, zSelected);
@@ -435,20 +432,45 @@
 			 * */
 			protected function chart_changeHandler(event:ChartItemEvent):void
 			{
+				//Still to be corected
+				/*
+				var bc:BubbleChart = event.target as BubbleChart;
 				
-				/*var bc:BubbleChart = event.target as BubbleChart;
 				
 				for each (var bs:BubbleSeries in bc.series)
 				{
-				var ac:ArrayCollection = new ArrayCollection();
-				var dp:ArrayCollection = bs.dataProvider as ArrayCollection;
+					var ac:ArrayCollection = new ArrayCollection();
+					var dp:ArrayCollection = bs.dataProvider as ArrayCollection;
+					var tmpMinX:Number = maxXValue;
+					var tmpMinY:Number = maxYValue;
+					var tmpMaxX:Number = 0;
+					var tmpMaxY:Number = 0;
+					for each (var bsi:BubbleSeriesItem in bs.selectedItems)
+					{
+						if(bsi.item.x < tmpMinX)
+							tmpMinX = bsi.item.x;
+						if(bsi.item.y < tmpMinY)
+							tmpMinY = bsi.item.y;
+						if(bsi.item.x > tmpMaxX)
+							tmpMaxX = bsi.item.x;
+						if(bsi.item.y > tmpMaxY)
+							tmpMaxY = bsi.item.y;
+					ac.addItem(bsi.item);
+						
+					}
+					var logAxis:LogAxis = new LogAxis();
+					logAxis.minimum = tmpMinX-100;
+					logAxis.maximum = tmpMaxX+100;
+					
+					var linAxis:LinearAxis = new LinearAxis();
+					linAxis.minimum = tmpMinY-1000;
+					linAxis.maximum = tmpMaxY+1000;
+					
+					chart.horizontalAxis = logAxis;
+					chart.verticalAxis = linAxis;
+					bs.dataProvider = ac;
+				}
 				
-				for each (var bsi:BubbleSeriesItem in bs.selectedItems)
-				{
-				ac.addItem(bsi.item);
-				}
-				bs.dataProvider = ac;
-				}
 				bc.clearSelection();
 				chartCanReset = true;
 				*/
@@ -704,8 +726,25 @@
 				}
 						
 			}
+			protected function busyIndicator_initializeHandler(event:FlexEvent):void
+			{
+				busyIndicator.setStyle("source", "assets/animation11.swf");
+				busyIndicator.setStyle("scale", false);
+			}
 			
+			protected function busyIndicator1_initializeHandler(event:FlexEvent):void
+			{
+				busyIndicator1.setStyle("source", "assets/animation18.swf");
+				busyIndicator1.setStyle("scale", false);
+			}
 			
+			public function hideBusyCursor():void{
+				busyIndicator.busy = false;
+			}
+			
+			public function showBusyCursor():void{
+				busyIndicator.busy = true;
+			}
 			
 		]]>
 	</fx:Script>
@@ -735,7 +774,7 @@
 		<mx:AnimateProperty id="animateSlider" property="value" fromValue="2006" toValue="2010" easingFunction="Linear.easeNone" target="{hSlider}" />
 		<bubbleentriesservice:BubbleEntriesService id="bubbleEntriesService"
 												   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
-												   showBusyCursor="true"/>
+												   />
 		<s:CallResponder id="getBubbleEntriesPerYearByIdsResult" result="getBubbleEntriesPerYearByIdsResult_resultHandler(event)"/>
 		
 		
@@ -748,7 +787,7 @@
 		<s:CallResponder id="getAllMunicipalitiesResult" result="getAllMunicipalitiesResult_resultHandler(event)"/>
 		<municipalitiesservice:MunicipalitiesService id="municipalitiesService"
 													 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
-													 showBusyCursor="true"/>
+													 />
 
 		<mx:SolidColorStroke id="stroke1" color="blue" weight="0.5" alpha="0.3"/>
 		<mx:NumberFormatter  id="numberformater" rounding="up" precision="0" thousandsSeparatorFrom="" thousandsSeparatorTo=""/>
@@ -759,129 +798,133 @@
 			<s:VGroup height="100%" gap="3" width="100%">
 				<mx:TabNavigator width="100%" height="100%" paddingBottom="0" paddingLeft="0" paddingRight="0">
 					<s:NavigatorContent width="100%" height="100%" label="Графикон">
-						<s:Group width="100%" height="100%" top="-10">
-							<s:Panel width="100%" height="100%" borderVisible="false" dropShadowVisible="false"
-									 skinClass="org.most.righttoknow.skins.TitlelessPanel">
-								<s:HGroup width="100%" height="100%" gap="0" paddingLeft="5" paddingBottom="5">
-									<s:Group  height="100%" width="20">
-									<s:VGroup width="100%" height="100%" bottom="19" >
-										
-										<controls:ToggleSwitch id="yToggle" selected="false" selectedLabel="log" deselectedLabel="lin" 
-															   styleName="toggleSwitch" rotation="-90"
-															    
-															    click="yToggle_clickHandler(event)"/>
-										<s:Button id="yAxisPopup" left="0" height="100%" fontWeight="bold"
-												  rotation="-90" click="yAxisPopup_clickHandler(event)"
-												  cornerRadius="0" 
-												  skinClass="org.most.righttoknow.skins.ButtonAsAList"></s:Button>
-									</s:VGroup>
-									</s:Group>
-									
-									<s:VGroup width="100%" height="100%" gap="0">
-										<s:Group width="100%" height="100%">
-											<mx:BubbleChart id="chart" x="0" y="0" width="100%" height="100%"
-															change="chart_changeHandler(event)"
-															dataTipFunction="dataTipFunction" 
-															doubleClick="chart_doubleClickHandler(event)"
-															doubleClickEnabled="true"
-															minRadius="{minSize}"
-															maxRadius="{maxSize}" 
-															paddingRight="5" paddingTop="5" selectionMode="multiple"
-															showDataTips="true" dataTipMode="single"
-														    horizontalAxisStyleNames="linedNumericAxis"
-															verticalAxisStyleNames="linedNumericAxis"
-															
-															>
-												<mx:series>
-													<mx:BubbleSeries id="bubbleSeries"
-																	 displayName="Series 1" 
-																	 xField="x"
-																	 yField="y"
-																	 radiusField="z"
-																	 showDataEffect="{interpolateIn}"
-																	 dataProvider="{chartDataProvider.getItemAt( parseInt(numberformater.format(hSlider.value - hSlider.minimum)))}"		  
-																	 fillFunction="bubbleSeriesFillFunction"
-																	 stroke="{new SolidColorStroke(0x666666,1,0.6)}" />
-												</mx:series>
-												
-												<mx:horizontalAxis>
-													<mx:LogAxis  id="xAxis" minimum="0" maximum="{maxXValue+100}"/>
-												</mx:horizontalAxis>
-												
-												<mx:verticalAxis>
-													<mx:LinearAxis id="yAxis" minimum="0" maximum="{maxYValue+1000}"/>
-												</mx:verticalAxis>
-												
-												<mx:annotationElements>
-													<controls:RangeSelector styleName="anno" />
-									 			</mx:annotationElements>
-												<mx:backgroundElements>
-													<mx:GridLines horizontalShowOrigin="true"
-																  verticalShowOrigin="true"
-																  y="0" x="0" gridDirection="both"
-																  horizontalStroke="{new Stroke(0x666666,1,0.2)}"
-																  verticalStroke="{new Stroke(0x666666,1,0.2)}"
-																  />
-													<s:HGroup width="100%" verticalAlign="middle" horizontalAlign="center">
-														<s:Label text="{numberformater.format(hSlider.value)}" 
-																 verticalAlign="middle"
-																 alpha="0.2"  
-																 fontSize="128"
-																 color="#666666"
-																 fontWeight="bold" />
-													</s:HGroup>
-													
-												</mx:backgroundElements>
-											</mx:BubbleChart>
+						<controls:BusyIndicator id="busyIndicator" busy="true" width="100%" height="100%" 
+												initialize="busyIndicator_initializeHandler(event)" >
+							
+						
+							<s:Group width="100%" height="100%" top="-10">
+								<s:Panel width="100%" height="100%" borderVisible="false" dropShadowVisible="false"
+										 skinClass="org.most.righttoknow.skins.TitlelessPanel">
+									<s:HGroup width="100%" height="100%" gap="0" paddingLeft="5" paddingBottom="5">
+										<s:Group  height="100%" width="20">
+										<s:VGroup width="100%" height="100%" bottom="19" >
 											
-											
+											<controls:ToggleSwitch id="yToggle" selected="false" selectedLabel="log" deselectedLabel="lin" 
+																   styleName="toggleSwitch" rotation="-90"
+																    
+																    click="yToggle_clickHandler(event)"/>
+											<s:Button id="yAxisPopup" left="0" height="100%" fontWeight="bold"
+													  rotation="-90" click="yAxisPopup_clickHandler(event)"
+													  cornerRadius="0" 
+													  skinClass="org.most.righttoknow.skins.ButtonAsAList"></s:Button>
+										</s:VGroup>
 										</s:Group>
-										<s:HGroup width="100%" height="20">
-											<s:Button id="xAxisPopup" right="16" width="100%"
-													  click="xAxisPopup_clickHandler(event)"
-													  cornerRadius="0"
-													  creationComplete="xAxisPopup_creationCompleteHandler(event)"
-													  fontWeight="bold"
-													  skinClass="org.most.righttoknow.skins.ButtonAsAList"/>
-											<controls:ToggleSwitch id="xToggle" selected="true" selectedLabel="log" 
-																   deselectedLabel="lin" styleName="toggleSwitch"
-																   click="xToggle_clickHandler(event)" />
-										</s:HGroup>
-									</s:VGroup>
-									
-								</s:HGroup>
-								
-								<s:controlBarContent>
-									<s:HGroup x="0" y="0" width="100%" height="30" paddingLeft="5" verticalAlign="middle">
-										<mx:Button id="playBtn" y="6" width="40" height="35"
-												   icon="@Embed(source='assets/play_blue.png')"
-												   click="playBtn_clickHandler(event)"/>
-										<mx:VSlider id="playSpeed" height="40"
-												    value="{playDuration}"
-													change="playSpeed_changeHandler(event)"
-													horizontalCenter="0" labelOffset="-1"
-													liveDragging="true" maximum="6" minimum="1"
-													rotation="-180" snapInterval="1"
-													tickInterval="1" tickLength="10" tickOffset="4"
-													toolTip="Брзина на плејбек"
-													verticalCenter="0"/> 
-										<mx:HSlider id="hSlider" y="2" width="100%" height="40"
-													allowTrackClick="true" 
-													change="hSlider_changeHandler(event)"
-													dataTipFormatFunction="formatYear"
-													labelOffset="-1"  
-													showTrackHighlight="true"
-													tickInterval="1" tickLength="10" tickOffset="4"
-												    valueCommit="hSlider_valueCommitHandler(event)"
-												    
-												    />
+										
+										<s:VGroup width="100%" height="100%" gap="0">
+											<s:Group width="100%" height="100%">
+												<mx:BubbleChart id="chart" x="0" y="0" width="100%" height="100%"
+																change="chart_changeHandler(event)"
+																dataTipFunction="dataTipFunction" 
+																doubleClick="chart_doubleClickHandler(event)"
+																doubleClickEnabled="true"
+																minRadius="{minSize}"
+																maxRadius="{maxSize}" 
+																paddingRight="5" paddingTop="5" selectionMode="multiple"
+																showDataTips="true" dataTipMode="single"
+															    horizontalAxisStyleNames="linedNumericAxis"
+																verticalAxisStyleNames="linedNumericAxis"
+																
+																>
+													<mx:series>
+														<mx:BubbleSeries id="bubbleSeries"
+																		 displayName="Series 1" 
+																		 xField="x"
+																		 yField="y"
+																		 radiusField="z"
+																		 showDataEffect="{interpolateIn}"
+																		 dataProvider="{chartDataProvider.getItemAt( parseInt(numberformater.format(hSlider.value - hSlider.minimum)))}"		  
+																		 fillFunction="bubbleSeriesFillFunction"
+																		 stroke="{new SolidColorStroke(0x666666,1,0.6)}" />
+													</mx:series>
+													
+													<mx:horizontalAxis>
+														<mx:LogAxis  id="xAxis" minimum="0" maximum="{maxXValue+100}"/>
+													</mx:horizontalAxis>
+													
+													<mx:verticalAxis>
+														<mx:LinearAxis id="yAxis" minimum="0" maximum="{maxYValue+1000}"/>
+													</mx:verticalAxis>
+													
+													<mx:annotationElements>
+														<controls:RangeSelector styleName="anno" />
+										 			</mx:annotationElements>
+													<mx:backgroundElements>
+														<mx:GridLines horizontalShowOrigin="true"
+																	  verticalShowOrigin="true"
+																	  y="0" x="0" gridDirection="both"
+																	  horizontalStroke="{new Stroke(0x666666,1,0.2)}"
+																	  verticalStroke="{new Stroke(0x666666,1,0.2)}"
+																	  />
+														<s:HGroup width="100%" verticalAlign="middle" horizontalAlign="center">
+															<s:Label id="charBgLabel" text="{numberformater.format(hSlider.value)}" 
+																	 verticalAlign="middle"
+																	 alpha="0.2"  
+																	 fontSize="128"
+																	 color="#666666" visible="false"
+																	 fontWeight="bold" />
+														</s:HGroup>
+														
+													</mx:backgroundElements>
+												</mx:BubbleChart>
+												
+												
+											</s:Group>
+											<s:HGroup width="100%" height="20">
+												<s:Button id="xAxisPopup" right="16" width="100%"
+														  click="xAxisPopup_clickHandler(event)"
+														  cornerRadius="0"
+														  creationComplete="xAxisPopup_creationCompleteHandler(event)"
+														  fontWeight="bold"
+														  skinClass="org.most.righttoknow.skins.ButtonAsAList"/>
+												<controls:ToggleSwitch id="xToggle" selected="true" selectedLabel="log" 
+																	   deselectedLabel="lin" styleName="toggleSwitch"
+																	   click="xToggle_clickHandler(event)" />
+											</s:HGroup>
+										</s:VGroup>
 										
 									</s:HGroup>
-								</s:controlBarContent>
-							</s:Panel>
-							
-						</s:Group>
-						
+									
+									<s:controlBarContent>
+										<s:HGroup x="0" y="0" width="100%" height="30" paddingLeft="5" verticalAlign="middle">
+											<mx:Button id="playBtn" y="6" width="40" height="35"
+													   icon="@Embed(source='assets/play_blue.png')"
+													   click="playBtn_clickHandler(event)"/>
+											<mx:VSlider id="playSpeed" height="40"
+													    value="{playDuration}"
+														change="playSpeed_changeHandler(event)"
+														horizontalCenter="0" labelOffset="-1"
+														liveDragging="true" maximum="6" minimum="1"
+														rotation="-180" snapInterval="1"
+														tickInterval="1" tickLength="10" tickOffset="4"
+														toolTip="Брзина на плејбек"
+														verticalCenter="0"/> 
+											<mx:HSlider id="hSlider" y="2" width="100%" height="40"
+														allowTrackClick="true" 
+														change="hSlider_changeHandler(event)"
+														dataTipFormatFunction="formatYear"
+														labelOffset="-1"  
+														showTrackHighlight="true"
+														tickInterval="1" tickLength="10" tickOffset="4"
+													    valueCommit="hSlider_valueCommitHandler(event)"
+													    
+													    />
+											
+										</s:HGroup>
+									</s:controlBarContent>
+								</s:Panel>
+								
+							</s:Group>
+						</controls:BusyIndicator> 
 					</s:NavigatorContent>
 					<s:NavigatorContent width="100%" height="100%" label="Мапа">
 						<s:Group width="100%" height="100%" top="-10">
@@ -899,40 +942,41 @@
 				<s:Panel width="100%" height="100%" dropShadowVisible="false" fontSize="11"
 						 fontWeight="normal" skinClass="org.most.righttoknow.skins.PanelSkin"
 						 title="Изберете...">
-					
-					<mx:List id="list" y="0" width="100%" height="100%" borderVisible="false"
-							 dataProvider="{allCities}"
-							 fontSize="10" horizontalCenter="0"
-							 labelField="label" paddingBottom="0" paddingLeft="0" paddingTop="0" >
-						<mx:itemRenderer>
-							<fx:Component>
-								<mx:CheckBox label="{data.label}" change="onChange(event);"  paddingLeft="5" selected="{data.isSelected}">
-									<fx:Script>
-										<![CDATA[
-											import mx.controls.Alert;
-											private function onChange(evt:Event):void {     
-												//Alert.show("Item clicked="+data.label +" id="+data.dataField+" ");
-												//Alert.show("al="+outerDocument.allCities.getItemAt(data.dataField-1).label);
-												var o:Object;
-												if(selected){
-													o = {id:data.id, label:data.label, dataField:data.dataField, isSelected:true};
-												}else{
-													o = {id:data.id, label:data.label, dataField:data.dataField, isSelected:false};
+					<controls:BusyIndicator id="busyIndicator1" busy="true" width="100%" height="100%" 
+											initialize="busyIndicator1_initializeHandler(event)" >
+						<mx:List id="list" y="0" width="100%" height="100%" borderVisible="false"
+								 dataProvider="{allCities}"
+								 fontSize="10" horizontalCenter="0"
+								 labelField="label" paddingBottom="0" paddingLeft="0" paddingTop="0" >
+							<mx:itemRenderer>
+								<fx:Component>
+									<mx:CheckBox label="{data.label}" change="onChange(event);"  paddingLeft="5" selected="{data.isSelected}">
+										<fx:Script>
+											<![CDATA[
+												import mx.controls.Alert;
+												private function onChange(evt:Event):void {     
+													//Alert.show("Item clicked="+data.label +" id="+data.dataField+" ");
+													//Alert.show("al="+outerDocument.allCities.getItemAt(data.dataField-1).label);
+													var o:Object;
+													if(selected){
+														o = {id:data.id, label:data.label, dataField:data.dataField, isSelected:true};
+													}else{
+														o = {id:data.id, label:data.label, dataField:data.dataField, isSelected:false};
+													}
+													outerDocument.allCities.setItemAt(o,data.id);
+													outerDocument.filter();
 												}
-												outerDocument.allCities.setItemAt(o,data.id);
-												outerDocument.filter();
-											}
-											
-										]]>
-									</fx:Script>
-									
-								</mx:CheckBox>
-							</fx:Component>
-						</mx:itemRenderer> 
-					</mx:List>
-					<s:CheckBox id="checkAllCities" x="5" y="-19"
+												
+											]]>
+										</fx:Script>
+										
+									</mx:CheckBox>
+								</fx:Component>
+							</mx:itemRenderer> 
+						</mx:List>
+						<s:CheckBox id="checkAllCities" x="5" y="-19"
 								click="checkAllCities_clickHandler(event)"/>					
-					
+					</controls:BusyIndicator>
 				</s:Panel>
 				<s:Panel width="100%" height="90" dropShadowVisible="false"
 						 skinClass="org.most.righttoknow.skins.PanelSkin" title="Големина">
