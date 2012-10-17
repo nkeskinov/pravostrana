@@ -634,7 +634,7 @@
 					hSlider.snapInterval = 0;
 					hSlider.mouseChildren = false;
 					hSlider.mouseEnabled = false;
-					animateSlider.duration = playDuration*3800;
+					animateSlider.duration = playDuration*(maxYear-minYear)*1000;
 					animateSlider.fromValue = hSlider.value;
 					
 					animateSlider.play(null,false);
@@ -663,7 +663,7 @@
 					playDuration = playSpeed.value;
 					animateSlider.stop();
 					animateSlider.fromValue = hSlider.value;
-					animateSlider.duration = playSpeed.value*3800;
+					animateSlider.duration = playDuration*(maxYear-minYear)*1000
 					animateSlider.play();
 					//Alert.show("playDuration="+playDuration);
 					//timer.stop();
