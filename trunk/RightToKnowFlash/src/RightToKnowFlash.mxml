@@ -17,6 +17,8 @@
 			import com.amcharts.events.AmChartEvent;
 			import com.amcharts.events.ValueAxisEvent;
 			
+			import flashx.textLayout.formats.Float;
+			
 			import mx.charts.AxisRenderer;
 			import mx.charts.BubbleChart;
 			import mx.charts.ChartItem;
@@ -31,6 +33,7 @@
 			import mx.collections.XMLListCollection;
 			import mx.controls.Alert;
 			import mx.controls.Menu;
+			import mx.effects.AnimateProperty;
 			import mx.effects.easing.Back;
 			import mx.effects.easing.Bounce;
 			import mx.effects.easing.Elastic;
@@ -134,6 +137,10 @@
 			protected var minYear:Number;
 			protected var maxYear:Number;
 			
+			[Bindable]
+			protected var playDuration:Number = 3;
+			[Bindable]
+			protected var animProp:AnimateProperty = new AnimateProperty();
 			/**
 			 * Start up function
 			 * */
@@ -221,7 +228,7 @@
 			 */
 			protected function formatYear(value:Number):Object
 			{
-				return value.toString();
+				return numberformater.format(value);
 			}
 			
 			/**
@@ -257,6 +264,8 @@
 				//Alert.show(getBubbleEntriesPerYearByIdsResult.lastResult.rows[0][0].name+"");
 				minYear = getBubbleEntriesPerYearByIdsResult.lastResult.minYear;
 				maxYear = getBubbleEntriesPerYearByIdsResult.lastResult.maxYear;
+				
+				
 				
 				hSlider.minimum = minYear;
 				hSlider.maximum = maxYear;
@@ -365,53 +374,7 @@
 				//Alert.show("x="+xSelected +" y="+event.item.id);
 			}
 			
-			protected function playBtn_clickHandler(event:MouseEvent):void
-			{
-//				if(!playing){
-//					if(hSlider.value == maxYear){
-//						hSlider.value = minYear;
-//					}
-//					playing = true;
-//					playBtn.setStyle("icon",pauseBtnIcn);
-//					
-//					//hSlider.setStyle("slideDuration", 1);
-//					//hSlider.setStyle("slideEasingFunction", Elastic.easeInOut(2000,100,100,100));
-//					
-//					
-//					
-//					timer = new Timer(1000 * playSpeed.value);
-//					timer.addEventListener("timer", playTimeline);
-//					timer.start();
-//					
-//				}else{
-//					playing = false;
-//					playBtn.setStyle("icon",playBtnIcn);
-//					timer.stop();
-//				}
-				animateProperty.end();
-				animateProperty.play();
-			}
-			
-			protected function playSpeed_changeHandler(event:SliderEvent):void
-			{
-				if(playing){
-					timer.stop();
-					timer = new Timer(1000 * playSpeed.value);
-					timer.addEventListener("timer", playTimeline);
-					timer.start();
-				}
-			}
-			private function playTimeline(e:TimerEvent):void{
-				//Alert.show("Test="+timelineSlider.value);
-				if(hSlider.value == maxYear){
-					timer.stop();
-					playing = false;
-					playBtn.setStyle("icon",playBtnIcn);
-				}else
-					
-					hSlider.value = hSlider.value+1;
-			} 
-			
+						
 			
 			/**
 			 * Result handler for the getEntrySetMenu web method
@@ -642,6 +605,7 @@
 			
 			protected function bubbleSizeHSlider_changeHandler(event:SliderEvent):void
 			{
+				 
 				if(bubbleSizeHSlider.thumbCount==2){
 					minSize = bubbleSizeHSlider.values[0];
 					maxSize = bubbleSizeHSlider.values[1];
@@ -651,6 +615,94 @@
 				}
 				
 				//Alert.show("max="+maxSize);
+			}
+			
+			protected function playBtn_clickHandler(event:MouseEvent):void
+			{
+				
+				if(!playing){
+					if(hSlider.value == maxYear){
+						hSlider.value = minYear;
+						
+					}
+					playing = true;
+					playBtn.setStyle("icon",pauseBtnIcn);
+					
+					hSlider.setStyle("slideDuration", 0);
+					hSlider.setStyle("slideEasingFunction", Linear.easeNone);
+					
+					hSlider.snapInterval = 0;
+					hSlider.mouseChildren = false;
+					hSlider.mouseEnabled = false;
+					animateSlider.duration = playDuration*3800;
+					animateSlider.fromValue = hSlider.value;
+					
+					animateSlider.play(null,false);
+					
+					//timer = new Timer(1);
+					//timer.addEventListener("timer", playTimeline);
+					//timer.start();
+				}else{
+					
+					playing = false;
+					playBtn.setStyle("icon",playBtnIcn);
+					hSlider.mouseEnabled = true;
+					hSlider.mouseChildren = true;
+					animateSlider.stop();
+					animateSlider.fromValue = hSlider.value;
+					//animateSlider.fromValue = minYear;
+					
+				}
+				
+			}
+			
+			protected function playSpeed_changeHandler(event:SliderEvent):void
+			{
+				
+				if(playing){
+					playDuration = playSpeed.value;
+					animateSlider.stop();
+					animateSlider.fromValue = hSlider.value;
+					animateSlider.duration = playSpeed.value*3800;
+					animateSlider.play();
+					//Alert.show("playDuration="+playDuration);
+					//timer.stop();
+					//timer = new Timer(1);
+					//timer.addEventListener("timer", playTimeline);
+					//timer.start();
+					//animateProperty.duration = 6000 * playSpeed.value;
+				}
+				
+			}
+			private function playTimeline(e:TimerEvent):void{
+				//Alert.show("Test="+timelineSlider.value);
+				if(hSlider.value == maxYear){
+					timer.stop();
+					playing = false;
+					playBtn.setStyle("icon",playBtnIcn);
+				}else{
+					//hSlider.invalidateProperties();
+					//hSlider.getThumbAt(0).x = hSlider.getThumbAt(0).x+10;
+					
+					//hSlider.value = hSlider.value+(5/1000);
+					//hSlider.setStyle("slideDuration", 5000);
+					//hSlider.setStyle("slideEasingFunction", Elastic.easeOut);
+				}
+			} 
+
+			
+			protected function hSlider_valueCommitHandler(event:FlexEvent):void
+			{
+				if(hSlider.value == maxYear && playing){
+					playing = false;
+					playBtn.setStyle("icon",playBtnIcn);
+					//timer.stop();
+					hSlider.snapInterval = 1;
+					animateSlider.stop();
+					animateSlider.fromValue = minYear;
+					hSlider.mouseEnabled = true;
+				}
+						
 			}
 			
 			
@@ -676,8 +728,11 @@
 		}
 	</fx:Style>
 	<fx:Declarations>
-		<mx:AnimateProperty id="animateProperty" property="value" fromValue="2006" toValue="2010" repeatDelay="{playSpeed.value * 1000}" target="{hSlider}" roundValue="true"/>
 		
+		<s:Animate id="anim" targets="{[hSlider]}" duration="{playDuration}" startDelay="0" >
+			<s:SimpleMotionPath property="value" valueFrom="2006" valueTo="2010"  />
+		</s:Animate>
+		<mx:AnimateProperty id="animateSlider" property="value" fromValue="2006" toValue="2010" easingFunction="Linear.easeNone" target="{hSlider}" />
 		<bubbleentriesservice:BubbleEntriesService id="bubbleEntriesService"
 												   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 												   showBusyCursor="true"/>
@@ -689,14 +744,14 @@
 										   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 										   showBusyCursor="true"/>
 
-		<mx:SeriesInterpolate id="interpolateIn" duration="{1000*playSpeed.value}" elementOffset="0" easingFunction="Linear.easeNone"/>
+		<mx:SeriesInterpolate id="interpolateIn" duration="{playSpeed.value*1000}" elementOffset="0" easingFunction="Linear.easeNone"/>
 		<s:CallResponder id="getAllMunicipalitiesResult" result="getAllMunicipalitiesResult_resultHandler(event)"/>
 		<municipalitiesservice:MunicipalitiesService id="municipalitiesService"
 													 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 													 showBusyCursor="true"/>
 
 		<mx:SolidColorStroke id="stroke1" color="blue" weight="0.5" alpha="0.3"/>
-		
+		<mx:NumberFormatter  id="numberformater" rounding="up" precision="0" thousandsSeparatorFrom="" thousandsSeparatorTo=""/>
 	</fx:Declarations>
 	<s:BorderContainer width="100%" height="100%" horizontalCenter="0" verticalCenter="0">
 		
@@ -744,9 +799,9 @@
 																	 yField="y"
 																	 radiusField="z"
 																	 showDataEffect="{interpolateIn}"
-																	 dataProvider="{chartDataProvider.getItemAt(hSlider.value - hSlider.minimum)}"		  
+																	 dataProvider="{chartDataProvider.getItemAt( parseInt(numberformater.format(hSlider.value - hSlider.minimum)))}"		  
 																	 fillFunction="bubbleSeriesFillFunction"
-																	  stroke="{new SolidColorStroke(0x666666,1,0.6)}" />
+																	 stroke="{new SolidColorStroke(0x666666,1,0.6)}" />
 												</mx:series>
 												
 												<mx:horizontalAxis>
@@ -768,7 +823,7 @@
 																  verticalStroke="{new Stroke(0x666666,1,0.2)}"
 																  />
 													<s:HGroup width="100%" verticalAlign="middle" horizontalAlign="center">
-														<s:Label text="{hSlider.value}" 
+														<s:Label text="{numberformater.format(hSlider.value)}" 
 																 verticalAlign="middle"
 																 alpha="0.2"  
 																 fontSize="128"
@@ -801,19 +856,25 @@
 										<mx:Button id="playBtn" y="6" width="40" height="35"
 												   icon="@Embed(source='assets/play_blue.png')"
 												   click="playBtn_clickHandler(event)"/>
-										<mx:VSlider id="playSpeed" height="40" horizontalCenter="0" maximum="6"
-												   minimum="1" toolTip="Брзина на плејбек"
-												   value="3" verticalCenter="0"
-												   snapInterval="1" tickInterval="1" tickLength="10" tickOffset="4" labelOffset="-1"
-												   change="playSpeed_changeHandler(event)"
-												  /> 
+										<mx:VSlider id="playSpeed" height="40"
+												    value="{playDuration}"
+													change="playSpeed_changeHandler(event)"
+													horizontalCenter="0" labelOffset="-1"
+													liveDragging="true" maximum="6" minimum="1"
+													rotation="-180" snapInterval="1"
+													tickInterval="1" tickLength="10" tickOffset="4"
+													toolTip="Брзина на плејбек"
+													verticalCenter="0"/> 
 										<mx:HSlider id="hSlider" y="2" width="100%" height="40"
 													allowTrackClick="true" 
 													change="hSlider_changeHandler(event)"
 													dataTipFormatFunction="formatYear"
-													labelOffset="-1" liveDragging="true"
-													showTrackHighlight="true" snapInterval="1"
-													tickInterval="1" tickLength="10" tickOffset="4"/>
+													labelOffset="-1"  
+													showTrackHighlight="true"
+													tickInterval="1" tickLength="10" tickOffset="4"
+												    valueCommit="hSlider_valueCommitHandler(event)"
+												    
+												    />
 										
 									</s:HGroup>
 								</s:controlBarContent>
