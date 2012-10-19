@@ -10,13 +10,10 @@
 			   xmlns:entrysetsservice="services.entrysetsservice.*"
 			   xmlns:local="*"
 			   xmlns:municipalitiesservice="services.municipalitiesservice.*"
-			   width="600" height="430" applicationComplete="init()" horizontalCenter="0"
+			   width="690" height="430" applicationComplete="init()" horizontalCenter="0"
 			   verticalCenter="0">
 	<fx:Script> 
 		<![CDATA[
-			import com.amcharts.events.AmChartEvent;
-			import com.amcharts.events.ValueAxisEvent;
-			
 			import flashx.textLayout.formats.Float;
 			
 			import mx.charts.AxisRenderer;
@@ -53,6 +50,8 @@
 			import org.most.righttoknow.components.HelpTitleWindow;
 			import org.most.righttoknow.components.ShareTitleWindow;
 			import org.most.righttoknow.controls.StyledAxisRenderer;
+			
+			import spark.events.IndexChangeEvent;
 			
 			
 			protected var timer:Timer;
@@ -149,6 +148,7 @@
 				stage.addEventListener(FullScreenEvent.FULL_SCREEN, stage_fullScreen);		
 				
 				getAllMunicipalities();
+				resourceManager.localeChain = ['mk_MK'];
 				
 			}
 			
@@ -190,7 +190,7 @@
 			{ 
 				
 				var titleWindowInstance:HelpTitleWindow = HelpTitleWindow(PopUpManager.createPopUp(this, HelpTitleWindow, false));
-				 
+				 titleWindowInstance.title=resourceManager.getString('resources', 'help_window_title');
 				PopUpManager.centerPopUp(titleWindowInstance);
 			}
 			
@@ -211,7 +211,7 @@
 				var tmpArray:ArrayCollection = getAllMunicipalitiesResult.lastResult;
 				for(var i:int =0; i<tmpArray.length; i++){
 					var item:Object = tmpArray.getItemAt(i);
-					var o:Object = {id:i, label:item.name, dataField:item.id_municipality, isSelected:false};
+					var o:Object = {id:i, label:item.name, label_en:item.name_en, label_sq:item.name_sq, dataField:item.id_municipality, isSelected:false};
 					allCities.addItem(o);
 				}
 				busyIndicator1.busy = false;
@@ -330,7 +330,7 @@
 			 * */
 			private function menuZitemClick(event:MenuEvent):void {
 				
-				zAxisPopup.label = event.item.label;
+				zAxisPopup.label = event.item[resourceManager.getString('resources', 'menu_label_field')];
 				zSelected = event.item.id;
 				if(zSelected == 0){
 					
@@ -354,7 +354,7 @@
 			 * */
 			private function menuXitemClick(event:MenuEvent):void {
 				
-				xAxisPopup.label = event.item.label;
+				xAxisPopup.label = event.item[resourceManager.getString('resources', 'menu_label_field')];
 				xSelected = event.item.id
 				getBubbleEntriesPerYearByIds(xSelected, ySelected, zSelected);
 				
@@ -365,7 +365,7 @@
 			 * */
 			private function menuYitemClick(event:MenuEvent):void {
 				
-				yAxisPopup.label = event.item.label;
+				yAxisPopup.label = event.item[resourceManager.getString('resources', 'menu_label_field')];
 				ySelected = event.item.id;
 				getBubbleEntriesPerYearByIds(xSelected, ySelected, zSelected);
 				//Alert.show("x="+xSelected +" y="+event.item.id);
@@ -380,9 +380,9 @@
 			{
 				var menuData:Array = getEntrySetMenuResult.lastResult.menu;
 				
-				
+				//Alert.show("menu="+menuData[0].label_sq);
 				menuX = Menu.createMenu(null, menuData, false);
-				menuX.labelField="label";
+				menuX.labelField=resourceManager.getString('resources', 'menu_label_field')
 				menuX.addEventListener(MenuEvent.ITEM_CLICK, menuXitemClick);
 				
 				//Set the default_x and default_y
@@ -391,27 +391,35 @@
 				zSelected = getEntrySetMenuResult.lastResult.default_z_id;
 				
 				menuY = Menu.createMenu(null, menuData, false);
-				menuY.labelField="label";
+				menuY.labelField=resourceManager.getString('resources', 'menu_label_field');
 				menuY.addEventListener(MenuEvent.ITEM_CLICK, menuYitemClick);
 				
 				var tmpArr:ArrayCollection = new ArrayCollection();
 				var item:Object = new Object;
 				item.id = -1;
-				item.label = "Индикатори";
+				item.label = resourceManager.getString('resources', 'z_indicators_label');
+				item.label_en = resourceManager.getString('resources', 'z_indicators_label');
+				item.label_sq = resourceManager.getString('resources', 'z_indicators_label');
+				
 				item.children = menuData;
 				tmpArr.addItem(item);
-				tmpArr.addItem({id:0, label:"Иста големина"});
+				item = new Object;
+				item.id=0;
+				item.label = resourceManager.getString('resources', 'z_size_label');
+				item.label_en = resourceManager.getString('resources', 'z_size_label');
+				item.label_sq = resourceManager.getString('resources', 'z_size_label');
+				tmpArr.addItem(item);
 				
 				
 				menuZ = Menu.createMenu(null, tmpArr, false);
-				menuZ.labelField="label";
+				menuZ.labelField=resourceManager.getString('resources', 'menu_label_field');
 				menuZ.layoutDirection="rtl";
 				menuZ.addEventListener(MenuEvent.ITEM_CLICK, menuZitemClick);
 				
 				
-				zAxisPopup.label = getEntrySetMenuResult.lastResult.default_z;
-				xAxisPopup.label = getEntrySetMenuResult.lastResult.default_x;
-				yAxisPopup.label = getEntrySetMenuResult.lastResult.default_y;
+				zAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_x_label')];
+				xAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_y_label')];
+				yAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_z_label')];
 				
 				//Initialize the bubble chart with the default values 
 				getBubbleEntriesPerYearByIds(xSelected, ySelected, zSelected);
@@ -422,7 +430,7 @@
 			 * */
 			protected function dataTipFunction(hitData:HitData):String{
 				
-				return "<b>"+hitData.item.name+"</b><br>"+xAxisPopup.label+": "+hitData.item.x+"<br>"+yAxisPopup.label+": "+hitData.item.y+"<br>"+zAxisPopup.label+": "+hitData.item.z;
+				return "<b>"+hitData.item[resourceManager.getString('resources', 'chart_label_field')]+"</b><br>"+xAxisPopup.label+": "+hitData.item.x+"<br>"+yAxisPopup.label+": "+hitData.item.y+"<br>"+zAxisPopup.label+": "+hitData.item.z;
 				
 			}
 			
@@ -650,8 +658,8 @@
 					playing = true;
 					playBtn.setStyle("icon",pauseBtnIcn);
 					
-					hSlider.setStyle("slideDuration", 0);
-					hSlider.setStyle("slideEasingFunction", Linear.easeNone);
+					//hSlider.setStyle("slideDuration", 0);
+					//hSlider.setStyle("slideEasingFunction", Linear.easeNone);
 					
 					hSlider.snapInterval = 0;
 					hSlider.mouseChildren = false;
@@ -670,6 +678,7 @@
 					playBtn.setStyle("icon",playBtnIcn);
 					hSlider.mouseEnabled = true;
 					hSlider.mouseChildren = true;
+					hSlider.snapInterval = 1;
 					animateSlider.stop();
 					animateSlider.fromValue = hSlider.value;
 					//animateSlider.fromValue = minYear;
@@ -746,6 +755,44 @@
 				busyIndicator.busy = true;
 			}
 			
+			protected function langList_changeHandler(event:IndexChangeEvent):void
+			{
+				
+				resourceManager.localeChain = [langList.selectedItem.id];
+				
+				menuX.labelField=resourceManager.getString('resources', 'menu_label_field');
+				menuY.labelField=resourceManager.getString('resources', 'menu_label_field');
+				menuZ.labelField=resourceManager.getString('resources', 'menu_label_field');
+				
+				var tmpArr:ArrayCollection = new ArrayCollection();
+				var item:Object = new Object;
+				item.id = -1;
+				item.label = resourceManager.getString('resources', 'z_indicators_label');
+				item.label_en = resourceManager.getString('resources', 'z_indicators_label');
+				item.label_sq = resourceManager.getString('resources', 'z_indicators_label');
+				
+				item.children = getEntrySetMenuResult.lastResult.menu;;
+				tmpArr.addItem(item);
+				item = new Object;
+				item.id=0;
+				item.label = resourceManager.getString('resources', 'z_size_label');
+				item.label_en = resourceManager.getString('resources', 'z_size_label');
+				item.label_sq = resourceManager.getString('resources', 'z_size_label');
+				tmpArr.addItem(item);
+				
+				
+				menuZ = Menu.createMenu(null, tmpArr, false);
+				menuZ.labelField=resourceManager.getString('resources', 'menu_label_field');
+				menuZ.layoutDirection="rtl";
+				menuZ.addEventListener(MenuEvent.ITEM_CLICK, menuZitemClick);
+				
+				
+				zAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_x_label')];
+				xAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_y_label')];
+				yAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_z_label')];
+			}
+			
+			
 		]]>
 	</fx:Script>
 	<fx:Style>
@@ -766,11 +813,14 @@
 			tickPlacement:none
 		}
 	</fx:Style>
+	<fx:Metadata>
+		[ResourceBundle("resources")]
+	</fx:Metadata>
+	<s:states>
+		<s:State name="State1"/>
+	</s:states>
 	<fx:Declarations>
 		
-		<s:Animate id="anim" targets="{[hSlider]}" duration="{playDuration}" startDelay="0" >
-			<s:SimpleMotionPath property="value" valueFrom="2006" valueTo="2010"  />
-		</s:Animate>
 		<mx:AnimateProperty id="animateSlider" property="value" fromValue="2006" toValue="2010" easingFunction="Linear.easeNone" target="{hSlider}" />
 		<bubbleentriesservice:BubbleEntriesService id="bubbleEntriesService"
 												   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
@@ -792,12 +842,11 @@
 		<mx:SolidColorStroke id="stroke1" color="blue" weight="0.5" alpha="0.3"/>
 		<mx:NumberFormatter  id="numberformater" rounding="up" precision="0" thousandsSeparatorFrom="" thousandsSeparatorTo=""/>
 	</fx:Declarations>
-	<s:BorderContainer width="100%" height="100%" horizontalCenter="0" verticalCenter="0">
 		
 		<s:HGroup left="10" right="10" top="10" bottom="10" gap="3" width="100%" height="100%">
 			<s:VGroup height="100%" gap="3" width="100%">
 				<mx:TabNavigator width="100%" height="100%" paddingBottom="0" paddingLeft="0" paddingRight="0">
-					<s:NavigatorContent width="100%" height="100%" label="Графикон">
+					<s:NavigatorContent width="100%" height="100%" label="{resourceManager.getString('resources', 'tab_chart_title')}">
 						<controls:BusyIndicator id="busyIndicator" busy="true" width="100%" height="100%" 
 												initialize="busyIndicator_initializeHandler(event)" >
 							
@@ -898,7 +947,8 @@
 										<s:HGroup x="0" y="0" width="100%" height="30" paddingLeft="5" verticalAlign="middle">
 											<mx:Button id="playBtn" y="6" width="40" height="35"
 													   icon="@Embed(source='assets/play_blue.png')"
-													   click="playBtn_clickHandler(event)"/>
+													   click="playBtn_clickHandler(event)"
+													    toolTip="{resourceManager.getString('resources', 'play_tooltip')}"/>
 											<mx:VSlider id="playSpeed" height="40"
 													    value="{playDuration}"
 														change="playSpeed_changeHandler(event)"
@@ -906,7 +956,7 @@
 														liveDragging="true" maximum="6" minimum="1"
 														rotation="-180" snapInterval="1"
 														tickInterval="1" tickLength="10" tickOffset="4"
-														toolTip="Брзина на плејбек"
+														toolTip="{resourceManager.getString('resources', 'playback_speed_tooltip')}"
 														verticalCenter="0"/> 
 											<mx:HSlider id="hSlider" y="2" width="100%" height="40"
 														allowTrackClick="true" 
@@ -926,7 +976,7 @@
 							</s:Group>
 						</controls:BusyIndicator> 
 					</s:NavigatorContent>
-					<s:NavigatorContent width="100%" height="100%" label="Мапа">
+					<s:NavigatorContent width="100%" height="100%" label="{resourceManager.getString('resources', 'tab_map_title')}">
 						<s:Group width="100%" height="100%" top="-10">
 							<components:MapChartComponent x="5" width="100%" height="100%" horizontalCenter="0">
 							</components:MapChartComponent>
@@ -941,16 +991,16 @@
 			<s:VGroup width="155" height="100%" gap="3">
 				<s:Panel width="100%" height="100%" dropShadowVisible="false" fontSize="11"
 						 fontWeight="normal" skinClass="org.most.righttoknow.skins.PanelSkin"
-						 title="Изберете...">
+						 title="{resourceManager.getString('resources', 'cities_panel_title')}">
 					<controls:BusyIndicator id="busyIndicator1" busy="true" width="100%" height="100%" 
 											initialize="busyIndicator1_initializeHandler(event)" >
 						<mx:List id="list" y="0" width="100%" height="100%" borderVisible="false"
 								 dataProvider="{allCities}"
-								 fontSize="10" horizontalCenter="0"
-								 labelField="label" paddingBottom="0" paddingLeft="0" paddingTop="0" >
+								 fontSize="10" horizontalCenter="0" 
+								  paddingBottom="0" paddingLeft="0" paddingTop="0" >
 							<mx:itemRenderer>
 								<fx:Component>
-									<mx:CheckBox label="{data.label}" change="onChange(event);"  paddingLeft="5" selected="{data.isSelected}">
+									<mx:CheckBox label="{data[resourceManager.getString('resources', 'cities_label_field')]}" change="onChange(event);"  paddingLeft="5" selected="{data.isSelected}">
 										<fx:Script>
 											<![CDATA[
 												import mx.controls.Alert;
@@ -959,9 +1009,9 @@
 													//Alert.show("al="+outerDocument.allCities.getItemAt(data.dataField-1).label);
 													var o:Object;
 													if(selected){
-														o = {id:data.id, label:data.label, dataField:data.dataField, isSelected:true};
+														o = {id:data.id, label:data.label, label_en:data.label_en, label_sq:data.label_sq, dataField:data.dataField, isSelected:true};
 													}else{
-														o = {id:data.id, label:data.label, dataField:data.dataField, isSelected:false};
+														o = {id:data.id, label:data.label, label_en:data.label_en, label_sq:data.label_sq, dataField:data.dataField, isSelected:false};
 													}
 													outerDocument.allCities.setItemAt(o,data.id);
 													outerDocument.filter();
@@ -974,12 +1024,12 @@
 								</fx:Component>
 							</mx:itemRenderer> 
 						</mx:List>
-						<s:CheckBox id="checkAllCities" x="5" y="-19"
+						<s:CheckBox id="checkAllCities" x="5" y="-19" toolTip="{resourceManager.getString('resources', 'check_allCities_tooltip')}"
 								click="checkAllCities_clickHandler(event)"/>					
 					</controls:BusyIndicator>
 				</s:Panel>
 				<s:Panel width="100%" height="90" dropShadowVisible="false"
-						 skinClass="org.most.righttoknow.skins.PanelSkin" title="Големина">
+						 skinClass="org.most.righttoknow.skins.PanelSkin" title="{resourceManager.getString('resources', 'size_panel_title')}">
 					<s:VGroup left="0" top="0" bottom="0" width="100%">
 						<s:Button id="zAxisPopup" width="100%" click="zAxisPopup_clickHandler(event)"
 								  cornerRadius="0" fontWeight="bold"
@@ -990,7 +1040,7 @@
 									allowTrackClick="true" thumbCount="2"
 									liveDragging="true" values="{[MIN_SIZE,MAX_SIZE]}"  
 									maximum="30" minimum="1" snapInterval="1"
-								    labels="[5,10,15,20,25,30]" toolTip="Промена на минимална и максимална големина на балоните"	
+								    labels="[5,10,15,20,25,30]" toolTip="{resourceManager.getString('resources', 'size_slider_tooltip')}"	
 									tickInterval="1" tickLength="10" tickOffset="4" labelOffset="-1"/>
 					</s:VGroup>
 					
@@ -999,14 +1049,28 @@
 			</s:VGroup> 
 		</s:HGroup>
 		<s:HGroup y="10" right="168" width="249" height="22" gap="2" horizontalAlign="right">
-			<s:Button id="helpBtn" label="Помош" click="helpBtn_clickHandler(event)" fontSize="11"
+			<s:Button id="helpBtn" label="{resourceManager.getString('resources', 'help_button')}" click="helpBtn_clickHandler(event)" fontSize="11"
 					  icon="@Embed(source='assets/help.png')"/>  
-			<mx:Button id="shareBtn" label="Сподели" click="shareBtn_clickHandler(event)"
+			<!--<mx:Button id="shareBtn" label="{resourceManager.getString('resources', 'share_button')}" click="shareBtn_clickHandler(event)"
 					   fontSize="11" icon="@Embed(source='assets/share2.png')" paddingLeft="5"
-					   paddingRight="5"/>
+					   paddingRight="5"/> -->
+			<s:DropDownList id="langList" width="26" horizontalCenter="0"
+							itemRenderer="spark.skins.spark.DefaultComplexItemRenderer"
+							labelField="label" requireSelection="true"
+							skinClass="org.most.righttoknow.skins.CustomDropDownListSkin"
+							change="langList_changeHandler(event)"
+							toolTip="{resourceManager.getString('resources', 'change_lang_tooltip')}"  >
+				<s:dataProvider>
+					<s:ArrayList>
+						<s:BitmapImage source="@Embed('assets/mk_flag.png')" id="mk_MK"/>
+						<s:BitmapImage source="@Embed('assets/us_flag.png')" id="en_US" />
+						<s:BitmapImage source="@Embed('assets/al_flag.png')" id="sq_AL"/>
+					</s:ArrayList>
+				</s:dataProvider>
+			</s:DropDownList>
 			<s:ToggleButton  id="fullScreenBtn" width="21" height="21"
 					  click="fullScreenBtn_clickHandler(event)"
 					  icon="@Embed(source='assets/full_screen.png')"/>
 		</s:HGroup>
-	</s:BorderContainer>
+	
 </s:Application>

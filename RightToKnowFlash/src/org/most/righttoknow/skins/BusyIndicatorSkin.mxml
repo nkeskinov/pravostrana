@@ -87,7 +87,7 @@
 	
 	
 	<fx:Declarations>
-		<s:GlowFilter id="glow" blurX="10" blurY="10"/>
+		<s:GlowFilter id="glow" blurX="10" blurY="10" color="0xbd2e25"/>
 		<s:AnimateFilter id="glower" target="{loader}" bitmapFilter="{glow}" 
 						 duration="600" repeatCount="0" repeatBehavior="{RepeatBehavior.REVERSE}">
 			<s:SimpleMotionPath property="alpha" valueFrom="0" valueTo="1" />

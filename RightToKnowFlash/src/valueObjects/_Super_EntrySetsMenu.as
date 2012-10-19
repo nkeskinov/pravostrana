@@ -62,7 +62,13 @@ public class _Super_EntrySetsMenu extends flash.events.EventDispatcher implement
     /**
      * properties
      */
+    private var _internal_default_y_sq : String;
+    private var _internal_default_y_en : String;
+    private var _internal_default_x_en : String;
     private var _internal_default_z : String;
+    private var _internal_default_z_en : String;
+    private var _internal_default_z_sq : String;
+    private var _internal_default_x_sq : String;
     private var _internal_default_z_id : int;
     private var _internal_default_x : Object;
     private var _internal_default_x_id : Object;
@@ -85,7 +91,13 @@ public class _Super_EntrySetsMenu extends flash.events.EventDispatcher implement
         _model = new _EntrySetsMenuEntityMetadata(this);
 
         // Bind to own data or source properties for cache invalidation triggering
+        model_internal::_changeWatcherArray.push(mx.binding.utils.ChangeWatcher.watch(this, "default_y_sq", model_internal::setterListenerDefault_y_sq));
+        model_internal::_changeWatcherArray.push(mx.binding.utils.ChangeWatcher.watch(this, "default_y_en", model_internal::setterListenerDefault_y_en));
+        model_internal::_changeWatcherArray.push(mx.binding.utils.ChangeWatcher.watch(this, "default_x_en", model_internal::setterListenerDefault_x_en));
         model_internal::_changeWatcherArray.push(mx.binding.utils.ChangeWatcher.watch(this, "default_z", model_internal::setterListenerDefault_z));
+        model_internal::_changeWatcherArray.push(mx.binding.utils.ChangeWatcher.watch(this, "default_z_en", model_internal::setterListenerDefault_z_en));
+        model_internal::_changeWatcherArray.push(mx.binding.utils.ChangeWatcher.watch(this, "default_z_sq", model_internal::setterListenerDefault_z_sq));
+        model_internal::_changeWatcherArray.push(mx.binding.utils.ChangeWatcher.watch(this, "default_x_sq", model_internal::setterListenerDefault_x_sq));
 
     }
 
@@ -94,9 +106,45 @@ public class _Super_EntrySetsMenu extends flash.events.EventDispatcher implement
      */
 
     [Bindable(event="propertyChange")]
+    public function get default_y_sq() : String
+    {
+        return _internal_default_y_sq;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get default_y_en() : String
+    {
+        return _internal_default_y_en;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get default_x_en() : String
+    {
+        return _internal_default_x_en;
+    }
+
+    [Bindable(event="propertyChange")]
     public function get default_z() : String
     {
         return _internal_default_z;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get default_z_en() : String
+    {
+        return _internal_default_z_en;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get default_z_sq() : String
+    {
+        return _internal_default_z_sq;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get default_x_sq() : String
+    {
+        return _internal_default_x_sq;
     }
 
     [Bindable(event="propertyChange")]
@@ -143,6 +191,36 @@ public class _Super_EntrySetsMenu extends flash.events.EventDispatcher implement
      * data/source property setters
      */
 
+    public function set default_y_sq(value:String) : void
+    {
+        var oldValue:String = _internal_default_y_sq;
+        if (oldValue !== value)
+        {
+            _internal_default_y_sq = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "default_y_sq", oldValue, _internal_default_y_sq));
+        }
+    }
+
+    public function set default_y_en(value:String) : void
+    {
+        var oldValue:String = _internal_default_y_en;
+        if (oldValue !== value)
+        {
+            _internal_default_y_en = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "default_y_en", oldValue, _internal_default_y_en));
+        }
+    }
+
+    public function set default_x_en(value:String) : void
+    {
+        var oldValue:String = _internal_default_x_en;
+        if (oldValue !== value)
+        {
+            _internal_default_x_en = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "default_x_en", oldValue, _internal_default_x_en));
+        }
+    }
+
     public function set default_z(value:String) : void
     {
         var oldValue:String = _internal_default_z;
@@ -150,6 +228,36 @@ public class _Super_EntrySetsMenu extends flash.events.EventDispatcher implement
         {
             _internal_default_z = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "default_z", oldValue, _internal_default_z));
+        }
+    }
+
+    public function set default_z_en(value:String) : void
+    {
+        var oldValue:String = _internal_default_z_en;
+        if (oldValue !== value)
+        {
+            _internal_default_z_en = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "default_z_en", oldValue, _internal_default_z_en));
+        }
+    }
+
+    public function set default_z_sq(value:String) : void
+    {
+        var oldValue:String = _internal_default_z_sq;
+        if (oldValue !== value)
+        {
+            _internal_default_z_sq = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "default_z_sq", oldValue, _internal_default_z_sq));
+        }
+    }
+
+    public function set default_x_sq(value:String) : void
+    {
+        var oldValue:String = _internal_default_x_sq;
+        if (oldValue !== value)
+        {
+            _internal_default_x_sq = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "default_x_sq", oldValue, _internal_default_x_sq));
         }
     }
 
@@ -225,9 +333,39 @@ public class _Super_EntrySetsMenu extends flash.events.EventDispatcher implement
      *  - the validity of the property (and the containing entity) if the given data property is required.
      */
 
+    model_internal function setterListenerDefault_y_sq(value:flash.events.Event):void
+    {
+        _model.invalidateDependentOnDefault_y_sq();
+    }
+
+    model_internal function setterListenerDefault_y_en(value:flash.events.Event):void
+    {
+        _model.invalidateDependentOnDefault_y_en();
+    }
+
+    model_internal function setterListenerDefault_x_en(value:flash.events.Event):void
+    {
+        _model.invalidateDependentOnDefault_x_en();
+    }
+
     model_internal function setterListenerDefault_z(value:flash.events.Event):void
     {
         _model.invalidateDependentOnDefault_z();
+    }
+
+    model_internal function setterListenerDefault_z_en(value:flash.events.Event):void
+    {
+        _model.invalidateDependentOnDefault_z_en();
+    }
+
+    model_internal function setterListenerDefault_z_sq(value:flash.events.Event):void
+    {
+        _model.invalidateDependentOnDefault_z_sq();
+    }
+
+    model_internal function setterListenerDefault_x_sq(value:flash.events.Event):void
+    {
+        _model.invalidateDependentOnDefault_x_sq();
     }
 
 
@@ -251,10 +389,40 @@ public class _Super_EntrySetsMenu extends flash.events.EventDispatcher implement
         var validationFailureMessages:Array = new Array();
 
         var propertyValidity:Boolean = true;
+        if (!_model.default_y_sqIsValid)
+        {
+            propertyValidity = false;
+            com.adobe.fiber.util.FiberUtils.arrayAdd(validationFailureMessages, _model.model_internal::_default_y_sqValidationFailureMessages);
+        }
+        if (!_model.default_y_enIsValid)
+        {
+            propertyValidity = false;
+            com.adobe.fiber.util.FiberUtils.arrayAdd(validationFailureMessages, _model.model_internal::_default_y_enValidationFailureMessages);
+        }
+        if (!_model.default_x_enIsValid)
+        {
+            propertyValidity = false;
+            com.adobe.fiber.util.FiberUtils.arrayAdd(validationFailureMessages, _model.model_internal::_default_x_enValidationFailureMessages);
+        }
         if (!_model.default_zIsValid)
         {
             propertyValidity = false;
             com.adobe.fiber.util.FiberUtils.arrayAdd(validationFailureMessages, _model.model_internal::_default_zValidationFailureMessages);
+        }
+        if (!_model.default_z_enIsValid)
+        {
+            propertyValidity = false;
+            com.adobe.fiber.util.FiberUtils.arrayAdd(validationFailureMessages, _model.model_internal::_default_z_enValidationFailureMessages);
+        }
+        if (!_model.default_z_sqIsValid)
+        {
+            propertyValidity = false;
+            com.adobe.fiber.util.FiberUtils.arrayAdd(validationFailureMessages, _model.model_internal::_default_z_sqValidationFailureMessages);
+        }
+        if (!_model.default_x_sqIsValid)
+        {
+            propertyValidity = false;
+            com.adobe.fiber.util.FiberUtils.arrayAdd(validationFailureMessages, _model.model_internal::_default_x_sqValidationFailureMessages);
         }
 
         model_internal::_cacheInitialized_isValid = true;
@@ -335,6 +503,87 @@ public class _Super_EntrySetsMenu extends flash.events.EventDispatcher implement
         }
     }
 
+    model_internal var _doValidationCacheOfDefault_y_sq : Array = null;
+    model_internal var _doValidationLastValOfDefault_y_sq : String;
+
+    model_internal function _doValidationForDefault_y_sq(valueIn:Object):Array
+    {
+        var value : String = valueIn as String;
+
+        if (model_internal::_doValidationCacheOfDefault_y_sq != null && model_internal::_doValidationLastValOfDefault_y_sq == value)
+           return model_internal::_doValidationCacheOfDefault_y_sq ;
+
+        _model.model_internal::_default_y_sqIsValidCacheInitialized = true;
+        var validationFailures:Array = new Array();
+        var errorMessage:String;
+        var failure:Boolean;
+
+        var valRes:ValidationResult;
+        if (_model.isDefault_y_sqAvailable && _internal_default_y_sq == null)
+        {
+            validationFailures.push(new ValidationResult(true, "", "", "default_y_sq is required"));
+        }
+
+        model_internal::_doValidationCacheOfDefault_y_sq = validationFailures;
+        model_internal::_doValidationLastValOfDefault_y_sq = value;
+
+        return validationFailures;
+    }
+    
+    model_internal var _doValidationCacheOfDefault_y_en : Array = null;
+    model_internal var _doValidationLastValOfDefault_y_en : String;
+
+    model_internal function _doValidationForDefault_y_en(valueIn:Object):Array
+    {
+        var value : String = valueIn as String;
+
+        if (model_internal::_doValidationCacheOfDefault_y_en != null && model_internal::_doValidationLastValOfDefault_y_en == value)
+           return model_internal::_doValidationCacheOfDefault_y_en ;
+
+        _model.model_internal::_default_y_enIsValidCacheInitialized = true;
+        var validationFailures:Array = new Array();
+        var errorMessage:String;
+        var failure:Boolean;
+
+        var valRes:ValidationResult;
+        if (_model.isDefault_y_enAvailable && _internal_default_y_en == null)
+        {
+            validationFailures.push(new ValidationResult(true, "", "", "default_y_en is required"));
+        }
+
+        model_internal::_doValidationCacheOfDefault_y_en = validationFailures;
+        model_internal::_doValidationLastValOfDefault_y_en = value;
+
+        return validationFailures;
+    }
+    
+    model_internal var _doValidationCacheOfDefault_x_en : Array = null;
+    model_internal var _doValidationLastValOfDefault_x_en : String;
+
+    model_internal function _doValidationForDefault_x_en(valueIn:Object):Array
+    {
+        var value : String = valueIn as String;
+
+        if (model_internal::_doValidationCacheOfDefault_x_en != null && model_internal::_doValidationLastValOfDefault_x_en == value)
+           return model_internal::_doValidationCacheOfDefault_x_en ;
+
+        _model.model_internal::_default_x_enIsValidCacheInitialized = true;
+        var validationFailures:Array = new Array();
+        var errorMessage:String;
+        var failure:Boolean;
+
+        var valRes:ValidationResult;
+        if (_model.isDefault_x_enAvailable && _internal_default_x_en == null)
+        {
+            validationFailures.push(new ValidationResult(true, "", "", "default_x_en is required"));
+        }
+
+        model_internal::_doValidationCacheOfDefault_x_en = validationFailures;
+        model_internal::_doValidationLastValOfDefault_x_en = value;
+
+        return validationFailures;
+    }
+    
     model_internal var _doValidationCacheOfDefault_z : Array = null;
     model_internal var _doValidationLastValOfDefault_z : String;
 
@@ -358,6 +607,87 @@ public class _Super_EntrySetsMenu extends flash.events.EventDispatcher implement
 
         model_internal::_doValidationCacheOfDefault_z = validationFailures;
         model_internal::_doValidationLastValOfDefault_z = value;
+
+        return validationFailures;
+    }
+    
+    model_internal var _doValidationCacheOfDefault_z_en : Array = null;
+    model_internal var _doValidationLastValOfDefault_z_en : String;
+
+    model_internal function _doValidationForDefault_z_en(valueIn:Object):Array
+    {
+        var value : String = valueIn as String;
+
+        if (model_internal::_doValidationCacheOfDefault_z_en != null && model_internal::_doValidationLastValOfDefault_z_en == value)
+           return model_internal::_doValidationCacheOfDefault_z_en ;
+
+        _model.model_internal::_default_z_enIsValidCacheInitialized = true;
+        var validationFailures:Array = new Array();
+        var errorMessage:String;
+        var failure:Boolean;
+
+        var valRes:ValidationResult;
+        if (_model.isDefault_z_enAvailable && _internal_default_z_en == null)
+        {
+            validationFailures.push(new ValidationResult(true, "", "", "default_z_en is required"));
+        }
+
+        model_internal::_doValidationCacheOfDefault_z_en = validationFailures;
+        model_internal::_doValidationLastValOfDefault_z_en = value;
+
+        return validationFailures;
+    }
+    
+    model_internal var _doValidationCacheOfDefault_z_sq : Array = null;
+    model_internal var _doValidationLastValOfDefault_z_sq : String;
+
+    model_internal function _doValidationForDefault_z_sq(valueIn:Object):Array
+    {
+        var value : String = valueIn as String;
+
+        if (model_internal::_doValidationCacheOfDefault_z_sq != null && model_internal::_doValidationLastValOfDefault_z_sq == value)
+           return model_internal::_doValidationCacheOfDefault_z_sq ;
+
+        _model.model_internal::_default_z_sqIsValidCacheInitialized = true;
+        var validationFailures:Array = new Array();
+        var errorMessage:String;
+        var failure:Boolean;
+
+        var valRes:ValidationResult;
+        if (_model.isDefault_z_sqAvailable && _internal_default_z_sq == null)
+        {
+            validationFailures.push(new ValidationResult(true, "", "", "default_z_sq is required"));
+        }
+
+        model_internal::_doValidationCacheOfDefault_z_sq = validationFailures;
+        model_internal::_doValidationLastValOfDefault_z_sq = value;
+
+        return validationFailures;
+    }
+    
+    model_internal var _doValidationCacheOfDefault_x_sq : Array = null;
+    model_internal var _doValidationLastValOfDefault_x_sq : String;
+
+    model_internal function _doValidationForDefault_x_sq(valueIn:Object):Array
+    {
+        var value : String = valueIn as String;
+
+        if (model_internal::_doValidationCacheOfDefault_x_sq != null && model_internal::_doValidationLastValOfDefault_x_sq == value)
+           return model_internal::_doValidationCacheOfDefault_x_sq ;
+
+        _model.model_internal::_default_x_sqIsValidCacheInitialized = true;
+        var validationFailures:Array = new Array();
+        var errorMessage:String;
+        var failure:Boolean;
+
+        var valRes:ValidationResult;
+        if (_model.isDefault_x_sqAvailable && _internal_default_x_sq == null)
+        {
+            validationFailures.push(new ValidationResult(true, "", "", "default_x_sq is required"));
+        }
+
+        model_internal::_doValidationCacheOfDefault_x_sq = validationFailures;
+        model_internal::_doValidationLastValOfDefault_x_sq = value;
 
         return validationFailures;
     }

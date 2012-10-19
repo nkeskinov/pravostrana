@@ -21,6 +21,7 @@ import mx.rpc.AbstractOperation;
 import mx.rpc.AsyncToken;
 import mx.rpc.remoting.Operation;
 import mx.rpc.remoting.RemoteObject;
+import valueObjects.CustomDatatype;
 import valueObjects.Municipalities;
 
 import mx.collections.ItemResponder;
@@ -137,13 +138,14 @@ internal class _Super_MunicipalitiesService extends com.adobe.fiber.services.wra
         _serviceControl = new mx.rpc.remoting.RemoteObject();
 
         // initialize RemoteClass alias for all entities returned by functions of this service
+        valueObjects.CustomDatatype._initRemoteClassAlias();
         valueObjects.Municipalities._initRemoteClassAlias();
 
         var operations:Object = new Object();
         var operation:mx.rpc.remoting.Operation;
 
         operation = new mx.rpc.remoting.Operation(null, "getAllMunicipalities");
-         operation.resultElementType = valueObjects.Municipalities;
+         operation.resultElementType = valueObjects.CustomDatatype;
         operations["getAllMunicipalities"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "getMunicipalitiesByID");
          operation.resultType = valueObjects.Municipalities;
@@ -187,11 +189,6 @@ internal class _Super_MunicipalitiesService extends com.adobe.fiber.services.wra
         dmOperation = new mx.data.ManagedOperation("getMunicipalitiesByID", "get");
         dmOperation.parameters = "id_municipality";
         _municipalitiesRPCDataManager.addManagedOperation(dmOperation);     
-
-        dmQuery = new mx.data.ManagedQuery("getAllMunicipalities");
-        dmQuery.propertySpecifier = "id_municipality,name,map_id";
-        dmQuery.parameters = "";
-        _municipalitiesRPCDataManager.addManagedOperation(dmQuery);
 
         dmQuery = new mx.data.ManagedQuery("getMunicipalities_paged");
         dmQuery.propertySpecifier = "id_municipality,name,map_id";

@@ -67,8 +67,14 @@ class EntrysetsService {
 		// initialize result to the corresponding return type
 		$result = new EntrySetsMenu; 
 		$result->default_x = null;
+		$result->default_x_en = null;
+		$result->default_x_sq = null;
 		$result->default_y = null;
+		$result->default_y_en = null;
+		$result->default_y_sq = null;
 		$result->default_z = null; 
+		$result->default_z_en = null; 
+		$result->default_z_en = null; 
 		$result->default_x_id = null;
 		$result->default_y_id = null;
 		$result->default_z_id = null;
@@ -76,24 +82,30 @@ class EntrysetsService {
 		$rows = array();
 		
 		// bind result to a helper object and fetch actual data
-        mysqli_stmt_bind_result($stmt, $entry->id_entry_set, $entry->name, $entry->default_x, $entry->default_y, $entry->default_z, $entry->parent);
+        mysqli_stmt_bind_result($stmt, $entry->id_entry_set, $entry->name, $entry->name_en, $entry->name_sq, $entry->default_x, $entry->default_y, $entry->default_z, $entry->parent);
 		
         while (mysqli_stmt_fetch($stmt)) {
 		  if($entry->default_x == 1){ 
 			$result->default_x_id = $entry->id_entry_set;
 			$result->default_x = $entry->name;
+			$result->default_x_en = $entry->name_en;
+			$result->default_x_sq = $entry->name_sq;
 		  }
 		  if($entry->default_y == 1){
 			$result->default_y_id = $entry->id_entry_set;
 			$result->default_y = $entry->name;
+			$result->default_y_en = $entry->name_en;
+			$result->default_y_sq = $entry->name_sq;
 		  }
 		  if($entry->default_z == 1){
 			$result->default_z_id = $entry->id_entry_set;
 			$result->default_z = $entry->name;
+			$result->default_z_en = $entry->name_en;
+			$result->default_z_sq = $entry->name_sq;
 		  }
 		  $rows[] = $entry;
 	      $entry = new stdClass();
-	      mysqli_stmt_bind_result($stmt, $entry->id_entry_set, $entry->name, $entry->default_x, $entry->default_y, $entry->default_z,  $entry->parent);
+	      mysqli_stmt_bind_result($stmt, $entry->id_entry_set, $entry->name, $entry->name_en, $entry->name_sq, $entry->default_x, $entry->default_y, $entry->default_z,  $entry->parent);
 	    }
 		
 		mysqli_stmt_free_result($stmt);
@@ -101,8 +113,11 @@ class EntrysetsService {
 		//Iterate the rows of the entry
 		foreach($rows as $row){
 			$menu->label = $row->name;
+			$menu->label_en = $row->name_en;
+			$menu->label_sq = $row->name_sq;
 			$menu->id = $row->id_entry_set;
-			
+			//$menu->children = array();
+			//$menu->children[] = new stdClass();
 			
 			$stmt = mysqli_prepare($this->connection, "SELECT * FROM $this->tablename where parent = ?");		
 			$this->throwExceptionOnError();
@@ -115,33 +130,41 @@ class EntrysetsService {
 			$this->throwExceptionOnError();
 
 			$entry = new stdClass();
-			mysqli_stmt_bind_result($stmt, $entry->id_entry_set, $entry->name, $entry->default_x, $entry->default_y, $entry->default_z, $entry->parent);
+			mysqli_stmt_bind_result($stmt, $entry->id_entry_set, $entry->name, $entry->name_en, $entry->name_sq, $entry->default_x, $entry->default_y, $entry->default_z, $entry->parent);
 			
 			while (mysqli_stmt_fetch($stmt)) {
 				
 				//Check if the default is somewhere in the childrens
-				if($entry->default_x == 1){
+				 if($entry->default_x == 1){ 
 					$result->default_x_id = $entry->id_entry_set;
 					$result->default_x = $entry->name;
-				}
-				if($entry->default_y == 1){
+					$result->default_x_en = $entry->name_en;
+					$result->default_x_sq = $entry->name_sq;
+				  }
+				  if($entry->default_y == 1){
 					$result->default_y_id = $entry->id_entry_set;
 					$result->default_y = $entry->name;
-				}
-				if($entry->default_z == 1){
+					$result->default_y_en = $entry->name_en;
+					$result->default_y_sq = $entry->name_sq;
+				  }
+				  if($entry->default_z == 1){
 					$result->default_z_id = $entry->id_entry_set;
 					$result->default_z = $entry->name;
-				}
+					$result->default_z_en = $entry->name_en;
+					$result->default_z_sq = $entry->name_sq;
+				  }
 				
 				
 					
 				$item->id = $entry->id_entry_set;
 				$item->label = $entry->name;
+				$item->label_en = $entry->name_en;
+				$item->label_sq = $entry->name_sq;
 				$menu->children[] = $item;
 				$item = new stdClass();
 				
 				$entry = new stdClass();
-				mysqli_stmt_bind_result($stmt, $entry->id_entry_set, $entry->name, $entry->default_x, $entry->default_y, $entry->default_z,  $entry->parent);
+				mysqli_stmt_bind_result($stmt, $entry->id_entry_set, $entry->name, $entry->name_en, $entry->name_sq, $entry->default_x, $entry->default_y, $entry->default_z,  $entry->parent);
 			}
 			
 		   $result->menu[] = $menu;
