@@ -3,6 +3,22 @@
   <annotation name="ActionScriptGeneration">
     <item name="FullyQualifyReferences">true</item>
   </annotation>
+  <entity name="CategoriesMenu">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">CategoriesMenu</item>
+    </annotation>
+    <annotation name="service Group"/>
+    <annotation name="ServerProperties">
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="getCategoriesByAxes">
+      <item name="propertySpecifier">menu</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="menu" type="opaque" required="true"/>
+  </entity>
   <service name="MapEntriesService">
     <annotation name="ActionScriptGeneration">
       <item name="Source">MapEntriesService</item>
@@ -16,12 +32,12 @@
     </annotation>
     <annotation name="ServiceConfig">
       <item name="PHP_RELATIVE_LOCATION">RightToKnowFlash/bin-debug/services/MapEntriesService.php</item>
-      <item name="PHP_SERVER_ROOT">../</item>
+      <item name="PHP_SERVER_ROOT">D:\Development\pravostrana</item>
       <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
-      <item name="PHP_SERVICES_FOLDER">bin-debug\services</item>
-      <item name="PHP_LOCATION">bin-debug/services/MapEntriesService.php</item>
+      <item name="PHP_SERVICES_FOLDER">D:\Development\pravostrana\RightToKnowFlash\bin-debug\services</item>
+      <item name="PHP_LOCATION">D:/Development/pravostrana/RightToKnowFlash/bin-debug/services/MapEntriesService.php</item>
       <item name="LINKED_FILE">MapEntriesService.php</item>
-      <item name="PHP_SERVER_ROOT_URL">http://localhost/pravostrana/</item>
+      <item name="PHP_SERVER_ROOT_URL">http://localhost/pravostrana</item>
       <item name="ABSOLUTE_ENDPOINT">http://localhost/pravostrana/RightToKnowFlash/bin-debug/gateway.php</item>
       <item name="PHP_CLASS_NAME">MapEntriesService</item>
     </annotation>
@@ -73,21 +89,24 @@
     </annotation>
     <annotation name="ServiceConfig">
       <item name="PHP_RELATIVE_LOCATION">RightToKnowFlash/bin-debug/services/MunicipalitiesService.php</item>
-      <item name="PHP_SERVER_ROOT">../</item>
+      <item name="PHP_SERVER_ROOT">D:\Development\pravostrana</item>
       <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
-      <item name="PHP_SERVICES_FOLDER">bin-debug\services</item>
-      <item name="PHP_LOCATION">bin-debug/services/MunicipalitiesService.php</item>
+      <item name="PHP_SERVICES_FOLDER">D:\Development\pravostrana\RightToKnowFlash\bin-debug\services</item>
+      <item name="PHP_LOCATION">D:/Development/pravostrana/RightToKnowFlash/bin-debug/services/MunicipalitiesService.php</item>
       <item name="LINKED_FILE">MunicipalitiesService.php</item>
-      <item name="PHP_SERVER_ROOT_URL">http://localhost/pravostrana/</item>
+      <item name="PHP_SERVER_ROOT_URL">http://localhost/pravostrana</item>
       <item name="ABSOLUTE_ENDPOINT">http://localhost/pravostrana/RightToKnowFlash/bin-debug/gateway.php</item>
       <item name="PHP_CLASS_NAME">MunicipalitiesService</item>
     </annotation>
-    <function name="getAllMunicipalities" return-type="Municipalities[]">
+    <function name="getAllMunicipalities" return-type="CustomDatatype[]">
       <annotation name="analyze group">
         <item name="analyzed">true</item>
       </annotation>
       <annotation name="original signature">
         <item name="returnType">opaque</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">name_sq,map_id,id_municipality,name_en,name</item>
       </annotation>
     </function>
     <function name="getMunicipalitiesByID" return-type="Municipalities">
@@ -155,7 +174,7 @@
       <item name="EntityOriginalName">Municipalities</item>
     </annotation>
     <annotation name="service Group">
-      <item name="service">MunicipalitiesService,MunicipalitiesServiceDummy</item>
+      <item name="service">MunicipalitiesService</item>
     </annotation>
     <annotation name="ServerProperties">
       <item name="IncludeRemoteClass">nonempty</item>
@@ -165,7 +184,7 @@
       <item name="update">updateMunicipalities</item>
       <item name="get">getMunicipalitiesByID</item>
       <item name="delete">deleteMunicipalities</item>
-      <item name="fillFunc">getAllMunicipalities,getMunicipalities_paged</item>
+      <item name="fillFunc">getMunicipalities_paged</item>
       <item name="managingService">MunicipalitiesService</item>
     </annotation>
     <annotation name="getMunicipalitiesByID">
@@ -187,21 +206,27 @@
     <property name="name" type="string"/>
     <property name="map_id" type="string"/>
   </entity>
-  <entity name="CategoriesMenu">
+  <entity name="CustomDatatype">
     <annotation name="EntityProperties">
-      <item name="EntityOriginalName">CategoriesMenu</item>
+      <item name="EntityOriginalName">CustomDatatype</item>
     </annotation>
-    <annotation name="service Group"/>
+    <annotation name="service Group">
+      <item name="service">MunicipalitiesService</item>
+    </annotation>
     <annotation name="ServerProperties">
       <item name="IncludeRemoteClass">nonempty</item>
     </annotation>
-    <annotation name="getCategoriesByAxes">
-      <item name="propertySpecifier">menu</item>
+    <annotation name="getAllMunicipalities">
+      <item name="propertySpecifier">name_sq,map_id,id_municipality,name_en,name</item>
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
     </annotation>
-    <property name="menu" type="opaque" required="true"/>
+    <property name="name_sq" type="string" required="true"/>
+    <property name="map_id" type="string" required="true"/>
+    <property name="id_municipality" type="integer" required="true"/>
+    <property name="name_en" type="string" required="true"/>
+    <property name="name" type="string" required="true"/>
   </entity>
   <service name="EntrysetsService">
     <annotation name="ActionScriptGeneration">
@@ -216,9 +241,9 @@
     </annotation>
     <annotation name="ServiceConfig">
       <item name="PHP_RELATIVE_LOCATION">RightToKnowFlash/bin-debug/services/EntrysetsService.php</item>
-      <item name="PHP_SERVER_ROOT">D:/Development/pravostrana</item>
+      <item name="PHP_SERVER_ROOT">D:\Development\pravostrana</item>
       <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
-      <item name="PHP_SERVICES_FOLDER">D:/Development/pravostrana/RightToKnowFlash/bin-debug/services</item>
+      <item name="PHP_SERVICES_FOLDER">D:\Development\pravostrana\RightToKnowFlash\bin-debug\services</item>
       <item name="PHP_LOCATION">D:/Development/pravostrana/RightToKnowFlash/bin-debug/services/EntrysetsService.php</item>
       <item name="LINKED_FILE">EntrysetsService.php</item>
       <item name="PHP_SERVER_ROOT_URL">http://localhost/pravostrana</item>
@@ -321,7 +346,13 @@
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
     </annotation>
+    <property name="default_y_sq" type="string" required="true"/>
+    <property name="default_y_en" type="string" required="true"/>
+    <property name="default_x_en" type="string" required="true"/>
     <property name="default_z" type="string" required="true"/>
+    <property name="default_z_en" type="string" required="true"/>
+    <property name="default_z_sq" type="string" required="true"/>
+    <property name="default_x_sq" type="string" required="true"/>
     <property name="default_z_id" type="integer" required="true"/>
     <property name="default_x" type="opaque"/>
     <property name="default_x_id" type="opaque"/>
@@ -381,12 +412,12 @@
     </annotation>
     <annotation name="ServiceConfig">
       <item name="PHP_RELATIVE_LOCATION">RightToKnowFlash/bin-debug/services/BubbleEntriesService.php</item>
-      <item name="PHP_SERVER_ROOT">../</item>
+      <item name="PHP_SERVER_ROOT">D:\Development\pravostrana</item>
       <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
-      <item name="PHP_SERVICES_FOLDER">bin-debug\services</item>
-      <item name="PHP_LOCATION">bin-debug/services/BubbleEntriesService.php</item>
+      <item name="PHP_SERVICES_FOLDER">D:\Development\pravostrana\RightToKnowFlash\bin-debug\services</item>
+      <item name="PHP_LOCATION">D:/Development/pravostrana/RightToKnowFlash/bin-debug/services/BubbleEntriesService.php</item>
       <item name="LINKED_FILE">BubbleEntriesService.php</item>
-      <item name="PHP_SERVER_ROOT_URL">http://localhost/pravostrana/</item>
+      <item name="PHP_SERVER_ROOT_URL">http://localhost/pravostrana</item>
       <item name="ABSOLUTE_ENDPOINT">http://localhost/pravostrana/RightToKnowFlash/bin-debug/gateway.php</item>
       <item name="PHP_CLASS_NAME">BubbleEntriesService</item>
     </annotation>

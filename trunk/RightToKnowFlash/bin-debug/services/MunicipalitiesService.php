@@ -66,12 +66,12 @@ class MunicipalitiesService {
 		
 		$rows = array();
 		
-		mysqli_stmt_bind_result($stmt, $row->id_municipality, $row->name, $row->map_id);
+		mysqli_stmt_bind_result($stmt, $row->id_municipality, $row->name, $row->name_en, $row->name_sq, $row->map_id);
 		
 	    while (mysqli_stmt_fetch($stmt)) {
 	      $rows[] = $row;
 	      $row = new stdClass();
-	      mysqli_stmt_bind_result($stmt, $row->id_municipality, $row->name, $row->map_id);
+	      mysqli_stmt_bind_result($stmt, $row->id_municipality, $row->name, $row->name_en, $row->name_sq, $row->map_id);
 	    }
 		
 		mysqli_stmt_free_result($stmt);

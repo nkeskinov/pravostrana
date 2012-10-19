@@ -6,7 +6,7 @@
 		 xmlns:mapentriesservice="services.mapentriesservice.*"
 		 width="100%" height="100%" creationComplete="application1_creationCompleteHandler(event)">
 	<fx:Script>
-		<![CDATA[
+		<![CDATA[ 
 			import com.ammap.mapClasses.DataSet;
 			import com.ammap.mapClasses.MapArea;
 			
@@ -45,7 +45,7 @@
 				
 				var bordersMapArea:MapArea = new MapArea;
 				bordersMapArea.instanceName = "borders";
-				bordersMapArea.color = Number("FFFFFF");
+				bordersMapArea.color = Number("ff0ff0");
 				bordersMapArea.mouseEnabled = false;
 				macedoniaDataSet.addObject(bordersMapArea);
 				
@@ -57,11 +57,32 @@
 					macedoniaDataSet.addObject(mapArea);
 					trace(mapEntry.title);
 				}
+				
+				var mapArea:MapArea = new MapArea;
+				mapArea.instanceName = "MK_LOD";
+				mapArea.title = "Lake Ohrid";
+				mapArea.color = 0xffffff;
+				mapArea.mouseEnabled = false;
+				macedoniaDataSet.addObject(mapArea);
+				
+				var mapArea1:MapArea = new MapArea;
+				mapArea1.instanceName = "borders_lakes";
+				mapArea1.color = 0xffffff;
+				mapArea1.mouseEnabled = false;
+				macedoniaDataSet.addObject(mapArea1);
+				
+				var mapArea2:MapArea = new MapArea;
+				mapArea2.instanceName = "MK_LSD";
+				mapArea2.title = "Lake Dojran";
+				mapArea2.color = 0xffffff;
+				mapArea2.mouseEnabled = false;
+				macedoniaDataSet.addObject(mapArea2);
 				ammap.dataSets.push(macedoniaDataSet);
 				ammap.invalidateData();
 			}
 			
 		
+			
 			
 		]]>
 	</fx:Script>
@@ -71,10 +92,11 @@
 											 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 											 showBusyCursor="true"/>
 	</fx:Declarations>
-	<ammap:AmMap id="ammap" width="100%" height="100%" useObjectColorForBalloon="false" initialize="ammap_initializeHandler(event)">
+	<ammap:AmMap id="ammap" width="100%" height="100%" useObjectColorForBalloon="false" initialize="ammap_initializeHandler(event)"
+				 backgroundColor="#ffffff" >
 		
 		<ammap:areasSettings>
-			<ammap:AreasSettings color="#FFFFFF" colorSolid="#000000" balloonText="[[value]] people live in [[title]]"/>
+			<ammap:AreasSettings color="#fcff08"  colorSolid="#ff0000" balloonText="[[value]] people live in [[title]]"  />
 		</ammap:areasSettings>
 		
 		<ammap:zoomControl>
@@ -82,9 +104,10 @@
 		</ammap:zoomControl>
 		
 		<ammap:moviesSettings>
-			<ammap:MoviesSettings bringForwardOnHover="true" color="#FFFFFF" rollOverColor="#CC0000" selectedColor="#000000"/>
+			<ammap:MoviesSettings  bringForwardOnHover="true" color="#FFFFFF" rollOverColor="#CC0000" selectedColor="#000000"/>
 		</ammap:moviesSettings>
 		
 	</ammap:AmMap>
+	
 	
 </s:Group>

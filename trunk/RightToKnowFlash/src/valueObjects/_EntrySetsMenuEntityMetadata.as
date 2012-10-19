@@ -22,14 +22,14 @@ internal class _EntrySetsMenuEntityMetadata extends com.adobe.fiber.valueobjects
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("default_z", "default_z_id", "default_x", "default_x_id", "default_y", "default_y_id", "menu");
+    model_internal static var allProperties:Array = new Array("default_y_sq", "default_y_en", "default_x_en", "default_z", "default_z_en", "default_z_sq", "default_x_sq", "default_z_id", "default_x", "default_x_id", "default_y", "default_y_id", "menu");
     model_internal static var allAssociationProperties:Array = new Array();
-    model_internal static var allRequiredProperties:Array = new Array("default_z", "default_z_id");
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("default_z", "default_z_id", "default_x", "default_x_id", "default_y", "default_y_id", "menu");
+    model_internal static var allRequiredProperties:Array = new Array("default_y_sq", "default_y_en", "default_x_en", "default_z", "default_z_en", "default_z_sq", "default_x_sq", "default_z_id");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("default_y_sq", "default_y_en", "default_x_en", "default_z", "default_z_en", "default_z_sq", "default_x_sq", "default_z_id", "default_x", "default_x_id", "default_y", "default_y_id", "menu");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("default_z", "default_z_id", "default_x", "default_x_id", "default_y", "default_y_id", "menu");
+    model_internal static var dataProperties:Array = new Array("default_y_sq", "default_y_en", "default_x_en", "default_z", "default_z_en", "default_z_sq", "default_x_sq", "default_z_id", "default_x", "default_x_id", "default_y", "default_y_id", "menu");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("default_z", "default_z_id", "default_x", "default_x_id", "default_y", "default_y_id", "menu");
+    model_internal static var nonDerivedProperties:Array = new Array("default_y_sq", "default_y_en", "default_x_en", "default_z", "default_z_en", "default_z_sq", "default_x_sq", "default_z_id", "default_x", "default_x_id", "default_y", "default_y_id", "menu");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
@@ -39,10 +39,40 @@ internal class _EntrySetsMenuEntityMetadata extends com.adobe.fiber.valueobjects
     model_internal static var propertyTypeMap:Object;
 
     
+    model_internal var _default_y_sqIsValid:Boolean;
+    model_internal var _default_y_sqValidator:com.adobe.fiber.styles.StyleValidator;
+    model_internal var _default_y_sqIsValidCacheInitialized:Boolean = false;
+    model_internal var _default_y_sqValidationFailureMessages:Array;
+    
+    model_internal var _default_y_enIsValid:Boolean;
+    model_internal var _default_y_enValidator:com.adobe.fiber.styles.StyleValidator;
+    model_internal var _default_y_enIsValidCacheInitialized:Boolean = false;
+    model_internal var _default_y_enValidationFailureMessages:Array;
+    
+    model_internal var _default_x_enIsValid:Boolean;
+    model_internal var _default_x_enValidator:com.adobe.fiber.styles.StyleValidator;
+    model_internal var _default_x_enIsValidCacheInitialized:Boolean = false;
+    model_internal var _default_x_enValidationFailureMessages:Array;
+    
     model_internal var _default_zIsValid:Boolean;
     model_internal var _default_zValidator:com.adobe.fiber.styles.StyleValidator;
     model_internal var _default_zIsValidCacheInitialized:Boolean = false;
     model_internal var _default_zValidationFailureMessages:Array;
+    
+    model_internal var _default_z_enIsValid:Boolean;
+    model_internal var _default_z_enValidator:com.adobe.fiber.styles.StyleValidator;
+    model_internal var _default_z_enIsValidCacheInitialized:Boolean = false;
+    model_internal var _default_z_enValidationFailureMessages:Array;
+    
+    model_internal var _default_z_sqIsValid:Boolean;
+    model_internal var _default_z_sqValidator:com.adobe.fiber.styles.StyleValidator;
+    model_internal var _default_z_sqIsValidCacheInitialized:Boolean = false;
+    model_internal var _default_z_sqValidationFailureMessages:Array;
+    
+    model_internal var _default_x_sqIsValid:Boolean;
+    model_internal var _default_x_sqValidator:com.adobe.fiber.styles.StyleValidator;
+    model_internal var _default_x_sqIsValidCacheInitialized:Boolean = false;
+    model_internal var _default_x_sqValidationFailureMessages:Array;
 
     model_internal var _instance:_Super_EntrySetsMenu;
     model_internal static var _nullStyle:com.adobe.fiber.styles.Style = new com.adobe.fiber.styles.Style();
@@ -54,7 +84,13 @@ internal class _EntrySetsMenuEntityMetadata extends com.adobe.fiber.valueobjects
         {
             // dependents map
             model_internal::dependentsOnMap = new Object();
+            model_internal::dependentsOnMap["default_y_sq"] = new Array();
+            model_internal::dependentsOnMap["default_y_en"] = new Array();
+            model_internal::dependentsOnMap["default_x_en"] = new Array();
             model_internal::dependentsOnMap["default_z"] = new Array();
+            model_internal::dependentsOnMap["default_z_en"] = new Array();
+            model_internal::dependentsOnMap["default_z_sq"] = new Array();
+            model_internal::dependentsOnMap["default_x_sq"] = new Array();
             model_internal::dependentsOnMap["default_z_id"] = new Array();
             model_internal::dependentsOnMap["default_x"] = new Array();
             model_internal::dependentsOnMap["default_x_id"] = new Array();
@@ -68,7 +104,13 @@ internal class _EntrySetsMenuEntityMetadata extends com.adobe.fiber.valueobjects
 
         // Property type Map
         model_internal::propertyTypeMap = new Object();
+        model_internal::propertyTypeMap["default_y_sq"] = "String";
+        model_internal::propertyTypeMap["default_y_en"] = "String";
+        model_internal::propertyTypeMap["default_x_en"] = "String";
         model_internal::propertyTypeMap["default_z"] = "String";
+        model_internal::propertyTypeMap["default_z_en"] = "String";
+        model_internal::propertyTypeMap["default_z_sq"] = "String";
+        model_internal::propertyTypeMap["default_x_sq"] = "String";
         model_internal::propertyTypeMap["default_z_id"] = "int";
         model_internal::propertyTypeMap["default_x"] = "Object";
         model_internal::propertyTypeMap["default_x_id"] = "Object";
@@ -77,11 +119,41 @@ internal class _EntrySetsMenuEntityMetadata extends com.adobe.fiber.valueobjects
         model_internal::propertyTypeMap["menu"] = "Object";
 
         model_internal::_instance = value;
+        model_internal::_default_y_sqValidator = new StyleValidator(model_internal::_instance.model_internal::_doValidationForDefault_y_sq);
+        model_internal::_default_y_sqValidator.required = true;
+        model_internal::_default_y_sqValidator.requiredFieldError = "default_y_sq is required";
+        //model_internal::_default_y_sqValidator.source = model_internal::_instance;
+        //model_internal::_default_y_sqValidator.property = "default_y_sq";
+        model_internal::_default_y_enValidator = new StyleValidator(model_internal::_instance.model_internal::_doValidationForDefault_y_en);
+        model_internal::_default_y_enValidator.required = true;
+        model_internal::_default_y_enValidator.requiredFieldError = "default_y_en is required";
+        //model_internal::_default_y_enValidator.source = model_internal::_instance;
+        //model_internal::_default_y_enValidator.property = "default_y_en";
+        model_internal::_default_x_enValidator = new StyleValidator(model_internal::_instance.model_internal::_doValidationForDefault_x_en);
+        model_internal::_default_x_enValidator.required = true;
+        model_internal::_default_x_enValidator.requiredFieldError = "default_x_en is required";
+        //model_internal::_default_x_enValidator.source = model_internal::_instance;
+        //model_internal::_default_x_enValidator.property = "default_x_en";
         model_internal::_default_zValidator = new StyleValidator(model_internal::_instance.model_internal::_doValidationForDefault_z);
         model_internal::_default_zValidator.required = true;
         model_internal::_default_zValidator.requiredFieldError = "default_z is required";
         //model_internal::_default_zValidator.source = model_internal::_instance;
         //model_internal::_default_zValidator.property = "default_z";
+        model_internal::_default_z_enValidator = new StyleValidator(model_internal::_instance.model_internal::_doValidationForDefault_z_en);
+        model_internal::_default_z_enValidator.required = true;
+        model_internal::_default_z_enValidator.requiredFieldError = "default_z_en is required";
+        //model_internal::_default_z_enValidator.source = model_internal::_instance;
+        //model_internal::_default_z_enValidator.property = "default_z_en";
+        model_internal::_default_z_sqValidator = new StyleValidator(model_internal::_instance.model_internal::_doValidationForDefault_z_sq);
+        model_internal::_default_z_sqValidator.required = true;
+        model_internal::_default_z_sqValidator.requiredFieldError = "default_z_sq is required";
+        //model_internal::_default_z_sqValidator.source = model_internal::_instance;
+        //model_internal::_default_z_sqValidator.property = "default_z_sq";
+        model_internal::_default_x_sqValidator = new StyleValidator(model_internal::_instance.model_internal::_doValidationForDefault_x_sq);
+        model_internal::_default_x_sqValidator.required = true;
+        model_internal::_default_x_sqValidator.requiredFieldError = "default_x_sq is required";
+        //model_internal::_default_x_sqValidator.source = model_internal::_instance;
+        //model_internal::_default_x_sqValidator.property = "default_x_sq";
     }
 
     override public function getEntityName():String
@@ -309,7 +381,43 @@ internal class _EntrySetsMenuEntityMetadata extends com.adobe.fiber.valueobjects
     }
 
     [Bindable(event="propertyChange")]
+    public function get isDefault_y_sqAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isDefault_y_enAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isDefault_x_enAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
     public function get isDefault_zAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isDefault_z_enAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isDefault_z_sqAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isDefault_x_sqAvailable():Boolean
     {
         return true;
     }
@@ -354,6 +462,30 @@ internal class _EntrySetsMenuEntityMetadata extends com.adobe.fiber.valueobjects
     /**
      * derived property recalculation
      */
+    public function invalidateDependentOnDefault_y_sq():void
+    {
+        if (model_internal::_default_y_sqIsValidCacheInitialized )
+        {
+            model_internal::_instance.model_internal::_doValidationCacheOfDefault_y_sq = null;
+            model_internal::calculateDefault_y_sqIsValid();
+        }
+    }
+    public function invalidateDependentOnDefault_y_en():void
+    {
+        if (model_internal::_default_y_enIsValidCacheInitialized )
+        {
+            model_internal::_instance.model_internal::_doValidationCacheOfDefault_y_en = null;
+            model_internal::calculateDefault_y_enIsValid();
+        }
+    }
+    public function invalidateDependentOnDefault_x_en():void
+    {
+        if (model_internal::_default_x_enIsValidCacheInitialized )
+        {
+            model_internal::_instance.model_internal::_doValidationCacheOfDefault_x_en = null;
+            model_internal::calculateDefault_x_enIsValid();
+        }
+    }
     public function invalidateDependentOnDefault_z():void
     {
         if (model_internal::_default_zIsValidCacheInitialized )
@@ -362,10 +494,334 @@ internal class _EntrySetsMenuEntityMetadata extends com.adobe.fiber.valueobjects
             model_internal::calculateDefault_zIsValid();
         }
     }
+    public function invalidateDependentOnDefault_z_en():void
+    {
+        if (model_internal::_default_z_enIsValidCacheInitialized )
+        {
+            model_internal::_instance.model_internal::_doValidationCacheOfDefault_z_en = null;
+            model_internal::calculateDefault_z_enIsValid();
+        }
+    }
+    public function invalidateDependentOnDefault_z_sq():void
+    {
+        if (model_internal::_default_z_sqIsValidCacheInitialized )
+        {
+            model_internal::_instance.model_internal::_doValidationCacheOfDefault_z_sq = null;
+            model_internal::calculateDefault_z_sqIsValid();
+        }
+    }
+    public function invalidateDependentOnDefault_x_sq():void
+    {
+        if (model_internal::_default_x_sqIsValidCacheInitialized )
+        {
+            model_internal::_instance.model_internal::_doValidationCacheOfDefault_x_sq = null;
+            model_internal::calculateDefault_x_sqIsValid();
+        }
+    }
 
     model_internal function fireChangeEvent(propertyName:String, oldValue:Object, newValue:Object):void
     {
         this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, propertyName, oldValue, newValue));
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get default_y_sqStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    public function get default_y_sqValidator() : StyleValidator
+    {
+        return model_internal::_default_y_sqValidator;
+    }
+
+    model_internal function set _default_y_sqIsValid_der(value:Boolean):void 
+    {
+        var oldValue:Boolean = model_internal::_default_y_sqIsValid;         
+        if (oldValue !== value)
+        {
+            model_internal::_default_y_sqIsValid = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "default_y_sqIsValid", oldValue, value));
+        }                             
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get default_y_sqIsValid():Boolean
+    {
+        if (!model_internal::_default_y_sqIsValidCacheInitialized)
+        {
+            model_internal::calculateDefault_y_sqIsValid();
+        }
+
+        return model_internal::_default_y_sqIsValid;
+    }
+
+    model_internal function calculateDefault_y_sqIsValid():void
+    {
+        var valRes:ValidationResultEvent = model_internal::_default_y_sqValidator.validate(model_internal::_instance.default_y_sq)
+        model_internal::_default_y_sqIsValid_der = (valRes.results == null);
+        model_internal::_default_y_sqIsValidCacheInitialized = true;
+        if (valRes.results == null)
+             model_internal::default_y_sqValidationFailureMessages_der = emptyArray;
+        else
+        {
+            var _valFailures:Array = new Array();
+            for (var a:int = 0 ; a<valRes.results.length ; a++)
+            {
+                _valFailures.push(valRes.results[a].errorMessage);
+            }
+            model_internal::default_y_sqValidationFailureMessages_der = _valFailures;
+        }
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get default_y_sqValidationFailureMessages():Array
+    {
+        if (model_internal::_default_y_sqValidationFailureMessages == null)
+            model_internal::calculateDefault_y_sqIsValid();
+
+        return _default_y_sqValidationFailureMessages;
+    }
+
+    model_internal function set default_y_sqValidationFailureMessages_der(value:Array) : void
+    {
+        var oldValue:Array = model_internal::_default_y_sqValidationFailureMessages;
+
+        var needUpdate : Boolean = false;
+        if (oldValue == null)
+            needUpdate = true;
+    
+        // avoid firing the event when old and new value are different empty arrays
+        if (!needUpdate && (oldValue !== value && (oldValue.length > 0 || value.length > 0)))
+        {
+            if (oldValue.length == value.length)
+            {
+                for (var a:int=0; a < oldValue.length; a++)
+                {
+                    if (oldValue[a] !== value[a])
+                    {
+                        needUpdate = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                needUpdate = true;
+            }
+        }
+
+        if (needUpdate)
+        {
+            model_internal::_default_y_sqValidationFailureMessages = value;   
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "default_y_sqValidationFailureMessages", oldValue, value));
+            // Only execute calculateIsValid if it has been called before, to update the validationFailureMessages for
+            // the entire entity.
+            if (model_internal::_instance.model_internal::_cacheInitialized_isValid)
+            {
+                model_internal::_instance.model_internal::isValid_der = model_internal::_instance.model_internal::calculateIsValid();
+            }
+        }
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get default_y_enStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    public function get default_y_enValidator() : StyleValidator
+    {
+        return model_internal::_default_y_enValidator;
+    }
+
+    model_internal function set _default_y_enIsValid_der(value:Boolean):void 
+    {
+        var oldValue:Boolean = model_internal::_default_y_enIsValid;         
+        if (oldValue !== value)
+        {
+            model_internal::_default_y_enIsValid = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "default_y_enIsValid", oldValue, value));
+        }                             
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get default_y_enIsValid():Boolean
+    {
+        if (!model_internal::_default_y_enIsValidCacheInitialized)
+        {
+            model_internal::calculateDefault_y_enIsValid();
+        }
+
+        return model_internal::_default_y_enIsValid;
+    }
+
+    model_internal function calculateDefault_y_enIsValid():void
+    {
+        var valRes:ValidationResultEvent = model_internal::_default_y_enValidator.validate(model_internal::_instance.default_y_en)
+        model_internal::_default_y_enIsValid_der = (valRes.results == null);
+        model_internal::_default_y_enIsValidCacheInitialized = true;
+        if (valRes.results == null)
+             model_internal::default_y_enValidationFailureMessages_der = emptyArray;
+        else
+        {
+            var _valFailures:Array = new Array();
+            for (var a:int = 0 ; a<valRes.results.length ; a++)
+            {
+                _valFailures.push(valRes.results[a].errorMessage);
+            }
+            model_internal::default_y_enValidationFailureMessages_der = _valFailures;
+        }
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get default_y_enValidationFailureMessages():Array
+    {
+        if (model_internal::_default_y_enValidationFailureMessages == null)
+            model_internal::calculateDefault_y_enIsValid();
+
+        return _default_y_enValidationFailureMessages;
+    }
+
+    model_internal function set default_y_enValidationFailureMessages_der(value:Array) : void
+    {
+        var oldValue:Array = model_internal::_default_y_enValidationFailureMessages;
+
+        var needUpdate : Boolean = false;
+        if (oldValue == null)
+            needUpdate = true;
+    
+        // avoid firing the event when old and new value are different empty arrays
+        if (!needUpdate && (oldValue !== value && (oldValue.length > 0 || value.length > 0)))
+        {
+            if (oldValue.length == value.length)
+            {
+                for (var a:int=0; a < oldValue.length; a++)
+                {
+                    if (oldValue[a] !== value[a])
+                    {
+                        needUpdate = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                needUpdate = true;
+            }
+        }
+
+        if (needUpdate)
+        {
+            model_internal::_default_y_enValidationFailureMessages = value;   
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "default_y_enValidationFailureMessages", oldValue, value));
+            // Only execute calculateIsValid if it has been called before, to update the validationFailureMessages for
+            // the entire entity.
+            if (model_internal::_instance.model_internal::_cacheInitialized_isValid)
+            {
+                model_internal::_instance.model_internal::isValid_der = model_internal::_instance.model_internal::calculateIsValid();
+            }
+        }
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get default_x_enStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    public function get default_x_enValidator() : StyleValidator
+    {
+        return model_internal::_default_x_enValidator;
+    }
+
+    model_internal function set _default_x_enIsValid_der(value:Boolean):void 
+    {
+        var oldValue:Boolean = model_internal::_default_x_enIsValid;         
+        if (oldValue !== value)
+        {
+            model_internal::_default_x_enIsValid = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "default_x_enIsValid", oldValue, value));
+        }                             
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get default_x_enIsValid():Boolean
+    {
+        if (!model_internal::_default_x_enIsValidCacheInitialized)
+        {
+            model_internal::calculateDefault_x_enIsValid();
+        }
+
+        return model_internal::_default_x_enIsValid;
+    }
+
+    model_internal function calculateDefault_x_enIsValid():void
+    {
+        var valRes:ValidationResultEvent = model_internal::_default_x_enValidator.validate(model_internal::_instance.default_x_en)
+        model_internal::_default_x_enIsValid_der = (valRes.results == null);
+        model_internal::_default_x_enIsValidCacheInitialized = true;
+        if (valRes.results == null)
+             model_internal::default_x_enValidationFailureMessages_der = emptyArray;
+        else
+        {
+            var _valFailures:Array = new Array();
+            for (var a:int = 0 ; a<valRes.results.length ; a++)
+            {
+                _valFailures.push(valRes.results[a].errorMessage);
+            }
+            model_internal::default_x_enValidationFailureMessages_der = _valFailures;
+        }
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get default_x_enValidationFailureMessages():Array
+    {
+        if (model_internal::_default_x_enValidationFailureMessages == null)
+            model_internal::calculateDefault_x_enIsValid();
+
+        return _default_x_enValidationFailureMessages;
+    }
+
+    model_internal function set default_x_enValidationFailureMessages_der(value:Array) : void
+    {
+        var oldValue:Array = model_internal::_default_x_enValidationFailureMessages;
+
+        var needUpdate : Boolean = false;
+        if (oldValue == null)
+            needUpdate = true;
+    
+        // avoid firing the event when old and new value are different empty arrays
+        if (!needUpdate && (oldValue !== value && (oldValue.length > 0 || value.length > 0)))
+        {
+            if (oldValue.length == value.length)
+            {
+                for (var a:int=0; a < oldValue.length; a++)
+                {
+                    if (oldValue[a] !== value[a])
+                    {
+                        needUpdate = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                needUpdate = true;
+            }
+        }
+
+        if (needUpdate)
+        {
+            model_internal::_default_x_enValidationFailureMessages = value;   
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "default_x_enValidationFailureMessages", oldValue, value));
+            // Only execute calculateIsValid if it has been called before, to update the validationFailureMessages for
+            // the entire entity.
+            if (model_internal::_instance.model_internal::_cacheInitialized_isValid)
+            {
+                model_internal::_instance.model_internal::isValid_der = model_internal::_instance.model_internal::calculateIsValid();
+            }
+        }
     }
 
     [Bindable(event="propertyChange")]   
@@ -469,6 +925,306 @@ internal class _EntrySetsMenuEntityMetadata extends com.adobe.fiber.valueobjects
     }
 
     [Bindable(event="propertyChange")]   
+    public function get default_z_enStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    public function get default_z_enValidator() : StyleValidator
+    {
+        return model_internal::_default_z_enValidator;
+    }
+
+    model_internal function set _default_z_enIsValid_der(value:Boolean):void 
+    {
+        var oldValue:Boolean = model_internal::_default_z_enIsValid;         
+        if (oldValue !== value)
+        {
+            model_internal::_default_z_enIsValid = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "default_z_enIsValid", oldValue, value));
+        }                             
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get default_z_enIsValid():Boolean
+    {
+        if (!model_internal::_default_z_enIsValidCacheInitialized)
+        {
+            model_internal::calculateDefault_z_enIsValid();
+        }
+
+        return model_internal::_default_z_enIsValid;
+    }
+
+    model_internal function calculateDefault_z_enIsValid():void
+    {
+        var valRes:ValidationResultEvent = model_internal::_default_z_enValidator.validate(model_internal::_instance.default_z_en)
+        model_internal::_default_z_enIsValid_der = (valRes.results == null);
+        model_internal::_default_z_enIsValidCacheInitialized = true;
+        if (valRes.results == null)
+             model_internal::default_z_enValidationFailureMessages_der = emptyArray;
+        else
+        {
+            var _valFailures:Array = new Array();
+            for (var a:int = 0 ; a<valRes.results.length ; a++)
+            {
+                _valFailures.push(valRes.results[a].errorMessage);
+            }
+            model_internal::default_z_enValidationFailureMessages_der = _valFailures;
+        }
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get default_z_enValidationFailureMessages():Array
+    {
+        if (model_internal::_default_z_enValidationFailureMessages == null)
+            model_internal::calculateDefault_z_enIsValid();
+
+        return _default_z_enValidationFailureMessages;
+    }
+
+    model_internal function set default_z_enValidationFailureMessages_der(value:Array) : void
+    {
+        var oldValue:Array = model_internal::_default_z_enValidationFailureMessages;
+
+        var needUpdate : Boolean = false;
+        if (oldValue == null)
+            needUpdate = true;
+    
+        // avoid firing the event when old and new value are different empty arrays
+        if (!needUpdate && (oldValue !== value && (oldValue.length > 0 || value.length > 0)))
+        {
+            if (oldValue.length == value.length)
+            {
+                for (var a:int=0; a < oldValue.length; a++)
+                {
+                    if (oldValue[a] !== value[a])
+                    {
+                        needUpdate = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                needUpdate = true;
+            }
+        }
+
+        if (needUpdate)
+        {
+            model_internal::_default_z_enValidationFailureMessages = value;   
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "default_z_enValidationFailureMessages", oldValue, value));
+            // Only execute calculateIsValid if it has been called before, to update the validationFailureMessages for
+            // the entire entity.
+            if (model_internal::_instance.model_internal::_cacheInitialized_isValid)
+            {
+                model_internal::_instance.model_internal::isValid_der = model_internal::_instance.model_internal::calculateIsValid();
+            }
+        }
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get default_z_sqStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    public function get default_z_sqValidator() : StyleValidator
+    {
+        return model_internal::_default_z_sqValidator;
+    }
+
+    model_internal function set _default_z_sqIsValid_der(value:Boolean):void 
+    {
+        var oldValue:Boolean = model_internal::_default_z_sqIsValid;         
+        if (oldValue !== value)
+        {
+            model_internal::_default_z_sqIsValid = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "default_z_sqIsValid", oldValue, value));
+        }                             
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get default_z_sqIsValid():Boolean
+    {
+        if (!model_internal::_default_z_sqIsValidCacheInitialized)
+        {
+            model_internal::calculateDefault_z_sqIsValid();
+        }
+
+        return model_internal::_default_z_sqIsValid;
+    }
+
+    model_internal function calculateDefault_z_sqIsValid():void
+    {
+        var valRes:ValidationResultEvent = model_internal::_default_z_sqValidator.validate(model_internal::_instance.default_z_sq)
+        model_internal::_default_z_sqIsValid_der = (valRes.results == null);
+        model_internal::_default_z_sqIsValidCacheInitialized = true;
+        if (valRes.results == null)
+             model_internal::default_z_sqValidationFailureMessages_der = emptyArray;
+        else
+        {
+            var _valFailures:Array = new Array();
+            for (var a:int = 0 ; a<valRes.results.length ; a++)
+            {
+                _valFailures.push(valRes.results[a].errorMessage);
+            }
+            model_internal::default_z_sqValidationFailureMessages_der = _valFailures;
+        }
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get default_z_sqValidationFailureMessages():Array
+    {
+        if (model_internal::_default_z_sqValidationFailureMessages == null)
+            model_internal::calculateDefault_z_sqIsValid();
+
+        return _default_z_sqValidationFailureMessages;
+    }
+
+    model_internal function set default_z_sqValidationFailureMessages_der(value:Array) : void
+    {
+        var oldValue:Array = model_internal::_default_z_sqValidationFailureMessages;
+
+        var needUpdate : Boolean = false;
+        if (oldValue == null)
+            needUpdate = true;
+    
+        // avoid firing the event when old and new value are different empty arrays
+        if (!needUpdate && (oldValue !== value && (oldValue.length > 0 || value.length > 0)))
+        {
+            if (oldValue.length == value.length)
+            {
+                for (var a:int=0; a < oldValue.length; a++)
+                {
+                    if (oldValue[a] !== value[a])
+                    {
+                        needUpdate = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                needUpdate = true;
+            }
+        }
+
+        if (needUpdate)
+        {
+            model_internal::_default_z_sqValidationFailureMessages = value;   
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "default_z_sqValidationFailureMessages", oldValue, value));
+            // Only execute calculateIsValid if it has been called before, to update the validationFailureMessages for
+            // the entire entity.
+            if (model_internal::_instance.model_internal::_cacheInitialized_isValid)
+            {
+                model_internal::_instance.model_internal::isValid_der = model_internal::_instance.model_internal::calculateIsValid();
+            }
+        }
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get default_x_sqStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    public function get default_x_sqValidator() : StyleValidator
+    {
+        return model_internal::_default_x_sqValidator;
+    }
+
+    model_internal function set _default_x_sqIsValid_der(value:Boolean):void 
+    {
+        var oldValue:Boolean = model_internal::_default_x_sqIsValid;         
+        if (oldValue !== value)
+        {
+            model_internal::_default_x_sqIsValid = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "default_x_sqIsValid", oldValue, value));
+        }                             
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get default_x_sqIsValid():Boolean
+    {
+        if (!model_internal::_default_x_sqIsValidCacheInitialized)
+        {
+            model_internal::calculateDefault_x_sqIsValid();
+        }
+
+        return model_internal::_default_x_sqIsValid;
+    }
+
+    model_internal function calculateDefault_x_sqIsValid():void
+    {
+        var valRes:ValidationResultEvent = model_internal::_default_x_sqValidator.validate(model_internal::_instance.default_x_sq)
+        model_internal::_default_x_sqIsValid_der = (valRes.results == null);
+        model_internal::_default_x_sqIsValidCacheInitialized = true;
+        if (valRes.results == null)
+             model_internal::default_x_sqValidationFailureMessages_der = emptyArray;
+        else
+        {
+            var _valFailures:Array = new Array();
+            for (var a:int = 0 ; a<valRes.results.length ; a++)
+            {
+                _valFailures.push(valRes.results[a].errorMessage);
+            }
+            model_internal::default_x_sqValidationFailureMessages_der = _valFailures;
+        }
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get default_x_sqValidationFailureMessages():Array
+    {
+        if (model_internal::_default_x_sqValidationFailureMessages == null)
+            model_internal::calculateDefault_x_sqIsValid();
+
+        return _default_x_sqValidationFailureMessages;
+    }
+
+    model_internal function set default_x_sqValidationFailureMessages_der(value:Array) : void
+    {
+        var oldValue:Array = model_internal::_default_x_sqValidationFailureMessages;
+
+        var needUpdate : Boolean = false;
+        if (oldValue == null)
+            needUpdate = true;
+    
+        // avoid firing the event when old and new value are different empty arrays
+        if (!needUpdate && (oldValue !== value && (oldValue.length > 0 || value.length > 0)))
+        {
+            if (oldValue.length == value.length)
+            {
+                for (var a:int=0; a < oldValue.length; a++)
+                {
+                    if (oldValue[a] !== value[a])
+                    {
+                        needUpdate = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                needUpdate = true;
+            }
+        }
+
+        if (needUpdate)
+        {
+            model_internal::_default_x_sqValidationFailureMessages = value;   
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "default_x_sqValidationFailureMessages", oldValue, value));
+            // Only execute calculateIsValid if it has been called before, to update the validationFailureMessages for
+            // the entire entity.
+            if (model_internal::_instance.model_internal::_cacheInitialized_isValid)
+            {
+                model_internal::_instance.model_internal::isValid_der = model_internal::_instance.model_internal::calculateIsValid();
+            }
+        }
+    }
+
+    [Bindable(event="propertyChange")]   
     public function get default_z_idStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
@@ -529,9 +1285,33 @@ internal class _EntrySetsMenuEntityMetadata extends com.adobe.fiber.valueobjects
      {
          switch(propertyName)
          {
+            case("default_y_sq"):
+            {
+                return default_y_sqValidationFailureMessages;
+            }
+            case("default_y_en"):
+            {
+                return default_y_enValidationFailureMessages;
+            }
+            case("default_x_en"):
+            {
+                return default_x_enValidationFailureMessages;
+            }
             case("default_z"):
             {
                 return default_zValidationFailureMessages;
+            }
+            case("default_z_en"):
+            {
+                return default_z_enValidationFailureMessages;
+            }
+            case("default_z_sq"):
+            {
+                return default_z_sqValidationFailureMessages;
+            }
+            case("default_x_sq"):
+            {
+                return default_x_sqValidationFailureMessages;
             }
             default:
             {
