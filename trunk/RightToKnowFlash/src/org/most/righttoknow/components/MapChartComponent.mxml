@@ -100,7 +100,7 @@
 							//mapArea.title = mapEntry.title;
 							mapArea.value = Number(mapEntry.value);
 							
-							mapArea.title = mapEntry.title + "\n\n"+mapEntry.entry1 + " "+xTitle+"\n" + mapEntry.entry2 + " "+yTitle;
+							mapArea.title = "<b>"+mapEntry.title + "</b>\n\n"+mapEntry.entry1 + " "+xTitle+"\n" + mapEntry.entry2 + " "+yTitle;
 							macedoniaDataSet.addObject(mapArea);
 							
 					}
