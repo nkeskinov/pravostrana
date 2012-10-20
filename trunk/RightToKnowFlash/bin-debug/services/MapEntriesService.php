@@ -58,37 +58,69 @@ class MapEntriesService {
 	 *
 	 * @return array
 	 */
-	public function getMapEntriesByIds($id_entry_set) {
+	public function getMapEntriesByIds($value1, $value2) {
 
 		$stmt = mysqli_prepare($this->connection,
-                    "select $this->tablename.`value`, $this->tablename.`year`, municipalities.`name` as title, municipalities.map_id as instanceName ".
-                    "from $this->tablename, municipalities ".
-                    "where entries.id_entry_set = ? ".
-                        "and entries.id_municipality = municipalities.id_municipality ".
-                        "and `year` = '2010' ".
-                    " order by `year` asc");
+                    "select entry1.value/entry2.value as value, entry1.value as entry1, entry2.value as entry2, entry1.`year` as year, municipalities.`name` as title, municipalities.map_id as instanceName ".
+                    "from $this->tablename as entry1, $this->tablename as entry2,  municipalities ".
+                    "where entry1.id_entry_set = ? ".
+						"and entry2.id_entry_set = ? ".
+						"and entry1.year = entry2.year ".
+                        "and entry1.id_municipality = municipalities.id_municipality ".
+						"and entry2.id_municipality = municipalities.id_municipality ".
+                    " order by entry1.`year`, municipalities.`id_municipality` asc");
 		$this->throwExceptionOnError();
 
-        mysqli_stmt_bind_param($stmt, 'i', $id_entry_set);
+        mysqli_stmt_bind_param($stmt, 'ii', $value1, $value2);
         $this->throwExceptionOnError();
 		
 		mysqli_stmt_execute($stmt);
 		$this->throwExceptionOnError();
 		
-		$rows = array();
+		// initialize result to the corresponding return type
+        $result = new MapEntryResult;
+		// initialize internal result field
+        $result->rows = array();
 		
-		mysqli_stmt_bind_result($stmt, $row->value, $row->year, $row->title, $row->instanceName);
+		
+		mysqli_stmt_bind_result($stmt, $entry->value, $entry->entry1, $entry->entry2, $year, $entry->title, $entry->instanceName);
+		mysqli_stmt_fetch($stmt);
+		
+		$entry->value = $entry->value + 0.0;
+		$entry->entry1 = $entry->entry1 + 0.0;
+		$entry->entry2 = $entry->entry2 + 0.0;
+		
+		$result->minYear = $year;
+        $result->maxYear = $year;
+       
+		// insert first row
+        $result->rows[0][] = $entry;
+		// initialize new empty object
+        $entry = new stdClass();
+		mysqli_stmt_bind_result($stmt, $entry->value, $entry->entry1, $entry->entry2,  $year, $entry->title, $entry->instanceName);
 		
 	    while (mysqli_stmt_fetch($stmt)) {
-	      $rows[] = $row;
-	      $row = new stdClass();
-	      mysqli_stmt_bind_result($stmt, $row->value, $row->year, $row->title, $row->instanceName);
+	     	
+			$entry->value = $entry->value + 0.0;
+			
+            if ($year < $result->minYear) {
+                $result->minYear = $year;
+            }
+            if ($year > $result->maxYear) {
+                $result->maxYear = $year;
+            }
+			// insert row
+            $result->rows[$year - $result->minYear][] = $entry;
+			
+			$entry = new stdClass();
+			
+	      mysqli_stmt_bind_result($stmt, $entry->value,$entry->entry1, $entry->entry2,  $year, $entry->title, $entry->instanceName);
 	    }
 		
 		mysqli_stmt_free_result($stmt);
 	    mysqli_close($this->connection);
 	
-	    return $rows;
+	    return $result;
 	}
 
 	/**
@@ -106,4 +138,17 @@ class MapEntriesService {
 	}
 }
 
+
+class MapEntryResult{
+	public $minYear;
+	public $maxYear;
+	public $rows;
+}
+
+class MapEntry{
+	public $instanceName;
+	public $title;
+	public $value;
+	public $year;
+}
 ?>
