@@ -4,16 +4,19 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
 		 xmlns:ammap="http://www.ammap.com/com_internal"
 		 xmlns:mapentriesservice="services.mapentriesservice.*"
-		 width="100%" height="100%" creationComplete="application1_creationCompleteHandler(event)">
+		 width="100%" height="100%" >
 	<fx:Script>
 		<![CDATA[ 
+			import com.ammap.events.MapEvent;
 			import com.ammap.mapClasses.DataSet;
 			import com.ammap.mapClasses.MapArea;
 			
+			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
+			import mx.effects.easing.Linear;
 			import mx.events.FlexEvent;
+			import mx.events.SliderEvent;
 			import mx.rpc.events.ResultEvent;
-			
 			
 			import services.mapentriesservice.MapEntriesService;
 			
@@ -21,17 +24,41 @@
 			[Bindable]
 			[Embed(source="../flexassets/maps/macedonia.swf")]
 			private var _macedonia:Class 
-
 			
-			protected function application1_creationCompleteHandler(event:FlexEvent):void
+			protected var minYear:Number;
+			protected var maxYear:Number;
+			
+			protected var playing:Boolean = false;
+			
+			[Embed(source='assets/play_blue.png')]
+			public static var playBtnIcn:Class;
+			[Embed(source='assets/pause_blue.png')]
+			public static var pauseBtnIcn:Class;
+			
+			[Bindable]
+			protected var playDuration:Number = 3;
+			
+			[Bindable]
+			protected var mapDataSet:Array;
+			
+			protected var mapDataProvider:ArrayCollection;
+			
+			protected var xTitle:String;
+			protected var yTitle:String;
+			
+			public function init(value1:Number, value2:Number, stringValue1:String, stringValue2:String):void
 			{
-				getMapEntriesByIds(1);
+				xTitle = stringValue1;
+				yTitle = stringValue2;
+				getMapEntriesByIds(value1,value2);
+				
+				
 				
 			}
 		
-			protected function getMapEntriesByIds(id_entry_set:int):void
+			protected function getMapEntriesByIds(value1:int, value2:int):void
 			{
-				getMapEntriesByIdsResult.token = mapEntriesService.getMapEntriesByIds(id_entry_set);
+				getMapEntriesByIdsResult.token = mapEntriesService.getMapEntriesByIds(value1, value2);
 			}
 			
 			protected function ammap_initializeHandler(event:FlexEvent):void
@@ -40,74 +67,258 @@
 			
 			protected function getMapEntriesByIdsResult_resultHandler(event:ResultEvent):void
 			{
-				var macedoniaDataSet:DataSet = new DataSet;
-				macedoniaDataSet.mapClass = _macedonia;
 				
-				var bordersMapArea:MapArea = new MapArea;
-				bordersMapArea.instanceName = "borders";
-				bordersMapArea.color = Number("ff0ff0");
-				bordersMapArea.mouseEnabled = false;
-				macedoniaDataSet.addObject(bordersMapArea);
+				minYear = getMapEntriesByIdsResult.lastResult.minYear;
+				maxYear = getMapEntriesByIdsResult.lastResult.maxYear;
 				
-				for each(var mapEntry:MapEntry in event.result) {
-					var mapArea:MapArea = new MapArea;
-					mapArea.instanceName = mapEntry.instanceName;
-					mapArea.title = mapEntry.title;
-					mapArea.value = Number(mapEntry.value);
-					macedoniaDataSet.addObject(mapArea);
-					trace(mapEntry.title);
+				hSlider.minimum = minYear;
+				hSlider.maximum = maxYear;
+				hSlider.value = minYear;
+				
+				hSlider.labels = new Array(maxYear - minYear + 1);
+				
+				for (var i:int = minYear; i <= maxYear; i++) {
+					hSlider.labels[i - minYear] = i;
 				}
 				
-				var mapArea:MapArea = new MapArea;
-				mapArea.instanceName = "MK_LOD";
-				mapArea.title = "Lake Ohrid";
-				mapArea.color = 0xffffff;
-				mapArea.mouseEnabled = false;
-				macedoniaDataSet.addObject(mapArea);
+				mapDataProvider = new ArrayCollection();
 				
-				var mapArea1:MapArea = new MapArea;
-				mapArea1.instanceName = "borders_lakes";
-				mapArea1.color = 0xffffff;
-				mapArea1.mouseEnabled = false;
-				macedoniaDataSet.addObject(mapArea1);
+				for each (var tmpMapEntry:Array in getMapEntriesByIdsResult.lastResult.rows){
+					
+					var macedoniaDataSet:DataSet = new DataSet();
+					macedoniaDataSet.mapClass = _macedonia;
+					
+					var bordersMapArea:MapArea = new MapArea();
+					bordersMapArea.instanceName = "borders";
+					bordersMapArea.color = Number("ff0ff0");
+					bordersMapArea.mouseEnabled = false;
+					macedoniaDataSet.addObject(bordersMapArea);
+					
+					for each(var mapEntry:Object in tmpMapEntry) {
+							var mapArea:MapArea = new MapArea();
+							mapArea.instanceName = mapEntry.instanceName;
+							//mapArea.title = mapEntry.title;
+							mapArea.value = Number(mapEntry.value);
+							
+							mapArea.title = mapEntry.title + "\n\n"+mapEntry.entry1 + " "+xTitle+"\n" + mapEntry.entry2 + " "+yTitle;
+							macedoniaDataSet.addObject(mapArea);
+							
+					}
 				
-				var mapArea2:MapArea = new MapArea;
-				mapArea2.instanceName = "MK_LSD";
-				mapArea2.title = "Lake Dojran";
-				mapArea2.color = 0xffffff;
-				mapArea2.mouseEnabled = false;
-				macedoniaDataSet.addObject(mapArea2);
-				ammap.dataSets.push(macedoniaDataSet);
+					var mapArea:MapArea = new MapArea();
+					mapArea.instanceName = "MK_LOD";
+					mapArea.title = "Lake Ohrid";
+					mapArea.color = 0xffffff;
+					mapArea.mouseEnabled = false;
+					macedoniaDataSet.addObject(mapArea);
+					
+					var mapArea1:MapArea = new MapArea;
+					mapArea1.instanceName = "borders_lakes";
+					mapArea1.color = 0xffffff;
+					mapArea1.mouseEnabled = false;
+					macedoniaDataSet.addObject(mapArea1);
+					
+					var mapArea2:MapArea = new MapArea;
+					mapArea2.instanceName = "MK_LSD";
+					mapArea2.title = "Lake Dojran";
+					mapArea2.color = 0xffffff;
+					mapArea2.mouseEnabled = false;
+					macedoniaDataSet.addObject(mapArea2);
+					
+					mapDataProvider.addItem(macedoniaDataSet);
+					//ammap.dataSets.push(macedoniaDataSet);
+				}
+				yearLabel.visible = true;
+				
+				var tmpDS:DataSet = mapDataProvider.getItemAt(hSlider.value-minYear) as DataSet;
+				ammap.dataSets.push(tmpDS);
 				ammap.invalidateData();
+				
+				
+				var tmpDataSet:DataSet = mapDataProvider.getItemAt(parseInt(numberformater.format(hSlider.value - hSlider.minimum))) as DataSet;
+				for(var i:int=0; i< ammap.dataSets[0].areas.length; i++){
+					
+					ammap.dataSets[0].areas[i].value=tmpDataSet.areas[i].value;
+					ammap.dataSets[0].areas[i].title = tmpDataSet.areas[i].title;
+				}
+				
 			}
 			
 		
+			/**
+			 * Utility function to format years retrieved as int-s from DB.
+			 */
+			protected function formatYear(value:Number):Object
+			{
+				return numberformater.format(value);
+			}
 			
+			protected function hSlider_valueCommitHandler(event:FlexEvent):void
+			{
+				var tmpDataSet:DataSet = mapDataProvider.getItemAt(hSlider.value - hSlider.minimum) as DataSet;
+				for(var i:int=0; i< ammap.dataSets[0].areas.length; i++){
+					
+					ammap.dataSets[0].areas[i].value=tmpDataSet.areas[i].value;
+					ammap.dataSets[0].areas[i].title = tmpDataSet.areas[i].title;
+				}
+				
+				if(hSlider.value == maxYear && playing){
+					playing = false;
+					playBtn.setStyle("icon",playBtnIcn);
+					//timer.stop();
+					hSlider.snapInterval = 1;
+					animateSlider.stop();
+					animateSlider.fromValue = minYear;
+					hSlider.mouseEnabled = true;
+				}
+				
+			}
+			
+			
+			
+			protected function playBtn_clickHandler(event:MouseEvent):void
+			{
+				
+				if(!playing){
+					if(hSlider.value == maxYear){
+						hSlider.value = minYear;
+						
+					}
+					playing = true;
+					playBtn.setStyle("icon",pauseBtnIcn);
+			
+					hSlider.snapInterval = 0;
+					hSlider.mouseChildren = false;
+					hSlider.mouseEnabled = false;
+					animateSlider.duration = playDuration*(maxYear-minYear)*1000;
+					animateSlider.fromValue = hSlider.value;
+					
+					animateSlider.play(null,false);
+					
+				}else{
+					playing = false;
+					playBtn.setStyle("icon",playBtnIcn);
+					hSlider.mouseEnabled = true;
+					hSlider.mouseChildren = true;
+					hSlider.snapInterval = 1;
+					animateSlider.stop();
+					animateSlider.fromValue = hSlider.value;
+					
+				}
+				
+			}
+			protected function playSpeed_changeHandler(event:SliderEvent):void
+			{
+				
+				if(playing){
+					playDuration = playSpeed.value;
+					animateSlider.stop();
+					animateSlider.fromValue = hSlider.value;
+					animateSlider.duration = playDuration*(maxYear-minYear)*1000
+					animateSlider.play();
+				}
+				
+			}
+			
+			protected function ammap_dataSetChangedHandler(event:MapEvent):void
+			{
+				// TODO Auto-generated method stub
+				//Alert.show("changed");
+			}
+			
+			protected function hSlider_changeHandler(event:SliderEvent):void
+			{
+				//ammap.selectedDataSet = ammap.dataSets[hSlider.value-hSlider.minimum];
+				// TODO Auto-generated method stub
+				//ammap.invalidateData();
+				//Alert.show("kolku="+(hSlider.value-hSlider.minimum));
+				//var t:DataSet = ammap.dataSets[parseInt(numberformater.format(hSlider.value - hSlider.minimum))];
+				//Alert.show("tt="+t.areas[5].value+" v="+t.areas[5].title);
+				//ammap.dataSets[0].areas[5].value = 0.9;
+				//var t1:DataSet = ammap.dataSets[0];
+				//Alert.show("tt="+t1.areas[5].value+" v="+t1.areas[5].title);
+					
+				var tmpDataSet:DataSet = mapDataProvider.getItemAt(parseInt(numberformater.format(hSlider.value - hSlider.minimum))) as DataSet;
+				for(var i:int=0; i< ammap.dataSets[0].areas.length; i++){
+					
+					ammap.dataSets[0].areas[i].value=tmpDataSet.areas[i].value;
+					ammap.dataSets[0].areas[i].title = tmpDataSet.areas[i].title;
+				}
+				
+				//ammap.invalidateData();
+				
+				//mapDataProvider.getItemAt(hSlider.value-minYear) as DataSet
+			}
 			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
+		<mx:AnimateProperty id="animateSlider" property="value" fromValue="2006" toValue="2010" easingFunction="Linear.easeNone" target="{hSlider}" />
 		<s:CallResponder id="getMapEntriesByIdsResult" result="getMapEntriesByIdsResult_resultHandler(event)"/>
 		<mapentriesservice:MapEntriesService id="mapEntriesService"
 											 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 											 showBusyCursor="true"/>
+		<mx:NumberFormatter  id="numberformater" rounding="down" precision="0" thousandsSeparatorFrom="" thousandsSeparatorTo=""/>
 	</fx:Declarations>
-	<ammap:AmMap id="ammap" width="100%" height="100%" useObjectColorForBalloon="false" initialize="ammap_initializeHandler(event)"
-				 backgroundColor="#ffffff" >
-		
-		<ammap:areasSettings>
-			<ammap:AreasSettings color="#fcff08"  colorSolid="#ff0000" balloonText="[[value]] people live in [[title]]"  />
-		</ammap:areasSettings>
-		
-		<ammap:zoomControl>
-			<ammap:ZoomControl visible="false"/>
-		</ammap:zoomControl>
-		
-		<ammap:moviesSettings>
-			<ammap:MoviesSettings  bringForwardOnHover="true" color="#FFFFFF" rollOverColor="#CC0000" selectedColor="#000000"/>
-		</ammap:moviesSettings>
-		
-	</ammap:AmMap>
-	
+	<s:Group width="100%" height="100%">
+		<s:Panel width="100%" height="100%" borderVisible="false" dropShadowVisible="false"
+				 skinClass="org.most.righttoknow.skins.TitlelessPanel">
+			<ammap:AmMap id="ammap" width="100%" height="100%" useObjectColorForBalloon="false" 
+						 backgroundColor="#ffffff" 
+					     zoomOnDoubleClick="false" dragMap="false"  
+						 dataSetChanged="ammap_dataSetChangedHandler(event)" >
+				
+				<ammap:areasSettings>
+					<ammap:AreasSettings  initialAnimationDuration="0"  color="#9bf6c9"  colorSolid="#0024ff" 
+										 balloonText="[[title]]"    />
+				</ammap:areasSettings>
+				
+				<ammap:zoomControl>
+					<ammap:ZoomControl visible="false"/>
+				</ammap:zoomControl>
+				<ammap:balloon>
+					<ammap:AmBalloon borderThickness="1"/>
+				</ammap:balloon>
+				<ammap:moviesSettings>
+					<ammap:MoviesSettings   bringForwardOnHover="true" color="#FFFFFF" rollOverColor="#CC0000" selectedColor="#000000"/>
+				</ammap:moviesSettings>
+				
+			</ammap:AmMap>
+			<s:Label id="yearLabel" right="5" bottom="0" text="{numberformater.format(hSlider.value)}" 
+					 verticalAlign="middle"
+					 alpha="0.4"  
+					 fontSize="64"
+					 color="#666666" visible="false"
+					 fontWeight="bold"/>
+			
+			<s:controlBarContent>
+				<s:HGroup x="0" y="0" width="100%" height="30" paddingLeft="5" verticalAlign="middle">
+					<mx:Button id="playBtn" y="6" width="40" height="35"
+							   icon="@Embed(source='assets/play_blue.png')"
+							   click="playBtn_clickHandler(event)"
+							   toolTip="{resourceManager.getString('resources', 'play_tooltip')}"/>
+					<mx:VSlider id="playSpeed" height="40"
+								value="{playDuration}"
+								change="playSpeed_changeHandler(event)"
+								horizontalCenter="0" labelOffset="-1"
+								liveDragging="true" maximum="6" minimum="1"
+								rotation="-180" snapInterval="1"
+								tickInterval="1" tickLength="10" tickOffset="4"
+								toolTip="{resourceManager.getString('resources', 'playback_speed_tooltip')}"
+								verticalCenter="0"/> 
+					<mx:HSlider id="hSlider" y="2" width="100%" height="40"
+								allowTrackClick="true" 
+								dataTipFormatFunction="formatYear"
+								labelOffset="-1"  
+								showTrackHighlight="true"
+								tickInterval="1" tickLength="10" tickOffset="4"
+								valueCommit="hSlider_valueCommitHandler(event)"
+							   change="hSlider_changeHandler(event)"	
+								/>
+					
+				</s:HGroup>
+			</s:controlBarContent>
+		</s:Panel>
+	</s:Group>	
 	
 </s:Group>

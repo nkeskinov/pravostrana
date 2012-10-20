@@ -11,7 +11,7 @@ import mx.rpc.AbstractOperation;
 import mx.rpc.AsyncToken;
 import mx.rpc.remoting.Operation;
 import mx.rpc.remoting.RemoteObject;
-import valueObjects.MapEntry;
+import valueObjects.MapEntryResult;
 
 import mx.collections.ItemResponder;
 import com.adobe.fiber.valueobjects.AvailablePropertyIterator;
@@ -27,13 +27,12 @@ internal class _Super_MapEntriesService extends com.adobe.fiber.services.wrapper
         _serviceControl = new mx.rpc.remoting.RemoteObject();
 
         // initialize RemoteClass alias for all entities returned by functions of this service
-        valueObjects.MapEntry._initRemoteClassAlias();
 
         var operations:Object = new Object();
         var operation:mx.rpc.remoting.Operation;
 
         operation = new mx.rpc.remoting.Operation(null, "getMapEntriesByIds");
-         operation.resultElementType = valueObjects.MapEntry;
+         operation.resultType = valueObjects.MapEntryResult;
         operations["getMapEntriesByIds"] = operation;
 
         _serviceControl.operations = operations;
@@ -65,10 +64,10 @@ internal class _Super_MapEntriesService extends com.adobe.fiber.services.wrapper
       *
       * @return an mx.rpc.AsyncToken whose result property will be populated with the result of the operation when the server response is received.
       */
-    public function getMapEntriesByIds(id_entry_set:Object) : mx.rpc.AsyncToken
+    public function getMapEntriesByIds(value1:int, value2:int) : mx.rpc.AsyncToken
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getMapEntriesByIds");
-		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(id_entry_set) ;
+		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(value1,value2) ;
         return _internal_token;
     }
      
