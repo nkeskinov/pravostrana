@@ -145,6 +145,8 @@
 			protected var playDuration:Number = 3;
 			[Bindable]
 			protected var animProp:AnimateProperty = new AnimateProperty();
+			
+			protected var marrLoaded:Boolean = false;
 			/**
 			 * Start up function
 			 * */
@@ -321,7 +323,8 @@
 			protected function xAxisPopup1_clickHandler(event:MouseEvent):void
 			{
 				
-				menuX1.show(tabNav.x+tabNav.width-35, tabNav.y+78);
+				menuX1.show(tabNav.x+tabNav.width-35, tabNav.y+91);
+				
 			}
 			
 			/**
@@ -340,7 +343,7 @@
 				
 			protected function yAxisPopup1_clickHandler(event:MouseEvent):void
 			{
-				menuY1.show(tabNav.x+tabNav.width-35, tabNav.y+123);
+				menuY1.show(tabNav.x+tabNav.width-35, tabNav.y+141);
 				
 			}
 			
@@ -869,7 +872,10 @@
 					this.currentState="State1";
 				else{
 					this.currentState="MapState";
-					mapChart.init(xSelected1, ySelected1, xAxisPopup.label, yAxisPopup.label);
+					if(!marrLoaded){
+						mapChart.init(xSelected1, ySelected1, xAxisPopup.label, yAxisPopup.label);
+						marrLoaded = true;
+					}
 				}
 			}
 			
