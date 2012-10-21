@@ -355,7 +355,7 @@ h4 {
 .mainBody .left-red-block .middle{
 	background:url(images/red-title-middle.png);
 	height:30px;
-	width:95%;
+	width:96%;
 	float:left;
 }
 .mainBody .left-red-block .middle .text{
@@ -378,9 +378,8 @@ h4 {
 }
 .mainBody .left-red-block .sodrzina{
 	border:1px solid #71312d;
-	border-right:none;
 	border-top:none;
-	margin-top:-5px;
+	margin-top:0px;
 	padding:5px;
 }
 
@@ -392,7 +391,18 @@ h4 {
 	margin-left:-3px;
 	display:block;
 }
+.mainBody .right-block2{
+	width:703px;
+	margin:0;
+	margin-left:-3px;
+	display:block;
+}
 .mainBody .right-block .title{
+	display: block; 
+	overflow:hidden; 
+	clear:both;
+}
+.mainBody .right-block2 .title{
 	display: block; 
 	overflow:hidden; 
 	clear:both;
@@ -403,7 +413,19 @@ h4 {
 	width:453px;
 	float:left;
 }
+.mainBody .right-block2 .middle{
+	background:url(images/red-title-middle.png);
+	height:30px;
+	width:600px;
+	float:left;
+}
 .mainBody .right-block .middle .text{
+	color:#fcf9ea;
+	font-weight:bold;
+	padding-left:10px;
+	padding-top:5px;
+}
+.mainBody .right-block2 .middle .text{
 	color:#fcf9ea;
 	font-weight:bold;
 	padding-left:10px;
@@ -415,13 +437,33 @@ h4 {
 	width:7px;
 	float:left;
 }
+.mainBody .right-block2 .left{
+	background:url(images/red-title-left.png) no-repeat;
+	height:30px;
+	width:7px;
+	float:left;
+}
 .mainBody .right-block .right{
 	background:url(images/red-title-right.png) no-repeat;
 	height:30px;
 	width:7px;
 	float:left;
 }
+.mainBody .right-block2 .right{
+	background:url(images/red-title-right.png) no-repeat;
+	height:30px;
+	width:7px;
+	float:left;
+}
 .mainBody .right-block .sodrzina{
+	border:1px solid #71312d;
+
+	border-top:none;
+	margin-top:-5px;
+
+	padding:5px;
+}
+.mainBody .right-block2 .sodrzina{
 	border:1px solid #71312d;
 
 	border-top:none;
@@ -677,6 +719,7 @@ div#horiz-menu{
 	text-align:left;
 	height: 30px;
 	padding-top:15px;
+	
 }
 /* @group Horiz Menu */
 
@@ -871,11 +914,11 @@ tr.off {
 }
 #bannerDiv1 {
 	position:absolute;
-	left:745px;
+	left:692px;
 	top:12px;
-	width:234px;
-	height:60px;
-	z-index:1;
+	width:280px;
+	height:67px;
+	
 }
 
 #username_login, #password_login {

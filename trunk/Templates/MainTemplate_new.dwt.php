@@ -5,29 +5,29 @@ session_start();
 <?php include("util/misc.php"); ?>
 <?php include("util/banner.php"); ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><!-- InstanceBegin template="/Templates/MainTemplate_new.dwt.php" codeOutsideHTMLIsLocked="false" -->
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!--templateinfo codeoutsidehtmlislocked="true" -->
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta http-equiv="Content-Language" content="mk-mk" />
 <meta name="description" content="Сите закони на едно место. База на закони, анализи, судски пракси..." />
 <meta name="keywords" content="makedonija, pravo, zakon, zakoni, sudska praksa, analizi, MOST, zakonodavstvo, zakonodavna funkcija, македонија, право, закон, судска пракса, закони, анализи, МОСТ, законодавна функција, законодавство" />
-<link href="rokmoomenu.css" rel="stylesheet" type="text/css" />
-<link href="style.css" rel="stylesheet" type="text/css" />
-<link rel="shortcut icon" href="images/favicon1.png" />
-<!-- InstanceBeginEditable name="doctitle" -->
+<link href="../rokmoomenu.css" rel="stylesheet" type="text/css" />
+<link href="../style.css" rel="stylesheet" type="text/css" />
+<link rel="shortcut icon" href="../images/favicon1.png" />
+<!-- TemplateBeginEditable name="doctitle" -->
 <title>Pravo.org.mk</title>
-<!-- InstanceEndEditable -->
-<!-- InstanceBeginEditable name="scripts" -->
-<!-- InstanceEndEditable -->
+<!-- TemplateEndEditable -->
+<!-- TemplateBeginEditable name="scripts" -->
+<!-- TemplateEndEditable -->
 <link href="YUI/2.6.0/build/fonts/fonts-min.css" rel="stylesheet" type="text/css" />
 <link href="YUI/2.6.0/build/container/assets/skins/sam/container.css" rel="stylesheet" type="text/css" />
 <script src="YUI/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js" type="text/javascript"></script>
 <script src="YUI/2.6.0/build/container/container-min.js" type="text/javascript"></script>
-<script type="text/javascript" src="mootools.js"></script>
-<script type="text/javascript" src="rokmoomenu.js"></script>
-<script type="text/javascript" src="javaScripts/cirillic_converter.js"></script>
-<script type="text/javascript" src="javaScripts/popUpWindow.js"></script>
+<script type="text/javascript" src="../mootools.js"></script>
+<script type="text/javascript" src="../rokmoomenu.js"></script>
+<script type="text/javascript" src="../javaScripts/cirillic_converter.js"></script>
+<script type="text/javascript" src="../javaScripts/popUpWindow.js"></script>
 <script type="text/javascript">
 <!--
 window.addEvent('domready', function() {
@@ -84,8 +84,8 @@ transition: Fx.Transitions.sineOut
             // JavaScript enabled so display the flashContent div in case it is not replaced with a swf object.
             swfobject.createCSS("#flashContent", "display:block;text-align:left;");
         </script>
-<!-- InstanceBeginEditable name="head" -->
-<!-- InstanceEndEditable -->
+<!-- TemplateBeginEditable name="head" -->
+<!-- TemplateEndEditable -->
 </head>
 <body>
 <div id="wrapper">
@@ -124,14 +124,14 @@ transition: Fx.Transitions.sineOut
    	<tr height="30">
     	<td width="7" style="background:url(images/red-title-left1.png)"></td> 
         <td style="background:url(images/red-title-middle1.png); color:#fcf9ea; font-weight:bold;padding-top:5px;" >
-        	<!-- InstanceBeginEditable name="searchTitle" -->Пребарување на закони<!-- InstanceEndEditable -->
+        	<!-- TemplateBeginEditable name="searchTitle" -->Наслов<!-- TemplateEndEditable -->
         </td>
         <td width="7" style="background:url(images/red-title-right1.png);"></td>
     </tr>
     <tr>
     	<td colspan="3" style="margin-top:0px;  background:#fbf6df; padding-left:5px; padding-right:5px" valign="top">
-        	<!-- InstanceBeginEditable name="searchContent" -->
-                     <?php include("util/search_new.php"); ?><!-- InstanceEndEditable -->
+        	<!-- TemplateBeginEditable name="searchContent" -->
+                    <p>Текст </p><!-- TemplateEndEditable -->
         </td>
     </tr>
    </table>
@@ -141,55 +141,14 @@ transition: Fx.Transitions.sineOut
    	<tr height="30">
     	<td width="7" style="background:url(images/red-title-left.png)"></td>
         <td style="background:url(images/red-title-middle.png); color:#fcf9ea; font-weight:bold; padding-top:5px;"  width="690"> 
-        	<!-- InstanceBeginEditable name="middleTitle" -->Имаш право да знаеш!<!-- InstanceEndEditable -->
+        	<!-- TemplateBeginEditable name="middleTitle" -->Наслов<!-- TemplateEndEditable -->
         </td>
         <td width="7" style="background:url(images/red-title-right.png);"></td>
     </tr>
     <tr>
     	<td colspan="3" style="border:1px solid #71312d; border-top:none margin-top:0px; padding:0px;" align="center" valign="top">
-        	<!-- InstanceBeginEditable name="middleContent" -->
-                   <div id="flashContent">
-            <p>
-                To view this page ensure that Adobe Flash Player version 
-                11.1.0 or greater is installed. 
-            </p>
-            <script type="text/javascript"> 
-                var pageHost = ((document.location.protocol == "https:") ? "https://" : "http://"); 
-                document.write("<a href='http://www.adobe.com/go/getflashplayer'><img src='" 
-                                + pageHost + "www.adobe.com/images/shared/download_buttons/get_flash_player.gif' alt='Get Adobe Flash player' /></a>" ); 
-            </script> 
-        </div>
-        
-        <noscript>
-            <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="710" height="430" id="RightToKnowFlash">
-                <param name="movie" value="RightToKnowFlash.swf" />
-                <param name="quality" value="high" />
-                <param name="bgcolor" value="#ffffff" />
-                <param name="allowScriptAccess" value="sameDomain" />
-                <param name="allowFullScreen" value="true" />
-                <!--[if !IE]>-->
-                <object type="application/x-shockwave-flash" data="RightToKnowFlash.swf" width="710" height="430">
-                    <param name="quality" value="high" />
-                    <param name="bgcolor" value="#ffffff" />
-                    <param name="allowScriptAccess" value="sameDomain" />
-                    <param name="allowFullScreen" value="true" />
-                <!--<![endif]-->
-                <!--[if gte IE 6]>-->
-                    <p> 
-                        Either scripts and active content are not permitted to run or Adobe Flash Player version
-                        11.1.0 or greater is not installed.
-                    </p>
-                <!--<![endif]-->
-                    <a href="http://www.adobe.com/go/getflashplayer">
-                        <img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash Player" />
-                    </a>
-                <!--[if !IE]>-->
-                </object>
-                <!--<![endif]-->
-            </object>
-        </noscript>     
-				   
-				   <!-- InstanceEndEditable -->
+        	<!-- TemplateBeginEditable name="middleContent" -->
+                    <p>Текст </p><!-- TemplateEndEditable -->
         </td>
     </tr>
    </table>
@@ -210,14 +169,14 @@ transition: Fx.Transitions.sineOut
    	<tr height="30">
     	<td width="7" style="background:url(images/red-title-left1.png)"></td>
         <td style="background:url(images/red-title-middle1.png); color:#fcf9ea; font-weight:bold; padding-top:5px;" >
-        	<!-- InstanceBeginEditable name="leftTitle1" -->Судска пракса пребарување<!-- InstanceEndEditable -->
+        	<!-- TemplateBeginEditable name="leftTitle1" -->Наслов<!-- TemplateEndEditable -->
         </td>
         <td width="7" style="background:url(images/red-title-right1.png);"></td>
     </tr>
     <tr>
     	<td colspan="3" style="margin-top:0px; padding:0px;" align="center">
-        	<!-- InstanceBeginEditable name="leftContent1" -->
-                    <?php include("util/search_practice.php"); ?><!-- InstanceEndEditable -->
+        	<!-- TemplateBeginEditable name="leftContent1" -->
+                    <p>Текст </p><!-- TemplateEndEditable -->
         </td>
     </tr>
    </table>
@@ -227,14 +186,14 @@ transition: Fx.Transitions.sineOut
        <tr height="30">
          <td width="7" style="background:url(images/red-title-left.png)"></td>
          <td style="background:url(images/red-title-middle.png); color:#fcf9ea; font-weight:bold; padding-top:5px;"  width="468">
-           <!-- InstanceBeginEditable name="middleTitle1" -->Последни документи<!-- InstanceEndEditable -->
+           <!-- TemplateBeginEditable name="middleTitle1" -->Наслов<!-- TemplateEndEditable -->
            </td>
          <td width="7" style="	background:url(images/red-title-right.png);"></td>
          </tr>
        <tr>
          <td colspan="3" style="border:1px solid #71312d; border-top:none margin-top:0px; padding:0px;" align="center">
-           <!-- InstanceBeginEditable name="middleContent1" -->
-                     <?php include('util/latestLaws.php'); ?><!-- InstanceEndEditable -->
+           <!-- TemplateBeginEditable name="middleContent1" -->
+             <p>Текст </p><!-- TemplateEndEditable -->
            </td>
          </tr>
        </table>
@@ -247,8 +206,8 @@ transition: Fx.Transitions.sineOut
  </tr>
  <tr>
  	 <td colspan="2" valign="top">
-        	<div><img src="images/eurocort.png" width="720" /></div>
-            <div style="	border:1px solid #f5e6a2; border-top:none"><!-- InstanceBeginEditable name="EuroCourtRegion" --><?php include("util/search_eurocourt.php"); ?><!-- InstanceEndEditable -->
+        	<div><img src="../images/eurocort.png" width="720" /></div>
+            <div style="	border:1px solid #f5e6a2; border-top:none"><!-- TemplateBeginEditable name="EuroCourtRegion" -->EuroCourtRegion<!-- TemplateEndEditable -->
             </div>
       </td>
       </tr>
@@ -273,4 +232,4 @@ piwikTracker.enableLinkTracking();
 </script><noscript><p><img src="http://www.pravo.org.mk/piwik/piwik.php?idsite=1" style="border:0" alt=""/></p></noscript>
 <!-- End Piwik Tag -->
 </body>
-<!-- InstanceEnd --></html>
+</html>
