@@ -8,7 +8,7 @@
 			   xmlns:ammap="http://www.ammap.com/com_internal"
 			   xmlns:controls="org.most.righttoknow.controls.*"
 			   xmlns:entrysetsservice="services.entrysetsservice.*"
-			   xmlns:local="*"
+			   xmlns:local="*" 
 			   xmlns:municipalitiesservice="services.municipalitiesservice.*"
 			   width="690" height="430" applicationComplete="init()" horizontalCenter="0"
 			   verticalCenter="0">
@@ -133,7 +133,12 @@
 			[Bindable]
 			protected var animProp:AnimateProperty = new AnimateProperty();
 			
-			protected var marrLoaded:Boolean = false;
+			[Bindable]
+			protected var mapPrimaryLabel:String;
+			[Bindable]
+			protected var mapOverlayLabel:String;
+			
+			protected var mapLoaded:Boolean = false;
 			/**
 			 * Start up function
 			 * */
@@ -256,7 +261,7 @@
 				
 				maxXValue= getBubbleEntriesPerYearByIdsResult.lastResult.maxXValue;
 				maxYValue= getBubbleEntriesPerYearByIdsResult.lastResult.maxYValue;
-				charBgLabel.visible = true;
+				chartBgLabel.visible = true;
 				
 				hideBusyCursor();
 			}
@@ -323,8 +328,9 @@
 			
 			protected function xAxisPopup1_creationCompleteHandler(event:FlexEvent):void
 			{
-				yAxisPopup1.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_y_label')];
-				xAxisPopup1.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_x_label')];
+				//mapPrimaryLabel = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_y_label')];
+				//mapOverlayLabel = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_x_label')];
+				
 			}
 			
 			/**
@@ -367,9 +373,9 @@
 			 * */
 			private function menuX1itemClick(event:MenuEvent):void {
 				
-				xAxisPopup1.label = event.item[resourceManager.getString('resources', 'menu_label_field')];
+				mapPrimaryLabel= event.item[resourceManager.getString('resources', 'menu_label_field')];
 				xSelected1 = event.item.id
-				mapChart.init(xSelected1, ySelected1, xAxisPopup1.label, yAxisPopup1.label);
+				mapChart.init(xSelected1, ySelected1, mapPrimaryLabel, mapOverlayLabel);
 				
 			}
 			
@@ -389,9 +395,9 @@
 			 * */
 			private function menuY1itemClick(event:MenuEvent):void {
 				
-				yAxisPopup1.label = event.item[resourceManager.getString('resources', 'menu_label_field')];
+				mapOverlayLabel = event.item[resourceManager.getString('resources', 'menu_label_field')];
 				ySelected1 = event.item.id;
-				mapChart.init(xSelected1, ySelected1, xAxisPopup1.label, yAxisPopup1.label);
+				mapChart.init(xSelected1, ySelected1, mapPrimaryLabel, mapOverlayLabel);
 				//Alert.show("x="+xSelected +" y="+event.item.id);
 			}
 			
@@ -421,7 +427,7 @@
 				zSelected = getEntrySetMenuResult.lastResult.default_z_id;
 				
 				xSelected1 = xSelected;
-				ySelected1 = ySelected;
+				ySelected1 = -1;
 				
 				
 				menuY = Menu.createMenu(null, menuData, false);
@@ -456,10 +462,12 @@
 				menuZ.addEventListener(MenuEvent.ITEM_CLICK, menuZitemClick);
 				
 				
-				zAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_z_label')];
 				xAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_x_label')];
 				yAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_y_label')];
+				zAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_z_label')];
 				
+				mapPrimaryLabel = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_x_label')];
+				mapOverlayLabel = resourceManager.getString('resources', 'map_overlay_none_label');
 				 
 				
 				//Initialize the bubble chart with the default values 
@@ -757,6 +765,7 @@
 			
 			protected function hSlider_valueCommitHandler(event:FlexEvent):void
 			{
+				chartBgLabel.text =numberformater.format(hSlider.value-1);
 				if(hSlider.value == maxYear && playing){
 					playing = false;
 					playBtn.setStyle("icon",playBtnIcn);
@@ -764,6 +773,8 @@
 					animateSlider.stop();
 					animateSlider.fromValue = minYear;
 					hSlider.mouseEnabled = true;
+					hSlider.mouseChildren = true;
+					chartBgLabel.text =numberformater.format(hSlider.value);
 				}
 						
 			}
@@ -819,9 +830,9 @@
 				menuZ.addEventListener(MenuEvent.ITEM_CLICK, menuZitemClick);
 				
 				
-				zAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_x_label')];
-				xAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_y_label')];
-				yAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_z_label')];
+				xAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_x_label')];
+				yAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_y_label')];
+				zAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_z_label')];
 			}
 			
 			
@@ -832,9 +843,9 @@
 					this.currentState="State1";
 				else{
 					this.currentState="MapState";
-					if(!marrLoaded){
-						mapChart.init(xSelected1, ySelected1, xAxisPopup.label, yAxisPopup.label);
-						marrLoaded = true;
+					if(!mapLoaded){
+						mapChart.init(xSelected1, ySelected1, mapPrimaryLabel, mapOverlayLabel);
+						mapLoaded = true;
 					}
 				}
 			}
@@ -969,7 +980,7 @@
 																	  verticalStroke="{new Stroke(0x666666,1,0.2)}"
 																	  />
 														<s:HGroup width="100%" verticalAlign="middle" horizontalAlign="center">
-															<s:Label id="charBgLabel" text="{numberformater.format(hSlider.value)}" 
+															<s:Label id="chartBgLabel" text="{numberformater.format(hSlider.value)}" 
 																	 verticalAlign="middle"
 																	 alpha="0.2"  
 																	 fontSize="128"
@@ -1088,7 +1099,7 @@
 							</s:HGroup>
 							<s:BorderContainer width="100%" height="27" backgroundAlpha="0.8"
 											   backgroundColor="#0024FF" borderVisible="false">
-								<s:Button id="xAxisPopup1" width="97%"
+								<s:Button id="xAxisPopup1" width="97%" label="{mapPrimaryLabel}"
 										  click="xAxisPopup1_clickHandler(event)" cornerRadius="0"
 										  creationComplete="xAxisPopup1_creationCompleteHandler(event)"
 										  fontWeight="bold" horizontalCenter="0"
@@ -1099,7 +1110,7 @@
 									 text="{resourceManager.getString('resources', 'overlay_data_label')}"/>
 							<s:BorderContainer width="100%" height="27" backgroundAlpha="0.8"
 											   backgroundColor="#9bf6c9" borderVisible="false">
-								<s:Button id="yAxisPopup1" width="97%"
+								<s:Button id="yAxisPopup1" width="97%" label="{mapOverlayLabel}"
 										  click="yAxisPopup1_clickHandler(event)" cornerRadius="0"
 										  fontWeight="bold" horizontalCenter="0"
 										  skinClass="org.most.righttoknow.skins.ButtonAsAList"
