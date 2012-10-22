@@ -54,20 +54,7 @@
 			
 			import spark.events.IndexChangeEvent;
 			
-			
-			protected var timer:Timer;
-			
 			public var bulletSizeValue:Number = 10;
-			
-			private var xStart:Number = 0;
-			private var xEnd:Number = 0;
-			private var yStart:Number = 0;
-			private var yEnd:Number = 0;
-			
-			private var xStartToSet:Number = 0;
-			private var xEndToSet:Number = 0;
-			private var yStartToSet:Number = 0;
-			private var yEndToSet:Number = 0;
 			
 			[Bindable]
 			protected var chartDataProvider:ArrayCollection;
@@ -237,24 +224,6 @@
 			protected function formatYear(value:Number):Object
 			{
 				return numberformater.format(value);
-			}
-			
-			/**
-			 * Detect changes in timeline slider and store "toSet" values 
-			 */
-			protected function hSlider_changeHandler(event:SliderEvent):void
-			{
-				if (xStart != 0 || xEnd != 0)
-				{
-					xStartToSet = xStart;
-					xEndToSet = xEnd;
-				}
-				if (yStart != 0 || yEnd != 0)
-				{
-					yStartToSet = yStart;
-					yEndToSet = yEnd;
-				}
-				
 			}
 			
 			
@@ -780,16 +749,8 @@
 			private function playTimeline(e:TimerEvent):void{
 				//Alert.show("Test="+timelineSlider.value);
 				if(hSlider.value == maxYear){
-					timer.stop();
 					playing = false;
 					playBtn.setStyle("icon",playBtnIcn);
-				}else{
-					//hSlider.invalidateProperties();
-					//hSlider.getThumbAt(0).x = hSlider.getThumbAt(0).x+10;
-					
-					//hSlider.value = hSlider.value+(5/1000);
-					//hSlider.setStyle("slideDuration", 5000);
-					//hSlider.setStyle("slideEasingFunction", Elastic.easeOut);
 				}
 			} 
 
@@ -799,7 +760,6 @@
 				if(hSlider.value == maxYear && playing){
 					playing = false;
 					playBtn.setStyle("icon",playBtnIcn);
-					//timer.stop();
 					hSlider.snapInterval = 1;
 					animateSlider.stop();
 					animateSlider.fromValue = minYear;
@@ -910,7 +870,10 @@
 	</s:states>
 	<fx:Declarations>
 		
-		<mx:AnimateProperty id="animateSlider" property="value" fromValue="2006" toValue="2010" easingFunction="Linear.easeNone" target="{hSlider}" />
+		<mx:AnimateProperty id="animateSlider" property="value" 
+							fromValue="{getBubbleEntriesPerYearByIdsResult.lastResult.minYear}" 
+							toValue="{getBubbleEntriesPerYearByIdsResult.lastResult.maxYear}" 
+							easingFunction="Linear.easeNone" target="{hSlider}" />
 		<bubbleentriesservice:BubbleEntriesService id="bubbleEntriesService"
 												   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 												   />
@@ -1051,7 +1014,6 @@
 														verticalCenter="0"/> 
 											<mx:HSlider id="hSlider" y="2" width="100%" height="40"
 														allowTrackClick="true" 
-														change="hSlider_changeHandler(event)"
 														dataTipFormatFunction="formatYear"
 														labelOffset="-1"  
 														showTrackHighlight="true"
