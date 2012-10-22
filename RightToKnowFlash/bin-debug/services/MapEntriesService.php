@@ -59,20 +59,34 @@ class MapEntriesService {
 	 * @return array
 	 */
 	public function getMapEntriesByIds($value1, $value2) {
+		
+		if($value2 == -1){
+			$stmt = mysqli_prepare($this->connection,
+					"select entry1.value as value, entry1.value as entry1, null as entry2, entry1.`year` as year, municipalities.`name` as title, municipalities.map_id as instanceName ".
+					"from $this->tablename as entry1,  municipalities ".
+					"where entry1.id_entry_set = ? ".
+						"and entry1.id_municipality = municipalities.id_municipality  ".
+					"order by entry1.`year`, municipalities.`id_municipality` asc");
+			$this->throwExceptionOnError();
 
-		$stmt = mysqli_prepare($this->connection,
-                    "select entry1.value/entry2.value as value, entry1.value as entry1, entry2.value as entry2, entry1.`year` as year, municipalities.`name` as title, municipalities.map_id as instanceName ".
-                    "from $this->tablename as entry1, $this->tablename as entry2,  municipalities ".
-                    "where entry1.id_entry_set = ? ".
-						"and entry2.id_entry_set = ? ".
-						"and entry1.year = entry2.year ".
-                        "and entry1.id_municipality = municipalities.id_municipality ".
-						"and entry2.id_municipality = municipalities.id_municipality ".
-                    " order by entry1.`year`, municipalities.`id_municipality` asc");
+        mysqli_stmt_bind_param($stmt, 'i', $value1);
+        $this->throwExceptionOnError();
+		}else{
+			$stmt = mysqli_prepare($this->connection,
+						"select entry1.value/entry2.value as value, entry1.value as entry1, entry2.value as entry2, entry1.`year` as year, municipalities.`name` as title, municipalities.map_id as instanceName ".
+						"from $this->tablename as entry1, $this->tablename as entry2,  municipalities ".
+						"where entry1.id_entry_set = ? ".
+							"and entry2.id_entry_set = ? ".
+							"and entry1.year = entry2.year ".
+							"and entry1.id_municipality = municipalities.id_municipality ".
+							"and entry2.id_municipality = municipalities.id_municipality ".
+						" order by entry1.`year`, municipalities.`id_municipality` asc");
 		$this->throwExceptionOnError();
 
         mysqli_stmt_bind_param($stmt, 'ii', $value1, $value2);
         $this->throwExceptionOnError();
+		}
+		
 		
 		mysqli_stmt_execute($stmt);
 		$this->throwExceptionOnError();
