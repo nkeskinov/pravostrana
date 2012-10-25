@@ -112,6 +112,7 @@ class EntrysetsService {
 		
 		//Iterate the rows of the entry
 		foreach($rows as $row){
+			$menu = new stdClass();
 			$menu->label = $row->name;
 			$menu->label_en = $row->name_en;
 			$menu->label_sq = $row->name_sq;
@@ -155,7 +156,7 @@ class EntrysetsService {
 				  }
 				
 				
-					
+				$item = new stdClass();	
 				$item->id = $entry->id_entry_set;
 				$item->label = $entry->name;
 				$item->label_en = $entry->name_en;
