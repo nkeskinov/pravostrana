@@ -171,6 +171,85 @@
     <property name="name_en" type="string" required="true"/>
     <property name="name" type="string" required="true"/>
   </entity>
+  <entity name="MapEntry">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">MapEntry</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">MapEntriesService</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="getMapEntriesByIds">
+      <item name="propertySpecifier">title,instanceName,value,year</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="title" type="string" required="true"/>
+    <property name="instanceName" type="string" required="true"/>
+    <property name="value" type="string" required="true"/>
+    <property name="year" type="integer" required="true"/>
+  </entity>
+  <service name="MapEntriesService">
+    <annotation name="ActionScriptGeneration">
+      <item name="Source">MapEntriesService</item>
+      <item name="ServiceType">RemoteObject</item>
+      <item name="Package">services.mapentriesservice</item>
+      <item name="Endpoint">gateway.php</item>
+      <item name="Destination">MapEntriesService</item>
+    </annotation>
+    <annotation name="ServiceTypeGroup">
+      <item name="ServiceBackendType">PHP</item>
+    </annotation>
+    <annotation name="ServiceConfig">
+      <item name="PHP_RELATIVE_LOCATION">RightToKnowFlash/bin-debug/services/MapEntriesService.php</item>
+      <item name="PHP_SERVER_ROOT">D:\Development\pravostrana</item>
+      <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
+      <item name="PHP_SERVICES_FOLDER">D:\Development\pravostrana\RightToKnowFlash\bin-debug\services</item>
+      <item name="PHP_LOCATION">D:/Development/pravostrana/RightToKnowFlash/bin-debug/services/MapEntriesService.php</item>
+      <item name="LINKED_FILE">MapEntriesService.php</item>
+      <item name="PHP_SERVER_ROOT_URL">http://localhost/pravostrana</item>
+      <item name="ABSOLUTE_ENDPOINT">http://localhost/pravostrana/RightToKnowFlash/bin-debug/gateway.php</item>
+      <item name="PHP_CLASS_NAME">MapEntriesService</item>
+    </annotation>
+    <function name="getMapEntriesByIds" return-type="MapEntryResult">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="ValidProperties">
+        <item name="propertySpecifier">minYear,rows,maxYear</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">opaque,opaque</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+      <parameter name="value1" type="integer"/>
+      <parameter name="value2" type="integer"/>
+    </function>
+  </service>
+  <entity name="MapEntryResult">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">MapEntryResult</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="RemoteClass">MapEntryResult</item>
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">MapEntriesService,MapEntriesServiceDummy</item>
+    </annotation>
+    <annotation name="getMapEntriesByIds">
+      <item name="propertySpecifier">minYear,rows,maxYear</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <property name="minYear" type="integer" required="true"/>
+    <property name="rows" type="opaque[]" required="true"/>
+    <property name="maxYear" type="integer" required="true"/>
+  </entity>
   <service name="BubbleEntriesService">
     <annotation name="ActionScriptGeneration">
       <item name="Source">BubbleEntriesService</item>
@@ -217,7 +296,7 @@
         <item name="returnType">BubbleServiceResult</item>
       </annotation>
       <annotation name="ValidProperties">
-        <item name="propertySpecifier">minYValue,maxXValue,minYear,maxYValue,minXValue,rows,maxYear</item>
+        <item name="propertySpecifier">minYear,maxYear,minXValue,maxXValue,minYValue,maxYValue,rows</item>
       </annotation>
       <parameter name="x_axis" type="opaque"/>
       <parameter name="y_axis" type="opaque"/>
@@ -247,18 +326,18 @@
       <item name="service">BubbleEntriesService</item>
     </annotation>
     <annotation name="getBubbleEntriesPerYearByIds">
-      <item name="propertySpecifier">minYValue,maxXValue,minYear,maxYValue,minXValue,rows,maxYear</item>
+      <item name="propertySpecifier">minYear,maxYear,minXValue,maxXValue,minYValue,maxYValue,rows</item>
     </annotation>
     <annotation name="ActionScriptGeneration">
       <item name="Package">valueObjects</item>
     </annotation>
-    <property name="minYValue" type="double" required="true" default="0"/>
-    <property name="maxXValue" type="double" required="true" default="0"/>
-    <property name="minYear" type="integer" required="true"/>
-    <property name="maxYValue" type="double" required="true" default="0"/>
-    <property name="minXValue" type="double" required="true" default="0"/>
-    <property name="rows" type="opaque[]" required="true"/>
-    <property name="maxYear" type="integer" required="true"/>
+    <property name="minYear" type="opaque"/>
+    <property name="maxYear" type="opaque"/>
+    <property name="minXValue" type="opaque"/>
+    <property name="maxXValue" type="opaque"/>
+    <property name="minYValue" type="opaque"/>
+    <property name="maxYValue" type="opaque"/>
+    <property name="rows" type="opaque"/>
   </entity>
   <entity name="BubbleEntry">
     <annotation name="EntityProperties">
@@ -283,27 +362,6 @@
     <property name="year" type="integer" required="true"/>
     <property name="y" type="string" required="true"/>
     <property name="x" type="string" required="true"/>
-  </entity>
-  <entity name="MapEntry">
-    <annotation name="EntityProperties">
-      <item name="EntityOriginalName">MapEntry</item>
-    </annotation>
-    <annotation name="service Group">
-      <item name="service">MapEntriesService</item>
-    </annotation>
-    <annotation name="ServerProperties">
-      <item name="IncludeRemoteClass">nonempty</item>
-    </annotation>
-    <annotation name="getMapEntriesByIds">
-      <item name="propertySpecifier">title,instanceName,value,year</item>
-    </annotation>
-    <annotation name="ActionScriptGeneration">
-      <item name="Package">valueObjects</item>
-    </annotation>
-    <property name="title" type="string" required="true"/>
-    <property name="instanceName" type="string" required="true"/>
-    <property name="value" type="string" required="true"/>
-    <property name="year" type="integer" required="true"/>
   </entity>
   <service name="EntrysetsService">
     <annotation name="ActionScriptGeneration">
@@ -475,63 +533,5 @@
     <property name="default_x" type="integer"/>
     <property name="default_y" type="integer"/>
     <property name="parent" type="integer"/>
-  </entity>
-  <service name="MapEntriesService">
-    <annotation name="ActionScriptGeneration">
-      <item name="Source">MapEntriesService</item>
-      <item name="ServiceType">RemoteObject</item>
-      <item name="Package">services.mapentriesservice</item>
-      <item name="Endpoint">gateway.php</item>
-      <item name="Destination">MapEntriesService</item>
-    </annotation>
-    <annotation name="ServiceTypeGroup">
-      <item name="ServiceBackendType">PHP</item>
-    </annotation>
-    <annotation name="ServiceConfig">
-      <item name="PHP_RELATIVE_LOCATION">RightToKnowFlash/bin-debug/services/MapEntriesService.php</item>
-      <item name="PHP_SERVER_ROOT">D:\Development\pravostrana</item>
-      <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
-      <item name="PHP_SERVICES_FOLDER">D:\Development\pravostrana\RightToKnowFlash\bin-debug\services</item>
-      <item name="PHP_LOCATION">D:/Development/pravostrana/RightToKnowFlash/bin-debug/services/MapEntriesService.php</item>
-      <item name="LINKED_FILE">MapEntriesService.php</item>
-      <item name="PHP_SERVER_ROOT_URL">http://localhost/pravostrana</item>
-      <item name="ABSOLUTE_ENDPOINT">http://localhost/pravostrana/RightToKnowFlash/bin-debug/gateway.php</item>
-      <item name="PHP_CLASS_NAME">MapEntriesService</item>
-    </annotation>
-    <function name="getMapEntriesByIds" return-type="MapEntryResult">
-      <annotation name="analyze group">
-        <item name="analyzed">true</item>
-      </annotation>
-      <annotation name="ValidProperties">
-        <item name="propertySpecifier">minYear,rows,maxYear</item>
-      </annotation>
-      <annotation name="original signature">
-        <item name="inputParams">opaque,opaque</item>
-        <item name="returnType">opaque</item>
-      </annotation>
-      <parameter name="value1" type="integer"/>
-      <parameter name="value2" type="integer"/>
-    </function>
-  </service>
-  <entity name="MapEntryResult">
-    <annotation name="EntityProperties">
-      <item name="EntityOriginalName">MapEntryResult</item>
-    </annotation>
-    <annotation name="ServerProperties">
-      <item name="RemoteClass">MapEntryResult</item>
-      <item name="IncludeRemoteClass">nonempty</item>
-    </annotation>
-    <annotation name="service Group">
-      <item name="service">MapEntriesService,MapEntriesServiceDummy</item>
-    </annotation>
-    <annotation name="getMapEntriesByIds">
-      <item name="propertySpecifier">minYear,rows,maxYear</item>
-    </annotation>
-    <annotation name="ActionScriptGeneration">
-      <item name="Package">valueObjects</item>
-    </annotation>
-    <property name="minYear" type="integer" required="true"/>
-    <property name="rows" type="opaque[]" required="true"/>
-    <property name="maxYear" type="integer" required="true"/>
   </entity>
 </model>

@@ -11,8 +11,8 @@
 			   xmlns:local="*" 
 			   xmlns:municipalitiesservice="services.municipalitiesservice.*"
 			   width="690" height="430" applicationComplete="init()" horizontalCenter="0"
-			   verticalCenter="0">
-	<fx:Script> 
+			   verticalCenter="0"> 
+	<fx:Script>  
 		<![CDATA[
 			import flashx.textLayout.formats.Float;
 			
@@ -498,33 +498,33 @@
 				{
 					var ac:ArrayCollection = new ArrayCollection();
 					var dp:ArrayCollection = bs.dataProvider as ArrayCollection;
-					var tmpMinX:Number = maxXValue;
-					var tmpMinY:Number = maxYValue;
-					var tmpMaxX:Number = 0;
-					var tmpMaxY:Number = 0;
+					//var tmpMinX:Number = maxXValue;
+					//var tmpMinY:Number = maxYValue;
+					//var tmpMaxX:Number = 0;
+					//var tmpMaxY:Number = 0;
 					for each (var bsi:BubbleSeriesItem in bs.selectedItems)
 					{
-						if(bsi.item.x < tmpMinX)
-							tmpMinX = bsi.item.x;
-						if(bsi.item.y < tmpMinY)
-							tmpMinY = bsi.item.y;
-						if(bsi.item.x > tmpMaxX)
-							tmpMaxX = bsi.item.x;
-						if(bsi.item.y > tmpMaxY)
-							tmpMaxY = bsi.item.y;
-					ac.addItem(bsi.item);
+						//if(bsi.item.x < tmpMinX)
+							//tmpMinX = bsi.item.x;
+						//if(bsi.item.y < tmpMinY)
+						//	tmpMinY = bsi.item.y;
+						//if(bsi.item.x > tmpMaxX)
+						//	tmpMaxX = bsi.item.x;
+						//if(bsi.item.y > tmpMaxY)
+						//	tmpMaxY = bsi.item.y;
+						ac.addItem(bsi.item);
 						
 					}
-					var logAxis:LogAxis = new LogAxis();
-					logAxis.minimum = tmpMinX-100;
-					logAxis.maximum = tmpMaxX+100;
+					//var logAxis:LogAxis = new LogAxis();
+					//logAxis.minimum = tmpMinX-100;
+					//logAxis.maximum = tmpMaxX+100;
 					
-					var linAxis:LinearAxis = new LinearAxis();
-					linAxis.minimum = tmpMinY-1000;
-					linAxis.maximum = tmpMaxY+1000;
+					//var linAxis:LinearAxis = new LinearAxis();
+					//linAxis.minimum = tmpMinY-1000;
+					//linAxis.maximum = tmpMaxY+1000;
 					
-					chart.horizontalAxis = logAxis;
-					chart.verticalAxis = linAxis;
+					//chart.horizontalAxis = logAxis;
+					//chart.verticalAxis = linAxis;
 					bs.dataProvider = ac;
 				}
 				
@@ -567,14 +567,14 @@
 				
 				
 				if(yToggle.selected){
-					logAxis.minimum = 0;
+					logAxis.minimum = -100;
 					logAxis.maximum = maxYValue+1000;
 					chart.verticalAxis = logAxis;
 					
 				}
 				else{
 					//linAxis.maximum = maxYValue+1000;
-					linAxis.minimum = 0;
+					linAxis.minimum = -100;
 					linAxis.maximum = maxYValue+1000;
 					chart.verticalAxis = linAxis;
 				}
@@ -591,14 +591,14 @@
 				if(xToggle.selected){
 					//logAxis.baseAtZero = true;
 					//logAxis.autoAdjust = true;
-					logAxis.minimum=0;
+					logAxis.minimum=-100;
 					logAxis.maximum = maxXValue+100;
 					//logAxis.autoAdjust = true;
 				
 					chart.horizontalAxis = logAxis;
 				}
 				else{
-					linAxis.minimum=0;
+					linAxis.minimum=-100;
 					linAxis.maximum = maxXValue+100;
 					chart.horizontalAxis = linAxis;
 				}
@@ -962,11 +962,11 @@
 													</mx:series>
 													
 													<mx:horizontalAxis>
-														<mx:LogAxis  id="xAxis" minimum="0" maximum="{maxXValue+100}"/>
+														<mx:LogAxis  id="xAxis" minimum="0" maximum="{maxXValue}" />
 													</mx:horizontalAxis>
 													
 													<mx:verticalAxis>
-														<mx:LinearAxis id="yAxis" minimum="0" maximum="{maxYValue+1000}"/>
+														<mx:LinearAxis id="yAxis" minimum="0" maximum="{maxYValue}" />
 													</mx:verticalAxis>
 													
 													<mx:annotationElements>
