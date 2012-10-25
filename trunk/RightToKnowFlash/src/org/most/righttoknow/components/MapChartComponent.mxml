@@ -20,7 +20,6 @@
 			
 			import services.mapentriesservice.MapEntriesService;
 			
-			import valueObjects.MapEntry;
 			[Bindable]
 			[Embed(source="../flexassets/maps/macedonia.swf")]
 			private var _macedonia:Class 
