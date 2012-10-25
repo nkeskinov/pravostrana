@@ -50,6 +50,7 @@
 			
 			import org.most.righttoknow.components.HelpTitleWindow;
 			import org.most.righttoknow.components.ShareTitleWindow;
+			import org.most.righttoknow.components.TeaserTitleWindow;
 			import org.most.righttoknow.controls.StyledAxisRenderer;
 			
 			import spark.events.IndexChangeEvent;
@@ -148,7 +149,11 @@
 				
 				getAllMunicipalities();
 				resourceManager.localeChain = ['mk_MK'];
-				
+			
+				var titleWindowInstance:TeaserTitleWindow = TeaserTitleWindow(PopUpManager.createPopUp(this, TeaserTitleWindow, false));
+				//titleWindowInstance.title=resourceManager.getString('resources', 'help_window_title');
+				titleWindowInstance.alpha = 0.4;
+				PopUpManager.centerPopUp(titleWindowInstance);
 			}
 			
 		

@@ -6,10 +6,15 @@
 package valueObjects
 {
 import com.adobe.fiber.services.IFiberManagingService;
+import com.adobe.fiber.util.FiberUtils;
 import com.adobe.fiber.valueobjects.IValueObject;
+import flash.events.Event;
 import flash.events.EventDispatcher;
+import mx.binding.utils.ChangeWatcher;
 import mx.collections.ArrayCollection;
+import mx.events.CollectionEvent;
 import mx.events.PropertyChangeEvent;
+import mx.validators.ValidationResult;
 
 import flash.net.registerClassAlias;
 import flash.net.getClassByAlias;
@@ -58,16 +63,18 @@ public class _Super_BubbleServiceResult extends flash.events.EventDispatcher imp
     /**
      * properties
      */
-    private var _internal_minYear : Object;
-    private var _internal_maxYear : Object;
-    private var _internal_minXValue : Object;
-    private var _internal_maxXValue : Object;
-    private var _internal_minYValue : Object;
-    private var _internal_maxYValue : Object;
-    private var _internal_rows : Object;
+    private var _internal_minYValue : Number = Number(0);
+    private var _internal_maxXValue : Number = Number(0);
+    private var _internal_minYear : int;
+    private var _internal_maxYValue : Number = Number(0);
+    private var _internal_minXValue : Number = Number(0);
+    private var _internal_rows : ArrayCollection;
+    private var _internal_maxYear : int;
 
     private static var emptyArray:Array = new Array();
 
+    // Change this value according to your application's floating-point precision
+    private static var epsilon:Number = 0.0001;
 
     /**
      * derived property cache initialization
@@ -81,6 +88,7 @@ public class _Super_BubbleServiceResult extends flash.events.EventDispatcher imp
         _model = new _BubbleServiceResultEntityMetadata(this);
 
         // Bind to own data or source properties for cache invalidation triggering
+        model_internal::_changeWatcherArray.push(mx.binding.utils.ChangeWatcher.watch(this, "rows", model_internal::setterListenerRows));
 
     }
 
@@ -89,45 +97,45 @@ public class _Super_BubbleServiceResult extends flash.events.EventDispatcher imp
      */
 
     [Bindable(event="propertyChange")]
-    public function get minYear() : Object
-    {
-        return _internal_minYear;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get maxYear() : Object
-    {
-        return _internal_maxYear;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get minXValue() : Object
-    {
-        return _internal_minXValue;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get maxXValue() : Object
-    {
-        return _internal_maxXValue;
-    }
-
-    [Bindable(event="propertyChange")]
-    public function get minYValue() : Object
+    public function get minYValue() : Number
     {
         return _internal_minYValue;
     }
 
     [Bindable(event="propertyChange")]
-    public function get maxYValue() : Object
+    public function get maxXValue() : Number
+    {
+        return _internal_maxXValue;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get minYear() : int
+    {
+        return _internal_minYear;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get maxYValue() : Number
     {
         return _internal_maxYValue;
     }
 
     [Bindable(event="propertyChange")]
-    public function get rows() : Object
+    public function get minXValue() : Number
+    {
+        return _internal_minXValue;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get rows() : ArrayCollection
     {
         return _internal_rows;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get maxYear() : int
+    {
+        return _internal_maxYear;
     }
 
     public function clearAssociations() : void
@@ -138,9 +146,29 @@ public class _Super_BubbleServiceResult extends flash.events.EventDispatcher imp
      * data/source property setters
      */
 
-    public function set minYear(value:Object) : void
+    public function set minYValue(value:Number) : void
     {
-        var oldValue:Object = _internal_minYear;
+        var oldValue:Number = _internal_minYValue;
+        if (isNaN(_internal_minYValue) == true || Math.abs(oldValue - value) > epsilon)
+        {
+            _internal_minYValue = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "minYValue", oldValue, _internal_minYValue));
+        }
+    }
+
+    public function set maxXValue(value:Number) : void
+    {
+        var oldValue:Number = _internal_maxXValue;
+        if (isNaN(_internal_maxXValue) == true || Math.abs(oldValue - value) > epsilon)
+        {
+            _internal_maxXValue = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "maxXValue", oldValue, _internal_maxXValue));
+        }
+    }
+
+    public function set minYear(value:int) : void
+    {
+        var oldValue:int = _internal_minYear;
         if (oldValue !== value)
         {
             _internal_minYear = value;
@@ -148,63 +176,58 @@ public class _Super_BubbleServiceResult extends flash.events.EventDispatcher imp
         }
     }
 
-    public function set maxYear(value:Object) : void
+    public function set maxYValue(value:Number) : void
     {
-        var oldValue:Object = _internal_maxYear;
-        if (oldValue !== value)
-        {
-            _internal_maxYear = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "maxYear", oldValue, _internal_maxYear));
-        }
-    }
-
-    public function set minXValue(value:Object) : void
-    {
-        var oldValue:Object = _internal_minXValue;
-        if (oldValue !== value)
-        {
-            _internal_minXValue = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "minXValue", oldValue, _internal_minXValue));
-        }
-    }
-
-    public function set maxXValue(value:Object) : void
-    {
-        var oldValue:Object = _internal_maxXValue;
-        if (oldValue !== value)
-        {
-            _internal_maxXValue = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "maxXValue", oldValue, _internal_maxXValue));
-        }
-    }
-
-    public function set minYValue(value:Object) : void
-    {
-        var oldValue:Object = _internal_minYValue;
-        if (oldValue !== value)
-        {
-            _internal_minYValue = value;
-            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "minYValue", oldValue, _internal_minYValue));
-        }
-    }
-
-    public function set maxYValue(value:Object) : void
-    {
-        var oldValue:Object = _internal_maxYValue;
-        if (oldValue !== value)
+        var oldValue:Number = _internal_maxYValue;
+        if (isNaN(_internal_maxYValue) == true || Math.abs(oldValue - value) > epsilon)
         {
             _internal_maxYValue = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "maxYValue", oldValue, _internal_maxYValue));
         }
     }
 
-    public function set rows(value:Object) : void
+    public function set minXValue(value:Number) : void
     {
-        var oldValue:Object = _internal_rows;
+        var oldValue:Number = _internal_minXValue;
+        if (isNaN(_internal_minXValue) == true || Math.abs(oldValue - value) > epsilon)
+        {
+            _internal_minXValue = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "minXValue", oldValue, _internal_minXValue));
+        }
+    }
+
+    public function set rows(value:*) : void
+    {
+        var oldValue:ArrayCollection = _internal_rows;
         if (oldValue !== value)
         {
-            _internal_rows = value;
+            if (value is ArrayCollection)
+            {
+                _internal_rows = value;
+            }
+            else if (value is Array)
+            {
+                _internal_rows = new ArrayCollection(value);
+            }
+            else if (value == null)
+            {
+                _internal_rows = null;
+            }
+            else
+            {
+                throw new Error("value of rows must be a collection");
+            }
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "rows", oldValue, _internal_rows));
+        }
+    }
+
+    public function set maxYear(value:int) : void
+    {
+        var oldValue:int = _internal_maxYear;
+        if (oldValue !== value)
+        {
+            _internal_maxYear = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "maxYear", oldValue, _internal_maxYear));
         }
     }
 
@@ -219,6 +242,18 @@ public class _Super_BubbleServiceResult extends flash.events.EventDispatcher imp
      *  - the validity of the property (and the containing entity) if the given data property has a length restriction.
      *  - the validity of the property (and the containing entity) if the given data property is required.
      */
+
+    model_internal function setterListenerRows(value:flash.events.Event):void
+    {
+        if (value is mx.events.PropertyChangeEvent)
+        {
+            if (mx.events.PropertyChangeEvent(value).newValue)
+            {
+                mx.events.PropertyChangeEvent(value).newValue.addEventListener(mx.events.CollectionEvent.COLLECTION_CHANGE, model_internal::setterListenerRows);
+            }
+        }
+        _model.invalidateDependentOnRows();
+    }
 
 
     /**
@@ -241,6 +276,11 @@ public class _Super_BubbleServiceResult extends flash.events.EventDispatcher imp
         var validationFailureMessages:Array = new Array();
 
         var propertyValidity:Boolean = true;
+        if (!_model.rowsIsValid)
+        {
+            propertyValidity = false;
+            com.adobe.fiber.util.FiberUtils.arrayAdd(validationFailureMessages, _model.model_internal::_rowsValidationFailureMessages);
+        }
 
         model_internal::_cacheInitialized_isValid = true;
         model_internal::invalidConstraints_der = violatedConsts;
@@ -320,6 +360,33 @@ public class _Super_BubbleServiceResult extends flash.events.EventDispatcher imp
         }
     }
 
+    model_internal var _doValidationCacheOfRows : Array = null;
+    model_internal var _doValidationLastValOfRows : ArrayCollection;
+
+    model_internal function _doValidationForRows(valueIn:Object):Array
+    {
+        var value : ArrayCollection = valueIn as ArrayCollection;
+
+        if (model_internal::_doValidationCacheOfRows != null && model_internal::_doValidationLastValOfRows == value)
+           return model_internal::_doValidationCacheOfRows ;
+
+        _model.model_internal::_rowsIsValidCacheInitialized = true;
+        var validationFailures:Array = new Array();
+        var errorMessage:String;
+        var failure:Boolean;
+
+        var valRes:ValidationResult;
+        if (_model.isRowsAvailable && _internal_rows == null)
+        {
+            validationFailures.push(new ValidationResult(true, "", "", "rows is required"));
+        }
+
+        model_internal::_doValidationCacheOfRows = validationFailures;
+        model_internal::_doValidationLastValOfRows = value;
+
+        return validationFailures;
+    }
+    
 
 }
 
