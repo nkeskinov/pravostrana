@@ -100,9 +100,9 @@
 							//mapArea.title = mapEntry.title;
 							mapArea.value = Number(mapEntry.value);
 							if(mapEntry.entry2 == null)
-								mapArea.title = "<b>"+mapEntry.title + "</b>\n\n"+mapEntry.entry1 + " "+xTitle;
+								mapArea.title = "<b>"+mapEntry.title + "</b>\n\n"+numberformater.format(mapEntry.entry1) + " "+xTitle;
 							else{
-								mapArea.title = "<b>"+mapEntry.title + "</b>\n\n"+mapEntry.entry1 + " "+xTitle+"\n" + mapEntry.entry2 + " "+yTitle;
+								mapArea.title = "<b>"+mapEntry.title + "</b>\n\n"+numberformater.format(mapEntry.entry1) + " "+xTitle+"\n" + numberformater.format(mapEntry.entry2) + " "+yTitle;
 							}
 							macedoniaDataSet.addObject(mapArea);
 							
@@ -270,7 +270,7 @@
 		]]>
 	</fx:Script>
 	<fx:Declarations>
-		<mx:AnimateProperty id="animateSlider" property="value" fromValue="2006" toValue="2010" easingFunction="Linear.easeNone" target="{hSlider}" />
+		<mx:AnimateProperty id="animateSlider" property="value" fromValue="{getMapEntriesByIdsResult.lastResult.minYear}" toValue="{getMapEntriesByIdsResult.lastResult.maxYear}" easingFunction="Linear.easeNone" target="{hSlider}" />
 		<s:CallResponder id="getMapEntriesByIdsResult" result="getMapEntriesByIdsResult_resultHandler(event)"/>
 		<mapentriesservice:MapEntriesService id="mapEntriesService"
 											 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
