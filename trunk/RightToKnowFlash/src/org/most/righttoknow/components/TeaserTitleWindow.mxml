@@ -29,5 +29,5 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:SWFLoader click="{closeWindow()}" buttonMode="true" x="0" y="0" width="670" height="430" source="../bin-debug/teaser.swf"/>
+	<s:SWFLoader click="{closeWindow()}" buttonMode="true" x="0" y="0" width="670" height="430" source="teaser.swf"/>
 </s:TitleWindow>
