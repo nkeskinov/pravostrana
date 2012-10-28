@@ -46,6 +46,7 @@
 			import mx.graphics.SolidColorStroke;
 			import mx.graphics.Stroke;
 			import mx.managers.PopUpManager;
+			import mx.messaging.channels.StreamingAMFChannel;
 			import mx.rpc.events.ResultEvent;
 			
 			import org.most.righttoknow.components.HelpTitleWindow;
@@ -139,7 +140,15 @@
 			[Bindable]
 			protected var mapOverlayLabel:String;
 			
+			protected var xAxisType:String;
+			protected var yAxisType:String;
+			[Bindable]
+			protected var defaultTab:Number = 0;
+			
 			protected var mapLoaded:Boolean = false;
+			
+			[Bindable]
+			protected var selectionMenuDP:Array;
 			/**
 			 * Start up function
 			 * */
@@ -151,12 +160,31 @@
 				resourceManager.localeChain = ['mk_MK'];
 			
 				var titleWindowInstance:TeaserTitleWindow = TeaserTitleWindow(PopUpManager.createPopUp(this, TeaserTitleWindow, false));
-				//titleWindowInstance.title=resourceManager.getString('resources', 'help_window_title');
 				titleWindowInstance.alpha = 0.4;
 				PopUpManager.centerPopUp(titleWindowInstance);
+				
+				selectionMenuDP = [
+					{	data:"areaAll",
+					 	label:resourceManager.getString('resources', 'all_cities_label'),
+					 	label_en:resourceManager.getString('resources', 'all_cities_label_en'),
+					 	label_sq:resourceManager.getString('resources', 'all_cities_label_sq'),
+					 	type:"check",
+					 	toggled:false
+					},
+					{	data:"areaSkopje",
+						label:resourceManager.getString('resources', 'skopje_label'),
+						label_en:resourceManager.getString('resources', 'skopje_label_en'),
+						label_sq:resourceManager.getString('resources', 'skopje_label_sq'),
+						type:"check",
+						toggled:false
+					}];
+				
+				
 			}
 			
-		
+			/**
+			 * Click handler for the full screen
+			 * */
 			protected function fullScreenBtn_clickHandler(event:MouseEvent):void
 			{
 				if(fullScreenBtn.selected)
@@ -192,9 +220,8 @@
 			
 			protected function helpBtn_clickHandler(event:MouseEvent):void
 			{ 
-				
 				var titleWindowInstance:HelpTitleWindow = HelpTitleWindow(PopUpManager.createPopUp(this, HelpTitleWindow, false));
-				 titleWindowInstance.title=resourceManager.getString('resources', 'help_window_title');
+				titleWindowInstance.title=resourceManager.getString('resources', 'help_window_title');
 				PopUpManager.centerPopUp(titleWindowInstance);
 			}
 			
@@ -221,7 +248,9 @@
 				busyIndicator1.busy = false;
 			}
 		
-			
+			/**
+			 * Service Call for the EntrysetService
+			 * */
 			protected function getEntrySetMenu():void
 			{
 				getEntrySetMenuResult.token = entrysetsService.getEntrySetMenu();
@@ -236,8 +265,6 @@
 				return numberformater.format(value);
 			}
 			
-			
-			
 			/**
 			 * Result handler for the BubbleEntriesPerYEarByIds web method
 			 * 
@@ -246,12 +273,12 @@
 			{ 
 				showBusyCursor();
 				chartDataProvider = getBubbleEntriesPerYearByIdsResult.lastResult.rows;
+				//Save the original data for reseting purposes
 				originalData = chartDataProvider;
-				//Alert.show(getBubbleEntriesPerYearByIdsResult.lastResult.rows[0][0].name+"");
+				
+				//Min and max year
 				minYear = getBubbleEntriesPerYearByIdsResult.lastResult.minYear;
 				maxYear = getBubbleEntriesPerYearByIdsResult.lastResult.maxYear;
-				
-				
 				
 				hSlider.minimum = minYear;
 				hSlider.maximum = maxYear;
@@ -262,11 +289,39 @@
 					hSlider.labels[i - minYear] = i;
 				}
 				
-				
 				maxXValue= getBubbleEntriesPerYearByIdsResult.lastResult.maxXValue;
 				maxYValue= getBubbleEntriesPerYearByIdsResult.lastResult.maxYValue;
 				chartBgLabel.visible = true;
 				
+				if(xAxisType == "log"){
+					var logAxis:LogAxis = new LogAxis();
+					logAxis.baseAtZero = false;
+					logAxis.minimum = 0;
+					logAxis.maximum = maxXValue;
+					chart.horizontalAxis = logAxis;				
+				}
+				else if(xAxisType == "lin"){
+					var linAxis:LinearAxis = new LinearAxis();
+					linAxis.baseAtZero = false;
+					linAxis.minimum = 0;
+					linAxis.maximum = maxXValue;
+					chart.horizontalAxis = linAxis;
+				}
+				
+				if(yAxisType == "log"){
+					var logAxis:LogAxis = new LogAxis();
+					logAxis.baseAtZero = false;
+					logAxis.minimum = 0;
+					logAxis.maximum = maxYValue;
+					chart.verticalAxis = logAxis;				
+				}
+				else if(yAxisType == "lin"){
+					var linAxis:LinearAxis = new LinearAxis();
+					linAxis.baseAtZero = false;
+					linAxis.minimum = 0;
+					linAxis.maximum = maxYValue;
+					chart.verticalAxis = linAxis;
+				}
 				hideBusyCursor();
 			}
 			
@@ -292,7 +347,7 @@
 			protected function xAxisPopup_clickHandler(event:MouseEvent):void
 			{
 				
-				menuX.show(chart.x+37, chart.y+chart.height-36);
+				menuX.show(chart.x+37, chart.y+chart.height-15);
 			}
 			
 			/**
@@ -473,6 +528,10 @@
 				mapPrimaryLabel = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_x_label')];
 				mapOverlayLabel = resourceManager.getString('resources', 'map_overlay_none_label');
 				 
+				xAxisType = getEntrySetMenuResult.lastResult.x_axis;
+				yAxisType = getEntrySetMenuResult.lastResult.y_axis;
+				defaultTab = getEntrySetMenuResult.lastResult.default_tab;
+				
 				
 				//Initialize the bubble chart with the default values 
 				getBubbleEntriesPerYearByIds(xSelected, ySelected, zSelected);
@@ -551,12 +610,10 @@
 				}
 			}
 			
-			
 			private function bubbleSeriesFillFunction(item:ChartItem, index:Number):IFill {
 				return new SolidColor(0xffffff*(item.item.id_municipality)*0.001, 0.4);
 			}
-			
-			
+
 			
 			/**
 			 * Change the y axis from log to lin and vice versa
@@ -584,9 +641,6 @@
 			 * */
 			protected function xToggle_clickHandler(event:MouseEvent):void
 			{
-				
-				
-				
 				if(xToggle.selected){
 					var logAxis:LogAxis = new LogAxis();
 					logAxis.baseAtZero = false;
@@ -662,7 +716,7 @@
 			
 			protected function checkAllCities_clickHandler(event:MouseEvent):void
 			{
-				
+				/*
 				if(checkAllCities.selected){
 					for(var i:int=0; i<allCities.length; i++){
 						allCities.getItemAt(i).isSelected = true;
@@ -676,6 +730,7 @@
 				
 				list.dataProvider = allCities;
 				chartDataProvider = originalData;
+				*/
 			}
 			
 			
@@ -833,6 +888,10 @@
 				xAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_x_label')];
 				yAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_y_label')];
 				zAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_z_label')];
+				
+				//p1.label = resourceManager.getString('resources', 'all_cities_label_en');
+				p1.labelFunction = popUpMenuButton_labelFunc;
+				p1.dataProvider = selectionMenuDP;
 			}
 			
 			
@@ -850,6 +909,51 @@
 				}
 			}
 			
+			protected function p1_itemClickHandler(event:MenuEvent):void
+			{
+				
+				if(event.item.data=="areaAll"){
+					selectionMenuDP[1].toggled=false;
+					if(event.item.toggled){
+						for(var i:int=0; i<allCities.length; i++){
+							allCities.getItemAt(i).isSelected = true;
+							
+						}
+					}else{
+						for(var i:int=0; i<allCities.length; i++){
+							allCities.getItemAt(i).isSelected = false;
+						}
+					}
+					
+					list.dataProvider = allCities;
+					chartDataProvider = originalData;
+				}else if(event.item.data=="areaSkopje"){
+					selectionMenuDP[0].toggled=false;
+					if(event.item.toggled){
+						for(var j:int=0; j<allCities.length; j++){
+							allCities.getItemAt(j).isSelected = false;
+						}
+						allCities.getItemAt(0).isSelected = true;
+						allCities.getItemAt(1).isSelected = true;
+						allCities.getItemAt(9).isSelected = true;
+						filter();
+						
+					}else{
+						for(var j:int=0; j<allCities.length; j++){
+							allCities.getItemAt(j).isSelected = false;
+						}
+						chartDataProvider = originalData;
+					}
+					
+					list.dataProvider = allCities;
+					
+				}
+				
+			}
+			
+			private function popUpMenuButton_labelFunc(item:Object):String {
+				return item[resourceManager.getString('resources', 'menu_label_field')];
+			}
 			
 			
 		]]>
@@ -910,7 +1014,8 @@
 			<s:VGroup height="100%" gap="3" width="100%">
 				<mx:TabNavigator id="tabNav" width="100%" height="100%" 
 								 paddingBottom="0" paddingLeft="0" paddingRight="0"
-								 change="tabNav_changeHandler(event)" >
+								 change="tabNav_changeHandler(event)"
+								 selectedIndex="{defaultTab}" >
 					<s:NavigatorContent width="100%" height="100%" label="{resourceManager.getString('resources', 'tab_chart_title')}">
 						<controls:BusyIndicator id="busyIndicator" busy="true" width="100%" height="100%" 
 												initialize="busyIndicator_initializeHandler(event)" >
@@ -923,7 +1028,7 @@
 										<s:Group  height="100%" width="20">
 										<s:VGroup width="100%" height="100%" bottom="19" >
 											
-											<controls:ToggleSwitch id="yToggle" selected="false" selectedLabel="log" deselectedLabel="lin" 
+											<controls:ToggleSwitch id="yToggle" selected="{yAxisType=='log' ? true:false }" selectedLabel="log" deselectedLabel="lin" 
 																   styleName="toggleSwitch" rotation="-90"
 																    
 																    click="yToggle_clickHandler(event)"/>
@@ -1000,7 +1105,7 @@
 														  creationComplete="xAxisPopup_creationCompleteHandler(event)"
 														  fontWeight="bold"
 														  skinClass="org.most.righttoknow.skins.ButtonAsAList"/>
-												<controls:ToggleSwitch id="xToggle" selected="true" selectedLabel="log" 
+												<controls:ToggleSwitch id="xToggle" selected="{xAxisType=='log' ? true:false }" selectedLabel="log" 
 																	   deselectedLabel="lin" styleName="toggleSwitch"
 																	   click="xToggle_clickHandler(event)" />
 											</s:HGroup>
@@ -1055,7 +1160,7 @@
 			<s:VGroup width="155" height="100%" gap="3">
 				<s:Panel width="100%" height="100%" dropShadowVisible="false" fontSize="11"
 						 fontWeight="normal" skinClass="org.most.righttoknow.skins.PanelSkin"
-						 title.State1="{resourceManager.getString('resources', 'cities_panel_title')}"
+						
 						 title.MapState="{resourceManager.getString('resources', 'map_set_panel_title')}">
 					<controls:BusyIndicator id="busyIndicator1" busy="true" width="100%" height="100%" 
 											initialize="busyIndicator1_initializeHandler(event)" >
@@ -1089,8 +1194,7 @@
 								</fx:Component>
 							</mx:itemRenderer> 
 						</mx:List>
-						<s:CheckBox id="checkAllCities" x="5" y="-19" toolTip="{resourceManager.getString('resources', 'check_allCities_tooltip')}"
-								click="checkAllCities_clickHandler(event)" includeIn="State1"/>					
+						<!--s:CheckBox id="checkAllCities" x="5" y="-19" toolTip="{resourceManager.getString('resources', 'check_allCities_tooltip')}" click="checkAllCities_clickHandler(event)" includeIn="State1"/-->					
 						<s:VGroup includeIn="MapState" x="0" y="0" width="100%" height="100%"
 								  paddingLeft="5" paddingRight="5" paddingTop="10">
 							<s:HGroup width="100%" height="20" fontWeight="bold"
@@ -1120,6 +1224,16 @@
 						
 							
 					</controls:BusyIndicator>
+					<mx:PopUpMenuButton id="p1" x="0" y="-22" 
+										includeIn="State1"
+										width="100%"	
+										showRoot="true" 
+										itemClick="p1_itemClickHandler(event)" 	
+										dataProvider="{selectionMenuDP}"
+										labelFunction="popUpMenuButton_labelFunc"	
+										>
+						
+					</mx:PopUpMenuButton>
 				</s:Panel>
 				<s:Panel includeIn="State1" width="100%" height="90" dropShadowVisible="false"
 						 skinClass="org.most.righttoknow.skins.PanelSkin"
