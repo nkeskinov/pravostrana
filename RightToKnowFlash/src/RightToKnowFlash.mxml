@@ -1224,7 +1224,7 @@
 						
 							
 					</controls:BusyIndicator>
-					<mx:PopUpMenuButton id="p1" x="0" y="-22" 
+					<mx:PopUpMenuButton id="p1" x="0" y="-22" height="22" cornerRadius="0"
 										includeIn="State1"
 										width="100%"	
 										showRoot="true" 
@@ -1232,7 +1232,6 @@
 										dataProvider="{selectionMenuDP}"
 										labelFunction="popUpMenuButton_labelFunc"	
 										>
-						
 					</mx:PopUpMenuButton>
 				</s:Panel>
 				<s:Panel includeIn="State1" width="100%" height="90" dropShadowVisible="false"
