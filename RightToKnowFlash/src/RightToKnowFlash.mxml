@@ -245,7 +245,6 @@
 			protected function getBubbleEntriesPerYearByIdsResult_resultHandler(event:ResultEvent):void
 			{ 
 				showBusyCursor();
-				chartDataProvider = new ArrayCollection();
 				chartDataProvider = getBubbleEntriesPerYearByIdsResult.lastResult.rows;
 				originalData = chartDataProvider;
 				//Alert.show(getBubbleEntriesPerYearByIdsResult.lastResult.rows[0][0].name+"");
@@ -554,9 +553,7 @@
 			
 			
 			private function bubbleSeriesFillFunction(item:ChartItem, index:Number):IFill {
-				
 				return new SolidColor(0xffffff*(item.item.id_municipality)*0.001, 0.4);
-				
 			}
 			
 			
@@ -566,21 +563,18 @@
 			 * */
 			protected function yToggle_clickHandler(event:MouseEvent):void
 			{
-				
-				var linAxis:LinearAxis = new LinearAxis();
-				var logAxis:LogAxis = new LogAxis();
-				
-				
 				if(yToggle.selected){
-					logAxis.minimum = -100;
-					logAxis.maximum = maxYValue+1000;
-					chart.verticalAxis = logAxis;
-					
+					var logAxis:LogAxis = new LogAxis();
+					logAxis.baseAtZero = false;
+					logAxis.minimum = 0;
+					logAxis.maximum = maxYValue;
+					chart.verticalAxis = logAxis;				
 				}
 				else{
-					//linAxis.maximum = maxYValue+1000;
-					linAxis.minimum = -100;
-					linAxis.maximum = maxYValue+1000;
+					var linAxis:LinearAxis = new LinearAxis();
+					linAxis.baseAtZero = false;
+					linAxis.minimum = 0;
+					linAxis.maximum = maxYValue;
 					chart.verticalAxis = linAxis;
 				}
 			}
@@ -590,21 +584,21 @@
 			 * */
 			protected function xToggle_clickHandler(event:MouseEvent):void
 			{
-				var linAxis:LinearAxis = new LinearAxis();
-				var logAxis:LogAxis = new LogAxis();
+				
+				
 				
 				if(xToggle.selected){
-					//logAxis.baseAtZero = true;
-					//logAxis.autoAdjust = true;
-					logAxis.minimum=-100;
-					logAxis.maximum = maxXValue+100;
-					//logAxis.autoAdjust = true;
-				
+					var logAxis:LogAxis = new LogAxis();
+					logAxis.baseAtZero = false;
+					logAxis.minimum = 0;
+					logAxis.maximum = maxXValue;
 					chart.horizontalAxis = logAxis;
 				}
-				else{
-					linAxis.minimum=-100;
-					linAxis.maximum = maxXValue+100;
+				else {
+					var linAxis:LinearAxis = new LinearAxis();
+					linAxis.baseAtZero = false;
+					linAxis.minimum = 0;
+					linAxis.maximum = maxXValue;
 					chart.horizontalAxis = linAxis;
 				}
 			}
@@ -622,7 +616,7 @@
 				//if(filtered){
 					chartDataProvider = originalData;
 				//}
-				var tmpArrayCollection:ArrayCollection = new ArrayCollection();;
+				var tmpArrayCollection:ArrayCollection = new ArrayCollection();
 				for each(var item:Array in chartDataProvider){
 					
 					var k:ArrayCollection =new ArrayCollection(item);
@@ -650,6 +644,7 @@
 				}
 				chartDataProvider = tmpArrayCollection;
 			}
+			
 			private function customFilterFunction(item:Object):Boolean{
 				
 				var bool:Boolean = false;
@@ -952,7 +947,7 @@
 																showDataTips="true" dataTipMode="single"
 															    horizontalAxisStyleNames="linedNumericAxis"
 																verticalAxisStyleNames="linedNumericAxis"
-																
+																clipContent="false"
 																>
 													<mx:series>
 														<mx:BubbleSeries id="bubbleSeries"
@@ -967,11 +962,11 @@
 													</mx:series>
 													
 													<mx:horizontalAxis>
-														<mx:LogAxis  id="xAxis" minimum="0" maximum="{maxXValue}" />
+														<mx:LogAxis  id="xAxis" minimum="0" maximum="{maxXValue}" baseAtZero="false" />
 													</mx:horizontalAxis>
 													
 													<mx:verticalAxis>
-														<mx:LinearAxis id="yAxis" minimum="0" maximum="{maxYValue}" />
+														<mx:LinearAxis id="yAxis" minimum="0" maximum="{maxYValue}" baseAtZero="false" />
 													</mx:verticalAxis>
 													
 													<mx:annotationElements>
