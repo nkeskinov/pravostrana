@@ -22,14 +22,14 @@ internal class _EntrySetsMenuEntityMetadata extends com.adobe.fiber.valueobjects
 {
     private static var emptyArray:Array = new Array();
 
-    model_internal static var allProperties:Array = new Array("default_y_sq", "default_y_en", "default_x_en", "default_z", "default_z_en", "default_z_sq", "default_x_sq", "default_z_id", "default_x", "default_x_id", "default_y", "default_y_id", "menu");
+    model_internal static var allProperties:Array = new Array("default_y_sq", "default_y_en", "default_x_en", "default_z", "default_z_en", "default_z_sq", "default_x_sq", "default_z_id", "default_x", "default_x_id", "default_y", "default_y_id", "x_axis", "y_axis", "default_tab", "menu");
     model_internal static var allAssociationProperties:Array = new Array();
     model_internal static var allRequiredProperties:Array = new Array("default_y_sq", "default_y_en", "default_x_en", "default_z", "default_z_en", "default_z_sq", "default_x_sq", "default_z_id");
-    model_internal static var allAlwaysAvailableProperties:Array = new Array("default_y_sq", "default_y_en", "default_x_en", "default_z", "default_z_en", "default_z_sq", "default_x_sq", "default_z_id", "default_x", "default_x_id", "default_y", "default_y_id", "menu");
+    model_internal static var allAlwaysAvailableProperties:Array = new Array("default_y_sq", "default_y_en", "default_x_en", "default_z", "default_z_en", "default_z_sq", "default_x_sq", "default_z_id", "default_x", "default_x_id", "default_y", "default_y_id", "x_axis", "y_axis", "default_tab", "menu");
     model_internal static var guardedProperties:Array = new Array();
-    model_internal static var dataProperties:Array = new Array("default_y_sq", "default_y_en", "default_x_en", "default_z", "default_z_en", "default_z_sq", "default_x_sq", "default_z_id", "default_x", "default_x_id", "default_y", "default_y_id", "menu");
+    model_internal static var dataProperties:Array = new Array("default_y_sq", "default_y_en", "default_x_en", "default_z", "default_z_en", "default_z_sq", "default_x_sq", "default_z_id", "default_x", "default_x_id", "default_y", "default_y_id", "x_axis", "y_axis", "default_tab", "menu");
     model_internal static var sourceProperties:Array = emptyArray
-    model_internal static var nonDerivedProperties:Array = new Array("default_y_sq", "default_y_en", "default_x_en", "default_z", "default_z_en", "default_z_sq", "default_x_sq", "default_z_id", "default_x", "default_x_id", "default_y", "default_y_id", "menu");
+    model_internal static var nonDerivedProperties:Array = new Array("default_y_sq", "default_y_en", "default_x_en", "default_z", "default_z_en", "default_z_sq", "default_x_sq", "default_z_id", "default_x", "default_x_id", "default_y", "default_y_id", "x_axis", "y_axis", "default_tab", "menu");
     model_internal static var derivedProperties:Array = new Array();
     model_internal static var collectionProperties:Array = new Array();
     model_internal static var collectionBaseMap:Object;
@@ -96,6 +96,9 @@ internal class _EntrySetsMenuEntityMetadata extends com.adobe.fiber.valueobjects
             model_internal::dependentsOnMap["default_x_id"] = new Array();
             model_internal::dependentsOnMap["default_y"] = new Array();
             model_internal::dependentsOnMap["default_y_id"] = new Array();
+            model_internal::dependentsOnMap["x_axis"] = new Array();
+            model_internal::dependentsOnMap["y_axis"] = new Array();
+            model_internal::dependentsOnMap["default_tab"] = new Array();
             model_internal::dependentsOnMap["menu"] = new Array();
 
             // collection base map
@@ -116,6 +119,9 @@ internal class _EntrySetsMenuEntityMetadata extends com.adobe.fiber.valueobjects
         model_internal::propertyTypeMap["default_x_id"] = "Object";
         model_internal::propertyTypeMap["default_y"] = "Object";
         model_internal::propertyTypeMap["default_y_id"] = "Object";
+        model_internal::propertyTypeMap["x_axis"] = "Object";
+        model_internal::propertyTypeMap["y_axis"] = "Object";
+        model_internal::propertyTypeMap["default_tab"] = "Object";
         model_internal::propertyTypeMap["menu"] = "Object";
 
         model_internal::_instance = value;
@@ -448,6 +454,24 @@ internal class _EntrySetsMenuEntityMetadata extends com.adobe.fiber.valueobjects
 
     [Bindable(event="propertyChange")]
     public function get isDefault_y_idAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isX_axisAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isY_axisAvailable():Boolean
+    {
+        return true;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get isDefault_tabAvailable():Boolean
     {
         return true;
     }
@@ -1250,6 +1274,24 @@ internal class _EntrySetsMenuEntityMetadata extends com.adobe.fiber.valueobjects
 
     [Bindable(event="propertyChange")]   
     public function get default_y_idStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get x_axisStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get y_axisStyle():com.adobe.fiber.styles.Style
+    {
+        return model_internal::_nullStyle;
+    }
+
+    [Bindable(event="propertyChange")]   
+    public function get default_tabStyle():com.adobe.fiber.styles.Style
     {
         return model_internal::_nullStyle;
     }

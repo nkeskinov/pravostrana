@@ -74,6 +74,9 @@ public class _Super_EntrySetsMenu extends flash.events.EventDispatcher implement
     private var _internal_default_x_id : Object;
     private var _internal_default_y : Object;
     private var _internal_default_y_id : Object;
+    private var _internal_x_axis : Object;
+    private var _internal_y_axis : Object;
+    private var _internal_default_tab : Object;
     private var _internal_menu : Object;
 
     private static var emptyArray:Array = new Array();
@@ -175,6 +178,24 @@ public class _Super_EntrySetsMenu extends flash.events.EventDispatcher implement
     public function get default_y_id() : Object
     {
         return _internal_default_y_id;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get x_axis() : Object
+    {
+        return _internal_x_axis;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get y_axis() : Object
+    {
+        return _internal_y_axis;
+    }
+
+    [Bindable(event="propertyChange")]
+    public function get default_tab() : Object
+    {
+        return _internal_default_tab;
     }
 
     [Bindable(event="propertyChange")]
@@ -308,6 +329,36 @@ public class _Super_EntrySetsMenu extends flash.events.EventDispatcher implement
         {
             _internal_default_y_id = value;
             this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "default_y_id", oldValue, _internal_default_y_id));
+        }
+    }
+
+    public function set x_axis(value:Object) : void
+    {
+        var oldValue:Object = _internal_x_axis;
+        if (oldValue !== value)
+        {
+            _internal_x_axis = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "x_axis", oldValue, _internal_x_axis));
+        }
+    }
+
+    public function set y_axis(value:Object) : void
+    {
+        var oldValue:Object = _internal_y_axis;
+        if (oldValue !== value)
+        {
+            _internal_y_axis = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "y_axis", oldValue, _internal_y_axis));
+        }
+    }
+
+    public function set default_tab(value:Object) : void
+    {
+        var oldValue:Object = _internal_default_tab;
+        if (oldValue !== value)
+        {
+            _internal_default_tab = value;
+            this.dispatchEvent(mx.events.PropertyChangeEvent.createUpdateEvent(this, "default_tab", oldValue, _internal_default_tab));
         }
     }
 

@@ -78,6 +78,9 @@ class EntrysetsService {
 		$result->default_x_id = null;
 		$result->default_y_id = null;
 		$result->default_z_id = null;
+		$result->x_axis = null;
+		$result->y_axis = null;
+		$result->default_tab = null;
 		$result->menu =  array();
 		$rows = array();
 		
@@ -85,19 +88,31 @@ class EntrysetsService {
         mysqli_stmt_bind_result($stmt, $entry->id_entry_set, $entry->name, $entry->name_en, $entry->name_sq, $entry->default_x, $entry->default_y, $entry->default_z, $entry->parent);
 		
         while (mysqli_stmt_fetch($stmt)) {
-		  if($entry->default_x == 1){ 
+		  if($entry->default_x != null){ 
+			if($entry->default_x == 1)
+				$result->x_axis = "lin";
+			else if($entry->default_x == 2)
+				$result->x_axis = "log";
 			$result->default_x_id = $entry->id_entry_set;
 			$result->default_x = $entry->name;
 			$result->default_x_en = $entry->name_en;
 			$result->default_x_sq = $entry->name_sq;
 		  }
-		  if($entry->default_y == 1){
+		  if($entry->default_y != null){
+		  if($entry->default_y == 1)
+				$result->y_axis = "lin";
+			else if($entry->default_y == 2)
+				$result->y_axis = "log";
 			$result->default_y_id = $entry->id_entry_set;
 			$result->default_y = $entry->name;
 			$result->default_y_en = $entry->name_en;
 			$result->default_y_sq = $entry->name_sq;
 		  }
-		  if($entry->default_z == 1){
+		  if($entry->default_z != null){
+			if($entry->default_z == 1)
+				$result->default_tab = 0;
+			else if($entry->default_z == 2)
+				$result->default_tab = 1;
 			$result->default_z_id = $entry->id_entry_set;
 			$result->default_z = $entry->name;
 			$result->default_z_en = $entry->name_en;
@@ -136,19 +151,32 @@ class EntrysetsService {
 			while (mysqli_stmt_fetch($stmt)) {
 				
 				//Check if the default is somewhere in the childrens
-				 if($entry->default_x == 1){ 
+				 if($entry->default_x != null){ 
+					if($entry->default_x == 1)
+						$result->x_axis = "lin";
+					else if($entry->default_x == 2)
+						$result->x_axis = "log";
+					
 					$result->default_x_id = $entry->id_entry_set;
 					$result->default_x = $entry->name;
 					$result->default_x_en = $entry->name_en;
 					$result->default_x_sq = $entry->name_sq;
 				  }
-				  if($entry->default_y == 1){
+				  if($entry->default_y != null){
+					if($entry->default_y == 1)
+						$result->y_axis = "lin";
+					else if($entry->default_y == 2)
+						$result->y_axis = "log";
 					$result->default_y_id = $entry->id_entry_set;
 					$result->default_y = $entry->name;
 					$result->default_y_en = $entry->name_en;
 					$result->default_y_sq = $entry->name_sq;
 				  }
-				  if($entry->default_z == 1){
+				  if($entry->default_z != null){
+					if($entry->default_z == 1)
+						$result->default_tab = 0;
+					else if($entry->default_z == 2)
+						$result->default_tab = 1;
 					$result->default_z_id = $entry->id_entry_set;
 					$result->default_z = $entry->name;
 					$result->default_z_en = $entry->name_en;
@@ -393,6 +421,9 @@ class EntrySetsMenu{
 	public $default_x_id;
 	public $default_y;
 	public $default_y_id;
+	public $x_axis;
+	public $y_axis;
+	public $default_tab;
 	public $menu;
 }
 
