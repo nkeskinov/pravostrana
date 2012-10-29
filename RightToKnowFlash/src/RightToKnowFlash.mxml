@@ -149,6 +149,9 @@
 			
 			[Bindable]
 			protected var selectionMenuDP:Array;
+			
+			protected var isFirstTime:Boolean = true;
+			
 			/**
 			 * Start up function
 			 * */
@@ -292,35 +295,37 @@
 				maxXValue= getBubbleEntriesPerYearByIdsResult.lastResult.maxXValue;
 				maxYValue= getBubbleEntriesPerYearByIdsResult.lastResult.maxYValue;
 				chartBgLabel.visible = true;
-				
-				if(xAxisType == "log"){
-					var logAxis:LogAxis = new LogAxis();
-					logAxis.baseAtZero = false;
-					logAxis.minimum = 0;
-					logAxis.maximum = maxXValue;
-					chart.horizontalAxis = logAxis;				
-				}
-				else if(xAxisType == "lin"){
-					var linAxis:LinearAxis = new LinearAxis();
-					linAxis.baseAtZero = false;
-					linAxis.minimum = 0;
-					linAxis.maximum = maxXValue;
-					chart.horizontalAxis = linAxis;
-				}
-				
-				if(yAxisType == "log"){
-					var logAxis:LogAxis = new LogAxis();
-					logAxis.baseAtZero = false;
-					logAxis.minimum = 0;
-					logAxis.maximum = maxYValue;
-					chart.verticalAxis = logAxis;				
-				}
-				else if(yAxisType == "lin"){
-					var linAxis:LinearAxis = new LinearAxis();
-					linAxis.baseAtZero = false;
-					linAxis.minimum = 0;
-					linAxis.maximum = maxYValue;
-					chart.verticalAxis = linAxis;
+				if(isFirstTime){
+					if(xAxisType == "log"){
+						var logAxis:LogAxis = new LogAxis();
+						logAxis.baseAtZero = false;
+						logAxis.minimum = 0;
+						logAxis.maximum = maxXValue;
+						chart.horizontalAxis = logAxis;				
+					}
+					else if(xAxisType == "lin"){
+						var linAxis:LinearAxis = new LinearAxis();
+						linAxis.baseAtZero = false;
+						linAxis.minimum = 0;
+						linAxis.maximum = maxXValue;
+						chart.horizontalAxis = linAxis;
+					}
+					
+					if(yAxisType == "log"){
+						var logAxis:LogAxis = new LogAxis();
+						logAxis.baseAtZero = false;
+						logAxis.minimum = 0;
+						logAxis.maximum = maxYValue;
+						chart.verticalAxis = logAxis;				
+					}
+					else if(yAxisType == "lin"){
+						var linAxis:LinearAxis = new LinearAxis();
+						linAxis.baseAtZero = false;
+						linAxis.minimum = 0;
+						linAxis.maximum = maxYValue;
+						chart.verticalAxis = linAxis;
+					}
+					isFirstTime = false;
 				}
 				hideBusyCursor();
 			}
@@ -685,10 +690,8 @@
 								if(allCities.getItemAt(i).dataField == k.getItemAt(j).id_municipality)
 									t1.addItemAt(k.getItemAt(j),i);
 							}
-							
 						} 
 						else{
-							
 							t1.addItemAt(new Object(),i);
 						}
 					}
