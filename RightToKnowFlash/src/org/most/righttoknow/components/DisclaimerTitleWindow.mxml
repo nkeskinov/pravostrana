@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300"
+			   creationComplete="centerWindow()" close="closeWindow()">
+	<fx:Script>
+		<![CDATA[
+			import flashx.textLayout.conversion.TextConverter;
+			
+			import mx.events.FlexEvent;
+			import mx.managers.PopUpManager;
+			
+			
+			
+			[Bindable]
+			protected var textString:String = "";
+			
+			
+			
+			public function centerWindow():void
+			{
+				PopUpManager.centerPopUp(this);
+				
+				
+			}
+			
+			public function closeWindow():void
+			{
+				PopUpManager.removePopUp(this);
+			}
+			
+			public function setText(textString:String):void{
+				this.textString = textString;
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:RichText id="text" left="10" right="10" top="10" bottom="10" horizontalCenter="0" 
+				textFlow="{TextConverter.importToFlow(textString, TextConverter.TEXT_FIELD_HTML_FORMAT)}"
+				verticalCenter="0" />
+	
+</s:TitleWindow>
