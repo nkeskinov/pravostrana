@@ -462,7 +462,7 @@
 			 * */
 			private function menuZitemClick(event:MenuEvent):void {
 				
-				zAxisPopup.label = event.item[resourceManager.getString('resources', 'menu_label_field')];
+				zAxisPopup.label = event.item[resourceManager.getString('resources', 'menu_label_field')]+"***";
 				zSelected = event.item.id;
 				if(zSelected == 0){
 					
@@ -486,7 +486,7 @@
 			 * */
 			private function menuXitemClick(event:MenuEvent):void {
 				
-				xAxisPopup.label = event.item[resourceManager.getString('resources', 'menu_label_field')];
+				xAxisPopup.label = event.item[resourceManager.getString('resources', 'menu_label_field')]+"**";
 				xSelected = event.item.id
 				getBubbleEntriesPerYearByIds(xSelected, ySelected, zSelected);
 				
@@ -508,7 +508,7 @@
 			 * */
 			private function menuYitemClick(event:MenuEvent):void {
 				
-				yAxisPopup.label = event.item[resourceManager.getString('resources', 'menu_label_field')];
+				yAxisPopup.label = event.item[resourceManager.getString('resources', 'menu_label_field')]+"**";
 				ySelected = event.item.id;
 				getBubbleEntriesPerYearByIds(xSelected, ySelected, zSelected);
 				//Alert.show("x="+xSelected +" y="+event.item.id);
@@ -536,11 +536,11 @@
 				
 				//Alert.show("menu="+menuData[0].label_sq);
 				menuX = Menu.createMenu(null, menuData, false);
-				menuX.labelField=resourceManager.getString('resources', 'menu_label_field')
+				menuX.labelField=resourceManager.getString('resources', 'menu_label_field');
 				menuX.addEventListener(MenuEvent.ITEM_CLICK, menuXitemClick);
 				
 				menuX1 = Menu.createMenu(null, menuData, false);
-				menuX1.labelField=resourceManager.getString('resources', 'menu_label_field')
+				menuX1.labelField=resourceManager.getString('resources', 'menu_label_field');
 				menuX1.addEventListener(MenuEvent.ITEM_CLICK, menuX1itemClick);
 				menuX1.layoutDirection="rtl";
 
@@ -586,9 +586,10 @@
 				menuZ.addEventListener(MenuEvent.ITEM_CLICK, menuZitemClick);
 				
 				
-				xAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_x_label')];
-				yAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_y_label')];
-				zAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_z_label')];
+				
+				xAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_x_label')]+"**";
+				yAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_y_label')]+"*";
+				zAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_z_label')]+"***";
 				
 				mapPrimaryLabel = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_x_label')];
 				mapOverlayLabel = resourceManager.getString('resources', 'map_overlay_none_label');
@@ -950,9 +951,9 @@
 				menuZ.addEventListener(MenuEvent.ITEM_CLICK, menuZitemClick);
 				
 				
-				xAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_x_label')];
-				yAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_y_label')];
-				zAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_z_label')];
+				xAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_x_label')]+"**";
+				yAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_y_label')]+"*";
+				zAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_z_label')]+"***";
 				
 				//p1.label = resourceManager.getString('resources', 'all_cities_label_en');
 				p1.labelFunction = popUpMenuButton_labelFunc;
