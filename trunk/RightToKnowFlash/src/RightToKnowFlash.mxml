@@ -22,6 +22,7 @@
 			import mx.charts.HitData;
 			import mx.charts.LinearAxis;
 			import mx.charts.LogAxis;
+			import mx.charts.chartClasses.Series;
 			import mx.charts.events.ChartItemEvent;
 			import mx.charts.series.LineSeries;
 			import mx.charts.series.items.BubbleSeriesItem;
@@ -49,6 +50,7 @@
 			import mx.messaging.channels.StreamingAMFChannel;
 			import mx.rpc.events.ResultEvent;
 			
+			import org.most.righttoknow.components.DisclaimerTitleWindow;
 			import org.most.righttoknow.components.HelpTitleWindow;
 			import org.most.righttoknow.components.ShareTitleWindow;
 			import org.most.righttoknow.components.TeaserTitleWindow;
@@ -125,6 +127,14 @@
 			[Embed(source='assets/pause_blue.png')]
 			public static var pauseBtnIcn:Class;
 			
+			[Embed(source="assets/help.png")]
+			public static var helpIcn:Class;
+			[Embed(source="assets/icon_terms01.png")]
+			public static var termsIcn:Class;
+			[Embed(source="assets/get_info.png")]
+			public static var aboutIcn:Class;
+			
+			
 			protected var playing:Boolean = false;
 			
 			protected var minYear:Number;
@@ -149,6 +159,8 @@
 			
 			[Bindable]
 			protected var selectionMenuDP:Array;
+			[Bindable]
+			protected var helpMenuDP:Array;
 			
 			protected var isFirstTime:Boolean = true;
 			
@@ -165,6 +177,33 @@
 				var titleWindowInstance:TeaserTitleWindow = TeaserTitleWindow(PopUpManager.createPopUp(this, TeaserTitleWindow, false));
 				titleWindowInstance.alpha = 0.4;
 				PopUpManager.centerPopUp(titleWindowInstance);
+				
+				helpMenuDP=[
+					{	data:"help",
+						label:resourceManager.getString('resources', 'help_menu_help'),
+						label_en:resourceManager.getString('resources', 'help_menu_help_en'),
+						label_sq:resourceManager.getString('resources', 'help_menu_help_sq'),
+						icon:helpIcn
+					},
+					{	data:"methodology",
+						label:resourceManager.getString('resources', 'help_menu_methodology'),
+						label_en:resourceManager.getString('resources', 'help_menu_methodology_en'),
+						label_sq:resourceManager.getString('resources', 'help_menu_methodology_sq')
+					},
+					{	data:"terms",
+						label:resourceManager.getString('resources', 'help_menu_terms'),
+						label_en:resourceManager.getString('resources', 'help_menu_terms_en'),
+						label_sq:resourceManager.getString('resources', 'help_menu_terms_sq'),
+						icon:termsIcn
+					},
+					{	data:"about",
+						label:resourceManager.getString('resources', 'help_menu_about'),
+						label_en:resourceManager.getString('resources', 'help_menu_about_en'),
+						label_sq:resourceManager.getString('resources', 'help_menu_about_sq'),
+						icon:aboutIcn
+					}
+				];
+				
 				
 				selectionMenuDP = [
 					{	data:"areaAll",
@@ -221,12 +260,7 @@
 				fullScreenBtn.selected = isFullScreen();
 			}
 			
-			protected function helpBtn_clickHandler(event:MouseEvent):void
-			{ 
-				var titleWindowInstance:HelpTitleWindow = HelpTitleWindow(PopUpManager.createPopUp(this, HelpTitleWindow, false));
-				titleWindowInstance.title=resourceManager.getString('resources', 'help_window_title');
-				PopUpManager.centerPopUp(titleWindowInstance);
-			}
+			
 			
 			protected function shareBtn_clickHandler(event:MouseEvent):void
 			{
@@ -278,6 +312,32 @@
 				chartDataProvider = getBubbleEntriesPerYearByIdsResult.lastResult.rows;
 				//Save the original data for reseting purposes
 				originalData = chartDataProvider;
+				
+				var tmpArrayCollection:ArrayCollection = new ArrayCollection();
+				for each(var item:Array in chartDataProvider){
+					
+					var k:ArrayCollection =new ArrayCollection(item);
+					
+					var t1:ArrayCollection = new ArrayCollection();
+					//Do not include "Grad Skopje"
+					//for(var i:int = 0; i<allCities.length; i++){
+						for(var j:int=0; j<k.length; j++){
+							if(k.getItemAt(j).id_municipality!=85){
+								t1.addItem(k.getItemAt(j));
+							}else{
+								//Alert.show("GradSkopje="+k.getItemAt(j).name);
+								t1.addItem(new Object());
+							}
+						}
+					//}
+					//Alert.show("k="+k.getItemAt(0).id_municipality);
+					tmpArrayCollection.addItem(t1);
+				}
+				chartDataProvider = tmpArrayCollection;
+				
+				
+				
+				
 				
 				//Min and max year
 				minYear = getBubbleEntriesPerYearByIdsResult.lastResult.minYear;
@@ -700,6 +760,8 @@
 					tmpArrayCollection.addItem(t1);
 				}
 				chartDataProvider = tmpArrayCollection;
+				
+				
 			}
 			
 			private function customFilterFunction(item:Object):Boolean{
@@ -895,6 +957,10 @@
 				//p1.label = resourceManager.getString('resources', 'all_cities_label_en');
 				p1.labelFunction = popUpMenuButton_labelFunc;
 				p1.dataProvider = selectionMenuDP;
+				
+				helpMenu.labelFunction = popUpMenuButton_labelFunc;
+				helpMenu.dataProvider = helpMenuDP;
+				
 			}
 			
 			
@@ -959,6 +1025,42 @@
 			}
 			
 			
+			protected function button1_clickHandler(event:MouseEvent):void
+			{
+				var titleWindowInstance:DisclaimerTitleWindow = DisclaimerTitleWindow(PopUpManager.createPopUp(this, DisclaimerTitleWindow, false));
+				titleWindowInstance.title=resourceManager.getString('resources', 'disclaimer_window_title');
+				titleWindowInstance.setText(resourceManager.getString('resources', 'disclaimer_text'));
+				PopUpManager.centerPopUp(titleWindowInstance);
+			}
+			
+			
+			protected function helpMenu_itemClickHandler(event:MenuEvent):void
+			{
+				if(event.item.data=="help"){
+					var titleWindowInstance:HelpTitleWindow = HelpTitleWindow(PopUpManager.createPopUp(this, HelpTitleWindow, false));
+					titleWindowInstance.title=resourceManager.getString('resources', 'help_window_title');
+					PopUpManager.centerPopUp(titleWindowInstance);
+				
+				}else if(event.item.data=="terms"){
+					var titleWindowInstance1:DisclaimerTitleWindow = DisclaimerTitleWindow(PopUpManager.createPopUp(this, DisclaimerTitleWindow, false));
+					titleWindowInstance1.title=resourceManager.getString('resources', 'terms_window_title');
+					titleWindowInstance1.setText(resourceManager.getString('resources', 'terms_text'));
+					PopUpManager.centerPopUp(titleWindowInstance1);
+				
+				}else if(event.item.data=="methodology"){
+					var titleWindowInstance2:DisclaimerTitleWindow = DisclaimerTitleWindow(PopUpManager.createPopUp(this, DisclaimerTitleWindow, false));
+					titleWindowInstance2.title=resourceManager.getString('resources', 'methodology_window_title');
+					titleWindowInstance2.setText(resourceManager.getString('resources', 'methodology_text'));
+					PopUpManager.centerPopUp(titleWindowInstance2);
+				
+				}else if(event.item.data=="about"){
+					var titleWindowInstance3:DisclaimerTitleWindow = DisclaimerTitleWindow(PopUpManager.createPopUp(this, DisclaimerTitleWindow, false));
+					titleWindowInstance3.title=resourceManager.getString('resources', 'disclaimer_window_title');
+					titleWindowInstance3.setText(resourceManager.getString('resources', 'about_text'));
+					PopUpManager.centerPopUp(titleWindowInstance3);
+				}
+			}
+			
 		]]>
 	</fx:Script>
 	<fx:Style>
@@ -1002,8 +1104,10 @@
 		<entrysetsservice:EntrysetsService id="entrysetsService"
 										   fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
 										   showBusyCursor="true"/>
-
-		<mx:SeriesInterpolate id="interpolateIn" duration="{playSpeed.value*1000}" elementOffset="0" easingFunction="Linear.easeNone"/>
+		
+		<mx:SeriesInterpolate id="interpolateIn" duration="{playSpeed.value*1000}" hideFocusRing="true" 
+							  perElementOffset="0" elementOffset="0" easingFunction="Linear.easeNone"
+							  suspendBackgroundProcessing="false" />
 		<s:CallResponder id="getAllMunicipalitiesResult" result="getAllMunicipalitiesResult_resultHandler(event)"/>
 		<municipalitiesservice:MunicipalitiesService id="municipalitiesService"
 													 fault="Alert.show(event.fault.faultString + '\n' + event.fault.faultDetail)"
@@ -1029,16 +1133,23 @@
 										 skinClass="org.most.righttoknow.skins.TitlelessPanel">
 									<s:HGroup width="100%" height="100%" gap="0" paddingLeft="5" paddingBottom="5">
 										<s:Group  height="100%" width="20">
-										<s:VGroup width="100%" height="100%" bottom="19" >
+										<s:VGroup width="100%" height="100%" bottom="-1" >
 											
 											<controls:ToggleSwitch id="yToggle" selected="{yAxisType=='log' ? true:false }" selectedLabel="log" deselectedLabel="lin" 
 																   styleName="toggleSwitch" rotation="-90"
 																    
 																    click="yToggle_clickHandler(event)"/>
-											<s:Button id="yAxisPopup" left="0" height="100%" fontWeight="bold"
-													  rotation="-90" click="yAxisPopup_clickHandler(event)"
-													  cornerRadius="0" 
-													  skinClass="org.most.righttoknow.skins.ButtonAsAList"></s:Button>
+											<s:VGroup width="100%" height="100%" gap="-1">
+												<s:Button id="yAxisPopup" left="0" height="100%" fontWeight="bold"
+														  rotation="-90" click="yAxisPopup_clickHandler(event)"
+														  cornerRadius="0" 
+														  skinClass="org.most.righttoknow.skins.ButtonAsAList"></s:Button>
+												<s:Button includeIn="State1" width="21" height="21"
+														  label="Button"
+														  click="button1_clickHandler(event)"
+														  cornerRadius="0"
+														  icon="@Embed('../assets/get_info.png')"/>
+											</s:VGroup>
 										</s:VGroup>
 										</s:Group>
 										
@@ -1057,6 +1168,7 @@
 																verticalAxisStyleNames="linedNumericAxis"
 																clipContent="false"
 																>
+													
 													<mx:series>
 														<mx:BubbleSeries id="bubbleSeries"
 																		 displayName="Series 1" 
@@ -1097,7 +1209,7 @@
 														</s:HGroup>
 														
 													</mx:backgroundElements>
-												</mx:BubbleChart>
+												</mx:BubbleChart> 
 												
 												
 											</s:Group>
@@ -1161,7 +1273,13 @@
 			</s:VGroup>
 			
 			<s:VGroup width="155" height="100%" gap="3">
-				<s:Panel width="100%" height="100%" dropShadowVisible="false" fontSize="11"
+				<s:Panel width="100%" height="50%" dropShadowVisible="false" fontSize="11"
+						 fontWeight="normal"
+						 skinClass="org.most.righttoknow.skins.PanelSkin"
+						 title="{resourceManager.getString('resources', 'video_panel_title')}">
+					
+				</s:Panel>
+				<s:Panel width="100%" height="50%" dropShadowVisible="false" fontSize="11"
 						 fontWeight="normal" skinClass="org.most.righttoknow.skins.PanelSkin"
 						
 						 title.MapState="{resourceManager.getString('resources', 'map_set_panel_title')}">
@@ -1227,9 +1345,9 @@
 						
 							
 					</controls:BusyIndicator>
-					<mx:PopUpMenuButton id="p1" x="0" y="-22" height="22" cornerRadius="0"
+					<mx:PopUpMenuButton id="p1" x="-1" y="-22" height="22" cornerRadius="0"
 										includeIn="State1"
-										width="100%"	
+										width="155"	
 										showRoot="true" 
 										itemClick="p1_itemClickHandler(event)" 	
 										dataProvider="{selectionMenuDP}"
@@ -1237,14 +1355,17 @@
 										>
 					</mx:PopUpMenuButton>
 				</s:Panel>
-				<s:Panel includeIn="State1" width="100%" height="90" dropShadowVisible="false"
+				<!--s:Panel includeIn="State1" width="100%" height="90" dropShadowVisible="false"
 						 skinClass="org.most.righttoknow.skins.PanelSkin"
-						 title="{resourceManager.getString('resources', 'size_panel_title')}">
-					<s:VGroup left="0" top="0" bottom="0" width="100%">
+						 title="{resourceManager.getString('resources', 'size_panel_title')}"-->
+					<s:VGroup left="0" top="0" bottom="0" width="100%" includeIn="State1" gap="-1">
 						<s:Button id="zAxisPopup" width="100%" click="zAxisPopup_clickHandler(event)"
 								  cornerRadius="0" fontWeight="bold"
 								  skinClass="org.most.righttoknow.skins.ButtonAsAList"
 								 />
+						<s:BorderContainer width="100%" height="100%" backgroundColor="#CACACA">
+							
+						
 						<mx:HSlider id="bubbleSizeHSlider" width="150" 
 								    change="bubbleSizeHSlider_changeHandler(event)"	
 									allowTrackClick="true" thumbCount="2"
@@ -1252,15 +1373,23 @@
 									maximum="30" minimum="1" snapInterval="1"
 								    labels="[5,10,15,20,25,30]" toolTip="{resourceManager.getString('resources', 'size_slider_tooltip')}"	
 									tickInterval="1" tickLength="10" tickOffset="4" labelOffset="-1"/>
+						</s:BorderContainer>
 					</s:VGroup>
 					
-				</s:Panel>
+				<!--/s:Panel-->
 				
 			</s:VGroup> 
 		</s:HGroup>
 		<s:HGroup y="10" right="168" width="249" height="22" gap="2" horizontalAlign="right">
-			<s:Button id="helpBtn" label="{resourceManager.getString('resources', 'help_button')}" click="helpBtn_clickHandler(event)" fontSize="11"
-					  icon="@Embed(source='assets/help.png')"/>  
+			<mx:PopUpMenuButton id="helpMenu" x="0" cornerRadius="0"
+								width="120"	
+								showRoot="true" 
+								dataProvider="{helpMenuDP}"
+							    itemClick="helpMenu_itemClickHandler(event)"	
+								labelFunction="popUpMenuButton_labelFunc"	
+								>
+			</mx:PopUpMenuButton>
+			
 			<!--<mx:Button id="shareBtn" label="{resourceManager.getString('resources', 'share_button')}" click="shareBtn_clickHandler(event)"
 					   fontSize="11" icon="@Embed(source='assets/share2.png')" paddingLeft="5"
 					   paddingRight="5"/> -->
