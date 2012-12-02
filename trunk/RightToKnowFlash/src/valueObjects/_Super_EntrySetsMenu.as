@@ -28,17 +28,7 @@ public class _Super_EntrySetsMenu extends flash.events.EventDispatcher implement
 {
     model_internal static function initRemoteClassAliasSingle(cz:Class) : void
     {
-        try
-        {
-            if (flash.net.getClassByAlias("EntrySetsMenu") == null)
-            {
-                flash.net.registerClassAlias("EntrySetsMenu", cz);
-            }
-        }
-        catch (e:Error)
-        {
-            flash.net.registerClassAlias("EntrySetsMenu", cz);
-        }
+        flash.net.registerClassAlias("EntrySetsMenu", cz);
     }
 
     model_internal static function initRemoteClassAliasAllRelated() : void
@@ -430,6 +420,7 @@ public class _Super_EntrySetsMenu extends flash.events.EventDispatcher implement
     /**
      * derived property calculators
      */
+    
 
     /**
      * isValid calculator
