@@ -8,14 +8,15 @@
  */
 package org.most.righttoknow.controls
 {
-	import org.most.righttoknow.controls.YouTubePlayerEvent;
-	
+	import mx.controls.Alert;
 	import flash.display.DisplayObject;
 	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.net.URLRequest;
 	import flash.system.Security;
+	
+	import org.most.righttoknow.controls.YouTubePlayerEvent;
 	
 	public class YouTubePlayerAS3 extends Sprite
 	{
@@ -28,7 +29,7 @@ package org.most.righttoknow.controls
 		public var autoplay:Boolean								= false;
 		public var chromeless:Boolean							= false;
 		public var loop:Boolean									= false;
-		public var pars:String									= 'modestbranding=1&fs=0&rel=0&showinfo=0&showsearch=0&hd=1&autohide=0&iv_load_policy=3&cc_load_policy=3';
+		public var pars:String									= 'modestbranding=1&fs=0&rel=0&showinfo=1&showsearch=0&hd=1&autohide=0&iv_load_policy=3&cc_load_policy=3';
 		public var playerHeight:Number							= 300;
 		public var playerWidth:Number							= 400;
 		public var quality:String								= QUALITY_LARGE;
@@ -328,6 +329,7 @@ package org.most.righttoknow.controls
 			return isLoaded;
 		}
 		
+	
 		public function get playing():Boolean
 		{
 			return isPlaying;
