@@ -139,31 +139,32 @@ internal class _Super_EntrysetsService extends com.adobe.fiber.services.wrapper.
 
         // initialize RemoteClass alias for all entities returned by functions of this service
         valueObjects.Entry_sets._initRemoteClassAlias();
+        valueObjects.EntrySetsMenu._initRemoteClassAlias();
 
         var operations:Object = new Object();
         var operation:mx.rpc.remoting.Operation;
 
         operation = new mx.rpc.remoting.Operation(null, "getAllEntry_sets");
-         operation.resultElementType = valueObjects.Entry_sets;
+        operation.resultElementType = valueObjects.Entry_sets;
         operations["getAllEntry_sets"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "getEntry_setsByID");
-         operation.resultType = valueObjects.Entry_sets;
+        operation.resultType = valueObjects.Entry_sets;
         operations["getEntry_setsByID"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "createEntry_sets");
-         operation.resultType = int;
+        operation.resultType = int;
         operations["createEntry_sets"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "updateEntry_sets");
         operations["updateEntry_sets"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "deleteEntry_sets");
         operations["deleteEntry_sets"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "count");
-         operation.resultType = int;
+        operation.resultType = int;
         operations["count"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "getEntry_sets_paged");
-         operation.resultElementType = valueObjects.Entry_sets;
+        operation.resultElementType = valueObjects.Entry_sets;
         operations["getEntry_sets_paged"] = operation;
         operation = new mx.rpc.remoting.Operation(null, "getEntrySetMenu");
-         operation.resultType = valueObjects.EntrySetsMenu;
+        operation.resultType = valueObjects.EntrySetsMenu;
         operations["getEntrySetMenu"] = operation;
 
         _serviceControl.operations = operations;
@@ -232,9 +233,9 @@ internal class _Super_EntrysetsService extends com.adobe.fiber.services.wrapper.
     
 
     /**
-      * This method is a generated wrapper used to call the 'getAllEntry_sets' operation. It returns an mx.rpc.AsyncToken whose 
-      * result property will be populated with the result of the operation when the server response is received. 
-      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
+      * This method is a generated wrapper used to call the 'getAllEntry_sets' operation. It returns an mx.rpc.AsyncToken whose
+      * result property will be populated with the result of the operation when the server response is received.
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value.
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
       *
       * @see mx.rpc.AsyncToken
@@ -245,14 +246,14 @@ internal class _Super_EntrysetsService extends com.adobe.fiber.services.wrapper.
     public function getAllEntry_sets() : mx.rpc.AsyncToken
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getAllEntry_sets");
-		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send() ;
+        var _internal_token:mx.rpc.AsyncToken = _internal_operation.send() ;
         return _internal_token;
     }
      
     /**
-      * This method is a generated wrapper used to call the 'getEntry_setsByID' operation. It returns an mx.data.ItemReference whose 
-      * result property will be populated with the result of the operation when the server response is received. 
-      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
+      * This method is a generated wrapper used to call the 'getEntry_setsByID' operation. It returns an mx.data.ItemReference whose
+      * result property will be populated with the result of the operation when the server response is received.
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value.
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
       *
       * @see mx.data.ItemReference
@@ -263,14 +264,14 @@ internal class _Super_EntrysetsService extends com.adobe.fiber.services.wrapper.
     public function getEntry_setsByID(itemID:int) : mx.data.ItemReference
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getEntry_setsByID");
-		var _internal_token:mx.data.ItemReference = _internal_operation.send(itemID) as mx.data.ItemReference;
+        var _internal_token:mx.data.ItemReference = _internal_operation.send(itemID) as mx.data.ItemReference;
         return _internal_token;
     }
      
     /**
-      * This method is a generated wrapper used to call the 'createEntry_sets' operation. It returns an mx.data.ItemReference whose 
-      * result property will be populated with the result of the operation when the server response is received. 
-      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
+      * This method is a generated wrapper used to call the 'createEntry_sets' operation. It returns an mx.data.ItemReference whose
+      * result property will be populated with the result of the operation when the server response is received.
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value.
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
       *
       * @see mx.data.ItemReference
@@ -281,14 +282,14 @@ internal class _Super_EntrysetsService extends com.adobe.fiber.services.wrapper.
     public function createEntry_sets(item:valueObjects.Entry_sets) : mx.data.ItemReference
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("createEntry_sets");
-		var _internal_token:mx.data.ItemReference = _internal_operation.send(item) as mx.data.ItemReference;
+        var _internal_token:mx.data.ItemReference = _internal_operation.send(item) as mx.data.ItemReference;
         return _internal_token;
     }
      
     /**
-      * This method is a generated wrapper used to call the 'updateEntry_sets' operation. It returns an mx.data.ItemReference whose 
-      * result property will be populated with the result of the operation when the server response is received. 
-      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
+      * This method is a generated wrapper used to call the 'updateEntry_sets' operation. It returns an mx.data.ItemReference whose
+      * result property will be populated with the result of the operation when the server response is received.
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value.
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
       *
       * @see mx.data.ItemReference
@@ -299,14 +300,14 @@ internal class _Super_EntrysetsService extends com.adobe.fiber.services.wrapper.
     public function updateEntry_sets(item:valueObjects.Entry_sets) : mx.data.ItemReference
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("updateEntry_sets");
-		var _internal_token:mx.data.ItemReference = _internal_operation.send(item) as mx.data.ItemReference;
+        var _internal_token:mx.data.ItemReference = _internal_operation.send(item) as mx.data.ItemReference;
         return _internal_token;
     }
      
     /**
-      * This method is a generated wrapper used to call the 'deleteEntry_sets' operation. It returns an mx.rpc.AsyncToken whose 
-      * result property will be populated with the result of the operation when the server response is received. 
-      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
+      * This method is a generated wrapper used to call the 'deleteEntry_sets' operation. It returns an mx.rpc.AsyncToken whose
+      * result property will be populated with the result of the operation when the server response is received.
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value.
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
       *
       * @see mx.rpc.AsyncToken
@@ -317,14 +318,14 @@ internal class _Super_EntrysetsService extends com.adobe.fiber.services.wrapper.
     public function deleteEntry_sets(itemID:int) : mx.rpc.AsyncToken
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("deleteEntry_sets");
-		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(itemID) ;
+        var _internal_token:mx.rpc.AsyncToken = _internal_operation.send(itemID) ;
         return _internal_token;
     }
      
     /**
-      * This method is a generated wrapper used to call the 'count' operation. It returns an mx.rpc.AsyncToken whose 
-      * result property will be populated with the result of the operation when the server response is received. 
-      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
+      * This method is a generated wrapper used to call the 'count' operation. It returns an mx.rpc.AsyncToken whose
+      * result property will be populated with the result of the operation when the server response is received.
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value.
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
       *
       * @see mx.rpc.AsyncToken
@@ -335,14 +336,14 @@ internal class _Super_EntrysetsService extends com.adobe.fiber.services.wrapper.
     public function count() : mx.rpc.AsyncToken
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("count");
-		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send() ;
+        var _internal_token:mx.rpc.AsyncToken = _internal_operation.send() ;
         return _internal_token;
     }
      
     /**
-      * This method is a generated wrapper used to call the 'getEntry_sets_paged' operation. It returns an mx.rpc.AsyncToken whose 
-      * result property will be populated with the result of the operation when the server response is received. 
-      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
+      * This method is a generated wrapper used to call the 'getEntry_sets_paged' operation. It returns an mx.rpc.AsyncToken whose
+      * result property will be populated with the result of the operation when the server response is received.
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value.
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
       *
       * @see mx.rpc.AsyncToken
@@ -353,14 +354,14 @@ internal class _Super_EntrysetsService extends com.adobe.fiber.services.wrapper.
     public function getEntry_sets_paged() : mx.rpc.AsyncToken
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getEntry_sets_paged");
-		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send() ;
+        var _internal_token:mx.rpc.AsyncToken = _internal_operation.send() ;
         return _internal_token;
     }
      
     /**
-      * This method is a generated wrapper used to call the 'getEntrySetMenu' operation. It returns an mx.rpc.AsyncToken whose 
-      * result property will be populated with the result of the operation when the server response is received. 
-      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
+      * This method is a generated wrapper used to call the 'getEntrySetMenu' operation. It returns an mx.rpc.AsyncToken whose
+      * result property will be populated with the result of the operation when the server response is received.
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value.
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
       *
       * @see mx.rpc.AsyncToken
@@ -371,7 +372,7 @@ internal class _Super_EntrysetsService extends com.adobe.fiber.services.wrapper.
     public function getEntrySetMenu() : mx.rpc.AsyncToken
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getEntrySetMenu");
-		var _internal_token:mx.rpc.AsyncToken = _internal_operation.send() ;
+        var _internal_token:mx.rpc.AsyncToken = _internal_operation.send() ;
         return _internal_token;
     }
      
