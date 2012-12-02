@@ -595,17 +595,24 @@
 				var tmpArr:ArrayCollection = new ArrayCollection();
 				var item:Object = new Object;
 				item.id = -1;
+				resourceManager.localeChain = ["mk_MK"];
 				item.label = resourceManager.getString('resources', 'z_indicators_label');
+				resourceManager.localeChain = ["en_US"];
 				item.label_en = resourceManager.getString('resources', 'z_indicators_label');
+				resourceManager.localeChain = ["sq_AL"];
 				item.label_sq = resourceManager.getString('resources', 'z_indicators_label');
-				
+				resourceManager.localeChain = ["mk_MK"];
 				item.children = menuData;
 				tmpArr.addItem(item);
 				item = new Object;
 				item.id=0;
+				resourceManager.localeChain = ["mk_MK"];
 				item.label = resourceManager.getString('resources', 'z_size_label');
+				resourceManager.localeChain = ["en_US"];
 				item.label_en = resourceManager.getString('resources', 'z_size_label');
+				resourceManager.localeChain = ["sq_AL"];
 				item.label_sq = resourceManager.getString('resources', 'z_size_label');
+				resourceManager.localeChain = ["mk_MK"];
 				tmpArr.addItem(item);
 				
 				
@@ -642,6 +649,7 @@
 				
 				selectedX1 = selectedX;
 				selectedY1.id = 0;
+				resourceManager.localeChain = ["mk_MK"];
 				selectedY1.label = resourceManager.getString('resources', 'map_overlay_none_label');
 				resourceManager.localeChain = ["en_US"];
 				selectedY1.label_en = resourceManager.getString('resources', 'map_overlay_none_label');
@@ -988,17 +996,25 @@
 				var tmpArr:ArrayCollection = new ArrayCollection();
 				var item:Object = new Object;
 				item.id = -1;
+				resourceManager.localeChain = ["mk_MK"];
 				item.label = resourceManager.getString('resources', 'z_indicators_label');
+				resourceManager.localeChain = ["en_US"];
 				item.label_en = resourceManager.getString('resources', 'z_indicators_label');
+				resourceManager.localeChain = ["sq_AL"];
 				item.label_sq = resourceManager.getString('resources', 'z_indicators_label');
+				resourceManager.localeChain = [langList.selectedItem.id];
 				
 				item.children = getEntrySetMenuResult.lastResult.menu;;
 				tmpArr.addItem(item);
 				item = new Object;
 				item.id=0;
+				resourceManager.localeChain = ["mk_MK"];
 				item.label = resourceManager.getString('resources', 'z_size_label');
+				resourceManager.localeChain = ["en_US"];
 				item.label_en = resourceManager.getString('resources', 'z_size_label');
+				resourceManager.localeChain = ["sq_AL"];
 				item.label_sq = resourceManager.getString('resources', 'z_size_label');
+				resourceManager.localeChain = [langList.selectedItem.id];
 				tmpArr.addItem(item);
 				
 				
@@ -1416,6 +1432,9 @@
 										  skinClass="org.most.righttoknow.skins.ButtonAsAList"
 										  verticalCenter="0"></s:Button>
 							</s:BorderContainer>
+							<s:RichText width="100%" height="100%" color="#505050" fontSize="10"
+									    paddingLeft="2"	
+										text="{resourceManager.getString('resources', 'map_text')}"/>
 						</s:VGroup>
 						
 							
