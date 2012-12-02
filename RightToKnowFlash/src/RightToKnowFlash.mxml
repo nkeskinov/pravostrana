@@ -175,6 +175,17 @@
 			
 			protected var isFirstTime:Boolean = true;
 			
+			[Bindable]
+			protected var selectedX:Object = new Object();
+			[Bindable]
+			protected var selectedY:Object = new Object();
+			[Bindable]
+			protected var selectedZ:Object = new Object();
+			[Bindable]
+			protected var selectedX1:Object = new Object();
+			[Bindable]
+			protected var selectedY1:Object = new Object();
+			
 			/**
 			 * Start up function
 			 * */
@@ -477,7 +488,7 @@
 			 * Click handler for the menu on the X axis
 			 * */
 			private function menuZitemClick(event:MenuEvent):void {
-				
+				selectedZ = event.item;
 				zAxisPopup.label = event.item[resourceManager.getString('resources', 'menu_label_field')]+"***";
 				zSelected = event.item.id;
 				if(zSelected == 0){
@@ -502,6 +513,7 @@
 			 * */
 			private function menuXitemClick(event:MenuEvent):void {
 				
+				selectedX = event.item;
 				xAxisPopup.label = event.item[resourceManager.getString('resources', 'menu_label_field')]+"**";
 				xSelected = event.item.id
 				getBubbleEntriesPerYearByIds(xSelected, ySelected, zSelected);
@@ -512,7 +524,7 @@
 			 * Click handler for the menu on the X1 axis
 			 * */
 			private function menuX1itemClick(event:MenuEvent):void {
-				
+				selectedX1 = event.item;
 				mapPrimaryLabel= event.item[resourceManager.getString('resources', 'menu_label_field')];
 				xSelected1 = event.item.id
 				mapChart.init(xSelected1, ySelected1, mapPrimaryLabel, mapOverlayLabel);
@@ -524,6 +536,7 @@
 			 * */
 			private function menuYitemClick(event:MenuEvent):void {
 				
+				selectedY = event.item;
 				yAxisPopup.label = event.item[resourceManager.getString('resources', 'menu_label_field')]+"*";
 				ySelected = event.item.id;
 				getBubbleEntriesPerYearByIds(xSelected, ySelected, zSelected);
@@ -534,7 +547,7 @@
 			 * Click handler for the menu on the X axis
 			 * */
 			private function menuY1itemClick(event:MenuEvent):void {
-				
+				selectedY1 = event.item;
 				mapOverlayLabel = event.item[resourceManager.getString('resources', 'menu_label_field')];
 				ySelected1 = event.item.id;
 				mapChart.init(xSelected1, ySelected1, mapPrimaryLabel, mapOverlayLabel);
@@ -601,7 +614,24 @@
 				menuZ.layoutDirection="rtl";
 				menuZ.addEventListener(MenuEvent.ITEM_CLICK, menuZitemClick);
 				
+				//Alert.show(""+getEntrySetMenuResult.lastResult.default_x);
 				
+				
+				selectedX.id = getEntrySetMenuResult.lastResult.default_x_id;
+				selectedX.label = getEntrySetMenuResult.lastResult.default_x;
+				selectedX.label_en = getEntrySetMenuResult.lastResult.default_x_en;
+				selectedX.label_sq = getEntrySetMenuResult.lastResult.default_x_sq;
+				
+				
+				selectedY.id = getEntrySetMenuResult.lastResult.default_y_id;
+				selectedY.label = getEntrySetMenuResult.lastResult.default_y;
+				selectedY.label_en = getEntrySetMenuResult.lastResult.default_y_en;
+				selectedY.label_sq = getEntrySetMenuResult.lastResult.default_y_sq;
+				
+				selectedZ.id = getEntrySetMenuResult.lastResult.default_z_id;
+				selectedZ.label = getEntrySetMenuResult.lastResult.default_z;
+				selectedZ.label_en = getEntrySetMenuResult.lastResult.default_z_en;
+				selectedZ.label_sq = getEntrySetMenuResult.lastResult.default_z_sq;
 				
 				xAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_x_label')]+"**";
 				yAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_y_label')]+"*";
@@ -609,7 +639,16 @@
 				
 				mapPrimaryLabel = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_x_label')];
 				mapOverlayLabel = resourceManager.getString('resources', 'map_overlay_none_label');
-				 
+				
+				selectedX1 = selectedX;
+				selectedY1.id = 0;
+				selectedY1.label = resourceManager.getString('resources', 'map_overlay_none_label');
+				resourceManager.localeChain = ["en_US"];
+				selectedY1.label_en = resourceManager.getString('resources', 'map_overlay_none_label');
+				resourceManager.localeChain = ["sq_AL"];
+				selectedY1.label_sq = resourceManager.getString('resources', 'map_overlay_none_label');
+				resourceManager.localeChain = ["mk_MK"];
+				
 				xAxisType = getEntrySetMenuResult.lastResult.x_axis;
 				yAxisType = getEntrySetMenuResult.lastResult.y_axis;
 				defaultTab = getEntrySetMenuResult.lastResult.default_tab;
@@ -941,7 +980,9 @@
 				resourceManager.localeChain = [langList.selectedItem.id];
 				
 				menuX.labelField=resourceManager.getString('resources', 'menu_label_field');
+				menuX1.labelField=resourceManager.getString('resources', 'menu_label_field');
 				menuY.labelField=resourceManager.getString('resources', 'menu_label_field');
+				menuY1.labelField=resourceManager.getString('resources', 'menu_label_field');
 				menuZ.labelField=resourceManager.getString('resources', 'menu_label_field');
 				
 				var tmpArr:ArrayCollection = new ArrayCollection();
@@ -966,11 +1007,14 @@
 				menuZ.layoutDirection="rtl";
 				menuZ.addEventListener(MenuEvent.ITEM_CLICK, menuZitemClick);
 				
+				xAxisPopup.label = selectedX[resourceManager.getString('resources', 'menu_label_field')]+"**";
+				yAxisPopup.label = selectedY[resourceManager.getString('resources', 'menu_label_field')]+"*";
 				
-				xAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_x_label')]+"**";
-				yAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_y_label')]+"*";
-				zAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_z_label')]+"***";
+				zAxisPopup.label = selectedZ[resourceManager.getString('resources', 'menu_label_field')]+"***";
 				
+				mapOverlayLabel = selectedY1[resourceManager.getString('resources', 'menu_label_field')];
+				mapPrimaryLabel = selectedX1[resourceManager.getString('resources', 'menu_label_field')];
+					
 				//p1.label = resourceManager.getString('resources', 'all_cities_label_en');
 				p1.labelFunction = popUpMenuButton_labelFunc;
 				p1.dataProvider = selectionMenuDP;
@@ -1348,7 +1392,7 @@
 						</mx:List>
 						<!--s:CheckBox id="checkAllCities" x="5" y="-19" toolTip="{resourceManager.getString('resources', 'check_allCities_tooltip')}" click="checkAllCities_clickHandler(event)" includeIn="State1"/-->					
 						<s:VGroup includeIn="MapState" x="0" y="0" width="100%" height="100%"
-								  paddingLeft="5" paddingRight="5" paddingTop="10">
+								  paddingLeft="1" paddingRight="2" paddingTop="5">
 							<s:HGroup width="100%" height="20" fontWeight="bold"
 									  verticalAlign="middle">
 								<s:Label text="{resourceManager.getString('resources', 'primary_data_label')}" />
