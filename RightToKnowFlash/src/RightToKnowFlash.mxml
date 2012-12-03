@@ -469,7 +469,9 @@
 			 * */
 			protected function xAxisPopup_clickHandler(event:MouseEvent):void
 			{
-				menuX.show(chart.x+37, chart.y+chart.height-menuX.height);
+				menuX.show();
+				menuX.hide();
+				menuX.show(chart.x+37, chart.y+chart.height-menuX.height+34);
 			}
 			
 			/**
@@ -504,7 +506,7 @@
 			
 			protected function zAxisPopup_clickHandler(event:MouseEvent):void
 			{
-				menuZ.show(chart.width+42, chart.height+58);
+				menuZ.show(chart.width+41, chart.height+57);
 			}
 			
 			protected function xAxisPopup1_creationCompleteHandler(event:FlexEvent):void
@@ -1458,8 +1460,7 @@
 						<!--s:CheckBox id="checkAllCities" x="5" y="-19" toolTip="{resourceManager.getString('resources', 'check_allCities_tooltip')}" click="checkAllCities_clickHandler(event)" includeIn="State1"/-->					
 						<s:VGroup includeIn="MapState" x="0" y="0" width="100%" height="100%"
 								  paddingLeft="1" paddingRight="2" paddingTop="5">
-							<s:HGroup width="100%" height="20" fontWeight="bold"
-									  verticalAlign="middle">
+							<s:HGroup width="150" fontWeight="bold" verticalAlign="middle">
 								<s:Label text="{resourceManager.getString('resources', 'primary_data_label')}" />
 							</s:HGroup>
 							<s:BorderContainer width="100%" height="27" backgroundAlpha="0.8"
@@ -1471,7 +1472,7 @@
 										  skinClass="org.most.righttoknow.skins.ButtonAsAList"
 										  verticalCenter="0"/>
 							</s:BorderContainer>
-							<s:Label fontWeight="bold"
+							<s:Label width="150" fontWeight="bold"
 									 text="{resourceManager.getString('resources', 'overlay_data_label')}"/>
 							<s:BorderContainer width="100%" height="27" backgroundAlpha="0.8"
 											   backgroundColor="#9bf6c9" borderVisible="false">
@@ -1498,16 +1499,15 @@
 										>
 					</mx:PopUpMenuButton>
 				</s:Panel>
-				<!--s:Panel includeIn="State1" width="100%" height="90" dropShadowVisible="false"
+				<s:Panel includeIn="State1" width="100%" height="90" dropShadowVisible="false"
 						 skinClass="org.most.righttoknow.skins.PanelSkin"
-						 title="{resourceManager.getString('resources', 'size_panel_title')}"-->
-					<s:VGroup left="0" top="0" bottom="0" width="100%" includeIn="State1" gap="-1">
+						 title="{resourceManager.getString('resources', 'size_panel_title')}">
+					<s:VGroup left="0" top="0" bottom="0" width="100%" includeIn="State1" gap="0">
 						<s:Button id="zAxisPopup" width="100%" click="zAxisPopup_clickHandler(event)"
 								  cornerRadius="0" fontWeight="bold"
 								  skinClass="org.most.righttoknow.skins.ButtonAsAList"
 								 />
-						<s:BorderContainer width="100%" height="100%" backgroundColor="#CACACA">
-							
+						<s:BorderContainer width="100%" height="100%" borderVisible="false" backgroundColor="#D2D1D1">
 						
 						<mx:HSlider id="bubbleSizeHSlider" width="150" 
 								    change="bubbleSizeHSlider_changeHandler(event)"	
@@ -1519,7 +1519,7 @@
 						</s:BorderContainer>
 					</s:VGroup>
 					
-				<!--/s:Panel-->
+				</s:Panel>
 				
 			</s:VGroup> 
 		</s:HGroup>
