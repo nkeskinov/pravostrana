@@ -335,7 +335,7 @@
 			 * */
 			protected function getBubbleEntriesPerYearByIdsResult_resultHandler(event:ResultEvent):void
 			{ 
-				showBusyCursor();
+				//busyIndicator.busy = true;	
 				chartDataProvider = getBubbleEntriesPerYearByIdsResult.lastResult.rows;
 				//Save the original data for reseting purposes
 				originalData = chartDataProvider;
@@ -362,9 +362,9 @@
 				}
 				chartDataProvider = tmpArrayCollection;
 				
-				
-				
-				
+				if(filtered){
+					filter();
+				}
 				
 				//Min and max year
 				minYear = getBubbleEntriesPerYearByIdsResult.lastResult.minYear;
@@ -413,6 +413,36 @@
 						chart.verticalAxis = linAxis;
 					}
 					isFirstTime = false;
+				}else{
+					if(yToggle.selected){
+						var logAxis:LogAxis = new LogAxis();
+						logAxis.baseAtZero = false;
+						logAxis.minimum = 0;
+						logAxis.maximum = maxYValue;
+						chart.verticalAxis = logAxis;				
+					}
+					else{
+						var linAxis:LinearAxis = new LinearAxis();
+						linAxis.baseAtZero = false;
+						linAxis.minimum = 0;
+						linAxis.maximum = maxYValue;
+						chart.verticalAxis = linAxis;
+					}
+					if(xToggle.selected){
+						var logAxis:LogAxis = new LogAxis();
+						logAxis.baseAtZero = false;
+						logAxis.minimum = 0;
+						logAxis.maximum = maxXValue;
+						chart.horizontalAxis = logAxis;
+					}
+					else {
+						var linAxis:LinearAxis = new LinearAxis();
+						linAxis.baseAtZero = false;
+						linAxis.minimum = 0;
+						linAxis.maximum = maxXValue;
+						chart.horizontalAxis = linAxis;
+					}
+					
 				}
 				hideBusyCursor();
 			}
@@ -422,6 +452,7 @@
 			 **/
 			protected function getBubbleEntriesPerYearByIds(x_axis:int, y_axis:int, z_axis:int):void
 			{
+				busyIndicator.busy = true;	
 				getBubbleEntriesPerYearByIdsResult.token = bubbleEntriesService.getBubbleEntriesPerYearByIds(x_axis, y_axis, z_axis);
 			}
 			
@@ -808,8 +839,10 @@
 					// This is to keep the order of the data in the data provider
 					// So the interpolate effect in the data chart wont distort
 					var t1:ArrayCollection = new ArrayCollection();
+					var flag:Boolean = false;
 					for(var i:int = 0; i<allCities.length; i++){
 						if(allCities.getItemAt(i).isSelected){
+							flag = true;
 							for(var j:int=0; j<k.length; j++){
 								if(allCities.getItemAt(i).dataField == k.getItemAt(j).id_municipality)
 									t1.addItemAt(k.getItemAt(j),i);
@@ -818,6 +851,9 @@
 						else{
 							t1.addItemAt(new Object(),i);
 						}
+					}
+					if(!flag){
+						t1 = k;	
 					}
 						
 					//Alert.show("k="+k.getItemAt(0).id_municipality);
@@ -1080,8 +1116,16 @@
 							allCities.getItemAt(j).isSelected = false;
 						}
 						allCities.getItemAt(0).isSelected = true;
-						allCities.getItemAt(1).isSelected = true;
+						allCities.getItemAt(8).isSelected = true;
 						allCities.getItemAt(9).isSelected = true;
+						allCities.getItemAt(11).isSelected = true;
+						allCities.getItemAt(23).isSelected = true;
+						allCities.getItemAt(25).isSelected = true;
+						allCities.getItemAt(31).isSelected = true;
+						allCities.getItemAt(34).isSelected = true;
+						allCities.getItemAt(62).isSelected = true;
+						allCities.getItemAt(64).isSelected = true;
+						allCities.getItemAt(84).isSelected = true;
 						filter();
 						
 					}else{
@@ -1278,11 +1322,11 @@
 													</mx:series>
 													
 													<mx:horizontalAxis>
-														<mx:LogAxis  id="xAxis" minimum="0" maximum="{maxXValue}" baseAtZero="false" />
+														<mx:LogAxis  id="xAxis" minimum="0" maximum="{getBubbleEntriesPerYearByIdsResult.lastResult.maxXValue}" baseAtZero="false" />
 													</mx:horizontalAxis>
 													
 													<mx:verticalAxis>
-														<mx:LinearAxis id="yAxis" minimum="0" maximum="{maxYValue}" baseAtZero="false" />
+														<mx:LinearAxis id="yAxis" minimum="0" maximum="{getBubbleEntriesPerYearByIdsResult.lastResult.maxYValue}" baseAtZero="false" />
 													</mx:verticalAxis>
 													
 													<mx:annotationElements>
