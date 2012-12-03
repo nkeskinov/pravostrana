@@ -469,8 +469,7 @@
 			 * */
 			protected function xAxisPopup_clickHandler(event:MouseEvent):void
 			{
-				
-				menuX.show(chart.x+37, chart.y+chart.height-15);
+				menuX.show(chart.x+37, chart.y+chart.height-menuX.height);
 			}
 			
 			/**
