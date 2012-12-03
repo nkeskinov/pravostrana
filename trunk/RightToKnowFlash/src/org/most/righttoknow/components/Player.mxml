@@ -18,7 +18,7 @@
 				youTubeService =  new YouTubePlayerAS3();
 				youTubeService.autoplay = false;
 				
-				youTubeService.play("Zhawgd0REhA");
+				youTubeService.play("dQw4w9WgXcQ");
 
 			}
 		]]>

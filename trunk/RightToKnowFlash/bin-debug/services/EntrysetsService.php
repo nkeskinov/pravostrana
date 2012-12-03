@@ -124,6 +124,7 @@ class EntrysetsService {
 		  $menuItem->label_en = $entry->name_en;
 		  $menuItem->label_sq = $entry->name_sq;
 		  $menuItem->id = $entry->id_entry_set;
+		  
 			
 		  /*$rows[$entry->id_entry_set] = &$menuItem;
 		  if ($entry->parent == null || $entry->parent == 0) {
@@ -141,7 +142,7 @@ class EntrysetsService {
 		      $result->menu[] = $menuItem;
 		  } else {
 			  $parentMenuItem = $rows[$entry->parent];
-			  if ($parentMenuItem->children == null) {
+			  if (!isset($parentMenuItem->children)) {
 				  $parentMenuItem->children = array();
 			  }
 			  $parentMenuItem->children[] = $menuItem;
