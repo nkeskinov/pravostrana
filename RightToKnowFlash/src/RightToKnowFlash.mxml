@@ -599,6 +599,7 @@
 				menuX.labelField=resourceManager.getString('resources', 'menu_label_field');
 				menuX.addEventListener(MenuEvent.ITEM_CLICK, menuXitemClick);
 				
+				
 				menuX1 = Menu.createMenu(null, menuData, false);
 				menuX1.labelField=resourceManager.getString('resources', 'menu_label_field');
 				menuX1.addEventListener(MenuEvent.ITEM_CLICK, menuX1itemClick);
@@ -1216,6 +1217,11 @@
 		.myAxisStyles {
 			tickPlacement:none
 		}
+		
+		mx|Menu{
+		    fontSize: 10px;
+		}
+		
 	</fx:Style>
 	<fx:Metadata>
 		[ResourceBundle("resources")]
@@ -1288,7 +1294,7 @@
 														  label="Button"
 														  click="button1_clickHandler(event)"
 														  cornerRadius="0"
-														  icon="@Embed('../assets/get_info.png')"/>
+														  icon="@Embed('assets/get_info.png')"/>
 											</s:VGroup>
 										</s:VGroup>
 										</s:Group>

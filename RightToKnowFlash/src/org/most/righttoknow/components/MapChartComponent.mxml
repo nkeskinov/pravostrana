@@ -21,18 +21,19 @@
 			import services.mapentriesservice.MapEntriesService;
 			
 			[Bindable]
-			[Embed(source="../flexassets/maps/macedonia.swf")]
-			private var _macedonia:Class 
+			[Embed(source="assets/macedonia.swf")]
+			public static var _macedonia:Class 
 			
 			protected var minYear:Number;
 			protected var maxYear:Number;
 			
 			protected var playing:Boolean = false;
 			
-			[Embed(source='assets/play_blue.png')]
-			public static var playBtnIcn:Class;
+			[Embed(source="assets/play_blue.png")]
+			public static var playBtnIcn1:Class;
+			
 			[Embed(source='assets/pause_blue.png')]
-			public static var pauseBtnIcn:Class;
+			public static var pauseBtnIcn1:Class;
 			
 			[Bindable]
 			protected var playDuration:Number = 3;
@@ -45,12 +46,14 @@
 			protected var xTitle:String;
 			protected var yTitle:String;
 			
+			protected var initialLoad:Boolean = false;
+			
 			public function init(value1:Number, value2:Number, stringValue1:String, stringValue2:String):void
 			{
 				xTitle = stringValue1;
 				yTitle = stringValue2;
 				getMapEntriesByIds(value1,value2);
-				
+				mapDataProvider = new ArrayCollection();
 				
 				
 			}
@@ -144,6 +147,7 @@
 					ammap.dataSets[0].areas[i].title = tmpDataSet.areas[i].title;
 				}
 				hideBusyCursor();
+				initialLoad = true;
 			}
 			
 		
@@ -157,22 +161,28 @@
 			
 			protected function hSlider_valueCommitHandler(event:FlexEvent):void
 			{
-				var tmpDataSet:DataSet = mapDataProvider.getItemAt(hSlider.value - hSlider.minimum) as DataSet;
-				for(var i:int=0; i< ammap.dataSets[0].areas.length; i++){
+				//if(initialLoad){
 					
-					ammap.dataSets[0].areas[i].value=tmpDataSet.areas[i].value;
-					ammap.dataSets[0].areas[i].title = tmpDataSet.areas[i].title;
-				}
+					if(mapDataProvider.length>0){
+					var tmpDataSet:DataSet = mapDataProvider.getItemAt(hSlider.value-hSlider.minimum) as DataSet;
+					for(var i:int=0; i< ammap.dataSets[0].areas.length; i++){
+						
+						ammap.dataSets[0].areas[i].value=tmpDataSet.areas[i].value;
+						ammap.dataSets[0].areas[i].title = tmpDataSet.areas[i].title;
+					}
+					
+					if(hSlider.value == maxYear && playing){
+						playing = false;
+						playBtn.setStyle("icon",playBtnIcn1);
+						//timer.stop();
+						hSlider.snapInterval = 1;
+						animateSlider.stop();
+						animateSlider.fromValue = minYear;
+						hSlider.mouseEnabled = true;
+					}
+					}
+				//}
 				
-				if(hSlider.value == maxYear && playing){
-					playing = false;
-					playBtn.setStyle("icon",playBtnIcn);
-					//timer.stop();
-					hSlider.snapInterval = 1;
-					animateSlider.stop();
-					animateSlider.fromValue = minYear;
-					hSlider.mouseEnabled = true;
-				}
 				
 			}
 			
@@ -187,7 +197,7 @@
 						
 					}
 					playing = true;
-					playBtn.setStyle("icon",pauseBtnIcn);
+					playBtn.setStyle("icon",pauseBtnIcn1);
 			
 					hSlider.snapInterval = 0;
 					hSlider.mouseChildren = false;
@@ -199,7 +209,7 @@
 					
 				}else{
 					playing = false;
-					playBtn.setStyle("icon",playBtnIcn);
+					playBtn.setStyle("icon",playBtnIcn1);
 					hSlider.mouseEnabled = true;
 					hSlider.mouseChildren = true;
 					hSlider.snapInterval = 1;
@@ -329,6 +339,7 @@
 								dataTipFormatFunction="formatYear"
 								labelOffset="-1"  
 								showTrackHighlight="true"
+							    value="0" minimum="0"
 								tickInterval="1" tickLength="10" tickOffset="4"
 								valueCommit="hSlider_valueCommitHandler(event)"
 							   change="hSlider_changeHandler(event)"	
