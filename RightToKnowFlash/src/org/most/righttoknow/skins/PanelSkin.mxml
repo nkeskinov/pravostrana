@@ -232,7 +232,7 @@ in accordance with the terms of the license agreement accompanying it.
                 
                 <!-- layer 3: text -->
                 <!--- @copy spark.components.Panel#titleDisplay -->
-                <s:Label id="titleDisplay" left="22" right="3" top="1" bottom="0" minHeight="20"
+                <s:Label id="titleDisplay" left="22" right="3" top="1" bottom="0" minHeight="15"
 						 fontWeight="bold" maxDisplayedLines="1" textAlign="start"
 						 verticalAlign="middle"
 						 left.normal="5" right.normal="3" top.normal="1" bottom.normal="0">
