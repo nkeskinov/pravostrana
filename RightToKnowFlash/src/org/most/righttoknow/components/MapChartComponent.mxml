@@ -61,11 +61,7 @@
 			protected function getMapEntriesByIds(value1:int, value2:int):void
 			{
 				getMapEntriesByIdsResult.token = mapEntriesService.getMapEntriesByIds(value1, value2);
-			}
-			
-			protected function ammap_initializeHandler(event:FlexEvent):void
-			{
-			}
+			}					
 			
 			protected function getMapEntriesByIdsResult_resultHandler(event:ResultEvent):void
 			{
@@ -102,9 +98,12 @@
 							//mapArea.title = mapEntry.title;
 							mapArea.value = Number(mapEntry.value);
 							if(mapEntry.entry2 == null)
-								mapArea.title = "<b>"+mapEntry.title + "</b>\n\n"+numberformater.format(mapEntry.entry1) + " "+xTitle;
+								mapArea.title = "<b>"+mapEntry[resourceManager.getString('resources', 'map_label_field')] + "</b>\n\n"
+									+ xTitle + ": " + numberformater.format(mapEntry.entry1);
 							else{
-								mapArea.title = "<b>"+mapEntry.title + "</b>\n\n"+numberformater.format(mapEntry.entry1) + " "+xTitle+"\n" + numberformater.format(mapEntry.entry2) + " "+yTitle;
+								mapArea.title = "<b>"+mapEntry[resourceManager.getString('resources', 'map_label_field')] + "</b>\n\n"
+									+ xTitle + ": " + numberformater.format(mapEntry.entry1) + "\n" 
+									+ yTitle + ": " + numberformater.format(mapEntry.entry2) + "\n";
 							}
 							macedoniaDataSet.addObject(mapArea);
 							

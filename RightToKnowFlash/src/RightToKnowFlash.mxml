@@ -56,12 +56,8 @@
 			import org.most.righttoknow.components.ShareTitleWindow;
 			import org.most.righttoknow.components.TeaserTitleWindow;
 			import org.most.righttoknow.controls.StyledAxisRenderer;
-			import org.most.righttoknow.controls.YouTubePlayerAS3;
 			
 			import spark.events.IndexChangeEvent;
-			
-			[Bindable]
-			protected var youTubeService:YouTubePlayerAS3;
 			
 			public var bulletSizeValue:Number = 10;
 			
@@ -546,7 +542,7 @@
 			private function menuXitemClick(event:MenuEvent):void {
 				
 				selectedX = event.item;
-				xAxisPopup.label = event.item[resourceManager.getString('resources', 'menu_label_field')]+"**";
+				xAxisPopup.label = event.item[resourceManager.getString('resources', 'menu_label_field')]+"*";
 				xSelected = event.item.id
 				getBubbleEntriesPerYearByIds(xSelected, ySelected, zSelected);
 				
@@ -557,7 +553,7 @@
 			 * */
 			private function menuX1itemClick(event:MenuEvent):void {
 				selectedX1 = event.item;
-				mapPrimaryLabel= event.item[resourceManager.getString('resources', 'menu_label_field')];
+				mapPrimaryLabel= event.item[resourceManager.getString('resources', 'menu_label_field')]+"*";
 				xSelected1 = event.item.id
 				mapChart.init(xSelected1, ySelected1, mapPrimaryLabel, mapOverlayLabel);
 				
@@ -569,7 +565,7 @@
 			private function menuYitemClick(event:MenuEvent):void {
 				
 				selectedY = event.item;
-				yAxisPopup.label = event.item[resourceManager.getString('resources', 'menu_label_field')]+"*";
+				yAxisPopup.label = event.item[resourceManager.getString('resources', 'menu_label_field')]+"**";
 				ySelected = event.item.id;
 				getBubbleEntriesPerYearByIds(xSelected, ySelected, zSelected);
 				//Alert.show("x="+xSelected +" y="+event.item.id);
@@ -580,7 +576,7 @@
 			 * */
 			private function menuY1itemClick(event:MenuEvent):void {
 				selectedY1 = event.item;
-				mapOverlayLabel = event.item[resourceManager.getString('resources', 'menu_label_field')];
+				mapOverlayLabel = event.item[resourceManager.getString('resources', 'menu_label_field')]+"**";
 				ySelected1 = event.item.id;
 				mapChart.init(xSelected1, ySelected1, mapPrimaryLabel, mapOverlayLabel);
 				//Alert.show("x="+xSelected +" y="+event.item.id);
@@ -673,11 +669,11 @@
 				selectedZ.label_en = getEntrySetMenuResult.lastResult.default_z_en;
 				selectedZ.label_sq = getEntrySetMenuResult.lastResult.default_z_sq;
 				
-				xAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_x_label')]+"**";
-				yAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_y_label')]+"*";
+				xAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_x_label')]+"*";
+				yAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_y_label')]+"**";
 				zAxisPopup.label = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_z_label')]+"***";
 				
-				mapPrimaryLabel = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_x_label')];
+				mapPrimaryLabel = getEntrySetMenuResult.lastResult[resourceManager.getString('resources', 'default_x_label')]+"*";
 				mapOverlayLabel = resourceManager.getString('resources', 'map_overlay_none_label');
 				
 				selectedX1 = selectedX;
@@ -1042,7 +1038,7 @@
 				item.label_sq = resourceManager.getString('resources', 'z_indicators_label');
 				resourceManager.localeChain = [langList.selectedItem.id];
 				
-				item.children = getEntrySetMenuResult.lastResult.menu;;
+				item.children = getEntrySetMenuResult.lastResult.menu;
 				tmpArr.addItem(item);
 				item = new Object;
 				item.id=0;
@@ -1061,13 +1057,17 @@
 				menuZ.layoutDirection="rtl";
 				menuZ.addEventListener(MenuEvent.ITEM_CLICK, menuZitemClick);
 				
-				xAxisPopup.label = selectedX[resourceManager.getString('resources', 'menu_label_field')]+"**";
-				yAxisPopup.label = selectedY[resourceManager.getString('resources', 'menu_label_field')]+"*";
-				
+				xAxisPopup.label = selectedX[resourceManager.getString('resources', 'menu_label_field')]+"*";
+				yAxisPopup.label = selectedY[resourceManager.getString('resources', 'menu_label_field')]+"**";				
 				zAxisPopup.label = selectedZ[resourceManager.getString('resources', 'menu_label_field')]+"***";
 				
-				mapOverlayLabel = selectedY1[resourceManager.getString('resources', 'menu_label_field')];
-				mapPrimaryLabel = selectedX1[resourceManager.getString('resources', 'menu_label_field')];
+				mapPrimaryLabel = selectedX1[resourceManager.getString('resources', 'menu_label_field')]+"*";
+				mapOverlayLabel = selectedY1[resourceManager.getString('resources', 'menu_label_field')]+"**";
+				
+				if (mapLoaded) {
+					// reinitialize again to apply translations
+					mapChart.init(xSelected1, ySelected1, mapPrimaryLabel, mapOverlayLabel);
+				}
 					
 				//p1.label = resourceManager.getString('resources', 'all_cities_label_en');
 				p1.labelFunction = popUpMenuButton_labelFunc;
