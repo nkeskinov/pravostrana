@@ -62,7 +62,9 @@ class MapEntriesService {
 		
 		if($value2 == -1){
 			$stmt = mysqli_prepare($this->connection,
-					"select entry1.value as value, entry1.value as entry1, null as entry2, entry1.`year` as year, municipalities.`name` as title, municipalities.map_id as instanceName ".
+					"select entry1.value as value, entry1.value as entry1, null as entry2, entry1.`year` as year, ".
+					"municipalities.`name` as title, municipalities.`name_en` as title_en, municipalities.`name_sq` as title_sq, ".
+					"municipalities.map_id as instanceName ".
 					"from $this->tablename as entry1,  municipalities ".
 					"where entry1.id_entry_set = ? ".
 						"and entry1.id_municipality = municipalities.id_municipality  ".
@@ -73,7 +75,8 @@ class MapEntriesService {
         $this->throwExceptionOnError();
 		}else{
 			$stmt = mysqli_prepare($this->connection,
-						"select entry1.value/entry2.value as value, entry1.value as entry1, entry2.value as entry2, entry1.`year` as year, municipalities.`name` as title, municipalities.map_id as instanceName ".
+						"select entry1.value/entry2.value as value, entry1.value as entry1, entry2.value as entry2, entry1.`year` as year, ". "municipalities.`name` as title, municipalities.`name_en` as title_en, municipalities.`name_sq` as title_sq, ".
+						"municipalities.map_id as instanceName ".
 						"from $this->tablename as entry1, $this->tablename as entry2,  municipalities ".
 						"where entry1.id_entry_set = ? ".
 							"and entry2.id_entry_set = ? ".
@@ -97,7 +100,7 @@ class MapEntriesService {
         $result->rows = array();
 		
 		
-		mysqli_stmt_bind_result($stmt, $entry->value, $entry->entry1, $entry->entry2, $year, $entry->title, $entry->instanceName);
+		mysqli_stmt_bind_result($stmt, $entry->value, $entry->entry1, $entry->entry2, $year, $entry->title, $entry->title_en, $entry->title_sq, $entry->instanceName);
 		mysqli_stmt_fetch($stmt);
 		
 		$entry->value = $entry->value + 0.0;
@@ -111,7 +114,7 @@ class MapEntriesService {
         $result->rows[0][] = $entry;
 		// initialize new empty object
         $entry = new stdClass();
-		mysqli_stmt_bind_result($stmt, $entry->value, $entry->entry1, $entry->entry2,  $year, $entry->title, $entry->instanceName);
+		mysqli_stmt_bind_result($stmt, $entry->value, $entry->entry1, $entry->entry2, $year, $entry->title, $entry->title_en, $entry->title_sq, $entry->instanceName);
 		
 	    while (mysqli_stmt_fetch($stmt)) {
 	     	
@@ -128,7 +131,7 @@ class MapEntriesService {
 			
 			$entry = new stdClass();
 			
-	      mysqli_stmt_bind_result($stmt, $entry->value,$entry->entry1, $entry->entry2,  $year, $entry->title, $entry->instanceName);
+	      mysqli_stmt_bind_result($stmt, $entry->value,$entry->entry1, $entry->entry2,  $year, $entry->title, $entry->title_en, $entry->title_sq, $entry->instanceName);
 	    }
 		
 		mysqli_stmt_free_result($stmt);
@@ -162,6 +165,8 @@ class MapEntryResult{
 class MapEntry{
 	public $instanceName;
 	public $title;
+	public $title_en;
+	public $title_sq;
 	public $value;
 	public $year;
 }

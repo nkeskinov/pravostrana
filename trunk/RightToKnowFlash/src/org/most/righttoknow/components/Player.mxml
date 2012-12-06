@@ -18,7 +18,7 @@
 				youTubeService =  new YouTubePlayerAS3();
 				youTubeService.autoplay = false;
 				
-				youTubeService.play("dQw4w9WgXcQ");
+				youTubeService.play(resourceManager.getString('resources', 'youtube_video_id'));
 
 			}
 		]]>

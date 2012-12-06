@@ -191,6 +191,7 @@ public class _Super_MapEntry extends flash.events.EventDispatcher implements com
     /**
      * derived property calculators
      */
+    
 
     /**
      * isValid calculator
