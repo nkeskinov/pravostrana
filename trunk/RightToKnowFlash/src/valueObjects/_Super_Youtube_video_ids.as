@@ -166,7 +166,6 @@ public class _Super_Youtube_video_ids extends flash.events.EventDispatcher imple
     /**
      * derived property calculators
      */
-    
 
     /**
      * isValid calculator

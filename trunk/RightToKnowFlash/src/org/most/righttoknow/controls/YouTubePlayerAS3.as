@@ -8,13 +8,14 @@
  */
 package org.most.righttoknow.controls
 {
-	import mx.controls.Alert;
 	import flash.display.DisplayObject;
 	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.net.URLRequest;
 	import flash.system.Security;
+	
+	import mx.controls.Alert;
 	
 	import org.most.righttoknow.controls.YouTubePlayerEvent;
 	
@@ -29,9 +30,9 @@ package org.most.righttoknow.controls
 		public var autoplay:Boolean								= false;
 		public var chromeless:Boolean							= false;
 		public var loop:Boolean									= false;
-		public var pars:String									= 'modestbranding=1&fs=0&rel=0&showinfo=1&showsearch=0&hd=1&autohide=0&iv_load_policy=3&cc_load_policy=3';
-		public var playerHeight:Number							= 300;
-		public var playerWidth:Number							= 400;
+		public var pars:String									= 'modestbranding=1&fs=0&rel=0&showinfo=1&showsearch=0&hd=1&autohide=0&iv_load_policy=3&cc_load_policy=3&frameborder=0&theme=light';
+		public var playerHeight:Number							= 360;
+		public var playerWidth:Number							= 480;
 		public var quality:String								= QUALITY_LARGE;
 		
 		private var isLoaded:Boolean							= false;
@@ -106,6 +107,7 @@ package org.most.righttoknow.controls
 			dispatchEvent( new YouTubePlayerEvent( YouTubePlayerEvent.READY ) );
 			
 			player.setSize( playerWidth, playerHeight );
+			
 			
 			playVideo();
 		}
@@ -298,6 +300,7 @@ package org.most.righttoknow.controls
 			return ( isLoaded ? player.isMuted() : false );
 		}
 		
+		
 		public function setVolume(value:Number):void
 		{
 			if ( isLoaded )
@@ -319,6 +322,11 @@ package org.most.righttoknow.controls
 			}
 		}
 		
+		public function thumbanailButton(videoId:String, startSeconds:Number, suggestedQuality:String):DisplayObject{
+		
+			return player.getClickToPlayButton(videoId, startSeconds, suggestedQuality);
+		
+		}
 		public function get ytPlayer():Object
 		{
 			return ( isLoaded ? player : null );
