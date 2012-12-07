@@ -37,8 +37,9 @@
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
-	<s:RichText id="text" left="10" right="10" top="10" bottom="10" horizontalCenter="0" 
-				textFlow="{TextConverter.importToFlow(textString, TextConverter.TEXT_FIELD_HTML_FORMAT)}"
-				verticalCenter="0" />
-	
+	<s:Scroller left="10" right="10" top="10" bottom="10" horizontalScrollPolicy="off" verticalScrollPolicy="auto">
+		<s:RichEditableText id="text"  horizontalCenter="0" 
+					textFlow="{TextConverter.importToFlow(textString, TextConverter.TEXT_FIELD_HTML_FORMAT)}"
+					verticalCenter="0" editable="false" />
+	</s:Scroller>
 </s:TitleWindow>

@@ -2,11 +2,12 @@
 <s:TitleWindow xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
 			   xmlns:mx="library://ns.adobe.com/flex/mx" width="400" height="300"
+			   xmlns:components="org.most.righttoknow.components.*"
 			   creationComplete="centerWindow()" close="closeWindow()" title="Како да ги пребарувате податоците">
 	<fx:Script>
 		<![CDATA[
 			import mx.events.FlexEvent;
-			
+			import mx.events.ItemClickEvent;			
 			import mx.managers.PopUpManager;
 			
 			public function centerWindow():void
@@ -20,11 +21,41 @@
 				PopUpManager.removePopUp(this);
 			}
 			
+			protected function togglebuttonbar1_itemClickHandler(event:ItemClickEvent):void
+			{
+				if(videoToggle.selectedIndex == 0){
+					resetVideo.end();
+					resetVideo.play();
+					
+				}else{
+					resizeVideo.end();
+					resizeVideo.play();
+				}
+			}
+			
 			
 		]]>
 	</fx:Script>
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<s:Resize id="resizeVideo" heightTo="322" widthTo="400" duration="200" 
+				  targets="{[this]}"/>
+		<s:Resize id="resetVideo" heightTo="138" widthTo="155" duration="200" 
+				  targets="{[this]}" />
 	</fx:Declarations>
-	<s:VideoPlayer x="0" y="0" width="100%" height="100%"/>
+	<components:Player id="player" type="help"
+					   width="100%" height="100%"/>
+	<mx:ToggleButtonBar id="videoToggle" right="1"
+						width="60"
+						top="-17"
+						height="18"
+						
+						itemClick="togglebuttonbar1_itemClickHandler(event)"	
+						toggleOnClick="false"	>
+		<mx:dataProvider>  
+			<fx:Object  icon="{RightToKnowFlash.smallWindowIcn}"/>
+			<fx:Object icon="{RightToKnowFlash.largeWindowIcn}" />
+			
+		</mx:dataProvider>
+	</mx:ToggleButtonBar>
 </s:TitleWindow>
