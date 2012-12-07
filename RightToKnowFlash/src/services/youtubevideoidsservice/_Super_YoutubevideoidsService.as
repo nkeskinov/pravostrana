@@ -137,13 +137,12 @@ internal class _Super_YoutubevideoidsService extends com.adobe.fiber.services.wr
         _serviceControl = new mx.rpc.remoting.RemoteObject();
 
         // initialize RemoteClass alias for all entities returned by functions of this service
-        valueObjects.Youtube_video_ids._initRemoteClassAlias();
 
         var operations:Object = new Object();
         var operation:mx.rpc.remoting.Operation;
 
         operation = new mx.rpc.remoting.Operation(null, "getYoutube_video_idsByID");
-        operation.resultType = valueObjects.Youtube_video_ids;
+         operation.resultType = valueObjects.Youtube_video_ids;
         operations["getYoutube_video_idsByID"] = operation;
 
         _serviceControl.operations = operations;
@@ -187,9 +186,9 @@ internal class _Super_YoutubevideoidsService extends com.adobe.fiber.services.wr
     
 
     /**
-      * This method is a generated wrapper used to call the 'getYoutube_video_idsByID' operation. It returns an mx.data.ItemReference whose
-      * result property will be populated with the result of the operation when the server response is received.
-      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value.
+      * This method is a generated wrapper used to call the 'getYoutube_video_idsByID' operation. It returns an mx.data.ItemReference whose 
+      * result property will be populated with the result of the operation when the server response is received. 
+      * To use this result from MXML code, define a CallResponder component and assign its token property to this method's return value. 
       * You can then bind to CallResponder.lastResult or listen for the CallResponder.result or fault events.
       *
       * @see mx.data.ItemReference
@@ -200,7 +199,7 @@ internal class _Super_YoutubevideoidsService extends com.adobe.fiber.services.wr
     public function getYoutube_video_idsByID(itemID:int) : mx.data.ItemReference
     {
         var _internal_operation:mx.rpc.AbstractOperation = _serviceControl.getOperation("getYoutube_video_idsByID");
-        var _internal_token:mx.data.ItemReference = _internal_operation.send(itemID) as mx.data.ItemReference;
+		var _internal_token:mx.data.ItemReference = _internal_operation.send(itemID) as mx.data.ItemReference;
         return _internal_token;
     }
      

@@ -37,6 +37,7 @@
 			import mx.effects.easing.Elastic;
 			import mx.effects.easing.Linear;
 			import mx.events.DataGridEvent;
+			import mx.events.EffectEvent;
 			import mx.events.FlexEvent;
 			import mx.events.IndexChangedEvent;
 			import mx.events.ItemClickEvent;
@@ -127,10 +128,10 @@
 			public static var playBtnIcn:Class;
 			[Embed(source='assets/pause_blue.png')]
 			public static var pauseBtnIcn:Class;
-			
-			[Embed(source="assets/large_window2.png")]
-			public static var largeWindowIcn:Class;
-			[Embed(source="assets/small_window.png")]
+			 
+			[Embed(source="assets/large_window3.png")]
+			public static var largeWindowIcn:Class; 
+			[Embed(source="assets/small_window2.png")]
 			public static var smallWindowIcn:Class;
 			
 			
@@ -187,7 +188,7 @@
 			 * */
 			private function init():void {
 				fullScreenState = stage.displayState;
-				stage.addEventListener(FullScreenEvent.FULL_SCREEN, stage_fullScreen);		
+				stage.addEventListener(FullScreenEvent.FULL_SCREEN, stage_fullScreen);	
 				
 				getAllMunicipalities();
 				resourceManager.localeChain = ['mk_MK'];
@@ -275,8 +276,11 @@
 			}
 			
 			private function stage_fullScreen(evt:FullScreenEvent):void {
-				player.percentWidth = 100;
-				player.percentHeight = 100;
+				//panel.percentWidth = 100;
+				//panel.percentHeight = 100;
+				
+				this.percentWidth = 100;
+				this.percentHeight = 100;
 				fullScreenBtn.selected = isFullScreen();
 			}
 			
@@ -473,7 +477,7 @@
 			protected function xAxisPopup1_clickHandler(event:MouseEvent):void
 			{
 				
-				menuX1.show(tabNav.x+tabNav.width+21, tabNav.y+232);
+				menuX1.show(tabNav.x+tabNav.width-15, tabNav.y+214);
 				
 			}
 			
@@ -493,7 +497,7 @@
 				
 			protected function yAxisPopup1_clickHandler(event:MouseEvent):void
 			{
-				menuY1.show(tabNav.x+tabNav.width+21, tabNav.y+282);
+				menuY1.show(tabNav.x+tabNav.width-15, tabNav.y+264);
 				
 			}
 			
@@ -1197,6 +1201,20 @@
 				}
 			}
 			
+			protected function videoToggle_clickHandler(event:MouseEvent):void
+			{
+				if(videoToggle.selectedIndex == 0){
+					resetVideo.end();
+					resetVideo.play();
+					
+				}else{
+					resizeVideo.end();
+					resizeVideo.play();
+				}
+			}
+			
+			
+			
 		]]>
 	</fx:Script>
 	<fx:Style>
@@ -1226,6 +1244,14 @@
 			fontSize: 9px;
 		}
 		
+		s|ButtonBar{
+			cornerRadius: 0;
+		}
+		
+		.customToggleButtonBar{
+			cornerRadius: 16;
+		}
+		
 	</fx:Style>
 	<fx:Metadata>
 		[ResourceBundle("resources")]
@@ -1236,9 +1262,9 @@
 	</s:states>
 	<fx:Declarations>
 		
-		<s:Resize id="resizeVideo" heightTo="322" widthTo="400" duration="200" 
+		<s:Resize id="resizeVideo" heightTo="377" widthTo="480" duration="200" 
 				  targets="{[panel]}"/>
-		<s:Resize id="resetVideo" heightTo="138" widthTo="155" duration="200" 
+		<s:Resize id="resetVideo" heightTo="132.5" widthTo="155" duration="200" 
 				  targets="{[panel]}" />
 		<mx:AnimateProperty id="animateSlider" property="value" 
 							fromValue="{getBubbleEntriesPerYearByIdsResult.lastResult.minYear}" 
@@ -1557,25 +1583,28 @@
 					  click="fullScreenBtn_clickHandler(event)"
 					  icon="@Embed(source='assets/full_screen.png')"/>
 		</s:HGroup>
-		<s:Panel id="panel" right="10" top="10" width="155" height="138" dropShadowVisible="false"
+		<s:Panel id="panel" right="10" top="10" width="155" height="132.5" dropShadowVisible="false"
 				 fontSize="11" fontWeight="normal"
 				 skinClass="org.most.righttoknow.skins.PanelSkin"
 				 title="{resourceManager.getString('resources', 'video_panel_title')}"
 				>
-		<components:Player id="player" type="promo"
-						   width="100%" height="100%"/>
-			<mx:ToggleButtonBar id="videoToggle" right="1"
-							    width="60"
-								top="-17"
-							    height="18"
-							     
-							    itemClick="togglebuttonbar1_itemClickHandler(event)"	
-							    toggleOnClick="false"	>
-				<mx:dataProvider>  
-					<fx:Object  icon="{smallWindowIcn}"/>
-					<fx:Object icon="{largeWindowIcn}" />
-							   
-				</mx:dataProvider>
-			</mx:ToggleButtonBar>
+		<components:Player id="player" top="0" 
+						   width="100%" height="100%" type="promo"
+						    
+						    />
+			
+			<s:ButtonBar id="videoToggle" right="-1" top="-17" width="55" 
+						 height="17"
+						  
+						 click="videoToggle_clickHandler(event)" selectedIndex="0"
+						 skinClass="org.most.righttoknow.skins.ButtonBarSkin"
+						 styleName="customToggleButtonBar">
+				<s:dataProvider>  
+					<mx:ArrayCollection>
+						<fx:Object id="one"  icon="{smallWindowIcn}" label="" />
+						<fx:Object id="two" icon="{largeWindowIcn}" label="" />
+					</mx:ArrayCollection>	  
+				</s:dataProvider>
+			</s:ButtonBar>
 		</s:Panel>
 </s:Application>

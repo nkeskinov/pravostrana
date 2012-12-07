@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" width="150" height="150"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" width="100%" height="100%"
 		 xmlns:youtubevideoidsservice="services.youtubevideoidsservice.*"
 		 creationComplete="init()" >
 	
@@ -15,32 +15,53 @@
 			
 			[Bindable]
 			protected var youTubeService:YouTubePlayerAS3;
+			[Bindable]
+			protected var thumb:DisplayObject;
+			
+			[Bindable]
+			var youTubeId:String;
 			
 			public var type:String = "promo";
+			
+			[Bindable]
+			public var playerHight:Number = 360;
+			[Bindable]
+			public var playerWidth:Number = 480;
 			
 			public function init():void{
 				youTubeService =  new YouTubePlayerAS3();
 				youTubeService.autoplay = false;
 				
-				var youTubeId:String;
+				
+				
 				if (type == "promo") {
-					getYouTubePromoId.token = youtubevideoidsService.getYoutube_video_idsByID(1);					
+					getYouTubePromoId.token = youtubevideoidsService.getYoutube_video_idsByID(1);
 				} else {
 					getYouTubeHelpId.token = youtubevideoidsService.getYoutube_video_idsByID(2);
+					
 				}
 				
-
+				//thumb = youTubeService.thumbanailButton(youTubeId,10,YouTubePlayerAS3.QUALITY_LARGE);
 			}
 			
 			protected function getYouTubePromoId_resultHandler(event:ResultEvent):void
 			{
+				
 				youTubeService.play(getYouTubePromoId.lastResult.url_id);
+				
 			}
 			
 			protected function getYouTubeHelpId_resultHandler(event:ResultEvent):void
 			{
 				youTubeService.play(getYouTubeHelpId.lastResult[resourceManager.getString('resources', 'youtube_id_column')]);
 			}
+			
+			public function stop(){
+				youTubeService.stop();
+				
+			}
+			
+			
 			
 		]]>
 	</fx:Script>
@@ -52,9 +73,12 @@
 		<s:CallResponder id="getYouTubePromoId" result="getYouTubePromoId_resultHandler(event)"/>
 		<s:CallResponder id="getYouTubeHelpId" result="getYouTubeHelpId_resultHandler(event)"/>
 	</fx:Declarations>
+	
+	
 	<mx:SWFLoader id="swfLoader" height="100%" width="100%"
 				  source="{youTubeService}"
 				  autoLoad="true" 
 				  maintainAspectRatio="true"
 				  scaleContent="true"/>
+	
 </s:Group>

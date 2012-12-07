@@ -29,7 +29,17 @@ public class _Super_MapEntryResult extends flash.events.EventDispatcher implemen
 {
     model_internal static function initRemoteClassAliasSingle(cz:Class) : void
     {
-        flash.net.registerClassAlias("MapEntryResult", cz);
+        try
+        {
+            if (flash.net.getClassByAlias("MapEntryResult") == null)
+            {
+                flash.net.registerClassAlias("MapEntryResult", cz);
+            }
+        }
+        catch (e:Error)
+        {
+            flash.net.registerClassAlias("MapEntryResult", cz);
+        }
     }
 
     model_internal static function initRemoteClassAliasAllRelated() : void
@@ -186,7 +196,6 @@ public class _Super_MapEntryResult extends flash.events.EventDispatcher implemen
     /**
      * derived property calculators
      */
-    
 
     /**
      * isValid calculator
