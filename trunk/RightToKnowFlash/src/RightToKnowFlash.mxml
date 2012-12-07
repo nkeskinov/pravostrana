@@ -8,7 +8,7 @@
 			   xmlns:ammap="http://www.ammap.com/com_internal"
 			   xmlns:controls="org.most.righttoknow.controls.*"
 			   xmlns:entrysetsservice="services.entrysetsservice.*"
-			   xmlns:local="*" 
+			   xmlns:local="*"
 			   xmlns:municipalitiesservice="services.municipalitiesservice.*"
 			   width="690" height="430" applicationComplete="init()" horizontalCenter="0"
 			   verticalCenter="0"> 
@@ -238,9 +238,6 @@
 						type:"check",
 						toggled:false
 					}];
-				
-				
-				
 				
 				
 			}
@@ -1161,7 +1158,7 @@
 			protected function helpMenu_itemClickHandler(event:MenuEvent):void
 			{
 				if(event.item.data=="help"){
-					var titleWindowInstance:HelpTitleWindow = HelpTitleWindow(PopUpManager.createPopUp(this, HelpTitleWindow, false));
+					var titleWindowInstance:HelpTitleWindow = HelpTitleWindow(PopUpManager.createPopUp(this, HelpTitleWindow, false));					
 					titleWindowInstance.title=resourceManager.getString('resources', 'help_window_title');
 					PopUpManager.centerPopUp(titleWindowInstance);
 				
@@ -1179,7 +1176,7 @@
 				
 				}else if(event.item.data=="about"){
 					var titleWindowInstance3:DisclaimerTitleWindow = DisclaimerTitleWindow(PopUpManager.createPopUp(this, DisclaimerTitleWindow, false));
-					titleWindowInstance3.title=resourceManager.getString('resources', 'disclaimer_window_title');
+					titleWindowInstance3.title=resourceManager.getString('resources', 'about_window_title');
 					titleWindowInstance3.setText(resourceManager.getString('resources', 'about_text'));
 					PopUpManager.centerPopUp(titleWindowInstance3);
 				}
@@ -1268,6 +1265,7 @@
 
 		<mx:SolidColorStroke id="stroke1" color="blue" weight="0.5" alpha="0.3"/>
 		<mx:NumberFormatter  id="numberformater" rounding="up" precision="0" thousandsSeparatorFrom="" thousandsSeparatorTo=""/>
+		
 	</fx:Declarations>
 		
 		<s:HGroup left="10" right="10" top="10" bottom="10" gap="3" width="100%" height="100%">
@@ -1466,9 +1464,7 @@
 						<!--s:CheckBox id="checkAllCities" x="5" y="-19" toolTip="{resourceManager.getString('resources', 'check_allCities_tooltip')}" click="checkAllCities_clickHandler(event)" includeIn="State1"/-->					
 						<s:VGroup includeIn="MapState" x="0" y="0" width="100%" height="100%"
 								  paddingLeft="1" paddingRight="2" paddingTop="5">
-							<s:HGroup width="150" fontWeight="bold" verticalAlign="middle">
-								<s:Label text="{resourceManager.getString('resources', 'primary_data_label')}" />
-							</s:HGroup>
+							<s:Label width="150" fontWeight="bold" text="{resourceManager.getString('resources', 'primary_data_label')}"/>
 							<s:BorderContainer width="100%" height="27" backgroundAlpha="0.8"
 											   backgroundColor="#0024FF" borderVisible="false">
 								<s:Button id="xAxisPopup1" width="97%" label="{mapPrimaryLabel}"
@@ -1535,7 +1531,7 @@
 								width="120"	
 								showRoot="true" 
 								dataProvider="{helpMenuDP}"
-							    itemClick="helpMenu_itemClickHandler(event)"	
+							    itemClick="helpMenu_itemClickHandler(event)"
 								labelFunction="popUpMenuButton_labelFunc"	
 								>
 			</mx:PopUpMenuButton>
@@ -1552,8 +1548,8 @@
 				<s:dataProvider>
 					<s:ArrayList>
 						<s:BitmapImage source="@Embed('assets/mk_flag.png')" id="mk_MK"/>
-						<s:BitmapImage source="@Embed('assets/us_flag.png')" id="en_US" />
 						<s:BitmapImage source="@Embed('assets/al_flag.png')" id="sq_AL"/>
+						<s:BitmapImage source="@Embed('assets/us_gb_flag.png')" id="en_US" />
 					</s:ArrayList>
 				</s:dataProvider>
 			</s:DropDownList>
@@ -1566,11 +1562,11 @@
 				 skinClass="org.most.righttoknow.skins.PanelSkin"
 				 title="{resourceManager.getString('resources', 'video_panel_title')}"
 				>
-		<components:Player id="player"
+		<components:Player id="player" type="promo"
 						   width="100%" height="100%"/>
 			<mx:ToggleButtonBar id="videoToggle" right="1"
 							    width="60"
-								top="-20"
+								top="-17"
 							    height="18"
 							     
 							    itemClick="togglebuttonbar1_itemClickHandler(event)"	

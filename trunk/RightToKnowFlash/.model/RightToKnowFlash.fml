@@ -537,4 +537,62 @@
     <property name="default_y" type="integer"/>
     <property name="parent" type="integer"/>
   </entity>
+  <service name="YoutubevideoidsService">
+    <annotation name="ActionScriptGeneration">
+      <item name="Source">YoutubevideoidsService</item>
+      <item name="ServiceType">RemoteObject</item>
+      <item name="Package">services.youtubevideoidsservice</item>
+      <item name="Endpoint">gateway.php</item>
+      <item name="Destination">YoutubevideoidsService</item>
+    </annotation>
+    <annotation name="ServiceTypeGroup">
+      <item name="ServiceBackendType">PHP</item>
+    </annotation>
+    <annotation name="ServiceConfig">
+      <item name="PHP_RELATIVE_LOCATION">RightToKnowFlash/bin-debug/services/YoutubevideoidsService.php</item>
+      <item name="PHP_SERVER_ROOT">d:/dev/pravo.org.mk-php/</item>
+      <item name="DEFAULT_ENTITY_PACKAGE">valueObjects</item>
+      <item name="PHP_SERVICES_FOLDER">D:/dev/pravo.org.mk-php/RightToKnowFlash/bin-debug/services</item>
+      <item name="PHP_LOCATION">D:/dev/pravo.org.mk-php/RightToKnowFlash/bin-debug/services/YoutubevideoidsService.php</item>
+      <item name="LINKED_FILE">YoutubevideoidsService.php</item>
+      <item name="PHP_SERVER_ROOT_URL">http://localhost/pravostrana/</item>
+      <item name="ABSOLUTE_ENDPOINT">http://localhost/pravostrana/RightToKnowFlash/bin-debug/gateway.php</item>
+      <item name="PHP_CLASS_NAME">YoutubevideoidsService</item>
+    </annotation>
+    <function name="getYoutube_video_idsByID" return-type="Youtube_video_ids">
+      <annotation name="analyze group">
+        <item name="analyzed">true</item>
+      </annotation>
+      <annotation name="original signature">
+        <item name="inputParams">opaque</item>
+        <item name="returnType">opaque</item>
+      </annotation>
+      <parameter name="itemID" type="integer"/>
+    </function>
+  </service>
+  <entity name="Youtube_video_ids" persistent="true">
+    <annotation name="EntityProperties">
+      <item name="EntityOriginalName">Youtube_video_ids</item>
+    </annotation>
+    <annotation name="service Group">
+      <item name="service">YoutubevideoidsService,YoutubevideoidsServiceDummy</item>
+    </annotation>
+    <annotation name="ServerProperties">
+      <item name="IncludeRemoteClass">nonempty</item>
+    </annotation>
+    <annotation name="DataManagement">
+      <item name="get">getYoutube_video_idsByID</item>
+      <item name="managingService">YoutubevideoidsService</item>
+    </annotation>
+    <annotation name="ActionScriptGeneration">
+      <item name="Package">valueObjects</item>
+    </annotation>
+    <annotation name="getYoutube_video_idsByID">
+      <item name="propertySpecifier">id_youtube_video_id,url_id,url_id_sq,url_id_en</item>
+    </annotation>
+    <id name="id_youtube_video_id" type="integer"/>
+    <property name="url_id" type="string"/>
+    <property name="url_id_sq" type="string"/>
+    <property name="url_id_en" type="string"/>
+  </entity>
 </model>

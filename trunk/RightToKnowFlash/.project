@@ -19,17 +19,22 @@
 		<link>
 			<name>services/BubbleEntriesService.php</name>
 			<type>1</type>
-			<location>bin-debug/services/BubbleEntriesService.php</location>
+			<locationURI>bin-debug/services/BubbleEntriesService.php</locationURI>
 		</link>
 		<link>
 			<name>services/MapEntriesService.php</name>
 			<type>1</type>
-			<location>bin-debug/services/MapEntriesService.php</location>
+			<locationURI>bin-debug/services/MapEntriesService.php</locationURI>
 		</link>
 		<link>
 			<name>services/MunicipalitiesService.php</name>
 			<type>1</type>
-			<location>bin-debug/services/MunicipalitiesService.php</location>
+			<locationURI>bin-debug/services/MunicipalitiesService.php</locationURI>
+		</link>
+		<link>
+			<name>services/YoutubevideoidsService.php</name>
+			<type>1</type>
+			<location>bin-debug/services/YoutubevideoidsService.php</location>
 		</link>
 	</linkedResources>
 </projectDescription>
